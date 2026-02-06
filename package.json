@@ -1,5 +1,5 @@
 {
-  "name": "@capgo/capacitor-skills",
+  "name": "@capgo/capgo-skills",
   "version": "1.1.0",
   "description": "22 agent skills for Capacitor mobile development",
   "keywords": [
@@ -14,10 +14,10 @@
     "capsec",
     "security"
   ],
-  "homepage": "https://github.com/Cap-go/capacitor-skills",
+  "homepage": "https://github.com/Cap-go/capgo-skills",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Cap-go/capacitor-skills.git"
+    "url": "https://github.com/Cap-go/capgo-skills.git"
   },
   "license": "MIT",
   "author": "Capgo <support@capgo.app>",

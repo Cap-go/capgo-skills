@@ -1,5 +1,12 @@
 # Capacitor Agent Skills
 
+ <a href="https://capgo.app/"><img src='https://raw.githubusercontent.com/Cap-go/capgo/main/assets/capgo_banner.png' alt='Capgo - Instant updates for capacitor'/></a>
+
+<div align="center">
+  <h2><a href="https://capgo.app/?ref=repo_capgo_skills"> ➡️ Get Instant updates for your App with Capgo</a></h2>
+  <h2><a href="https://capgo.app/consulting/?ref=repo_capgo_skills"> Missing a feature? We’ll build the plugin for you</a></h2>
+</div>
+
 A collection of **22 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
 
 ## Compatibility
@@ -16,7 +23,7 @@ A collection of **22 skills** for AI coding agents working with Capacitor, the c
 ## Installation
 
 ```bash
-npx skills add Cap-go/capacitor-skills
+npx skills add Cap-go/capgo-skills
 ```
 
 ## Available Skills
