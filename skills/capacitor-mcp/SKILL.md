@@ -1,399 +1,428 @@
 ---
 name: capacitor-mcp
-description: Model Context Protocol (MCP) tools for Capacitor mobile development. Covers device management, app deployment, log streaming, and automated testing via MCP. Use this skill when users want to automate mobile development tasks or integrate AI agents with mobile tooling.
+description: Model Context Protocol (MCP) tools for Capacitor mobile development. Covers Ionic/Capacitor component APIs, plugin documentation, CLI commands, and AI-assisted development via MCP. Use this skill when users want to integrate AI agents with Ionic/Capacitor tooling.
 ---
 
 # Capacitor MCP Tools
 
-Guide to using Model Context Protocol (MCP) for Capacitor mobile development automation.
+Guide to using Model Context Protocol (MCP) for Ionic and Capacitor mobile development automation.
 
 ## When to Use This Skill
 
-- User wants to automate mobile development
+- User wants to automate Ionic/Capacitor development
 - User asks about MCP integration
-- User wants AI-assisted mobile testing
-- User needs programmatic device control
-- User wants to stream logs via MCP
+- User wants AI-assisted component/plugin discovery
+- User needs programmatic CLI command execution
+- User wants access to Ionic components and Capacitor plugins within AI chat
 
 ## What is MCP?
 
 MCP (Model Context Protocol) is an open standard for connecting AI models to external tools and data sources. For Capacitor development, MCP enables:
 
-- Automated app deployment
-- Real-time log streaming
-- Device management
-- Screenshot capture
-- Automated testing
+- Access to Ionic component definitions and APIs
+- Capacitor plugin documentation lookup
+- Automated CLI command execution (build, sync, run, etc.)
+- Project configuration management
+- Real-time component demos and examples
 
 ## Setting Up MCP for Capacitor
 
-### 1. Install MCP Server
+### 1. Install Awesome Ionic MCP Server
 
-```bash
-# Install the Capacitor MCP server
-bun add -g @anthropic/mcp-server-capacitor
-```
+The **awesome-ionic-mcp** server is a comprehensive tool that provides access to:
+- Ionic Framework component APIs
+- Official Capacitor plugins
+- Capawesome plugins (free and insider)
+- Capacitor Community plugins
+- CapGo plugins
+- 28 Ionic/Capacitor CLI commands
 
-### 2. Configure MCP
+#### Claude Desktop
 
-Create `~/.config/mcp/capacitor.json`:
+Add to `claude_desktop_config.json` (accessible via Claude > Settings > Developer):
 
 ```json
 {
   "mcpServers": {
-    "capacitor": {
-      "command": "mcp-server-capacitor",
-      "args": ["--project", "/path/to/your/capacitor/app"]
+    "awesome-ionic-mcp": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"]
     }
   }
 }
 ```
 
-### 3. Available MCP Tools
+#### Cline
 
-## iOS MCP Tools
-
-### Device Management
-
-```typescript
-// List available iOS devices
-mcp.ios.listDevices()
-// Returns: [{ name: "iPhone 15", udid: "xxx", state: "Booted" }]
-
-// Boot a simulator
-mcp.ios.bootSimulator({ name: "iPhone 15 Pro" })
-
-// Shutdown simulator
-mcp.ios.shutdownSimulator({ udid: "xxx" })
-```
-
-### App Deployment
-
-```typescript
-// Build iOS app
-mcp.ios.build({
-  scheme: "App",
-  configuration: "Debug",
-  destination: "platform=iOS Simulator,name=iPhone 15"
-})
-
-// Install app on device
-mcp.ios.install({
-  device: "booted",
-  appPath: "./ios/App/build/Debug-iphonesimulator/App.app"
-})
-
-// Launch app
-mcp.ios.launch({
-  device: "booted",
-  bundleId: "com.yourapp.id"
-})
-```
-
-### Log Streaming
-
-```typescript
-// Stream logs from iOS device
-const logStream = mcp.ios.streamLogs({
-  device: "booted",
-  predicate: 'process == "App"',
-  level: "debug"
-})
-
-logStream.on('log', (entry) => {
-  console.log(entry.timestamp, entry.level, entry.message)
-})
-
-// Stop streaming
-logStream.stop()
-```
-
-### Screenshots
-
-```typescript
-// Capture screenshot
-mcp.ios.screenshot({
-  device: "booted",
-  outputPath: "./screenshot.png"
-})
-
-// Record video
-mcp.ios.recordVideo({
-  device: "booted",
-  outputPath: "./recording.mp4",
-  duration: 30 // seconds
-})
-```
-
-## Android MCP Tools
-
-### Device Management
-
-```typescript
-// List connected Android devices
-mcp.android.listDevices()
-// Returns: [{ name: "Pixel 8", serial: "xxx", state: "device" }]
-
-// Start emulator
-mcp.android.startEmulator({ avd: "Pixel_8_API_34" })
-
-// Kill emulator
-mcp.android.killEmulator({ serial: "emulator-5554" })
-```
-
-### App Deployment
-
-```typescript
-// Build Android app
-mcp.android.build({
-  variant: "debug",
-  projectPath: "./android"
-})
-
-// Install APK
-mcp.android.install({
-  serial: "emulator-5554",
-  apkPath: "./android/app/build/outputs/apk/debug/app-debug.apk"
-})
-
-// Launch app
-mcp.android.launch({
-  serial: "emulator-5554",
-  package: "com.yourapp.id",
-  activity: ".MainActivity"
-})
-```
-
-### Log Streaming
-
-```typescript
-// Stream logcat
-const logStream = mcp.android.logcat({
-  serial: "emulator-5554",
-  package: "com.yourapp.id",
-  level: "D"
-})
-
-logStream.on('log', (entry) => {
-  console.log(entry.tag, entry.level, entry.message)
-})
-
-// Stop streaming
-logStream.stop()
-
-// Get recent logs
-const recentLogs = mcp.android.getLogcat({
-  serial: "emulator-5554",
-  lines: 100,
-  filter: "Capacitor:*"
-})
-```
-
-### Screenshots
-
-```typescript
-// Capture screenshot
-mcp.android.screenshot({
-  serial: "emulator-5554",
-  outputPath: "./screenshot.png"
-})
-
-// Record screen
-mcp.android.recordScreen({
-  serial: "emulator-5554",
-  outputPath: "./recording.mp4",
-  duration: 30
-})
-```
-
-## Capacitor CLI MCP Tools
-
-### Project Management
-
-```typescript
-// Sync web assets to native
-mcp.capacitor.sync({ platform: "ios" })
-mcp.capacitor.sync({ platform: "android" })
-
-// Run capacitor commands
-mcp.capacitor.run({
-  platform: "ios",
-  target: "iPhone 15 Pro"
-})
-
-// Open native IDE
-mcp.capacitor.open({ platform: "ios" })
-```
-
-### Plugin Management
-
-```typescript
-// List installed plugins
-mcp.capacitor.listPlugins()
-
-// Add plugin
-mcp.capacitor.addPlugin({ name: "@capgo/capacitor-native-biometric" })
-
-// Update plugins
-mcp.capacitor.updatePlugins()
-```
-
-## Automated Testing with MCP
-
-### UI Testing
-
-```typescript
-// Define test scenario
-async function testLogin() {
-  // Launch app
-  await mcp.ios.launch({ bundleId: "com.yourapp.id" })
-
-  // Wait for app ready
-  await mcp.ios.waitForElement({
-    device: "booted",
-    accessibility: "login-button"
-  })
-
-  // Capture initial state
-  await mcp.ios.screenshot({ outputPath: "./test-login-1.png" })
-
-  // Tap element
-  await mcp.ios.tap({
-    device: "booted",
-    accessibility: "login-button"
-  })
-
-  // Type text
-  await mcp.ios.typeText({
-    device: "booted",
-    accessibility: "email-input",
-    text: "test@example.com"
-  })
-
-  // Assert element exists
-  const element = await mcp.ios.findElement({
-    device: "booted",
-    accessibility: "welcome-message"
-  })
-
-  if (element) {
-    console.log("Login test passed!")
-  }
-}
-```
-
-### Performance Testing
-
-```typescript
-// Monitor performance during test
-async function performanceTest() {
-  // Start performance monitoring
-  const perfMonitor = mcp.ios.startPerformanceMonitoring({
-    device: "booted",
-    metrics: ["cpu", "memory", "fps"]
-  })
-
-  // Run test scenario
-  await runTestScenario()
-
-  // Stop and get results
-  const results = perfMonitor.stop()
-
-  console.log("Average CPU:", results.cpu.average)
-  console.log("Peak Memory:", results.memory.peak)
-  console.log("Average FPS:", results.fps.average)
-}
-```
-
-## MCP Server Implementation
-
-### Creating Custom MCP Tools
-
-```typescript
-// mcp-server.ts
-import { Server } from "@modelcontextprotocol/sdk/server/index.js"
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
-
-const server = new Server({
-  name: "capacitor-mcp",
-  version: "1.0.0"
-}, {
-  capabilities: {
-    tools: {}
-  }
-})
-
-// Register iOS log streaming tool
-server.setRequestHandler("tools/call", async (request) => {
-  if (request.params.name === "ios_stream_logs") {
-    const { device, predicate } = request.params.arguments
-
-    const process = spawn("xcrun", [
-      "simctl", "spawn", device, "log", "stream",
-      "--predicate", predicate
-    ])
-
-    // Stream logs back to client
-    process.stdout.on("data", (data) => {
-      server.sendNotification("log", { data: data.toString() })
-    })
-
-    return { content: [{ type: "text", text: "Log streaming started" }] }
-  }
-})
-
-// Start server
-const transport = new StdioServerTransport()
-await server.connect(transport)
-```
-
-## Integration Examples
-
-### Claude Desktop Integration
-
-Add to `~/.config/claude/claude_desktop_config.json`:
+Add to `cline_mcp_settings.json`:
 
 ```json
 {
   "mcpServers": {
-    "capacitor": {
-      "command": "node",
-      "args": ["/path/to/capacitor-mcp-server/index.js"],
+    "awesome-ionic-mcp": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"],
+      "disabled": false
+    }
+  }
+}
+```
+
+#### Cursor
+
+Add to `.cursor/mcp.json` (project-specific) or `~/.cursor/mcp.json` (global):
+
+```json
+{
+  "mcpServers": {
+    "awesome-ionic-mcp": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"]
+    }
+  }
+}
+```
+
+### 2. Optional: GitHub Token for Rate Limiting
+
+The server makes ~160+ GitHub API calls during initialization to fetch plugin data. Without authentication, GitHub limits you to 60 requests/hour. With a token, this increases to 5,000 requests/hour.
+
+Add `GITHUB_TOKEN` to your MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "awesome-ionic-mcp": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"],
       "env": {
-        "CAPACITOR_PROJECT": "/path/to/your/app"
+        "GITHUB_TOKEN": "ghp_your_token_here"
       }
     }
   }
 }
 ```
 
-### VS Code Integration
+Get a token from GitHub Settings → Developer settings → Personal access tokens. No special permissions needed for public repos.
 
-Install MCP extension and configure:
+## Available MCP Tools
 
-```json
-// .vscode/settings.json
-{
-  "mcp.servers": {
-    "capacitor": {
-      "command": "mcp-server-capacitor",
-      "args": ["--project", "${workspaceFolder}"]
-    }
-  }
-}
+### Ionic Component Tools
+
+```typescript
+// Get Ionic component definition
+get_ionic_component_definition({ tag: "ion-button" })
+// Returns TypeScript definition from @ionic/core
+
+// List all Ionic components
+get_all_ionic_components()
+// Returns: ["ion-button", "ion-card", "ion-input", ...]
+
+// Get component API documentation
+get_component_api({ tag: "ion-button" })
+// Returns API docs from ionicframework.com
+
+// Get component demo code
+get_component_demo({ tag: "ion-modal" })
+// Returns demo code from docs-demo.ionic.io
 ```
 
-## Available MCP Servers for Mobile
+### Capacitor Plugin Tools
 
-| Server | Description |
-|--------|-------------|
-| `mcp-server-capacitor` | Capacitor project management |
-| `mcp-server-ios` | iOS device/simulator control |
-| `mcp-server-android` | Android device/emulator control |
-| `mcp-server-appium` | Mobile UI testing |
+```typescript
+// Get official Capacitor plugin API
+get_official_plugin_api({ plugin: "Camera" })
+// Returns documentation from capacitorjs.com
+
+// List all official plugins
+get_all_official_plugins()
+// Returns: ["Camera", "Filesystem", "Geolocation", ...]
+
+// Search all available Capacitor plugins
+get_all_capacitor_plugins()
+// Returns superlist from all plugin publishers
+
+// Get Capawesome plugin documentation
+get_plugin_api({ plugin: "capacitor-firebase" })
+
+// List Capawesome plugins
+get_all_free_plugins() // Free plugins
+get_all_insider_plugins() // Insider/paid plugins
+
+// Get CapGo plugin documentation
+get_capgo_plugin_api({ plugin: "native-biometric" })
+get_all_capgo_plugins()
+
+// Get Capacitor Community plugin docs
+get_capacitor_community_plugin_api({ plugin: "http" })
+get_all_capacitor_community_plugins()
+```
+
+### Ionic CLI Commands
+
+All commands accept a `project_directory` parameter (defaults to current directory).
+
+#### Project Information
+
+```typescript
+// Get comprehensive project info
+ionic_info({ format: "json" })
+
+// Get configuration value
+ionic_config_get({ key: "name" })
+
+// Set configuration value
+ionic_config_set({ key: "name", value: "MyApp" })
+
+// Unset configuration value
+ionic_config_unset({ key: "telemetry" })
+```
+
+#### Project Setup
+
+```typescript
+// Create new Ionic project
+ionic_start({
+  name: "MyApp",
+  template: "tabs", // blank, list, sidemenu, tabs
+  type: "react", // angular, react, vue
+  capacitor: true
+})
+
+// List available templates
+ionic_start_list()
+
+// Initialize existing project
+ionic_init({ name: "MyApp", type: "react" })
+
+// Repair project dependencies
+ionic_repair()
+```
+
+#### Build & Serve
+
+```typescript
+// Build web assets
+ionic_build({
+  project_directory: "./my-app",
+  prod: true,
+  engine: "browser" // or "cordova"
+})
+
+// Start development server (manual launch recommended)
+// Note: Server runs in foreground, manual launch preferred
+ionic_serve({
+  project_directory: "./my-app",
+  port: 8100,
+  lab: false
+})
+```
+
+#### Code Generation
+
+```typescript
+// Generate page
+ionic_generate({
+  type: "page",
+  name: "home",
+  project_directory: "./my-app"
+})
+
+// Generate component
+ionic_generate({
+  type: "component",
+  name: "user-card"
+})
+
+// Generate service
+ionic_generate({
+  type: "service",
+  name: "auth"
+})
+
+// Other types: directive, guard, pipe, class, interface, module
+```
+
+#### Integrations
+
+```typescript
+// List available integrations
+integrations_list()
+
+// Enable integration (e.g., Capacitor)
+integrations_enable({ integration: "capacitor" })
+
+// Disable integration
+integrations_disable({ integration: "cordova" })
+```
+
+### Capacitor CLI Commands
+
+#### Project Management
+
+```typescript
+// Check Capacitor setup
+capacitor_doctor({ platform: "ios" })
+
+// List installed plugins
+capacitor_list_plugins()
+
+// Initialize Capacitor
+capacitor_init({
+  name: "MyApp",
+  id: "com.example.app",
+  web_dir: "dist"
+})
+
+// Add platform
+capacitor_add({ platform: "ios" })
+capacitor_add({ platform: "android" })
+
+// Migrate to latest version
+capacitor_migrate()
+```
+
+#### Build & Sync
+
+```typescript
+// Sync web assets and dependencies
+capacitor_sync({ platform: "ios" })
+
+// Copy web assets only
+capacitor_copy({ platform: "android" })
+
+// Update native dependencies
+capacitor_update({ platform: "ios" })
+
+// Build native release
+capacitor_build({
+  platform: "ios",
+  scheme: "App",
+  configuration: "Release"
+})
+```
+
+#### Run & Deploy
+
+```typescript
+// Run on device/emulator
+capacitor_run({
+  platform: "ios",
+  target: "iPhone 15 Pro"
+})
+
+// Open native IDE
+capacitor_open({ platform: "ios" }) // Opens Xcode
+capacitor_open({ platform: "android" }) // Opens Android Studio
+```
+
+## Common Workflows
+
+### Create New Project
+
+```typescript
+// 1. Create Ionic project
+ionic_start({
+  name: "MyApp",
+  template: "tabs",
+  type: "react",
+  capacitor: true
+})
+
+// 2. Add iOS platform
+capacitor_add({
+  project_directory: "./MyApp",
+  platform: "ios"
+})
+
+// 3. Build and sync
+ionic_build({
+  project_directory: "./MyApp",
+  prod: true
+})
+capacitor_sync({
+  project_directory: "./MyApp",
+  platform: "ios"
+})
+```
+
+### Check Project Health
+
+```typescript
+// Get system info
+ionic_info({ format: "json" })
+
+// Check Capacitor setup
+capacitor_doctor({ platform: "ios" })
+
+// List installed plugins
+capacitor_list_plugins()
+```
+
+### Generate Code
+
+```typescript
+// Generate page with routing
+ionic_generate({ type: "page", name: "profile" })
+
+// Generate reusable component
+ionic_generate({ type: "component", name: "user-avatar" })
+
+// Generate service
+ionic_generate({ type: "service", name: "data" })
+```
+
+## AI-Assisted Development Benefits
+
+With awesome-ionic-mcp, AI assistants can:
+
+1. **Discover Components**: Ask "What Ionic components can I use for forms?" and get accurate API docs
+2. **Find Plugins**: Ask "Is there a Capacitor plugin for biometric authentication?" and get relevant results
+3. **Execute Commands**: Request "Build the iOS app" and the CLI command runs automatically
+4. **Generate Code**: Get component examples with proper TypeScript definitions
+5. **Troubleshoot**: Look up plugin APIs and configuration without leaving the chat
+
+## Example Queries
+
+With the MCP server installed, you can ask your AI assistant:
+
+- "Show me the API for ion-modal component"
+- "List all available Capacitor Camera plugin methods"
+- "Generate a new page called settings"
+- "What Capawesome plugins are available for Firebase?"
+- "Build my app for iOS"
+- "Sync my Capacitor project"
+- "What are all the free CapGo plugins?"
+
+## Technical Details
+
+### Data Sources
+
+The awesome-ionic-mcp server aggregates data from:
+- `@ionic/core` package (TypeScript definitions)
+- ionicframework.com (component API docs)
+- docs-demo.ionic.io (component demos)
+- capacitorjs.com (official plugins)
+- capawesome.io (Capawesome plugins)
+- capacitor-community (community plugins)
+- capgo.app (CapGo plugins)
+
+### Requirements
+
+- Node.js (for npx command)
+- Optional: GitHub token for avoiding API rate limits
+- Ionic/Capacitor project (for CLI commands)
+
+### Browser Automation
+
+The server uses Puppeteer to fetch some documentation. You may see a browser window spawn and close during initialization - this is normal.
 
 ## Resources
 
+- awesome-ionic-mcp: https://github.com/Tommertom/awesome-ionic-mcp
 - MCP Specification: https://modelcontextprotocol.io
 - MCP SDK: https://github.com/modelcontextprotocol/sdk
-- Anthropic MCP Servers: https://github.com/anthropics/mcp-servers
+- Ionic Framework: https://ionicframework.com
+- Capacitor: https://capacitorjs.com
+- Capawesome Plugins: https://capawesome.io
+- CapGo Plugins: https://capgo.app
