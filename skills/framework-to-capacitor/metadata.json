@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "February 2026",
+  "abstract": "Complete guide for integrating web frameworks with Capacitor. Covers Next.js static export, React, Vue, Angular, Svelte, and other frameworks. Includes build configuration, static generation, and platform-specific optimizations.",
+  "triggers": [
+    "nextjs capacitor",
+    "next.js static export",
+    "react capacitor",
+    "vue capacitor",
+    "angular capacitor",
+    "svelte capacitor",
+    "framework to capacitor",
+    "convert nextjs to capacitor"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs",
+    "https://nextjs.org/docs/app/building-your-application/deploying/static-exports",
+    "https://capgo.app/blog/how-to-use-capacitor-with-nextjs",
+    "https://ionicframework.com/docs"
+  ]
+}

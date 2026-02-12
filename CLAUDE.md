@@ -81,3 +81,20 @@ Use when users want to migrate iOS dependencies. Covers:
 - Migration process
 - Hybrid approach
 - Plugin SPM support
+
+### cordova-to-capacitor
+Use when users need to migrate from Cordova/PhoneGap. Covers:
+- Step-by-step migration process
+- Plugin mapping (Cordova → Capacitor)
+- Code conversion patterns
+- Configuration updates
+- Permission handling
+
+### framework-to-capacitor
+Use when users want to integrate web frameworks with Capacitor. Covers:
+- Next.js static export configuration
+- React, Vue, Angular, Svelte integration
+- Routing setup for mobile
+- Build configuration
+- Environment detection
+- Common issues and solutions

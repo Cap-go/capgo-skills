@@ -1,7 +1,7 @@
 {
   "name": "@capgo/capgo-skills",
   "version": "1.1.0",
-  "description": "22 agent skills for Capacitor mobile development",
+  "description": "24 agent skills for Capacitor mobile development",
   "keywords": [
     "capacitor",
     "capacitor-skills",
@@ -44,6 +44,8 @@
     "capacitor-performance",
     "capacitor-accessibility",
     "capacitor-app-store",
-    "cocoapods-to-spm"
+    "cocoapods-to-spm",
+    "cordova-to-capacitor",
+    "framework-to-capacitor"
   ]
 }

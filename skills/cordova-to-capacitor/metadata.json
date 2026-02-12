@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "February 2026",
+  "abstract": "Complete guide for migrating from Apache Cordova to Capacitor. Covers plugin migration, configuration updates, platform differences, and step-by-step migration process to modernize your hybrid mobile app.",
+  "triggers": [
+    "cordova to capacitor",
+    "migrate from cordova",
+    "convert cordova",
+    "cordova migration",
+    "phonegap to capacitor",
+    "replace cordova"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/cordova/migrating-from-cordova-to-capacitor",
+    "https://capacitorjs.com/docs",
+    "https://cordova.apache.org/docs"
+  ]
+}

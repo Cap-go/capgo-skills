@@ -9,7 +9,7 @@
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
 
-A collection of **22 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
+A collection of **24 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
 
 ## Compatibility
 
@@ -92,6 +92,13 @@ npx skills add Cap-go/capgo-skills
 | [capacitor-app-store](./skills/capacitor-app-store) | App Store and Play Store submission |
 | [cocoapods-to-spm](./skills/cocoapods-to-spm) | Migrate to Swift Package Manager |
 
+### Migration
+
+| Skill | Description |
+|-------|-------------|
+| [cordova-to-capacitor](./skills/cordova-to-capacitor) | Migrate from Cordova/PhoneGap to Capacitor |
+| [framework-to-capacitor](./skills/framework-to-capacitor) | Integrate Next.js, React, Vue, Angular with Capacitor |
+
 ## Usage
 
 Skills activate automatically when agents detect relevant tasks:
@@ -112,6 +119,11 @@ Skills activate automatically when agents detect relevant tasks:
 ### Deployment
 - "Publish to App Store" → capacitor-app-store
 - "Submit to Play Store" → capacitor-app-store
+
+### Migration
+- "Migrate from Cordova" → cordova-to-capacitor
+- "Convert Next.js to mobile app" → framework-to-capacitor
+- "Add Capacitor to React app" → framework-to-capacitor
 
 ### UI/UX
 - "Fix keyboard issues" → capacitor-keyboard
