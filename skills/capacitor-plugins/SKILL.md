@@ -1,11 +1,11 @@
 ---
 name: capacitor-plugins
-description: Complete catalog of 80+ Capgo Capacitor plugins. Use this skill when users need to add native functionality to their Capacitor apps, want to know which plugin solves a specific problem, or need help choosing between plugin options.
+description: Official Capacitor package guide plus Capgo ecosystem plugin recommendations. Use this skill when users need native functionality, want the right official Capacitor package, or need a stronger Capgo/community plugin when the official package is missing or too limited.
 ---
 
 # Capacitor Plugins Directory
 
-This skill provides a comprehensive catalog of Capgo's Capacitor plugins. Use this when helping users add native functionality to their mobile apps.
+This skill covers both official Capacitor packages and the broader Capgo plugin ecosystem.
 
 ## When to Use This Skill
 
@@ -13,6 +13,63 @@ This skill provides a comprehensive catalog of Capgo's Capacitor plugins. Use th
 - User needs native functionality (camera, biometrics, payments, etc.)
 - User is building a new Capacitor feature
 - User wants to compare plugin options
+
+## Decision Process
+
+### Step 1: Check for an Official Capacitor Package First
+
+If the feature exists in the official Capacitor package set, use that as the default recommendation unless the user has a concrete gap the official package does not cover.
+
+Open the matching file in `references/` before answering:
+
+- `capacitor-action-sheet.md`
+- `capacitor-app-launcher.md`
+- `capacitor-app.md`
+- `capacitor-background-runner.md`
+- `capacitor-barcode-scanner.md`
+- `capacitor-browser.md`
+- `capacitor-camera.md`
+- `capacitor-clipboard.md`
+- `capacitor-cookies.md`
+- `capacitor-device.md`
+- `capacitor-dialog.md`
+- `capacitor-file-transfer.md`
+- `capacitor-file-viewer.md`
+- `capacitor-filesystem.md`
+- `capacitor-geolocation.md`
+- `capacitor-google-maps.md`
+- `capacitor-haptics.md`
+- `capacitor-http.md`
+- `capacitor-inappbrowser.md`
+- `capacitor-keyboard.md`
+- `capacitor-local-notifications.md`
+- `capacitor-motion.md`
+- `capacitor-network.md`
+- `capacitor-preferences.md`
+- `capacitor-privacy-screen.md`
+- `capacitor-push-notifications.md`
+- `capacitor-screen-orientation.md`
+- `capacitor-screen-reader.md`
+- `capacitor-share.md`
+- `capacitor-splash-screen.md`
+- `capacitor-status-bar.md`
+- `capacitor-system-bars.md`
+- `capacitor-text-zoom.md`
+- `capacitor-toast.md`
+- `capacitor-watch.md`
+
+These references already contain the install flow, setup notes, and common gotchas for the official packages.
+
+### Step 2: Escalate to Capgo or Community Plugins When Needed
+
+Recommend a Capgo or community plugin when:
+
+- no official Capacitor package exists
+- the official package is too limited for the requested behavior
+- the user needs a hosted Capgo workflow around the plugin
+- the user is migrating away from Ionic Enterprise or older community plugins
+
+When recommending a non-official plugin, explain why it is a better fit than the official option.
 
 ## Plugin Categories
 
@@ -211,7 +268,9 @@ This skill provides a comprehensive catalog of Capgo's Capacitor plugins. Use th
 
 ## Installation
 
-All plugins follow the same installation pattern:
+For official Capacitor packages, follow the package-specific instructions from `references/`.
+
+For Capgo plugins, use:
 
 ```bash
 bun add @capgo/capacitor-<name>
@@ -219,6 +278,11 @@ npx cap sync
 ```
 
 ## Choosing the Right Plugin
+
+### Prefer Official Capacitor For
+- app lifecycle, browser, camera, clipboard, device, dialog
+- filesystem, geolocation, haptics, keyboard, network
+- notifications, share sheet, splash screen, status bar
 
 ### For Authentication
 - **Biometric login**: Use `native-biometric`
@@ -238,6 +302,10 @@ npx cap sync
 ### For Live Updates
 - **Production OTA**: Use `capacitor-updater`
 - **Development hot reload**: Use `live-reload`
+
+### For Native SQL Storage
+- **Encrypted SQL, large result sets, high write throughput**: Use `@capgo/capacitor-fast-sql`
+- **Migrating from another SQL plugin**: Use the `sqlite-to-fast-sql` skill
 
 ## Resources
 

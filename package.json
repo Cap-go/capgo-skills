@@ -1,7 +1,7 @@
 {
   "name": "@capgo/capgo-skills",
   "version": "1.1.0",
-  "description": "40 agent skills for Capacitor mobile development",
+  "description": "45 agent skills for Capacitor mobile development",
   "keywords": [
     "capacitor",
     "capacitor-skills",
@@ -23,6 +23,11 @@
   "license": "MIT",
   "author": "Capgo <support@capgo.app>",
   "skills": [
+    "capgo-cli-usage",
+    "capgo-cloud",
+    "capgo-native-builds",
+    "capgo-organization-management",
+    "capgo-release-management",
     "capacitor-plugins",
     "capacitor-best-practices",
     "capgo-release-workflows",

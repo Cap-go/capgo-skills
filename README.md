@@ -9,7 +9,7 @@
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
 
-A collection of **40 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
+A collection of **45 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
 
 ## Compatibility
 
@@ -34,7 +34,9 @@ bunx skills add Cap-go/capgo-skills
 
 | Skill | Description |
 |-------|-------------|
-| [capacitor-plugins](./skills/capacitor-plugins) | Complete catalog of 80+ Capgo Capacitor plugins |
+| [capgo-cli-usage](./skills/capgo-cli-usage) | Route general Capgo CLI requests to the right workflow |
+| [capgo-cloud](./skills/capgo-cloud) | Coordinate Capgo builds, releases, publishing, and organization workflows |
+| [capacitor-plugins](./skills/capacitor-plugins) | Official Capacitor packages plus Capgo plugin recommendations |
 | [capacitor-best-practices](./skills/capacitor-best-practices) | Development best practices and patterns |
 | [capgo-release-workflows](./skills/capgo-release-workflows) | Coordinate live updates, builds, and publishing |
 | [capgo-live-updates](./skills/capgo-live-updates) | Deploy OTA updates instantly with Capgo |
@@ -90,10 +92,18 @@ bunx skills add Cap-go/capgo-skills
 
 | Skill | Description |
 |-------|-------------|
+| [capgo-native-builds](./skills/capgo-native-builds) | Request hosted iOS and Android builds with Capgo Build |
+| [capgo-release-management](./skills/capgo-release-management) | Manage bundles, channels, compatibility checks, and encryption |
 | [capgo-release-workflows](./skills/capgo-release-workflows) | Coordinate Capgo live updates with builds and store publishing |
 | [capacitor-app-store](./skills/capacitor-app-store) | App Store and Play Store submission |
 | [capacitor-plugin-spm-support](./skills/capacitor-plugin-spm-support) | Add Swift Package Manager support to a plugin |
 | [cocoapods-to-spm](./skills/cocoapods-to-spm) | Migrate to Swift Package Manager |
+
+### Operations
+
+| Skill | Description |
+|-------|-------------|
+| [capgo-organization-management](./skills/capgo-organization-management) | Manage Capgo organizations, members, and security policies |
 
 ### Authoring
 
@@ -138,12 +148,21 @@ Skills activate automatically when agents detect relevant tasks:
 - "Add unit tests" → capacitor-testing
 - "Set up GitHub Actions" → capacitor-ci-cd
 
+### Capgo Cloud
+- "How do I use the Capgo CLI?" → capgo-cli-usage
+- "Set up Capgo cloud workflows" → capgo-cloud
+- "Request a native build" → capgo-native-builds
+- "Upload a bundle to a channel" → capgo-release-management
+- "Manage Capgo organization members" → capgo-organization-management
+
 ### Features
 - "Add push notifications" → capacitor-push-notifications
 - "Implement deep linking" → capacitor-deep-linking
 - "Make app work offline" → capacitor-offline-first
 
 ### Deployment
+- "Run a Capgo build" → capgo-native-builds
+- "Manage Capgo channels" → capgo-release-management
 - "Set up the full release workflow" → capgo-release-workflows
 - "Publish to App Store" → capacitor-app-store
 - "Submit to Play Store" → capacitor-app-store
@@ -188,15 +207,15 @@ Go to **https://capgo.app** and sign up.
 
 ```bash
 bun add -g @capgo/cli
-capgo login
+bunx @capgo/cli@latest login
 ```
 
 ### 3. Initialize & Deploy
 
 ```bash
-capgo init
+bunx @capgo/cli@latest init
 bun run build
-capgo upload
+bunx @capgo/cli@latest bundle upload
 ```
 
 ## Security Scanning with Capsec

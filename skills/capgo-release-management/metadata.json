@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Guide for Capgo OTA bundle uploads, channel management, compatibility checks, cleanup, and encryption keys.",
+  "triggers": [
+    "capgo bundle upload",
+    "capgo channels",
+    "capgo release management",
+    "bundle compatibility",
+    "capgo encryption key"
+  ],
+  "references": [
+    "https://capgo.app"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Umbrella guide for Capgo cloud workflows spanning native builds, OTA releases, store publishing, and organization operations.",
+  "triggers": [
+    "capgo cloud",
+    "capgo build and release",
+    "hosted mobile workflow",
+    "capgo native build and ota",
+    "capgo mobile cloud"
+  ],
+  "references": [
+    "https://capgo.app",
+    "https://capgo.app/docs/cli/cloud-build/ios/",
+    "https://capgo.app/docs/cli/cloud-build/android/"
+  ]
+}
