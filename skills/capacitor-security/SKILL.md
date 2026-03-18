@@ -22,39 +22,39 @@ Zero-config security scanning for Capacitor and Ionic apps.
 
 ```bash
 # Scan current directory (no installation needed)
-bunx capsec scan
+npx capsec scan
 
 # Scan specific path
-bunx capsec scan ./my-app
+npx capsec scan ./my-app
 
 # CI mode (exit code 1 on high/critical issues)
-bunx capsec scan --ci
+npx capsec scan --ci
 ```
 
 ### Output Formats
 
 ```bash
 # CLI output (default)
-bunx capsec scan
+npx capsec scan
 
 # JSON report
-bunx capsec scan --output json --output-file report.json
+npx capsec scan --output json --output-file report.json
 
 # HTML report
-bunx capsec scan --output html --output-file security-report.html
+npx capsec scan --output html --output-file security-report.html
 ```
 
 ### Filtering
 
 ```bash
 # Only critical and high severity
-bunx capsec scan --severity high
+npx capsec scan --severity high
 
 # Specific categories
-bunx capsec scan --categories secrets,network,storage
+npx capsec scan --categories secrets,network,storage
 
 # Exclude test files
-bunx capsec scan --exclude "**/test/**,**/*.spec.ts"
+npx capsec scan --exclude "**/test/**,**/*.spec.ts"
 ```
 
 ## Security Rules Reference
@@ -375,7 +375,7 @@ jobs:
       - uses: oven-sh/setup-bun@v1
 
       - name: Run Capsec Security Scan
-        run: bunx capsec scan --ci --output json --output-file security-report.json
+        run: npx capsec scan --ci --output json --output-file security-report.json
 
       - name: Upload Security Report
         uses: actions/upload-artifact@v4
@@ -391,7 +391,7 @@ jobs:
 security-scan:
   image: oven/bun:latest
   script:
-    - bunx capsec scan --ci
+    - npx capsec scan --ci
   artifacts:
     reports:
       security: security-report.json
@@ -428,7 +428,7 @@ security-scan:
 ### Initialize Config
 
 ```bash
-bunx capsec init
+npx capsec init
 ```
 
 ## Root/Jailbreak Detection
@@ -456,7 +456,7 @@ async function checkDeviceSecurity() {
 
 ### Before Release
 
-- [ ] Run `bunx capsec scan --severity high`
+- [ ] Run `npx capsec scan --severity high`
 - [ ] Remove all console.log statements
 - [ ] Disable WebView debugging
 - [ ] Remove development URLs

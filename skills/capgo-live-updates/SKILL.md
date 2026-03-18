@@ -77,7 +77,7 @@ If not installed automatically:
 
 ```bash
 bun add @capgo/capacitor-updater
-bunx cap sync
+npx cap sync
 ```
 
 ## Configuration
@@ -305,7 +305,7 @@ jobs:
         run: bun run build
 
       - name: Deploy to Capgo
-        run: bunx @capgo/cli upload
+        run: npx @capgo/cli upload
         env:
           CAPGO_TOKEN: ${{ secrets.CAPGO_TOKEN }}
 ```
@@ -320,7 +320,7 @@ deploy:
   script:
     - bun install
     - bun run build
-    - bunx @capgo/cli upload
+    - npx @capgo/cli upload
   only:
     - main
   variables:

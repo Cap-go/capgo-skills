@@ -253,7 +253,7 @@ describe('LoginButton', () => {
 
 ```bash
 bun add -D @playwright/test
-bunx playwright install
+npx playwright install
 ```
 
 ```typescript
@@ -559,9 +559,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
       - run: bun install
-      - run: bunx playwright install --with-deps
+      - run: npx playwright install --with-deps
       - run: bun run build
-      - run: bunx playwright test
+      - run: npx playwright test
 
   ios:
     runs-on: macos-latest

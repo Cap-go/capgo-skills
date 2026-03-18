@@ -42,7 +42,7 @@ Build apps that work seamlessly with or without internet connectivity.
 
 ```bash
 bun add @capacitor/network
-bunx cap sync
+npx cap sync
 ```
 
 ```typescript
@@ -116,7 +116,7 @@ class NetworkAwareService {
 
 ```bash
 bun add @capgo/capacitor-data-storage-sqlite
-bunx cap sync
+npx cap sync
 ```
 
 ### Database Setup

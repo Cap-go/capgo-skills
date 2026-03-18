@@ -29,7 +29,7 @@ Implement deep links, universal links, and app links in Capacitor apps.
 
 ```bash
 bun add @capacitor/app
-bunx cap sync
+npx cap sync
 ```
 
 ### Handle Deep Links

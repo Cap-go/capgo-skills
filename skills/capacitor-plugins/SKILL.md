@@ -216,7 +216,7 @@ All plugins follow the same installation pattern:
 
 ```bash
 bun add @capgo/capacitor-<name>
-bunx cap sync
+npx cap sync
 ```
 
 ## Choosing the Right Plugin

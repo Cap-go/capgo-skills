@@ -20,7 +20,7 @@ Configure and customize splash screens for iOS and Android.
 
 ```bash
 bun add @capacitor/splash-screen
-bunx cap sync
+npx cap sync
 ```
 
 ### Basic Configuration
@@ -82,7 +82,7 @@ bun add -D @capacitor/assets
 # resources/splash.png (2732x2732 recommended)
 # resources/splash-dark.png (optional)
 
-bunx capacitor-assets generate
+npx capacitor-assets generate
 ```
 
 ### iOS Sizes

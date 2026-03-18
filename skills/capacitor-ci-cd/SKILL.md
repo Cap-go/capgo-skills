@@ -62,7 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
-      - run: bunx capsec scan --ci
+      - run: npx capsec scan --ci
 
   # Build web assets
   build-web:
@@ -104,7 +104,7 @@ jobs:
         run: bun install
 
       - name: Sync Capacitor
-        run: bunx cap sync ios
+        run: npx cap sync ios
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -188,7 +188,7 @@ jobs:
         run: bun install
 
       - name: Sync Capacitor
-        run: bunx cap sync android
+        run: npx cap sync android
 
       - name: Decode keystore
         env:
@@ -251,7 +251,7 @@ jobs:
           path: dist/
 
       - name: Deploy to Capgo
-        run: bunx @capgo/cli upload
+        run: npx @capgo/cli upload
         env:
           CAPGO_TOKEN: ${{ secrets.CAPGO_TOKEN }}
 
@@ -476,7 +476,7 @@ security:
   stage: test
   image: oven/bun:${BUN_VERSION}
   script:
-    - bunx capsec scan --ci --output json --output-file security.json
+    - npx capsec scan --ci --output json --output-file security.json
   artifacts:
     reports:
       security: security.json
@@ -500,7 +500,7 @@ build-ios:
   needs: [build-web]
   script:
     - bun install
-    - bunx cap sync ios
+    - npx cap sync ios
     - cd ios/App && fastlane build
   artifacts:
     paths:
@@ -515,7 +515,7 @@ build-android:
   needs: [build-web]
   script:
     - bun install
-    - bunx cap sync android
+    - npx cap sync android
     - cd android && ./gradlew assembleRelease
   artifacts:
     paths:
@@ -529,7 +529,7 @@ deploy-capgo:
   image: oven/bun:${BUN_VERSION}
   needs: [build-web]
   script:
-    - bunx @capgo/cli upload --channel production
+    - npx @capgo/cli upload --channel production
   only:
     - main
   environment:
@@ -624,7 +624,7 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bunx semantic-release
+        run: npx semantic-release
 ```
 
 ## Build Caching

@@ -47,7 +47,7 @@ bun install
 bun run start
 ```
 
-The example app references the plugin via `file:..`. Use `bunx cap sync <platform>` to sync native platforms.
+The example app references the plugin via `file:..`. Use `npx cap sync <platform>` to sync native platforms.
 
 ## Project Structure
 
@@ -96,6 +96,9 @@ We welcome contributions, including AI-generated pull requests. Every PR must in
 - We review PRs on a best-effort basis. We may request changes — you are expected to address them for the PR to be merged.
 - We use automated code review tools (CodeRabbit, and others). You will need to respond to their feedback and resolve any issues they raise.
 - We have automatic releases. Once merged, your change will ship in the next release cycle.
+
+Always use NPX in skills never use bunx. NPX will ensure the correct version of the plugin is used in skills, while Bun is for development and CI/CD tasks.
+It's allowed to use bun in skills if the skill is about Bun itself, but for any Capacitor-related skill, use NPX to run plugin commands. This ensures compatibility and prevents issues with different Bun versions across environments.
 
 ### PR Template
 

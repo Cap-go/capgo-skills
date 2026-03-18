@@ -184,7 +184,7 @@ Also needed:
 ```bash
 # Use capacitor-assets
 bun add -D @capacitor/assets
-bunx capacitor-assets generate --iconBackgroundColor '#ffffff'
+npx capacitor-assets generate --iconBackgroundColor '#ffffff'
 ```
 
 ## Screenshots

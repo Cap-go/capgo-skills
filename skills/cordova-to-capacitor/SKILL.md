@@ -55,7 +55,7 @@ cat config.xml
 bun add @capacitor/core @capacitor/cli
 
 # Initialize Capacitor
-bunx cap init
+npx cap init
 ```
 
 **When prompted:**
@@ -70,11 +70,11 @@ bunx cap init
 ```bash
 # Add iOS platform
 bun add @capacitor/ios
-bunx cap add ios
+npx cap add ios
 
 # Add Android platform
 bun add @capacitor/android
-bunx cap add android
+npx cap add android
 ```
 
 This creates:
@@ -314,7 +314,7 @@ const config: CapacitorConfig = {
 
 **Sync web code with native projects:**
 ```bash
-bunx cap sync
+npx cap sync
 ```
 
 **This copies:**
@@ -324,13 +324,13 @@ bunx cap sync
 
 **Build for iOS:**
 ```bash
-bunx cap open ios
+npx cap open ios
 # Then build in Xcode (Cmd+R)
 ```
 
 **Build for Android:**
 ```bash
-bunx cap open android
+npx cap open android
 # Then build in Android Studio (Run)
 ```
 
@@ -382,7 +382,7 @@ Error: Plugin not found
 
 **Solution:**
 1. Check if plugin is installed: `bun list`
-2. Sync native projects: `bunx cap sync`
+2. Sync native projects: `npx cap sync`
 3. Clean and rebuild in Xcode/Android Studio
 
 ### Issue: deviceready Never Fires
@@ -412,7 +412,7 @@ App shows white screen or crashes.
 **Solution:**
 1. Check `webDir` in capacitor.config.ts points to correct build output
 2. Rebuild web app: `bun run build`
-3. Sync: `bunx cap sync`
+3. Sync: `npx cap sync`
 4. Check browser console in device for errors
 
 ### Issue: Permissions Not Working
@@ -442,7 +442,7 @@ Use the Capacitor Cordova compatibility layer:
 
 ```bash
 bun add cordova-plugin-example
-bunx cap sync
+npx cap sync
 ```
 
 Capacitor includes Cordova compatibility, but:
@@ -469,7 +469,7 @@ Capacitor includes Cordova compatibility, but:
 - [ ] Convert callbacks to async/await
 - [ ] Remove `deviceready` event listeners
 - [ ] Add permission strings (iOS Info.plist, Android AndroidManifest.xml)
-- [ ] Sync native projects: `bunx cap sync`
+- [ ] Sync native projects: `npx cap sync`
 - [ ] Test on physical devices
 - [ ] Remove Cordova plugins after verification
 

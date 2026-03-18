@@ -76,7 +76,7 @@ Keep Capacitor core packages in sync:
 ```bash
 bun add @capacitor/core@latest @capacitor/cli@latest
 bun add @capacitor/ios@latest @capacitor/android@latest
-bunx cap sync
+npx cap sync
 ```
 
 ### Plugin Installation Pattern
@@ -87,7 +87,7 @@ bunx cap sync
 bun add @capgo/capacitor-native-biometric
 
 # 2. Sync native projects
-bunx cap sync
+npx cap sync
 
 # 3. For iOS: Install pods (or use SPM)
 cd ios/App && pod install && cd ../..

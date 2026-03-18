@@ -155,13 +155,13 @@ capgo upload
 
 ```bash
 # Scan for vulnerabilities
-bunx capsec scan
+npx capsec scan
 
 # CI mode (fails on high/critical)
-bunx capsec scan --ci
+npx capsec scan --ci
 
 # Generate HTML report
-bunx capsec scan --output html --output-file security.html
+npx capsec scan --output html --output-file security.html
 ```
 
 Capsec detects **63+ security issues** including:

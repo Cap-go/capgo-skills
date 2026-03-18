@@ -36,7 +36,7 @@ async function takePhoto() {
 
 ```bash
 # Analyze bundle
-bunx vite-bundle-visualizer
+npx vite-bundle-visualizer
 
 # Tree-shake imports
 import { specific } from 'large-library';  // Good

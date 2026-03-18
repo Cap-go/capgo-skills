@@ -41,7 +41,7 @@ bun add @ionic/vue @ionic/vue-router
 
 # Add Capacitor
 bun add @capacitor/core @capacitor/cli
-bunx cap init
+npx cap init
 ```
 
 ### Setup (React)

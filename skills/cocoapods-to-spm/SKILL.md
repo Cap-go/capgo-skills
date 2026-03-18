@@ -253,7 +253,7 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 # Cmd + Shift + K
 
 # Rebuild
-bunx cap sync ios
+npx cap sync ios
 cd ios/App && pod install
 ```
 

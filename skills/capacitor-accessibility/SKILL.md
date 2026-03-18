@@ -168,7 +168,7 @@ ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat()
 # Settings > Accessibility > TalkBack
 
 # Web: Use axe-core
-bunx @axe-core/cli https://localhost:3000
+npx @axe-core/cli https://localhost:3000
 ```
 
 ## Resources

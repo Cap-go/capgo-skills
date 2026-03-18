@@ -21,7 +21,7 @@ Build beautiful mobile apps with Tailwind CSS and Capacitor.
 
 ```bash
 bun add -D tailwindcss postcss autoprefixer
-bunx tailwindcss init -p
+npx tailwindcss init -p
 ```
 
 ### Configuration

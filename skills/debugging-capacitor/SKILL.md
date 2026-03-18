@@ -100,7 +100,7 @@ Install "Debugger for Chrome" extension:
 
 1. **Open in Xcode**:
 ```bash
-bunx cap open ios
+npx cap open ios
 ```
 
 2. **Set breakpoints**:
@@ -140,7 +140,7 @@ bt
 
 1. **Open in Android Studio**:
 ```bash
-bunx cap open android
+npx cap open android
 ```
 
 2. **Attach debugger**:
@@ -243,7 +243,7 @@ adb logcat *:E | grep -i "fatal\|crash"
 3. Missing native dependencies
 
 **Solution checklist**:
-- [ ] Run `bunx cap sync`
+- [ ] Run `npx cap sync`
 - [ ] iOS: `cd ios/App && pod install`
 - [ ] Check Info.plist permissions
 - [ ] Check AndroidManifest.xml permissions
@@ -263,7 +263,7 @@ console.log('MyPlugin available:', !!Capacitor.Plugins.MyPlugin);
 
 **Solutions**:
 1. Ensure plugin is installed: `bun add @capgo/plugin-name`
-2. Run sync: `bunx cap sync`
+2. Run sync: `npx cap sync`
 3. Check plugin is registered (native code)
 
 ### Issue: Network Requests Failing
@@ -347,7 +347,7 @@ console.log('Camera permission:', status.state);
 bun run build
 
 # Sync to native
-bunx cap sync
+npx cap sync
 
 # Check config
 cat capacitor.config.ts

@@ -19,7 +19,7 @@ Manage keyboard behavior in iOS and Android apps.
 
 ```bash
 bun add @capacitor/keyboard
-bunx cap sync
+npx cap sync
 ```
 
 ## Basic Usage

@@ -429,7 +429,7 @@ class MainActivity : BridgeActivity() {
 
 ```bash
 bun add @capacitor/status-bar
-bunx cap sync
+npx cap sync
 ```
 
 ### Usage

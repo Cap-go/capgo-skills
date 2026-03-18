@@ -40,7 +40,7 @@ bun add konsta
 
 # Required: Tailwind CSS
 bun add -D tailwindcss postcss autoprefixer
-bunx tailwindcss init -p
+npx tailwindcss init -p
 ```
 
 ### Tailwind Configuration

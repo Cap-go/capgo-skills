@@ -77,7 +77,7 @@ This creates an `out/` directory with static files.
 
 ```bash
 bun add @capacitor/core @capacitor/cli
-bunx cap init
+npx cap init
 ```
 
 **Configuration:**
@@ -107,8 +107,8 @@ export default config;
 
 ```bash
 bun add @capacitor/ios @capacitor/android
-bunx cap add ios
-bunx cap add android
+npx cap add ios
+npx cap add android
 ```
 
 ### Step 6: Build and Sync
@@ -118,20 +118,20 @@ bunx cap add android
 bun run build
 
 # Sync with native projects
-bunx cap sync
+npx cap sync
 ```
 
 ### Step 7: Run on Device
 
 **iOS:**
 ```bash
-bunx cap open ios
+npx cap open ios
 # Build and run in Xcode
 ```
 
 **Android:**
 ```bash
-bunx cap open android
+npx cap open android
 # Build and run in Android Studio
 ```
 
@@ -268,7 +268,7 @@ bun install
 **Install Capacitor:**
 ```bash
 bun add @capacitor/core @capacitor/cli
-bunx cap init
+npx cap init
 ```
 
 **Configure vite.config.ts:**
@@ -300,24 +300,24 @@ export default config;
 **Add platforms and build:**
 ```bash
 bun add @capacitor/ios @capacitor/android
-bunx cap add ios
-bunx cap add android
+npx cap add ios
+npx cap add android
 bun run build
-bunx cap sync
+npx cap sync
 ```
 
 ### Option 2: Create React App
 
 **Create new project:**
 ```bash
-bunx create-react-app my-app --template typescript
+npx create-react-app my-app --template typescript
 cd my-app
 ```
 
 **Install Capacitor:**
 ```bash
 bun add @capacitor/core @capacitor/cli
-bunx cap init
+npx cap init
 ```
 
 **capacitor.config.ts:**
@@ -332,7 +332,7 @@ const config: CapacitorConfig = {
 **Build and sync:**
 ```bash
 bun run build
-bunx cap sync
+npx cap sync
 ```
 
 ### React Router Configuration
@@ -371,7 +371,7 @@ bun install
 **Install Capacitor:**
 ```bash
 bun add @capacitor/core @capacitor/cli
-bunx cap init
+npx cap init
 ```
 
 **vite.config.ts:**
@@ -399,10 +399,10 @@ const config: CapacitorConfig = {
 **Add platforms:**
 ```bash
 bun add @capacitor/ios @capacitor/android
-bunx cap add ios
-bunx cap add android
+npx cap add ios
+npx cap add android
 bun run build
-bunx cap sync
+npx cap sync
 ```
 
 ### Vue Router Configuration
@@ -433,14 +433,14 @@ Angular has excellent Capacitor integration.
 
 **Create Angular app:**
 ```bash
-bunx @angular/cli new my-app
+npx @angular/cli new my-app
 cd my-app
 ```
 
 **Install Capacitor:**
 ```bash
 bun add @capacitor/core @capacitor/cli
-bunx cap init
+npx cap init
 ```
 
 **capacitor.config.ts:**
@@ -460,10 +460,10 @@ webDir: 'dist/my-app',
 **Add platforms:**
 ```bash
 bun add @capacitor/ios @capacitor/android
-bunx cap add ios
-bunx cap add android
+npx cap add ios
+npx cap add android
 bun run build
-bunx cap sync
+npx cap sync
 ```
 
 ### Angular Router Configuration
@@ -503,7 +503,7 @@ Svelte and SvelteKit work great with Capacitor.
 
 **Create SvelteKit app:**
 ```bash
-bunx create-svelte my-app
+npx create-svelte my-app
 cd my-app
 bun install
 ```
@@ -533,7 +533,7 @@ export default config;
 **Install Capacitor:**
 ```bash
 bun add @capacitor/core @capacitor/cli
-bunx cap init
+npx cap init
 ```
 
 **capacitor.config.ts:**
@@ -548,7 +548,7 @@ const config: CapacitorConfig = {
 **Build and sync:**
 ```bash
 bun run build
-bunx cap sync
+npx cap sync
 ```
 
 ### Vite + Svelte (Simpler Option)
@@ -563,7 +563,7 @@ bun install
 **Install Capacitor:**
 ```bash
 bun add @capacitor/core @capacitor/cli
-bunx cap init
+npx cap init
 ```
 
 **capacitor.config.ts:**
@@ -730,7 +730,7 @@ const imageUrl = photo.webPath;
 **Solution:**
 1. Check build output directory matches `webDir` in capacitor.config.ts
 2. Rebuild: `bun run build`
-3. Sync: `bunx cap sync`
+3. Sync: `npx cap sync`
 4. Check browser console in device
 
 ### Issue: Routing Doesn't Work
