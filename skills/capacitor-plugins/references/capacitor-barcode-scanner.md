@@ -1,6 +1,6 @@
 # Barcode Scanner
 
-Barcode/QR scanning using Outsystems Barcode libs.
+Barcode/QR scanning using OutSystems barcode libraries.
 
 **Platforms:** Android, iOS
 
@@ -29,9 +29,13 @@ Add to `ios/App/App/Info.plist`:
 ## Usage
 
 ```typescript
-import { BarcodeScanner } from '@capacitor/barcode-scanner';
+import {
+  CapacitorBarcodeScanner,
+  CapacitorBarcodeScannerCameraDirection,
+  CapacitorBarcodeScannerTypeHint,
+} from '@capacitor/barcode-scanner';
 
-const result = await BarcodeScanner.scanBarcode({
+const result = await CapacitorBarcodeScanner.scanBarcode({
   hint: CapacitorBarcodeScannerTypeHint.QR_CODE,
   cameraDirection: CapacitorBarcodeScannerCameraDirection.BACK,
 });

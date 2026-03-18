@@ -17,7 +17,7 @@ npx cap sync
 
 - Android 13+: `checkPermissions()` / `requestPermissions()` required.
 - Android 12+: `SCHEDULE_EXACT_ALARM` permission in `android/app/src/main/AndroidManifest.xml`.
-- Android 14: `USE_EXACT_ALARM` permission (no user prompt).
+- Android 14+: `USE_EXACT_ALARM` is auto-granted only for limited app categories and is subject to Google Play policy review. For most apps, prefer `SCHEDULE_EXACT_ALARM`, check exact-alarm access at runtime, and fall back to inexact scheduling when exact alarms are unavailable.
 - Config options: `smallIcon` (drawable resource), `iconColor`, `sound` in `capacitor.config.ts`.
 
 ## Usage

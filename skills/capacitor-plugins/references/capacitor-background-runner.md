@@ -34,7 +34,9 @@ npx cap sync
 
 - Enable Background Modes capability: "Background fetch" and "Background processing".
 - Add `BGTaskSchedulerPermittedIdentifiers` to `ios/App/App/Info.plist`.
-- Register in `ios/App/App/AppDelegate.swift` with `BackgroundRunnerPlugin.registerBackgroundTask()`.
+- In `ios/App/App/AppDelegate.swift`, import `CapacitorBackgroundRunner`.
+- Call `BackgroundRunnerPlugin.handleApplicationDidFinishLaunching(launchOptions: launchOptions)` inside `application(_:didFinishLaunchingWithOptions:)`.
+- Register the task with `BackgroundRunnerPlugin.registerBackgroundTask()`.
 
 ### Android
 
@@ -49,7 +51,7 @@ import { BackgroundRunner } from '@capacitor/background-runner';
 
 await BackgroundRunner.dispatchEvent({
   label: 'com.example.background.task',
-  event: 'myEvent',
+  event: 'myCustomEvent',
   details: {},
 });
 ```

@@ -15,11 +15,26 @@ npx cap sync
 
 ### Android
 
-Set `androidxMaterialVersion` in `variables.gradle` (default: `1.13.0`).
+Set `androidxMaterialVersion` in `variables.gradle`.
+
+- Use `1.12.0` as the baseline default for older setups.
+- Use `1.13.0` for Capacitor 8 or current projects.
 
 ### Web
 
 Requires PWA Elements (`@ionic/pwa-elements`).
+
+Install it and register the loader during app startup:
+
+```bash
+npm install @ionic/pwa-elements
+```
+
+```typescript
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
+defineCustomElements(window);
+```
 
 ## Usage
 

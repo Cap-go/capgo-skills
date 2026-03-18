@@ -28,16 +28,21 @@ Config option `disableBackButtonHandler` (boolean, default: false, Android only)
 ```typescript
 import { App } from '@capacitor/app';
 
-App.addListener('appStateChange', ({ isActive }) => {
+const appStateHandle = await App.addListener('appStateChange', ({ isActive }) => {
   console.log('App state:', isActive);
 });
 
-App.addListener('appUrlOpen', (data) => {
+const appUrlHandle = await App.addListener('appUrlOpen', (data) => {
   console.log('Deep link:', data.url);
 });
 
 const info = await App.getInfo();
-const { url } = await App.getLaunchUrl();
+const launch = await App.getLaunchUrl();
+const url = launch?.url;
+
+// Cleanup when the screen or component is torn down.
+await appStateHandle.remove();
+await appUrlHandle.remove();
 ```
 
 ## Notes

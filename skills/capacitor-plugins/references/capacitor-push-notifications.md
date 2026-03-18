@@ -45,11 +45,23 @@ Enable Push Notifications capability in Xcode. Add two delegate methods to `ios/
 ```typescript
 import { PushNotifications } from '@capacitor/push-notifications';
 
-await PushNotifications.requestPermissions();
-await PushNotifications.register();
+let permStatus = await PushNotifications.checkPermissions();
+if (permStatus.receive === 'prompt') {
+  permStatus = await PushNotifications.requestPermissions();
+}
+
+if (permStatus.receive !== 'granted') {
+  console.warn('Push notification permission not granted');
+} else {
+  await PushNotifications.register();
+}
 
 PushNotifications.addListener('registration', (token) => {
   console.log('FCM/APNs token:', token.value);
+});
+
+PushNotifications.addListener('registrationError', (error) => {
+  console.error('Registration failed:', error);
 });
 
 PushNotifications.addListener('pushNotificationReceived', (notification) => {

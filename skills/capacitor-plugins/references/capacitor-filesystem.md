@@ -46,6 +46,12 @@ Add to `ios/App/App/Info.plist`:
 ```typescript
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 
+await Filesystem.mkdir({
+  path: 'secrets',
+  directory: Directory.Documents,
+  recursive: true,
+});
+
 await Filesystem.writeFile({
   path: 'secrets/text.txt',
   data: 'Hello',
@@ -57,12 +63,6 @@ const contents = await Filesystem.readFile({
   path: 'secrets/text.txt',
   directory: Directory.Documents,
   encoding: Encoding.UTF8,
-});
-
-await Filesystem.mkdir({
-  path: 'secrets',
-  directory: Directory.Documents,
-  recursive: true,
 });
 
 const files = await Filesystem.readdir({
