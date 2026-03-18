@@ -372,7 +372,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
 
       - name: Run Capsec Security Scan
         run: npx capsec scan --ci --output json --output-file security-report.json
@@ -389,7 +389,7 @@ jobs:
 
 ```yaml
 security-scan:
-  image: oven/bun:latest
+  image: node:20
   script:
     - npx capsec scan --ci
   artifacts:

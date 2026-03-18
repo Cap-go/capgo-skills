@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Migration guide for moving SQLite and SQL-style Capacitor plugins to @capgo/capacitor-fast-sql with better performance, encryption, transactions, and key-value storage.",
+  "triggers": [
+    "sqlite to fast sql",
+    "migrate sqlite plugin",
+    "migrate sql plugin",
+    "replace sqlite storage",
+    "fast sql migration"
+  ],
+  "references": [
+    "https://capgo.app/docs/plugins/fast-sql/getting-started/"
+  ]
+}

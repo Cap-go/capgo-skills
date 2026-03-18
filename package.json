@@ -1,7 +1,7 @@
 {
   "name": "@capgo/capgo-skills",
   "version": "1.1.0",
-  "description": "24 agent skills for Capacitor mobile development",
+  "description": "45 agent skills for Capacitor mobile development",
   "keywords": [
     "capacitor",
     "capacitor-skills",
@@ -23,8 +23,14 @@
   "license": "MIT",
   "author": "Capgo <support@capgo.app>",
   "skills": [
+    "capgo-cli-usage",
+    "capgo-cloud",
+    "capgo-native-builds",
+    "capgo-organization-management",
+    "capgo-release-management",
     "capacitor-plugins",
     "capacitor-best-practices",
+    "capgo-release-workflows",
     "capgo-live-updates",
     "capacitor-security",
     "capacitor-testing",
@@ -44,8 +50,27 @@
     "capacitor-performance",
     "capacitor-accessibility",
     "capacitor-app-store",
+    "capacitor-app-upgrades",
+    "capacitor-app-upgrade-v4-to-v5",
+    "capacitor-app-upgrade-v5-to-v6",
+    "capacitor-app-upgrade-v6-to-v7",
+    "capacitor-app-upgrade-v7-to-v8",
+    "capacitor-plugin-spm-support",
+    "capacitor-plugin-upgrades",
+    "capacitor-plugin-upgrade-v4-to-v5",
+    "capacitor-plugin-upgrade-v5-to-v6",
+    "capacitor-plugin-upgrade-v6-to-v7",
+    "capacitor-plugin-upgrade-v7-to-v8",
     "cocoapods-to-spm",
     "cordova-to-capacitor",
-    "framework-to-capacitor"
-  ]
+    "framework-to-capacitor",
+    "ionic-appflow-migration",
+    "skill-creator",
+    "sqlite-to-fast-sql",
+    "ionic-enterprise-sdk-migration"
+  ],
+  "scripts": {
+    "lint-skills": "bun scripts/lint-skills.mjs",
+    "lint-skills-skillgrade": "cd skills/skill-creator && bunx skillgrade --ci --provider=local --smoke"
+  }
 }

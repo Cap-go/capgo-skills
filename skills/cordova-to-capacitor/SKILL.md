@@ -52,7 +52,7 @@ cat config.xml
 **In your existing Cordova project:**
 ```bash
 # Install Capacitor
-bun add @capacitor/core @capacitor/cli
+npm install @capacitor/core @capacitor/cli
 
 # Initialize Capacitor
 npx cap init
@@ -69,11 +69,11 @@ npx cap init
 
 ```bash
 # Add iOS platform
-bun add @capacitor/ios
+npm install @capacitor/ios
 npx cap add ios
 
 # Add Android platform
-bun add @capacitor/android
+npm install @capacitor/android
 npx cap add android
 ```
 
@@ -89,20 +89,20 @@ This creates:
 
 | Cordova Plugin | Capacitor Equivalent | Install Command |
 |----------------|---------------------|-----------------|
-| cordova-plugin-camera | @capacitor/camera | `bun add @capacitor/camera` |
-| cordova-plugin-geolocation | @capacitor/geolocation | `bun add @capacitor/geolocation` |
-| cordova-plugin-device | @capacitor/device | `bun add @capacitor/device` |
-| cordova-plugin-network-information | @capacitor/network | `bun add @capacitor/network` |
-| cordova-plugin-statusbar | @capacitor/status-bar | `bun add @capacitor/status-bar` |
-| cordova-plugin-splashscreen | @capacitor/splash-screen | `bun add @capacitor/splash-screen` |
-| cordova-plugin-keyboard | @capacitor/keyboard | `bun add @capacitor/keyboard` |
-| cordova-plugin-dialogs | @capacitor/dialog | `bun add @capacitor/dialog` |
-| cordova-plugin-file | @capacitor/filesystem | `bun add @capacitor/filesystem` |
-| cordova-plugin-inappbrowser | @capacitor/browser | `bun add @capacitor/browser` |
+| cordova-plugin-camera | @capacitor/camera | `npm install @capacitor/camera` |
+| cordova-plugin-geolocation | @capacitor/geolocation | `npm install @capacitor/geolocation` |
+| cordova-plugin-device | @capacitor/device | `npm install @capacitor/device` |
+| cordova-plugin-network-information | @capacitor/network | `npm install @capacitor/network` |
+| cordova-plugin-statusbar | @capacitor/status-bar | `npm install @capacitor/status-bar` |
+| cordova-plugin-splashscreen | @capacitor/splash-screen | `npm install @capacitor/splash-screen` |
+| cordova-plugin-keyboard | @capacitor/keyboard | `npm install @capacitor/keyboard` |
+| cordova-plugin-dialogs | @capacitor/dialog | `npm install @capacitor/dialog` |
+| cordova-plugin-file | @capacitor/filesystem | `npm install @capacitor/filesystem` |
+| cordova-plugin-inappbrowser | @capacitor/browser | `npm install @capacitor/browser` |
 | cordova-plugin-media | @capacitor/media | Custom or use @capgo plugins |
-| cordova-plugin-vibration | @capacitor/haptics | `bun add @capacitor/haptics` |
-| cordova-plugin-local-notifications | @capacitor/local-notifications | `bun add @capacitor/local-notifications` |
-| cordova-plugin-push | @capacitor/push-notifications | `bun add @capacitor/push-notifications` |
+| cordova-plugin-vibration | @capacitor/haptics | `npm install @capacitor/haptics` |
+| cordova-plugin-local-notifications | @capacitor/local-notifications | `npm install @capacitor/local-notifications` |
+| cordova-plugin-push | @capacitor/push-notifications | `npm install @capacitor/push-notifications` |
 
 #### Third-Party Cordova Plugins → Capgo Equivalents
 
@@ -112,7 +112,7 @@ This creates:
 cordova plugin add cordova-plugin-fingerprint-aio
 
 # Capacitor
-bun add @capgo/capacitor-native-biometric
+npm install @capgo/capacitor-native-biometric
 ```
 
 **For payments:**
@@ -121,16 +121,16 @@ bun add @capgo/capacitor-native-biometric
 cordova plugin add cordova-plugin-purchase
 
 # Capacitor
-bun add @capgo/capacitor-purchases
+npm install @capgo/capacitor-purchases
 ```
 
 **For social login:**
 ```bash
 # Facebook
-bun add @capgo/capacitor-social-login
+npm install @capgo/capacitor-social-login
 
 # Google
-bun add @codetrix-studio/capacitor-google-auth
+npm install @codetrix-studio/capacitor-google-auth
 ```
 
 **Check the full plugin catalog:**
@@ -360,9 +360,9 @@ cordova platform remove ios
 cordova platform remove android
 
 # Remove Cordova
-bun remove cordova
-bun remove cordova-ios
-bun remove cordova-android
+npm uninstall cordova
+npm uninstall cordova-ios
+npm uninstall cordova-android
 
 # Remove Cordova plugins
 cordova plugin list | xargs -I {} cordova plugin remove {}
@@ -381,7 +381,7 @@ Error: Plugin not found
 ```
 
 **Solution:**
-1. Check if plugin is installed: `bun list`
+1. Check if plugin is installed: `npm list`
 2. Sync native projects: `npx cap sync`
 3. Clean and rebuild in Xcode/Android Studio
 
@@ -411,7 +411,7 @@ App shows white screen or crashes.
 
 **Solution:**
 1. Check `webDir` in capacitor.config.ts points to correct build output
-2. Rebuild web app: `bun run build`
+2. Rebuild web app: `npm run build`
 3. Sync: `npx cap sync`
 4. Check browser console in device for errors
 
@@ -441,7 +441,7 @@ Some third-party Cordova plugins still reference Cordova global.
 Use the Capacitor Cordova compatibility layer:
 
 ```bash
-bun add cordova-plugin-example
+npm install cordova-plugin-example
 npx cap sync
 ```
 
@@ -464,7 +464,7 @@ Capacitor includes Cordova compatibility, but:
 
 - [ ] List all Cordova plugins: `cordova plugin list`
 - [ ] Find Capacitor equivalents (use table above)
-- [ ] Install Capacitor plugins: `bun add @capacitor/plugin-name`
+- [ ] Install Capacitor plugins: `npm install @capacitor/plugin-name`
 - [ ] Update imports in code
 - [ ] Convert callbacks to async/await
 - [ ] Remove `deviceready` event listeners
@@ -481,15 +481,15 @@ After migration, add Capgo for OTA updates:
 
 ```bash
 # Install Capgo plugin
-bun add @capgo/capacitor-updater
+npm install @capgo/capacitor-updater
 
 # Create account at capgo.app
-bun add -g @capgo/cli
+npm install -g @capgo/cli
 capgo login
 
 # Initialize and deploy
 capgo init
-bun run build
+npm run build
 capgo upload
 ```
 

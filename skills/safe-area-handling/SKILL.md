@@ -428,7 +428,7 @@ class MainActivity : BridgeActivity() {
 ### Installation
 
 ```bash
-bun add @capacitor/status-bar
+npm install @capacitor/status-bar
 npx cap sync
 ```
 

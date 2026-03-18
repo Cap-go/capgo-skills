@@ -1,6 +1,6 @@
 ---
 name: capacitor-offline-first
-description: Guide to building offline-first Capacitor apps with data synchronization, caching strategies, and conflict resolution. Covers SQLite, service workers, and network detection. Use this skill when users need their app to work without internet.
+description: Guide to building offline-first Capacitor apps with data synchronization, caching strategies, and conflict resolution. Covers Fast SQL, service workers, and network detection. Use this skill when users need their app to work without internet.
 ---
 
 # Offline-First Capacitor Apps
@@ -31,7 +31,7 @@ Build apps that work seamlessly with or without internet connectivity.
 ├──────────────────┼──────────────────────┤
 │  ┌───────────────┴───────────────────┐  │
 │  │         Local Database            │  │
-│  │    (SQLite / IndexedDB)           │  │
+│  │   (Fast SQL / IndexedDB)          │  │
 │  └───────────────────────────────────┘  │
 └─────────────────────────────────────────┘
 ```
@@ -41,7 +41,7 @@ Build apps that work seamlessly with or without internet connectivity.
 ### Using Capacitor Network Plugin
 
 ```bash
-bun add @capacitor/network
+npm install @capacitor/network
 npx cap sync
 ```
 
@@ -110,60 +110,58 @@ class NetworkAwareService {
 }
 ```
 
-## Local Database with SQLite
+## Local Database with Fast SQL
 
 ### Installation
 
 ```bash
-bun add @capgo/capacitor-data-storage-sqlite
+npm install @capgo/capacitor-fast-sql
 npx cap sync
 ```
+
+Before using Fast SQL in production, complete the required platform setup:
+
+- iOS: allow localhost networking for the plugin transport.
+- Android: add the localhost cleartext exception required by the plugin.
+- Web: install `sql.js` if the app needs the web fallback.
+
+Use the dedicated `sqlite-to-fast-sql` skill when you need the full platform checklist.
 
 ### Database Setup
 
 ```typescript
-import { CapacitorDataStorageSqlite } from '@capgo/capacitor-data-storage-sqlite';
+import { KeyValueStore } from '@capgo/capacitor-fast-sql';
 
 class Database {
-  private db = CapacitorDataStorageSqlite;
-  private isOpen = false;
+  private store: Awaited<ReturnType<typeof KeyValueStore.open>> | null = null;
 
   async open() {
-    if (this.isOpen) return;
-
-    await this.db.openStore({
+    if (this.store) return;
+    this.store = await KeyValueStore.open({
       database: 'myapp',
-      table: 'data',
+      store: 'data',
       encrypted: false,
-      mode: 'no-encryption',
     });
-
-    this.isOpen = true;
   }
 
   async set(key: string, value: any) {
     await this.open();
-    await this.db.set({
-      key,
-      value: JSON.stringify(value),
-    });
+    await this.store!.set(key, value);
   }
 
   async get<T>(key: string): Promise<T | null> {
     await this.open();
-    const result = await this.db.get({ key });
-    return result.value ? JSON.parse(result.value) : null;
+    return this.store!.get<T>(key);
   }
 
   async remove(key: string) {
     await this.open();
-    await this.db.remove({ key });
+    await this.store!.remove(key);
   }
 
   async keys(): Promise<string[]> {
     await this.open();
-    const result = await this.db.keys();
-    return result.keys;
+    return this.store!.keys();
   }
 }
 ```

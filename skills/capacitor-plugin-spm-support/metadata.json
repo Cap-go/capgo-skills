@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Guide for adding Swift Package Manager support to an existing Capacitor plugin, including bridged Swift registration and package metadata updates.",
+  "triggers": [
+    "add spm support to capacitor plugin",
+    "swift package manager plugin",
+    "package.swift capacitor plugin",
+    "bridged plugin",
+    "capacitor plugin spm"
+  ],
+  "references": [
+    "https://swift.org/package-manager",
+    "https://capacitorjs.com/docs"
+  ]
+}

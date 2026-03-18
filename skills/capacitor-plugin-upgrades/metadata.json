@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Guide for upgrading a Capacitor plugin across major versions with sequential native and TypeScript verification.",
+  "triggers": [
+    "upgrade capacitor plugin",
+    "plugin major version",
+    "migrate capacitor plugin",
+    "bump plugin version",
+    "update capacitor plugin"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/plugins"
+  ]
+}

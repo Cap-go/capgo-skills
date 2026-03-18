@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Version-specific guide for upgrading a Capacitor plugin from v4 to v5.",
+  "triggers": [
+    "capacitor plugin 4 to 5",
+    "upgrade plugin to capacitor 5",
+    "v4 to v5 plugin migration",
+    "capacitor plugin upgrade v5"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs"
+  ]
+}

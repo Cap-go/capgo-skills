@@ -68,7 +68,7 @@ module.exports = {
 ### Step 2: Build Static Files
 
 ```bash
-bun run build
+npm run build
 ```
 
 This creates an `out/` directory with static files.
@@ -76,7 +76,7 @@ This creates an `out/` directory with static files.
 ### Step 3: Install Capacitor
 
 ```bash
-bun add @capacitor/core @capacitor/cli
+npm install @capacitor/core @capacitor/cli
 npx cap init
 ```
 
@@ -106,7 +106,7 @@ export default config;
 ### Step 5: Add Platforms
 
 ```bash
-bun add @capacitor/ios @capacitor/android
+npm install @capacitor/ios @capacitor/android
 npx cap add ios
 npx cap add android
 ```
@@ -115,7 +115,7 @@ npx cap add android
 
 ```bash
 # Build Next.js
-bun run build
+npm run build
 
 # Sync with native projects
 npx cap sync
@@ -260,14 +260,14 @@ React works great with Capacitor using Vite or Create React App.
 
 **Create new project:**
 ```bash
-bun create vite my-app --template react-ts
+npx create-vite@latest my-app --template react-ts
 cd my-app
-bun install
+npm install
 ```
 
 **Install Capacitor:**
 ```bash
-bun add @capacitor/core @capacitor/cli
+npm install @capacitor/core @capacitor/cli
 npx cap init
 ```
 
@@ -299,10 +299,10 @@ export default config;
 
 **Add platforms and build:**
 ```bash
-bun add @capacitor/ios @capacitor/android
+npm install @capacitor/ios @capacitor/android
 npx cap add ios
 npx cap add android
-bun run build
+npm run build
 npx cap sync
 ```
 
@@ -316,7 +316,7 @@ cd my-app
 
 **Install Capacitor:**
 ```bash
-bun add @capacitor/core @capacitor/cli
+npm install @capacitor/core @capacitor/cli
 npx cap init
 ```
 
@@ -331,7 +331,7 @@ const config: CapacitorConfig = {
 
 **Build and sync:**
 ```bash
-bun run build
+npm run build
 npx cap sync
 ```
 
@@ -363,14 +363,14 @@ Vue works seamlessly with Capacitor.
 
 **Using Vite:**
 ```bash
-bun create vite my-app --template vue-ts
+npx create-vite@latest my-app --template vue-ts
 cd my-app
-bun install
+npm install
 ```
 
 **Install Capacitor:**
 ```bash
-bun add @capacitor/core @capacitor/cli
+npm install @capacitor/core @capacitor/cli
 npx cap init
 ```
 
@@ -398,10 +398,10 @@ const config: CapacitorConfig = {
 
 **Add platforms:**
 ```bash
-bun add @capacitor/ios @capacitor/android
+npm install @capacitor/ios @capacitor/android
 npx cap add ios
 npx cap add android
-bun run build
+npm run build
 npx cap sync
 ```
 
@@ -439,7 +439,7 @@ cd my-app
 
 **Install Capacitor:**
 ```bash
-bun add @capacitor/core @capacitor/cli
+npm install @capacitor/core @capacitor/cli
 npx cap init
 ```
 
@@ -459,10 +459,10 @@ webDir: 'dist/my-app',
 
 **Add platforms:**
 ```bash
-bun add @capacitor/ios @capacitor/android
+npm install @capacitor/ios @capacitor/android
 npx cap add ios
 npx cap add android
-bun run build
+npm run build
 npx cap sync
 ```
 
@@ -505,12 +505,12 @@ Svelte and SvelteKit work great with Capacitor.
 ```bash
 npx create-svelte my-app
 cd my-app
-bun install
+npm install
 ```
 
 **Install adapter-static:**
 ```bash
-bun add -D @sveltejs/adapter-static
+npm install -D @sveltejs/adapter-static
 ```
 
 **Configure svelte.config.js:**
@@ -532,7 +532,7 @@ export default config;
 
 **Install Capacitor:**
 ```bash
-bun add @capacitor/core @capacitor/cli
+npm install @capacitor/core @capacitor/cli
 npx cap init
 ```
 
@@ -547,7 +547,7 @@ const config: CapacitorConfig = {
 
 **Build and sync:**
 ```bash
-bun run build
+npm run build
 npx cap sync
 ```
 
@@ -555,14 +555,14 @@ npx cap sync
 
 **Create with Vite:**
 ```bash
-bun create vite my-app --template svelte-ts
+npx create-vite@latest my-app --template svelte-ts
 cd my-app
-bun install
+npm install
 ```
 
 **Install Capacitor:**
 ```bash
-bun add @capacitor/core @capacitor/cli
+npm install @capacitor/core @capacitor/cli
 npx cap init
 ```
 
@@ -612,7 +612,7 @@ App.addListener('appUrlOpen', (data) => {
 
 **Add live updates to any framework:**
 ```bash
-bun add @capgo/capacitor-updater
+npm install @capgo/capacitor-updater
 ```
 
 ```typescript
@@ -631,22 +631,22 @@ await CapacitorUpdater.set({ id });
 
 **Use Ionic Framework for any framework:**
 ```bash
-bun add @ionic/core
+npm install @ionic/core
 ```
 
 **React:**
 ```bash
-bun add @ionic/react @ionic/react-router
+npm install @ionic/react @ionic/react-router
 ```
 
 **Vue:**
 ```bash
-bun add @ionic/vue @ionic/vue-router
+npm install @ionic/vue @ionic/vue-router
 ```
 
 **Angular:**
 ```bash
-bun add @ionic/angular
+npm install @ionic/angular
 ```
 
 ### 5. Storage
@@ -729,7 +729,7 @@ const imageUrl = photo.webPath;
 
 **Solution:**
 1. Check build output directory matches `webDir` in capacitor.config.ts
-2. Rebuild: `bun run build`
+2. Rebuild: `npm run build`
 3. Sync: `npx cap sync`
 4. Check browser console in device
 

@@ -20,7 +20,7 @@ Implement push notifications for iOS and Android using Firebase and APNs.
 ### Install Plugin
 
 ```bash
-bun add @capacitor/push-notifications
+npm install @capacitor/push-notifications
 npx cap sync
 ```
 

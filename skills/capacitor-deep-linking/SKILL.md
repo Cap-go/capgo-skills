@@ -28,7 +28,7 @@ Implement deep links, universal links, and app links in Capacitor apps.
 ### Install Plugin
 
 ```bash
-bun add @capacitor/app
+npm install @capacitor/app
 npx cap sync
 ```
 

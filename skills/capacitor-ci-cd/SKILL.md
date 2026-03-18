@@ -39,19 +39,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
 
       - name: Lint
-        run: bun run lint
+        run: npm run lint
 
       - name: Type check
-        run: bun run typecheck
+        run: npm run typecheck
 
       - name: Unit tests
-        run: bun test --coverage
+        run: npm test -- --coverage
 
       - name: Upload coverage
         uses: codecov/codecov-action@v4
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
       - run: npx capsec scan --ci
 
   # Build web assets
@@ -71,13 +71,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
 
       - name: Build
-        run: bun run build
+        run: npm run build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -92,7 +92,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
 
       - name: Download web build
         uses: actions/download-artifact@v4
@@ -101,7 +101,7 @@ jobs:
           path: dist/
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
 
       - name: Sync Capacitor
         run: npx cap sync ios
@@ -167,7 +167,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
 
       - name: Download web build
         uses: actions/download-artifact@v4
@@ -185,7 +185,7 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
 
       - name: Sync Capacitor
         run: npx cap sync android
@@ -242,7 +242,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
 
       - name: Download web build
         uses: actions/download-artifact@v4
@@ -448,23 +448,23 @@ stages:
   - deploy
 
 variables:
-  BUN_VERSION: "1.0"
+  NODE_VERSION: "20"
 
-.bun-cache: &bun-cache
+.npm-cache: &npm-cache
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - node_modules/
-      - ~/.bun/install/cache
+      - ~/.npm
 
 test:
   stage: test
-  image: oven/bun:${BUN_VERSION}
-  <<: *bun-cache
+  image: node:20
+  <<: *npm-cache
   script:
-    - bun install
-    - bun run lint
-    - bun test --coverage
+    - npm install
+    - npm run lint
+    - npm test -- --coverage
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
   artifacts:
     reports:
@@ -474,7 +474,7 @@ test:
 
 security:
   stage: test
-  image: oven/bun:${BUN_VERSION}
+  image: node:20
   script:
     - npx capsec scan --ci --output json --output-file security.json
   artifacts:
@@ -483,11 +483,11 @@ security:
 
 build-web:
   stage: build
-  image: oven/bun:${BUN_VERSION}
-  <<: *bun-cache
+  image: node:20
+  <<: *npm-cache
   script:
-    - bun install
-    - bun run build
+    - npm install
+    - npm run build
   artifacts:
     paths:
       - dist/
@@ -499,7 +499,7 @@ build-ios:
     - macos
   needs: [build-web]
   script:
-    - bun install
+    - npm install
     - npx cap sync ios
     - cd ios/App && fastlane build
   artifacts:
@@ -514,7 +514,7 @@ build-android:
   image: thyrlian/android-sdk
   needs: [build-web]
   script:
-    - bun install
+    - npm install
     - npx cap sync android
     - cd android && ./gradlew assembleRelease
   artifacts:
@@ -526,7 +526,7 @@ build-android:
 
 deploy-capgo:
   stage: deploy
-  image: oven/bun:${BUN_VERSION}
+  image: node:20
   needs: [build-web]
   script:
     - npx @capgo/cli upload --channel production
@@ -571,7 +571,7 @@ base64 -i release.keystore | pbcopy
 ### Semantic Release
 
 ```bash
-bun add -D semantic-release @semantic-release/git @semantic-release/changelog
+npm install -D semantic-release @semantic-release/git @semantic-release/changelog
 ```
 
 ```json
@@ -617,9 +617,9 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
 
-      - run: bun install
+      - run: npm install
 
       - name: Release
         env:

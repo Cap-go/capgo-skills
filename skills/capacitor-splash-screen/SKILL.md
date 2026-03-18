@@ -19,7 +19,7 @@ Configure and customize splash screens for iOS and Android.
 ### Install Plugin
 
 ```bash
-bun add @capacitor/splash-screen
+npm install @capacitor/splash-screen
 npx cap sync
 ```
 
@@ -76,7 +76,7 @@ await SplashScreen.hide({
 ### Using Capacitor Assets
 
 ```bash
-bun add -D @capacitor/assets
+npm install -D @capacitor/assets
 
 # Place source images in resources/
 # resources/splash.png (2732x2732 recommended)

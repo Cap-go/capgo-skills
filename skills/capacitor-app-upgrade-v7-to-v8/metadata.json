@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Version-specific guide for upgrading a Capacitor app from v7 to v8.",
+  "triggers": [
+    "capacitor 7 to 8",
+    "upgrade app to capacitor 8",
+    "v7 to v8 migration",
+    "capacitor app upgrade v8"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs"
+  ]
+}

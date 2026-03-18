@@ -18,7 +18,7 @@ Manage keyboard behavior in iOS and Android apps.
 ## Quick Start
 
 ```bash
-bun add @capacitor/keyboard
+npm install @capacitor/keyboard
 npx cap sync
 ```
 

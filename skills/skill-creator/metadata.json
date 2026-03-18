@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Guide for authoring high-quality agent skills with lean instructions, progressive disclosure, and skillgrade validation.",
+  "triggers": [
+    "create a skill",
+    "skill authoring",
+    "agent skill best practices",
+    "validate a skill",
+    "skillgrade"
+  ],
+  "references": [
+    "https://agentskills.io",
+    "https://github.com/mgechev/skillgrade"
+  ]
+}

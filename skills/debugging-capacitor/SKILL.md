@@ -262,7 +262,7 @@ console.log('MyPlugin available:', !!Capacitor.Plugins.MyPlugin);
 ```
 
 **Solutions**:
-1. Ensure plugin is installed: `bun add @capgo/plugin-name`
+1. Ensure plugin is installed: `npm install @capgo/plugin-name`
 2. Run sync: `npx cap sync`
 3. Check plugin is registered (native code)
 
@@ -344,7 +344,7 @@ console.log('Camera permission:', status.state);
 **Solutions**:
 ```bash
 # Rebuild web assets
-bun run build
+npm run build
 
 # Sync to native
 npx cap sync
@@ -432,7 +432,7 @@ When debugging issues:
 - [ ] Verify plugin is installed and synced
 - [ ] Check permissions (Info.plist/AndroidManifest)
 - [ ] Test on real device (not just simulator)
-- [ ] Try clean build (`rm -rf node_modules && bun install`)
+- [ ] Try clean build (`rm -rf node_modules && npm install`)
 - [ ] Verify capacitor.config.ts settings
 - [ ] Check for version mismatches (capacitor packages)
 

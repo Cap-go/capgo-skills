@@ -43,7 +43,7 @@ Capgo is a live update service for Capacitor apps that lets you:
 ### Step 2: Install the CLI
 
 ```bash
-bun add -g @capgo/cli
+npm install -g @capgo/cli
 ```
 
 ### Step 3: Login to Capgo
@@ -76,7 +76,7 @@ This will:
 If not installed automatically:
 
 ```bash
-bun add @capgo/capacitor-updater
+npm install @capgo/capacitor-updater
 npx cap sync
 ```
 
@@ -266,7 +266,7 @@ CapacitorUpdater.addListener('appReady', () => {
 
 ```bash
 # Build your web app
-bun run build
+npm run build
 
 # Upload to Capgo
 capgo upload
@@ -296,16 +296,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
 
       - name: Build
-        run: bun run build
+        run: npm run build
 
       - name: Deploy to Capgo
-        run: npx @capgo/cli upload
+        run: npx @capgo/cli bundle upload
         env:
           CAPGO_TOKEN: ${{ secrets.CAPGO_TOKEN }}
 ```
@@ -316,11 +316,11 @@ jobs:
 # .gitlab-ci.yml
 deploy:
   stage: deploy
-  image: oven/bun
+  image: node:20
   script:
-    - bun install
-    - bun run build
-    - npx @capgo/cli upload
+    - npm install
+    - npm run build
+    - npx @capgo/cli bundle upload
   only:
     - main
   variables:

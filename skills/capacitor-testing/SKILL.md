@@ -35,7 +35,7 @@ Comprehensive testing strategies for Capacitor mobile apps.
 ### Setup with Vitest
 
 ```bash
-bun add -D vitest @vitest/coverage-v8
+npm install -D vitest @vitest/coverage-v8
 ```
 
 ```typescript
@@ -185,7 +185,7 @@ describe('Platform-specific behavior', () => {
 ### React Testing Library
 
 ```bash
-bun add -D @testing-library/react @testing-library/user-event
+npm install -D @testing-library/react @testing-library/user-event
 ```
 
 ```typescript
@@ -219,7 +219,7 @@ describe('LoginButton', () => {
 ### Vue Test Utils
 
 ```bash
-bun add -D @vue/test-utils
+npm install -D @vue/test-utils
 ```
 
 ```typescript
@@ -252,7 +252,7 @@ describe('LoginButton', () => {
 ### Playwright for Web
 
 ```bash
-bun add -D @playwright/test
+npm install -D @playwright/test
 npx playwright install
 ```
 
@@ -282,7 +282,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'bun run dev',
+    command: 'npm run dev',
     url: 'http://localhost:5173',
     reuseExistingServer: !process.env.CI,
   },
@@ -320,7 +320,7 @@ test.describe('Login Flow', () => {
 ### Appium for Native
 
 ```bash
-bun add -D webdriverio @wdio/appium-service @wdio/mocha-framework
+npm install -D webdriverio @wdio/appium-service @wdio/mocha-framework
 ```
 
 ```typescript
@@ -375,7 +375,7 @@ describe('Native Login', () => {
 ### Detox for React Native Style Testing
 
 ```bash
-bun add -D detox
+npm install -D detox
 ```
 
 ```javascript
@@ -549,18 +549,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
-      - run: bun install
-      - run: bun test --coverage
+      - uses: actions/setup-node@v4
+      - run: npm install
+      - run: npm test -- --coverage
 
   e2e:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
-      - run: bun install
+      - uses: actions/setup-node@v4
+      - run: npm install
       - run: npx playwright install --with-deps
-      - run: bun run build
+      - run: npm run build
       - run: npx playwright test
 
   ios:

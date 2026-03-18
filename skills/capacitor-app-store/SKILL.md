@@ -183,7 +183,7 @@ Also needed:
 
 ```bash
 # Use capacitor-assets
-bun add -D @capacitor/assets
+npm install -D @capacitor/assets
 npx capacitor-assets generate --iconBackgroundColor '#ffffff'
 ```
 
@@ -403,13 +403,13 @@ cd android && ./gradlew bundleRelease
 
 ```bash
 # Increment patch (1.0.0 -> 1.0.1)
-bun version patch
+npm version patch
 
 # Increment minor (1.0.0 -> 1.1.0)
-bun version minor
+npm version minor
 
 # Increment major (1.0.0 -> 2.0.0)
-bun version major
+npm version major
 ```
 
 ### Phased Rollout

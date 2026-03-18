@@ -30,17 +30,17 @@ Ionic provides:
 
 ```bash
 # For React
-bun create vite my-app --template react-ts
+npx create-vite@latest my-app --template react-ts
 cd my-app
-bun add @ionic/react @ionic/react-router
+npm install @ionic/react @ionic/react-router
 
 # For Vue
-bun create vite my-app --template vue-ts
+npx create-vite@latest my-app --template vue-ts
 cd my-app
-bun add @ionic/vue @ionic/vue-router
+npm install @ionic/vue @ionic/vue-router
 
 # Add Capacitor
-bun add @capacitor/core @capacitor/cli
+npm install @capacitor/core @capacitor/cli
 npx cap init
 ```
 

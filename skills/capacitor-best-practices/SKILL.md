@@ -74,8 +74,8 @@ export default config;
 Keep Capacitor core packages in sync:
 
 ```bash
-bun add @capacitor/core@latest @capacitor/cli@latest
-bun add @capacitor/ios@latest @capacitor/android@latest
+npm install @capacitor/core@latest @capacitor/cli@latest
+npm install @capacitor/ios@latest @capacitor/android@latest
 npx cap sync
 ```
 
@@ -84,7 +84,7 @@ npx cap sync
 **CORRECT**:
 ```bash
 # 1. Install the package
-bun add @capgo/capacitor-native-biometric
+npm install @capgo/capacitor-native-biometric
 
 # 2. Sync native projects
 npx cap sync
@@ -96,7 +96,7 @@ cd ios/App && pod install && cd ../..
 **INCORRECT**:
 ```bash
 # Missing sync step
-bun add @capgo/capacitor-native-biometric
+npm install @capgo/capacitor-native-biometric
 # App crashes because native code not linked
 ```
 

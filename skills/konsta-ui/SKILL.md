@@ -30,16 +30,16 @@ Konsta UI provides:
 
 ```bash
 # React
-bun add konsta
+npm install konsta
 
 # Vue
-bun add konsta
+npm install konsta
 
 # Svelte
-bun add konsta
+npm install konsta
 
 # Required: Tailwind CSS
-bun add -D tailwindcss postcss autoprefixer
+npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 ```
 
