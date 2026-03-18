@@ -9,7 +9,7 @@
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
 
-A collection of **38 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
+A collection of **40 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
 
 ## Compatibility
 
@@ -36,6 +36,7 @@ bunx skills add Cap-go/capgo-skills
 |-------|-------------|
 | [capacitor-plugins](./skills/capacitor-plugins) | Complete catalog of 80+ Capgo Capacitor plugins |
 | [capacitor-best-practices](./skills/capacitor-best-practices) | Development best practices and patterns |
+| [capgo-release-workflows](./skills/capgo-release-workflows) | Coordinate live updates, builds, and publishing |
 | [capgo-live-updates](./skills/capgo-live-updates) | Deploy OTA updates instantly with Capgo |
 
 ### Security
@@ -89,6 +90,7 @@ bunx skills add Cap-go/capgo-skills
 
 | Skill | Description |
 |-------|-------------|
+| [capgo-release-workflows](./skills/capgo-release-workflows) | Coordinate Capgo live updates with builds and store publishing |
 | [capacitor-app-store](./skills/capacitor-app-store) | App Store and Play Store submission |
 | [capacitor-plugin-spm-support](./skills/capacitor-plugin-spm-support) | Add Swift Package Manager support to a plugin |
 | [cocoapods-to-spm](./skills/cocoapods-to-spm) | Migrate to Swift Package Manager |
@@ -120,6 +122,7 @@ bunx skills add Cap-go/capgo-skills
 |-------|-------------|
 | [cordova-to-capacitor](./skills/cordova-to-capacitor) | Migrate from Cordova/PhoneGap to Capacitor |
 | [framework-to-capacitor](./skills/framework-to-capacitor) | Integrate Next.js, React, Vue, Angular with Capacitor |
+| [ionic-appflow-migration](./skills/ionic-appflow-migration) | Migrate from Ionic Appflow to Capgo and repo-owned automation |
 | [sqlite-to-fast-sql](./skills/sqlite-to-fast-sql) | Migrate SQLite/SQL plugins to Fast SQL |
 | [ionic-enterprise-sdk-migration](./skills/ionic-enterprise-sdk-migration) | Replace Ionic Enterprise SDK plugins with open alternatives |
 
@@ -141,6 +144,7 @@ Skills activate automatically when agents detect relevant tasks:
 - "Make app work offline" → capacitor-offline-first
 
 ### Deployment
+- "Set up the full release workflow" → capgo-release-workflows
 - "Publish to App Store" → capacitor-app-store
 - "Submit to Play Store" → capacitor-app-store
 - "Add SPM support to a plugin" → capacitor-plugin-spm-support
@@ -165,6 +169,7 @@ Skills activate automatically when agents detect relevant tasks:
 - "Migrate from Cordova" → cordova-to-capacitor
 - "Convert Next.js to mobile app" → framework-to-capacitor
 - "Add Capacitor to React app" → framework-to-capacitor
+- "Migrate from Ionic Appflow" → ionic-appflow-migration
 - "Migrate SQLite to Fast SQL" → sqlite-to-fast-sql
 - "Remove Ionic Enterprise SDK" → ionic-enterprise-sdk-migration
 
