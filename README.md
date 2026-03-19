@@ -9,7 +9,7 @@
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
 
-A collection of **45 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
+A collection of **46 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
 
 ## Compatibility
 
@@ -95,6 +95,7 @@ npx skills add Cap-go/capgo-skills
 | [capgo-release-management](./skills/capgo-release-management) | Manage bundles, channels, compatibility checks, and encryption |
 | [capgo-release-workflows](./skills/capgo-release-workflows) | Coordinate Capgo live updates with builds and store publishing |
 | [capacitor-app-store](./skills/capacitor-app-store) | App Store and Play Store submission |
+| [capacitor-apple-review-preflight](./skills/capacitor-apple-review-preflight) | Apple review preflight audit narrowed to Capacitor apps |
 | [capacitor-plugin-spm-support](./skills/capacitor-plugin-spm-support) | Add Swift Package Manager support to a plugin |
 | [cocoapods-to-spm](./skills/cocoapods-to-spm) | Migrate to Swift Package Manager |
 
@@ -164,6 +165,8 @@ Skills activate automatically when agents detect relevant tasks:
 - "Manage Capgo channels" → capgo-release-management
 - "Set up the full release workflow" → capgo-release-workflows
 - "Publish to App Store" → capacitor-app-store
+- "Run an Apple review preflight" → capacitor-apple-review-preflight
+- "Help me fix an App Store rejection for my Capacitor app" → capacitor-apple-review-preflight
 - "Submit to Play Store" → capacitor-app-store
 - "Add SPM support to a plugin" → capacitor-plugin-spm-support
 

@@ -1,7 +1,7 @@
 {
   "name": "@capgo/capgo-skills",
   "version": "1.1.0",
-  "description": "45 agent skills for Capacitor mobile development",
+  "description": "46 agent skills for Capacitor mobile development",
   "keywords": [
     "capacitor",
     "tanstack-intent",
@@ -51,6 +51,7 @@
     "capacitor-performance",
     "capacitor-accessibility",
     "capacitor-app-store",
+    "capacitor-apple-review-preflight",
     "capacitor-app-upgrades",
     "capacitor-app-upgrade-v4-to-v5",
     "capacitor-app-upgrade-v5-to-v6",
