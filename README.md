@@ -9,7 +9,7 @@
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
 
-A collection of **45 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
+A collection of **46 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
 
 ## Compatibility
 
@@ -91,6 +91,7 @@ npx skills add Cap-go/capgo-skills
 
 | Skill | Description |
 |-------|-------------|
+| [capacitor-apple-review-preflight](./skills/capacitor-apple-review-preflight) | Apple App Store review preflight for Capacitor apps |
 | [capgo-native-builds](./skills/capgo-native-builds) | Request hosted iOS and Android builds with Capgo Build |
 | [capgo-release-management](./skills/capgo-release-management) | Manage bundles, channels, compatibility checks, and encryption |
 | [capgo-release-workflows](./skills/capgo-release-workflows) | Coordinate Capgo live updates with builds and store publishing |
@@ -160,6 +161,8 @@ Skills activate automatically when agents detect relevant tasks:
 - "Make app work offline" → capacitor-offline-first
 
 ### Deployment
+- "Run an Apple review preflight" → capacitor-apple-review-preflight
+- "Why did Apple reject my app?" → capacitor-apple-review-preflight
 - "Run a Capgo build" → capgo-native-builds
 - "Manage Capgo channels" → capgo-release-management
 - "Set up the full release workflow" → capgo-release-workflows

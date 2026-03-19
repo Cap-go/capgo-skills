@@ -15,6 +15,8 @@ Guide to submitting Capacitor apps to Apple App Store and Google Play Store.
 - User has app rejection issues
 - User needs to update app listing
 
+If the user specifically wants an Apple review audit, a rejection diagnosis, or a pre-submission compliance check for the iOS binary and metadata, route to `capacitor-apple-review-preflight` first and use this skill only for the publishing workflow around it.
+
 ## Pre-Submission Checklist
 
 ### Universal Requirements
