@@ -1,6 +1,9 @@
 ---
 name: framework-to-capacitor
 description: Guide for integrating modern web frameworks with Capacitor. Covers Next.js static export, React, Vue, Angular, Svelte, and others. Use this skill when converting framework apps to mobile apps with Capacitor.
+allowed-tools:
+  - Bash(node -e *)
+  - Bash(find *)
 ---
 
 # Framework to Capacitor Integration
@@ -14,6 +17,14 @@ Comprehensive guide for integrating web frameworks with Capacitor to build mobil
 - Configuring static exports for Capacitor
 - Setting up routing for mobile apps
 - Optimizing framework builds for native platforms
+
+## Live Project Snapshot
+
+Detected framework and build dependencies:
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const matchers=['next','react','vue','@angular/core','@sveltejs/kit','@builder.io/qwik','@remix-run/react','solid-js','vite','@capacitor/core','@capacitor/cli'];const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(matchers.includes(name))out.push(section+'.'+name+'='+version)}}for(const [name,cmd] of Object.entries(pkg.scripts||{})){if(['build','export','sync','cap:sync'].includes(name))out.push('scripts.'+name+'='+cmd)}console.log(out.join('\n'))"`
+
+Relevant framework and Capacitor config paths:
+!`find . -maxdepth 3 \( -name 'next.config.js' -o -name 'next.config.mjs' -o -name 'vite.config.ts' -o -name 'vite.config.js' -o -name 'angular.json' -o -name 'svelte.config.js' -o -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' \)`
 
 ## Framework Support Matrix
 

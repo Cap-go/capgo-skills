@@ -1,6 +1,8 @@
 ---
 name: capacitor-app-upgrade-v5-to-v6
 description: Guides the agent through upgrading a Capacitor app from v5 to v6. Use when the project is on Capacitor 5 and needs the v6 migration path. Do not use for other major versions, plugin-only upgrades, or non-Capacitor apps.
+allowed-tools:
+  - Bash(node -e *)
 ---
 
 # Capacitor App Upgrade v5 to v6
@@ -13,9 +15,14 @@ Upgrade a Capacitor app from version 5 to version 6.
 - User wants the exact v5 to v6 migration path
 - User needs v6-specific native and package updates
 
+## Live Project Snapshot
+
+Current Capacitor packages from `package.json`:
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(name.startsWith('@capacitor/'))out.push(section+'.'+name+'='+version)}}console.log(out.sort().join('\n'))"`
+
 ## Procedure
 
-1. Read the current `@capacitor/core` version from `package.json`.
+1. Start from the injected package snapshot and confirm the current `@capacitor/core` version.
 2. Update all `@capacitor/*` packages to the v6-compatible range.
 3. Review the v5 to v6 migration notes before editing native files.
 4. Run `npm install`.

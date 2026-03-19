@@ -1,6 +1,9 @@
 ---
 name: capacitor-app-upgrades
 description: Guides the agent through upgrading a Capacitor app project to a newer major version. Covers multi-version jumps, dependency alignment, native platform checks, and verification. Do not use for plugin library upgrades or non-Capacitor mobile frameworks.
+allowed-tools:
+  - Bash(node -e *)
+  - Bash(find *)
 ---
 
 # Capacitor App Upgrade
@@ -13,11 +16,19 @@ Upgrade a Capacitor app project to a newer major version.
 - User is preparing for a multi-version jump
 - User needs a safe fallback when automated migration does not complete cleanly
 
+## Live Project Snapshot
+
+Current Capacitor packages from `package.json`:
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(name.startsWith('@capacitor/'))out.push(section+'.'+name+'='+version)}}console.log(out.sort().join('\n'))"`
+
+Native and Capacitor config paths:
+!`find . -maxdepth 3 \( -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' -o -path './ios' -o -path './android' \)`
+
 ## Procedures
 
 ### Step 1: Detect the Current Version
 
-Read `@capacitor/core` from `package.json` in `dependencies` or `devDependencies`.
+Start from the injected snapshot above, then confirm `@capacitor/core` in `package.json` if anything looks inconsistent.
 
 If the target version is not specified, ask the user to confirm an explicit major version before proceeding.
 

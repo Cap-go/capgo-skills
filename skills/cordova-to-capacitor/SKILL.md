@@ -1,6 +1,9 @@
 ---
 name: cordova-to-capacitor
 description: Complete guide for migrating from Apache Cordova to Capacitor. Use this skill when users need to modernize a Cordova/PhoneGap app to Capacitor, migrate plugins, or understand platform differences.
+allowed-tools:
+  - Bash(node -e *)
+  - Bash(find *)
 ---
 
 # Cordova to Capacitor Migration
@@ -14,6 +17,14 @@ Step-by-step guide for migrating from Apache Cordova/PhoneGap to Capacitor.
 - Understanding Cordova vs Capacitor differences
 - Finding Capacitor equivalents for Cordova plugins
 - Modernizing hybrid mobile apps
+
+## Live Project Snapshot
+
+Current migration-related packages:
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(name.includes('cordova')||name.startsWith('@capacitor/')||name.startsWith('@ionic-enterprise/'))out.push(section+'.'+name+'='+version)}}console.log(out.sort().join('\n'))"`
+
+Relevant config and platform paths:
+!`find . -maxdepth 3 \( -name 'config.xml' -o -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' -o -path './ios' -o -path './android' \)`
 
 ## Why Migrate from Cordova?
 
@@ -30,6 +41,8 @@ Step-by-step guide for migrating from Apache Cordova/PhoneGap to Capacitor.
 ## Migration Process Overview
 
 ### Step 1: Assess Your Current App
+
+Start from the injected snapshot above before falling back to manual inspection.
 
 **Check Cordova version:**
 ```bash

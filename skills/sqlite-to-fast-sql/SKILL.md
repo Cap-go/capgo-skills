@@ -1,6 +1,8 @@
 ---
 name: sqlite-to-fast-sql
 description: Guides the agent through migrating SQLite and SQL-style Capacitor plugins to @capgo/capacitor-fast-sql. Use when replacing bridge-based SQL plugins, adding encryption, preserving transactions, or moving key-value storage onto Fast SQL. Do not use for non-SQL storage, generic app upgrades, or plugins that already wrap Fast SQL.
+allowed-tools:
+  - Bash(node -e *)
 ---
 
 # SQLite to Fast SQL Migration
@@ -13,6 +15,11 @@ Migrate bridge-based SQLite or SQL plugins to `@capgo/capacitor-fast-sql`.
 - User needs better performance for large result sets or sync-style writes
 - User wants encrypted local storage, transactions, batch writes, or BLOB support
 - User wants a key-value wrapper backed by Fast SQL instead of a legacy storage plugin
+
+## Live Project Snapshot
+
+Detected SQL-related packages:
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const needles=['sqlite','sqlcipher','typeorm','watermelondb','pouchdb','@capacitor-community/sqlite','@capawesome-team/capacitor-sqlite','@capgo/capacitor-fast-sql'];const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(needles.some((needle)=>name.includes(needle)))out.push(section+'.'+name+'='+version)}}console.log(out.sort().join('\n'))"`
 
 ## Why Fast SQL
 
@@ -31,7 +38,7 @@ Fast SQL also provides:
 
 ### Step 1: Inspect the Current SQL Plugin
 
-Read `package.json` and identify the current SQL plugin(s).
+Start from the injected package snapshot, then read `package.json` directly if the current SQL plugin set still needs clarification.
 
 Document whether the app uses:
 

@@ -36,6 +36,12 @@ Command the agent to read supporting files only when the current step needs them
 
 Prefer one-level-deep support files with explicit relative paths.
 
+When a skill depends on repository state that will differ at invocation time, prefer a guarded inline shell snapshot such as ``!`node -e "..."` `` instead of baking the current state into prose.
+
+Only do this when the command materially improves the invoked prompt, and keep the output short and deterministic.
+
+If a skill uses inline commands, declare the minimum required `allowed-tools` entries in frontmatter and keep them read-only.
+
 ### Step 4: Add Validation
 
 Create a `skillgrade` eval when the skill needs regression testing.
@@ -53,3 +59,4 @@ Replace ambiguous prose with concrete commands, file names, or output expectatio
 - If a skill cannot be validated, reduce scope until the missing behavior becomes testable.
 - If the description is too broad, tighten the trigger text before adding more instructions.
 - If the supporting material grows too large, extract it into a separate file and point the agent to it explicitly.
+- If an inline command would require broad shell access or produce noisy output, keep the skill static and tell the agent to inspect the files explicitly instead.

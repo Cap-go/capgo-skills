@@ -1,6 +1,9 @@
 ---
 name: ionic-enterprise-sdk-migration
 description: Guides the agent through migrating Capacitor apps from Ionic Enterprise SDK plugins to Capgo and Capacitor alternatives. Covers dependency detection, API replacement, local storage changes, and platform cleanup. Do not use for generic Capacitor version upgrades or Capgo live updates.
+allowed-tools:
+  - Bash(node -e *)
+  - Bash(rg *)
 ---
 
 # Ionic Enterprise SDK Migration
@@ -12,6 +15,11 @@ Migrate Capacitor apps away from Ionic Enterprise SDK plugins and onto open alte
 - User is replacing `@ionic-enterprise/*` plugins
 - User wants to remove Ionic Enterprise dependencies from an app
 - User needs a migration path for auth, biometric unlock, or secure local storage
+
+## Live Project Snapshot
+
+Detected Ionic Enterprise and replacement packages:
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(name.startsWith('@ionic-enterprise/')||name.startsWith('@capgo/')||name==='@capacitor/preferences')out.push(section+'.'+name+'='+version)}}console.log(out.sort().join('\n'))"`
 
 ## Replacement Map
 
@@ -33,7 +41,7 @@ If the app only needs non-sensitive key-value storage, use `@capacitor/preferenc
 
 ### Step 1: Detect Ionic Enterprise Dependencies
 
-Read `package.json` and look for:
+Start from the injected package snapshot, then read `package.json` directly and look for:
 
 - `@ionic-enterprise/auth`
 - `@ionic-enterprise/identity-vault`

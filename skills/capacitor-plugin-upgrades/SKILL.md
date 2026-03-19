@@ -1,6 +1,9 @@
 ---
 name: capacitor-plugin-upgrades
 description: Guides the agent through upgrading a Capacitor plugin to a newer major version. Covers dependency alignment, native platform changes, example app verification, and multi-version jumps. Do not use for app project upgrades or non-Capacitor plugin frameworks.
+allowed-tools:
+  - Bash(node -e *)
+  - Bash(find *)
 ---
 
 # Capacitor Plugin Upgrade
@@ -13,11 +16,19 @@ Upgrade a Capacitor plugin to a newer major version.
 - User needs help adapting native code to a new Capacitor major release
 - User wants to verify the plugin still works in its example app after the upgrade
 
+## Live Project Snapshot
+
+Plugin and Capacitor package snapshot:
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const out=['package.name='+(pkg.name||''),'package.version='+(pkg.version||'')];for(const section of ['peerDependencies','dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(name.startsWith('@capacitor/'))out.push(section+'.'+name+'='+version)}}console.log(out.join('\n'))"`
+
+Example and native project paths:
+!`find . -maxdepth 3 \( -path './example-app' -o -path './ios' -o -path './android' -o -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' \)`
+
 ## Procedures
 
 ### Step 1: Detect the Current Version
 
-Read the current `@capacitor/core` version from `package.json` and inspect the plugin package version.
+Start from the injected snapshot above, then inspect `package.json` if the Capacitor ranges or package version need confirmation.
 
 Ask the user to confirm the exact target major version before proceeding.
 

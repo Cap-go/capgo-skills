@@ -1,6 +1,9 @@
 ---
 name: ionic-appflow-migration
 description: Guides the agent through migrating an existing Ionic or Capacitor project away from Ionic Appflow. Use when detecting Appflow live updates, cloud builds, or store deployment flows and replacing them with Capgo live updates plus the repository's CI/CD and store publishing setup. Do not use for Ionic Enterprise SDK plugin migration or for setting up a fresh Capacitor project from scratch.
+allowed-tools:
+  - Bash(node -e *)
+  - Bash(find *)
 ---
 
 # Ionic Appflow Migration
@@ -12,6 +15,14 @@ Migrate an existing Ionic or Capacitor project away from Ionic Appflow.
 - User is moving off Ionic Appflow
 - The project uses Appflow Live Updates, cloud builds, or store deployment
 - The repository still references `ionic appflow`, `@capacitor/live-updates`, or `cordova-plugin-ionic`
+
+## Live Project Snapshot
+
+Detected Appflow-related packages and scripts:
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(name==='@capacitor/live-updates'||name==='cordova-plugin-ionic'||name.includes('appflow'))out.push(section+'.'+name+'='+version)}}for(const [name,cmd] of Object.entries(pkg.scripts||{})){if(/appflow|ionic cloud|ionic package|live-updates/i.test(cmd))out.push('scripts.'+name+'='+cmd)}console.log(out.join('\n'))"`
+
+Possible Appflow config and workflow paths:
+!`find . -maxdepth 4 \( -name '.io-config.json' -o -name 'ionic.config.json' -o -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' -o -path './.github/workflows' \)`
 
 ## Migration Strategy
 
@@ -26,6 +37,8 @@ Use this skill to detect what Appflow is doing today, then hand off each feature
 ## Procedures
 
 ### Step 1: Detect Appflow Usage
+
+Start from the injected snapshot above, then search more broadly if the migration surface is still unclear.
 
 Search the repository for:
 
