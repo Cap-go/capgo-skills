@@ -58,7 +58,7 @@ npx skills add Cap-go/capgo-skills
 | Skill | Description |
 |-------|-------------|
 | [debugging-capacitor](./skills/debugging-capacitor) | Debug iOS/Android apps |
-| [ios-android-logs](./skills/ios-android-logs) | Device log streaming |
+| [ios-android-logs](./skills/ios-android-logs) | Capture, filter, and stream iOS and Android device logs with devicectl, Console.app, and adb logcat for debugging. |
 | [capacitor-mcp](./skills/capacitor-mcp) | MCP automation tools |
 
 ### UI & Design
