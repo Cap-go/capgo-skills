@@ -2,6 +2,7 @@
   "version": "1.0.0",
   "organization": "Capgo",
   "date": "January 2026",
+  "description": "Step-by-step guide to capture and filter iOS and Android device logs for Capacitor apps using devicectl, Console.app, and adb logcat.",
   "abstract": "Complete guide to viewing and filtering device logs on iOS and Android. Covers Console.app, devicectl, simctl for iOS, and adb logcat for Android. Includes filtering techniques, crash log access, and MCP integration.",
   "triggers": [
     "device logs",
