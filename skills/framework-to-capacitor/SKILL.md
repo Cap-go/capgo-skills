@@ -1,22 +1,18 @@
 ---
 name: framework-to-capacitor
 description: Guide for integrating modern web frameworks with Capacitor. Covers Next.js static export, React, Vue, Angular, Svelte, and others. Use this skill when converting framework apps to mobile apps with Capacitor.
-allowed-tools:
-  - Bash(node -e *)
-  - Bash(find *)
+allowed-tools: "Bash(node -e *), Bash(find *)"
 ---
 
 # Framework to Capacitor Integration
 
 Comprehensive guide for integrating web frameworks with Capacitor to build mobile apps.
 
-## When to Use This Skill
+## When to Use
 
-- Converting a Next.js app to a mobile app
-- Integrating React, Vue, Angular, or Svelte with Capacitor
+- Converting a Next.js, React, Vue, Angular, or Svelte app to a mobile app
 - Configuring static exports for Capacitor
-- Setting up routing for mobile apps
-- Optimizing framework builds for native platforms
+- Setting up routing for Capacitor mobile apps
 
 ## Live Project Snapshot
 
@@ -229,35 +225,6 @@ export default function ProtectedPage() {
   }, []);
 
   return <div>Protected content</div>;
-}
-```
-
-### Complete Next.js + Capacitor Example
-
-**package.json:**
-```json
-{
-  "name": "my-capacitor-app",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "build:mobile": "next build && cap sync",
-    "ios": "cap open ios",
-    "android": "cap open android"
-  },
-  "dependencies": {
-    "next": "^14.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@capacitor/core": "^6.0.0",
-    "@capacitor/ios": "^6.0.0",
-    "@capacitor/android": "^6.0.0",
-    "@capacitor/camera": "^6.0.0"
-  },
-  "devDependencies": {
-    "@capacitor/cli": "^6.0.0",
-    "typescript": "^5.0.0"
-  }
 }
 ```
 
@@ -640,95 +607,7 @@ await CapacitorUpdater.set({ id });
 
 ### 4. Native UI Components
 
-**Use Ionic Framework for any framework:**
-```bash
-npm install @ionic/core
-```
-
-**React:**
-```bash
-npm install @ionic/react @ionic/react-router
-```
-
-**Vue:**
-```bash
-npm install @ionic/vue @ionic/vue-router
-```
-
-**Angular:**
-```bash
-npm install @ionic/angular
-```
-
-### 5. Storage
-
-**Use Capacitor Preferences for all frameworks:**
-```typescript
-import { Preferences } from '@capacitor/preferences';
-
-// Set value
-await Preferences.set({ key: 'theme', value: 'dark' });
-
-// Get value
-const { value } = await Preferences.get({ key: 'theme' });
-
-// Remove value
-await Preferences.remove({ key: 'theme' });
-
-// Clear all
-await Preferences.clear();
-```
-
-### 6. Camera Access
-
-**Same API across all frameworks:**
-```typescript
-import { Camera, CameraResultType } from '@capacitor/camera';
-
-const photo = await Camera.getPhoto({
-  quality: 90,
-  allowEditing: true,
-  resultType: CameraResultType.Uri,
-});
-
-const imageUrl = photo.webPath;
-```
-
----
-
-## Build Scripts for All Frameworks
-
-**Add these to package.json:**
-```json
-{
-  "scripts": {
-    "dev": "vite", // or next dev, ng serve, etc.
-    "build": "vite build", // or next build, ng build, etc.
-    "build:mobile": "vite build && cap sync",
-    "ios": "cap run ios",
-    "android": "cap run android",
-    "sync": "cap sync"
-  }
-}
-```
-
----
-
-## Routing Best Practices
-
-### Hash vs. History Mode
-
-**Hash mode (recommended for mobile):**
-- Works without server configuration
-- URLs look like: `#/about`
-- No server-side routing needed
-
-**History mode (requires server):**
-- Clean URLs: `/about`
-- Requires server fallback to index.html
-- Can have issues on mobile
-
-**Recommendation**: Use hash mode for Capacitor apps.
+See the `ionic-design` and `konsta-ui` skills for framework-specific UI component setup.
 
 ---
 
@@ -783,66 +662,12 @@ const response = await CapacitorHttp.get({
 });
 ```
 
----
-
-## Framework-Specific Plugins
-
-**Ionic Framework provides native UI components:**
-
-- **@ionic/react** - React components
-- **@ionic/vue** - Vue components
-- **@ionic/angular** - Angular components
-
-**Konsta UI for Tailwind CSS:**
-
-- Works with React, Vue, Svelte
-- iOS and Material Design themes
-
-See `ionic-design` and `konsta-ui` skills for details.
-
----
-
 ## Deployment Checklist
 
 - [ ] Configure static export (Next.js: `output: 'export'`)
 - [ ] Set correct `webDir` in capacitor.config.ts
 - [ ] Use hash routing for mobile
-- [ ] Disable image optimization (Next.js)
 - [ ] Remove SSR/API routes dependencies
 - [ ] Add native permissions (Info.plist, AndroidManifest.xml)
 - [ ] Test on physical devices
-- [ ] Configure splash screen and icons
-- [ ] Set up live updates with Capgo (optional)
-- [ ] Build and test on iOS and Android
-
----
-
-## Resources
-
-- **Capacitor Docs**: https://capacitorjs.com/docs
-- **Next.js Static Export**: https://nextjs.org/docs/app/building-your-application/deploying/static-exports
-- **Ionic Framework**: https://ionicframework.com
-- **Capgo Blog**: https://capgo.app/blog
-- **Community Forum**: https://forum.ionicframework.com
-
----
-
-## Framework-Specific Guides
-
-For detailed guides on specific frameworks:
-- **Next.js + Capacitor**: https://capgo.app/blog/how-to-use-capacitor-with-nextjs
-- **Ionic Framework**: See `ionic-design` skill
-- **Konsta UI**: See `konsta-ui` skill
-
----
-
-## Next Steps
-
-1. Choose your framework and follow the setup above
-2. Configure static export/build
-3. Install and configure Capacitor
-4. Add platforms (iOS/Android)
-5. Build and sync
-6. Test on devices
-7. Add native features with plugins
-8. Set up live updates with Capgo
+- [ ] Set up live updates with Capgo → see `capgo-live-updates` skill

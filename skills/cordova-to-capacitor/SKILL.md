@@ -1,22 +1,18 @@
 ---
 name: cordova-to-capacitor
-description: Complete guide for migrating from Apache Cordova to Capacitor. Use this skill when users need to modernize a Cordova/PhoneGap app to Capacitor, migrate plugins, or understand platform differences.
-allowed-tools:
-  - Bash(node -e *)
-  - Bash(find *)
+description: "Converts Cordova config.xml to Capacitor configuration, replaces Cordova plugins with Capacitor equivalents, updates native project structure, and handles platform-specific API differences. Use when migrating a Cordova or PhoneGap app to Capacitor, replacing Cordova plugins, or modernizing a hybrid mobile app."
+allowed-tools: "Bash(node -e *), Bash(find *)"
 ---
 
 # Cordova to Capacitor Migration
 
 Step-by-step guide for migrating from Apache Cordova/PhoneGap to Capacitor.
 
-## When to Use This Skill
+## When to Use
 
-- Migrating an existing Cordova app to Capacitor
-- Converting PhoneGap projects to Capacitor
-- Understanding Cordova vs Capacitor differences
-- Finding Capacitor equivalents for Cordova plugins
-- Modernizing hybrid mobile apps
+- Migrating an existing Cordova or PhoneGap app to Capacitor
+- Replacing Cordova plugins with Capacitor equivalents
+- Converting callback-based Cordova APIs to async/await Capacitor APIs
 
 ## Live Project Snapshot
 
@@ -26,19 +22,7 @@ Current migration-related packages:
 Relevant config and platform paths:
 !`find . -maxdepth 3 \( -name 'config.xml' -o -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' -o -path './ios' -o -path './android' \)`
 
-## Why Migrate from Cordova?
-
-| Aspect | Cordova | Capacitor |
-|--------|---------|-----------|
-| Native IDE | Builds via CLI | First-class Xcode/Android Studio |
-| Plugin Management | Separate ecosystem | npm packages |
-| Updates | Full app store review | Live updates with Capgo |
-| Web App Platform | Any | Any (React, Vue, Angular, etc.) |
-| Maintenance | Slowing down | Active development |
-| TypeScript | Limited | Full support |
-| Modern APIs | Older patterns | Modern Promise-based APIs |
-
-## Migration Process Overview
+## Migration Process
 
 ### Step 1: Assess Your Current App
 
@@ -363,9 +347,13 @@ npx cap open android
 - Callback → Promise conversions
 - Removed plugins
 
-### Step 10: Remove Cordova
+### Step 10: Validate Before Removal
 
-**Once migration is complete and tested:**
+Run through the plugin migration checklist below. Only proceed to removal when all items pass on both iOS and Android physical devices.
+
+### Step 11: Remove Cordova
+
+**Only after all features verified on both platforms:**
 
 ```bash
 # Remove Cordova platforms
@@ -397,25 +385,6 @@ Error: Plugin not found
 1. Check if plugin is installed: `npm list`
 2. Sync native projects: `npx cap sync`
 3. Clean and rebuild in Xcode/Android Studio
-
-### Issue: deviceready Never Fires
-
-**Problem:**
-Cordova's deviceready event doesn't exist in Capacitor.
-
-**Solution:**
-Remove all `deviceready` event listeners. Capacitor plugins work immediately.
-
-```typescript
-// Remove this
-document.addEventListener('deviceready', onDeviceReady);
-
-// Use this
-import { App } from '@capacitor/app';
-App.addListener('appStateChange', (state) => {
-  console.log('App state changed:', state.isActive);
-});
-```
 
 ### Issue: White Screen on Startup
 
@@ -508,39 +477,9 @@ capgo upload
 
 Users get updates instantly. See the `capgo-live-updates` skill for details.
 
-## Resources
-
-- **Official Migration Guide**: https://capacitorjs.com/docs/cordova/migrating-from-cordova-to-capacitor
-- **Capacitor Docs**: https://capacitorjs.com/docs
-- **Plugin Search**: https://github.com/Cap-go/awesome-capacitor
-- **Capgo Plugins**: https://github.com/Cap-go?q=capacitor
-- **Community Forum**: https://forum.ionicframework.com/c/capacitor
-
-## Migration Timeline Estimate
-
-| App Size | Estimated Time |
-|----------|----------------|
-| Small (1-3 plugins) | 2-4 hours |
-| Medium (4-8 plugins) | 1-2 days |
-| Large (9+ plugins) | 3-5 days |
-| Enterprise (custom plugins) | 1-2 weeks |
-
-## Post-Migration Benefits
-
-After migrating from Cordova to Capacitor:
-
-✅ **Faster development** - Direct access to Xcode/Android Studio
-✅ **Live updates** - Deploy updates without app store review (with Capgo)
-✅ **Better TypeScript** - Full type safety
-✅ **Modern APIs** - Promise-based, async/await
-✅ **Active maintenance** - Regular updates and improvements
-✅ **Better debugging** - Native IDE debugging tools
-✅ **Improved performance** - Optimized native bridge
-
 ## Next Steps
 
-1. Complete the migration using steps above
-2. Test thoroughly on physical devices
-3. Set up CI/CD (see `capacitor-ci-cd` skill)
-4. Add live updates (see `capgo-live-updates` skill)
-5. Submit to app stores (see `capacitor-app-store` skill)
+1. Test thoroughly on physical devices
+2. Set up CI/CD → see `capacitor-ci-cd` skill
+3. Add live updates → see `capgo-live-updates` skill
+4. Submit to app stores → see `capacitor-app-store` skill

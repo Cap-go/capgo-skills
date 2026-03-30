@@ -1,20 +1,18 @@
 ---
 name: capacitor-app-upgrades
-description: Guides the agent through upgrading a Capacitor app project to a newer major version. Covers multi-version jumps, dependency alignment, native platform checks, and verification. Do not use for plugin library upgrades or non-Capacitor mobile frameworks.
-allowed-tools:
-  - Bash(node -e *)
-  - Bash(find *)
+description: "Upgrades @capacitor/core and platform packages one major version at a time, runs npx cap migrate for automated changes, aligns native project settings (iOS deployment target, Gradle/Java versions), and verifies builds. Use when updating Capacitor from one major version to another, performing multi-version jumps, or fixing a failed cap migrate. Do not use for plugin library upgrades or non-Capacitor mobile frameworks."
+allowed-tools: "Bash(node -e *), Bash(find *)"
 ---
 
 # Capacitor App Upgrade
 
 Upgrade a Capacitor app project to a newer major version.
 
-## When to Use This Skill
+## When to Use
 
-- User wants to move a Capacitor app from one major version to another
-- User is preparing for a multi-version jump
-- User needs a safe fallback when automated migration does not complete cleanly
+- Upgrading @capacitor/core across one or more major versions
+- Running `npx cap migrate` or fixing a failed migration
+- Aligning native platform requirements after a Capacitor version bump
 
 ## Live Project Snapshot
 
@@ -38,22 +36,32 @@ Do not skip intermediate major versions.
 
 For each version jump:
 
-1. Update the `@capacitor/*` package versions in `package.json`.
+1. Update `@capacitor/core`, `@capacitor/cli`, `@capacitor/ios`, `@capacitor/android` to the target major version in `package.json`.
 2. Run `npm install`.
-3. Run the Capacitor migration flow if available for that version.
-4. Sync native projects with `npx cap sync`.
-5. Verify iOS and Android build cleanly before continuing.
+3. Run `npx cap migrate` (available in Capacitor 5+). For Capacitor 4 and below, apply changes manually per the official migration guide.
+4. Sync native projects: `npx cap sync`.
+5. Verify builds before continuing:
+   ```bash
+   # iOS
+   cd ios && xcodebuild -workspace App.xcworkspace -scheme App -destination 'generic/platform=iOS' build && cd ..
+   # Android
+   cd android && ./gradlew assembleDebug && cd ..
+   ```
 
-If the automated migration step fails, apply the generated changes manually and continue with the same major version before moving to the next one.
+If `npx cap migrate` only partially completes, finish the remaining changes for the current major version manually and re-verify builds before moving to the next version.
 
 ### Step 3: Check Native Projects
 
 Review the platform projects for version-specific requirements:
 
-- iOS deployment target
-- Xcode compatibility
-- Android Gradle Plugin and Java version
-- Any plugin-specific native changes introduced by the new Capacitor major version
+| Capacitor | iOS Deployment Target | Xcode | Gradle | Java |
+|-----------|-----------------------|-------|--------|------|
+| v5        | 13.0+                 | 14+   | 8.0+   | 17   |
+| v6        | 13.0+                 | 15+   | 8.2+   | 17   |
+| v7        | 14.0+                 | 15+   | 8.7+   | 21   |
+| v8        | 16.0+                 | 16+   | 8.11+  | 21   |
+
+Check `ios/App/App.xcodeproj` for deployment target and `android/build.gradle` for Gradle/Java settings. Update any plugin-specific native changes introduced by the new major version.
 
 ### Step 4: Final Verification
 

@@ -1,20 +1,18 @@
 ---
 name: sqlite-to-fast-sql
 description: Guides the agent through migrating SQLite and SQL-style Capacitor plugins to @capgo/capacitor-fast-sql. Use when replacing bridge-based SQL plugins, adding encryption, preserving transactions, or moving key-value storage onto Fast SQL. Do not use for non-SQL storage, generic app upgrades, or plugins that already wrap Fast SQL.
-allowed-tools:
-  - Bash(node -e *)
+allowed-tools: "Bash(node -e *)"
 ---
 
 # SQLite to Fast SQL Migration
 
 Migrate bridge-based SQLite or SQL plugins to `@capgo/capacitor-fast-sql`.
 
-## When to Use This Skill
+## When to Use
 
-- User wants to replace an existing SQLite or SQL plugin
-- User needs better performance for large result sets or sync-style writes
-- User wants encrypted local storage, transactions, batch writes, or BLOB support
-- User wants a key-value wrapper backed by Fast SQL instead of a legacy storage plugin
+- Replacing an existing SQLite or SQL Capacitor plugin with Fast SQL
+- Adding encryption, transactions, batch writes, or BLOB support to local storage
+- Migrating key-value storage to a Fast SQL-backed `KeyValueStore`
 
 ## Live Project Snapshot
 

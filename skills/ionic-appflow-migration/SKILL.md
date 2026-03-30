@@ -1,20 +1,17 @@
 ---
 name: ionic-appflow-migration
 description: Guides the agent through migrating an existing Ionic or Capacitor project away from Ionic Appflow. Use when detecting Appflow live updates, cloud builds, or store deployment flows and replacing them with Capgo live updates plus the repository's CI/CD and store publishing setup. Do not use for Ionic Enterprise SDK plugin migration or for setting up a fresh Capacitor project from scratch.
-allowed-tools:
-  - Bash(node -e *)
-  - Bash(find *)
+allowed-tools: "Bash(node -e *), Bash(find *)"
 ---
 
 # Ionic Appflow Migration
 
 Migrate an existing Ionic or Capacitor project away from Ionic Appflow.
 
-## When to Use This Skill
+## When to Use
 
-- User is moving off Ionic Appflow
-- The project uses Appflow Live Updates, cloud builds, or store deployment
-- The repository still references `ionic appflow`, `@capacitor/live-updates`, or `cordova-plugin-ionic`
+- Moving off Ionic Appflow live updates, cloud builds, or store deployment
+- Replacing `@capacitor/live-updates` or `cordova-plugin-ionic` with Capgo
 
 ## Live Project Snapshot
 
