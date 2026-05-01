@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Guide to configuring splash screens in Capacitor apps including asset generation, dark mode support, animations, and programmatic control.",
+  "triggers": [
+    "splash screen",
+    "launch screen",
+    "app loading",
+    "splash image",
+    "startup screen"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/apis/splash-screen",
+    "https://github.com/ionic-team/capacitor-assets"
+  ]
+}

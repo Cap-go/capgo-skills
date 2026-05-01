@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Guide for Capgo account lookup, organization administration, member inspection, and security settings.",
+  "triggers": [
+    "capgo organization",
+    "organization members",
+    "account id",
+    "capgo admin",
+    "organization security"
+  ],
+  "references": [
+    "https://capgo.app"
+  ]
+}

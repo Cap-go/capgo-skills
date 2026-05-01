@@ -1,0 +1,156 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "capgo-skills",
+  "description": "Agent skills for Capgo and Capacitor mobile development.",
+  "homepage": "https://github.com/Cap-go/capgo-skills",
+  "repository": "https://github.com/Cap-go/capgo-skills",
+  "owner": {
+    "name": "Capgo",
+    "email": "support@capgo.app"
+  },
+  "plugins": [
+    {
+      "name": "capgo-cloud",
+      "source": "./plugins/capgo-cloud",
+      "description": "Capgo cloud skills for CLI usage, live updates, hosted native builds, release management, and organization workflows.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["capgo", "capacitor", "live-updates", "native-builds", "release-management"],
+      "category": "development"
+    },
+    {
+      "name": "app-growth",
+      "source": "./plugins/app-growth",
+      "description": "App growth and revenue skills for early subscription revenue, ASO, acquisition, paywalls, pricing, and churn learning.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["app-growth", "revenue", "mrr", "aso", "paywall"],
+      "category": "development"
+    },
+    {
+      "name": "capacitor-core",
+      "source": "./plugins/capacitor-core",
+      "description": "Core Capacitor skills for best practices, plugin selection, and MCP automation.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["capacitor", "mobile", "plugins", "best-practices", "mcp"],
+      "category": "development"
+    },
+    {
+      "name": "capacitor-features",
+      "source": "./plugins/capacitor-features",
+      "description": "Capacitor feature skills for deep links, keyboard handling, offline-first data, push notifications, and splash screens.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["capacitor", "push-notifications", "deep-linking", "offline", "keyboard"],
+      "category": "development"
+    },
+    {
+      "name": "capacitor-ui",
+      "source": "./plugins/capacitor-ui",
+      "description": "Mobile UI skills for Ionic, Konsta UI, Tailwind, and safe-area handling in Capacitor apps.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["capacitor", "ionic", "konsta", "tailwind", "safe-area"],
+      "category": "development"
+    },
+    {
+      "name": "capacitor-quality",
+      "source": "./plugins/capacitor-quality",
+      "description": "Capacitor quality skills for testing, debugging, logs, performance, accessibility, and security.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["capacitor", "testing", "debugging", "performance", "security"],
+      "category": "development"
+    },
+    {
+      "name": "capacitor-deployment",
+      "source": "./plugins/capacitor-deployment",
+      "description": "Capacitor deployment skills for CI/CD, App Store publishing, Play Store publishing, and Apple review preflight checks.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["capacitor", "app-store", "play-store", "ci-cd", "apple-review"],
+      "category": "development"
+    },
+    {
+      "name": "capacitor-app-migrations",
+      "source": "./plugins/capacitor-app-migrations",
+      "description": "Migration skills for web apps, frameworks, Cordova, SPM, Appflow, Ionic Enterprise SDK, and SQLite alternatives.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["capacitor", "migration", "cordova", "spm", "webapp"],
+      "category": "development"
+    },
+    {
+      "name": "capacitor-app-upgrades",
+      "source": "./plugins/capacitor-app-upgrades",
+      "description": "Capacitor app upgrade skills for cross-version and major-version app migrations.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["capacitor", "app-upgrades", "migration", "v8", "v7"],
+      "category": "development"
+    },
+    {
+      "name": "capacitor-plugin-dev",
+      "source": "./plugins/capacitor-plugin-dev",
+      "description": "Capacitor plugin development skills for SPM support and plugin major-version upgrades.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["capacitor", "plugin", "spm", "upgrades", "swift-package-manager"],
+      "category": "development"
+    },
+    {
+      "name": "skill-authoring",
+      "source": "./plugins/skill-authoring",
+      "description": "Skill authoring workflow for creating and validating new agent skills.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Capgo",
+        "email": "support@capgo.app"
+      },
+      "license": "MIT",
+      "keywords": ["skills", "authoring", "validation", "agents"],
+      "category": "development"
+    }
+  ]
+}

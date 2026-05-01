@@ -3,6 +3,8 @@ name: sqlite-to-fast-sql
 description: Guides the agent through migrating SQLite and SQL-style Capacitor plugins to @capgo/capacitor-fast-sql. Use when replacing bridge-based SQL plugins, adding encryption, preserving transactions, or moving key-value storage onto Fast SQL. Do not use for non-SQL storage, generic app upgrades, or plugins that already wrap Fast SQL.
 allowed-tools:
   - Bash(node -e *)
+  - Bash(npm *)
+  - Bash(npx cap *)
 ---
 
 # SQLite to Fast SQL Migration

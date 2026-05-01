@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Migration guide for replacing Ionic Enterprise SDK plugins with Capgo and Capacitor alternatives, including auth, biometric unlock, and storage changes.",
+  "triggers": [
+    "ionic enterprise sdk migration",
+    "migrate auth connect",
+    "identity vault",
+    "secure storage migration",
+    "remove ionic enterprise"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs",
+    "https://capgo.app"
+  ]
+}

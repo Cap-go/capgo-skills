@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Complete guide to using Tailwind CSS in Capacitor mobile apps. Covers safe area handling, touch targets, dark mode, mobile-first design patterns, and performance optimization.",
+  "triggers": [
+    "tailwind capacitor",
+    "tailwind mobile",
+    "safe area css",
+    "mobile styling",
+    "touch targets",
+    "dark mode tailwind"
+  ],
+  "references": [
+    "https://tailwindcss.com/docs",
+    "https://tailwindui.com/",
+    "https://webkit.org/blog/7929/designing-websites-for-iphone-x/"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Guide for Capgo native cloud build requests, credential management, and build output configuration.",
+  "triggers": [
+    "capgo build",
+    "native build",
+    "cloud build ios",
+    "cloud build android",
+    "capgo native build"
+  ],
+  "references": [
+    "https://capgo.app/docs/cli/cloud-build/ios/",
+    "https://capgo.app/docs/cli/cloud-build/android/"
+  ]
+}

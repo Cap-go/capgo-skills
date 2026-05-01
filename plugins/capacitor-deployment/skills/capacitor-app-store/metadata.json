@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Complete guide to publishing Capacitor apps to Apple App Store and Google Play Store. Covers app icons, screenshots, metadata, privacy requirements, submission process, and handling rejections.",
+  "triggers": [
+    "app store",
+    "play store",
+    "publish app",
+    "submit app",
+    "app rejection",
+    "app review",
+    "screenshots",
+    "release app"
+  ],
+  "references": [
+    "https://developer.apple.com/app-store/review/guidelines",
+    "https://play.google.com/about/developer-content-policy",
+    "https://appstoreconnect.apple.com",
+    "https://play.google.com/console"
+  ]
+}

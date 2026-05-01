@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Comprehensive best practices guide for Capacitor app development. Covers project structure, plugin usage patterns, performance optimization, security hardening, error handling, live updates, and deployment preparation.",
+  "triggers": [
+    "capacitor best practice",
+    "optimize capacitor",
+    "capacitor security",
+    "capacitor performance",
+    "capacitor project structure",
+    "review capacitor code"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs",
+    "https://capgo.app/docs",
+    "https://ionicframework.com/docs"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Top-level guide for combining Capgo live updates with repository-owned native build and app store publishing workflows.",
+  "triggers": [
+    "capgo release workflow",
+    "capacitor release pipeline",
+    "live updates builds publishing",
+    "setup mobile release workflow",
+    "capgo deployment workflow"
+  ],
+  "references": [
+    "https://capgo.app",
+    "https://capacitorjs.com/docs"
+  ]
+}

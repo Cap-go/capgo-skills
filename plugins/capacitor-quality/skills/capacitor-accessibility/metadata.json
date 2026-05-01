@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Accessibility guide for Capacitor apps covering screen readers, semantic HTML, focus management, touch targets, color contrast, and WCAG compliance.",
+  "triggers": [
+    "accessibility",
+    "a11y",
+    "screen reader",
+    "voiceover",
+    "talkback",
+    "wcag",
+    "aria"
+  ],
+  "references": [
+    "https://www.w3.org/WAI/WCAG21/quickref",
+    "https://developer.apple.com/accessibility",
+    "https://developer.android.com/accessibility"
+  ]
+}

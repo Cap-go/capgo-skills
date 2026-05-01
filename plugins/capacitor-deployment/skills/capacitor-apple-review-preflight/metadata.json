@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Apple App Store preflight review skill for Capacitor apps covering project inspection, metadata review, privacy manifests, entitlements, subscriptions, Sign in with Apple, and common rejection patterns before submission or after a rejection.",
+  "triggers": [
+    "apple review",
+    "app store review",
+    "app store rejection",
+    "ios preflight",
+    "apple preflight",
+    "review guidelines",
+    "sign in with apple",
+    "privacy manifest",
+    "minimum functionality"
+  ],
+  "references": [
+    "https://developer.apple.com/app-store/review/guidelines",
+    "https://github.com/truongduy2611/app-store-preflight-skills",
+    "https://appstoreconnect.apple.com"
+  ]
+}

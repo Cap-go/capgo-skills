@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Complete guide to implementing push notifications in Capacitor apps using Firebase Cloud Messaging and Apple Push Notification Service. Covers setup, rich notifications, background handling, and troubleshooting.",
+  "triggers": [
+    "push notification",
+    "fcm",
+    "firebase messaging",
+    "apns",
+    "notification",
+    "remote notification",
+    "fcm token"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/apis/push-notifications",
+    "https://firebase.google.com/docs/cloud-messaging",
+    "https://developer.apple.com/documentation/usernotifications"
+  ]
+}

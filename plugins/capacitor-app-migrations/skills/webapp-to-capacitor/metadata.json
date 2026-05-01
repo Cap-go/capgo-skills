@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "May 2026",
+  "abstract": "Guide for migrating existing web apps, PWAs, and SPAs into store-ready Capacitor iOS and Android apps. Covers static build readiness, native-feeling UX, safe areas, permissions, offline behavior, account deletion, billing risks, App Store and Play Store testing, and Capgo live updates.",
+  "triggers": [
+    "web app to capacitor",
+    "webapp to capacitor",
+    "pwa to capacitor",
+    "convert web app to mobile app",
+    "wrap web app with capacitor",
+    "make website into app",
+    "turn website into ios app",
+    "turn website into android app",
+    "capacitor app store wrapper rejection",
+    "thin webview wrapper",
+    "store ready capacitor migration",
+    "native feeling capacitor app"
+  ],
+  "references": [
+    "https://www.reddit.com/r/capacitor/comments/1sztt6t/how_easy_is_it_to_make_a_web_app_into_app_with/",
+    "https://capacitorjs.com/docs",
+    "https://capgo.app/docs/cli/reference/init/",
+    "https://capgo.app/docs/plugins/updater/getting-started/",
+    "https://developer.apple.com/app-store/review/guidelines/",
+    "https://support.google.com/googleplay/android-developer/answer/14151465"
+  ]
+}

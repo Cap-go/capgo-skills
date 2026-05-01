@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Comprehensive security guide for Capacitor apps using Capsec scanner. Covers 63+ security rules across secrets detection, storage, network, authentication, cryptography, WebView, and platform-specific vulnerabilities for iOS and Android.",
+  "triggers": [
+    "security",
+    "capsec",
+    "vulnerability",
+    "hardcoded secret",
+    "security audit",
+    "owasp",
+    "penetration test",
+    "secure app"
+  ],
+  "references": [
+    "https://capacitor-sec.dev",
+    "https://owasp.org/www-project-mobile-top-10",
+    "https://mas.owasp.org/MASTG"
+  ]
+}

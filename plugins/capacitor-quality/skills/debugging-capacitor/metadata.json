@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Comprehensive debugging guide for Capacitor applications covering WebView debugging with Safari and Chrome DevTools, native debugging with Xcode and Android Studio, crash analysis, network inspection, and solutions to common issues.",
+  "triggers": [
+    "debug capacitor",
+    "app crash",
+    "white screen",
+    "plugin not found",
+    "permission denied",
+    "network error",
+    "inspect webview"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/guides/debugging",
+    "https://webkit.org/web-inspector",
+    "https://developer.chrome.com/docs/devtools",
+    "https://developer.apple.com/documentation/xcode/debugging"
+  ]
+}

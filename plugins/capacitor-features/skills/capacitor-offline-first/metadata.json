@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Guide to building offline-first Capacitor apps with data synchronization, caching strategies, conflict resolution, SQLite storage, and service workers.",
+  "triggers": [
+    "offline",
+    "offline first",
+    "sync data",
+    "work offline",
+    "no internet",
+    "cache",
+    "local storage"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/apis/network",
+    "https://developer.chrome.com/docs/workbox",
+    "http://offlinefirst.org"
+  ]
+}

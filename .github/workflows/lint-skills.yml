@@ -20,6 +20,12 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Install Claude Code
+        run: |
+          bun add -g @anthropic-ai/claude-code
+          node "$HOME/.bun/install/global/node_modules/@anthropic-ai/claude-code/install.cjs"
+          claude --version
+
       - name: Lint skills
         env:
           ENABLE_SKILLGRADE: "1"

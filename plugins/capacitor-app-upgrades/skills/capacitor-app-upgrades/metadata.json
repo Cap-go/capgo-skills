@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Guide for upgrading a Capacitor app across major versions with sequential migration, native platform checks, and verification.",
+  "triggers": [
+    "upgrade capacitor app",
+    "capacitor major version",
+    "migrate capacitor app",
+    "cap migrate",
+    "update capacitor app"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Entry-point guide for routing Capgo CLI requests to setup, OTA, native build, and organization workflows.",
+  "triggers": [
+    "capgo cli",
+    "capgo doctor",
+    "capgo login",
+    "capgo init",
+    "capgo usage"
+  ],
+  "references": [
+    "https://capgo.app"
+  ]
+}

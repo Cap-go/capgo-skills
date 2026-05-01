@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Version-specific guide for upgrading a Capacitor plugin from v6 to v7.",
+  "triggers": [
+    "capacitor plugin 6 to 7",
+    "upgrade plugin to capacitor 7",
+    "v6 to v7 plugin migration",
+    "capacitor plugin upgrade v7"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs"
+  ]
+}

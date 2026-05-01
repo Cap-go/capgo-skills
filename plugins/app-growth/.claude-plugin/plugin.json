@@ -1,0 +1,14 @@
+{
+  "name": "app-growth",
+  "description": "App growth and revenue skills for early subscription revenue, ASO, acquisition, paywalls, pricing, and churn learning.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Capgo",
+    "email": "support@capgo.app"
+  },
+  "homepage": "https://github.com/Cap-go/capgo-skills",
+  "repository": "https://github.com/Cap-go/capgo-skills",
+  "license": "MIT",
+  "keywords": ["app-growth", "revenue", "mrr", "aso", "paywall"],
+  "category": "development"
+}
