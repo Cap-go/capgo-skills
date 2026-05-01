@@ -37,7 +37,7 @@ Use when users report bugs or crashes. Covers:
 - Common issues and solutions
 
 ### ios-android-logs
-Use when you need device logs from iOS and Android. Capture, filter, and stream logs with devicectl, Console.app, and adb logcat to troubleshoot issues. Covers:
+Use when users need device logs. Covers:
 - `xcrun devicectl` for iOS
 - `adb logcat` for Android
 - Filtering and streaming logs

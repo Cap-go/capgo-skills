@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Guide to handling keyboard in Capacitor apps including visibility detection, height management, accessory bar, and scroll behavior.",
+  "triggers": [
+    "keyboard",
+    "keyboard height",
+    "hide keyboard",
+    "keyboard overlap",
+    "input focus"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/apis/keyboard"
+  ]
+}

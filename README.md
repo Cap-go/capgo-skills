@@ -9,7 +9,7 @@
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
 
-A collection of **46 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
+A collection of **48 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
 
 ## Compatibility
 
@@ -24,8 +24,40 @@ A collection of **46 skills** for AI coding agents working with Capacitor, the c
 
 ## Installation
 
+### skills.sh
+
 ```bash
 npx skills add Cap-go/capgo-skills
+```
+
+### Claude Code Plugin Marketplace
+
+Claude Code users can add this repository as a plugin marketplace and install focused plugin groups:
+
+```bash
+claude plugin marketplace add Cap-go/capgo-skills
+```
+
+Available plugins:
+
+| Plugin | Description |
+| ------ | ----------- |
+| `capgo-cloud` | Capgo CLI, live updates, native builds, releases, and organization workflows |
+| `app-growth` | Early subscription revenue, ASO, acquisition, paywalls, pricing, and churn learning |
+| `capacitor-core` | Capacitor best practices, plugin selection, and MCP automation |
+| `capacitor-features` | Deep links, keyboard handling, offline-first data, push notifications, and splash screens |
+| `capacitor-ui` | Ionic, Konsta UI, Tailwind, and safe-area handling |
+| `capacitor-quality` | Testing, debugging, logs, performance, accessibility, and security |
+| `capacitor-deployment` | CI/CD, App Store publishing, Play Store publishing, and Apple review preflight |
+| `capacitor-app-migrations` | Web app, framework, Cordova, SPM, Appflow, Ionic Enterprise SDK, and SQLite migrations |
+| `capacitor-app-upgrades` | Capacitor app major-version upgrades |
+| `capacitor-plugin-dev` | Capacitor plugin SPM support and major-version upgrades |
+| `skill-authoring` | Skill creation and validation |
+
+Install a plugin:
+
+```bash
+claude plugin install capgo-cloud@capgo-skills
 ```
 
 ## Available Skills
@@ -39,6 +71,12 @@ npx skills add Cap-go/capgo-skills
 | [capacitor-plugins](./skills/capacitor-plugins) | Official Capacitor packages plus Capgo plugin recommendations |
 | [capacitor-best-practices](./skills/capacitor-best-practices) | Development best practices and patterns |
 | [capgo-live-updates](./skills/capgo-live-updates) | Deploy OTA updates instantly with Capgo |
+
+### Growth & Revenue
+
+| Skill | Description |
+|-------|-------------|
+| [subscription-app-revenue](./skills/subscription-app-revenue) | Build a practical path from app idea or MVP to early subscription revenue |
 
 ### Security
 
@@ -58,7 +96,7 @@ npx skills add Cap-go/capgo-skills
 | Skill | Description |
 |-------|-------------|
 | [debugging-capacitor](./skills/debugging-capacitor) | Debug iOS/Android apps |
-| [ios-android-logs](./skills/ios-android-logs) | Capture, filter, and stream iOS and Android device logs with devicectl, Console.app, and adb logcat for debugging. |
+| [ios-android-logs](./skills/ios-android-logs) | Device log streaming |
 | [capacitor-mcp](./skills/capacitor-mcp) | MCP automation tools |
 
 ### UI & Design
@@ -97,7 +135,7 @@ npx skills add Cap-go/capgo-skills
 | [capacitor-app-store](./skills/capacitor-app-store) | App Store and Play Store submission |
 | [capacitor-apple-review-preflight](./skills/capacitor-apple-review-preflight) | Apple review preflight audit narrowed to Capacitor apps |
 | [capacitor-plugin-spm-support](./skills/capacitor-plugin-spm-support) | Add Swift Package Manager support to a plugin |
-| [cocoapods-to-spm](./skills/cocoapods-to-spm) | Migrate to Swift Package Manager |
+| [cocoapods-to-spm](./skills/cocoapods-to-spm) | Migrate a Capacitor iOS app from CocoaPods to Swift Package Manager |
 
 ### Operations
 
@@ -132,6 +170,7 @@ npx skills add Cap-go/capgo-skills
 |-------|-------------|
 | [cordova-to-capacitor](./skills/cordova-to-capacitor) | Migrate from Cordova/PhoneGap to Capacitor |
 | [framework-to-capacitor](./skills/framework-to-capacitor) | Integrate Next.js, React, Vue, Angular with Capacitor |
+| [webapp-to-capacitor](./skills/webapp-to-capacitor) | Migrate an existing web app or PWA into a store-ready Capacitor app |
 | [ionic-appflow-migration](./skills/ionic-appflow-migration) | Migrate from Ionic Appflow to Capgo and repo-owned automation |
 | [sqlite-to-fast-sql](./skills/sqlite-to-fast-sql) | Migrate SQLite/SQL plugins to Fast SQL |
 | [ionic-enterprise-sdk-migration](./skills/ionic-enterprise-sdk-migration) | Replace Ionic Enterprise SDK plugins with open alternatives |
@@ -155,6 +194,12 @@ Skills activate automatically when agents detect relevant tasks:
 - "Upload a bundle to a channel" → capgo-release-management
 - "Manage Capgo organization members" → capgo-organization-management
 
+### Growth & Revenue
+- "How do I make revenue from my app?" → subscription-app-revenue
+- "Help me get to $1K MRR" → subscription-app-revenue
+- "Plan my app paywall and pricing" → subscription-app-revenue
+- "Get first users for my subscription app" → subscription-app-revenue
+
 ### Features
 - "Add push notifications" → capacitor-push-notifications
 - "Implement deep linking" → capacitor-deep-linking
@@ -169,6 +214,7 @@ Skills activate automatically when agents detect relevant tasks:
 - "Help me fix an App Store rejection for my Capacitor app" → capacitor-apple-review-preflight
 - "Submit to Play Store" → capacitor-app-store
 - "Add SPM support to a plugin" → capacitor-plugin-spm-support
+- "Migrate my Capacitor app to Swift Package Manager" → cocoapods-to-spm
 
 ### Authoring
 - "Create a new skill" → skill-creator
@@ -190,6 +236,7 @@ Skills activate automatically when agents detect relevant tasks:
 - "Migrate from Cordova" → cordova-to-capacitor
 - "Convert Next.js to mobile app" → framework-to-capacitor
 - "Add Capacitor to React app" → framework-to-capacitor
+- "Turn my web app into an app" → webapp-to-capacitor
 - "Migrate from Ionic Appflow" → ionic-appflow-migration
 - "Migrate SQLite to Fast SQL" → sqlite-to-fast-sql
 - "Remove Ionic Enterprise SDK" → ionic-enterprise-sdk-migration

@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Version-specific guide for upgrading a Capacitor plugin from v7 to v8.",
+  "triggers": [
+    "capacitor plugin 7 to 8",
+    "upgrade plugin to capacitor 8",
+    "v7 to v8 plugin migration",
+    "capacitor plugin upgrade v8"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs"
+  ]
+}

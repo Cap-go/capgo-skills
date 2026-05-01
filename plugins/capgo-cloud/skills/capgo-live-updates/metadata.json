@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Complete guide to implementing live updates in Capacitor apps using Capgo. Covers account creation, plugin installation, update strategies, channels for staged rollouts, CI/CD integration, security with encryption, and monitoring.",
+  "triggers": [
+    "live updates",
+    "ota updates",
+    "capgo",
+    "skip app store",
+    "instant deploy",
+    "hotfix",
+    "capacitor updater"
+  ],
+  "references": [
+    "https://capgo.app/docs",
+    "https://web.capgo.app",
+    "https://github.com/Cap-go/capacitor-updater"
+  ]
+}

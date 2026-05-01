@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Complete guide to implementing deep links in Capacitor apps. Covers iOS Universal Links, Android App Links, custom URL schemes, OAuth callbacks, and advanced routing patterns.",
+  "triggers": [
+    "deep link",
+    "universal link",
+    "app link",
+    "url scheme",
+    "applinks",
+    "open app from link",
+    "aasa file"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/apis/app",
+    "https://developer.apple.com/documentation/xcode/supporting-universal-links-in-your-app",
+    "https://developer.android.com/training/app-links"
+  ]
+}

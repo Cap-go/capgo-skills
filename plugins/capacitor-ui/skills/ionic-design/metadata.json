@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Comprehensive guide to using Ionic Framework for building native-looking Capacitor apps. Covers components, navigation patterns, theming, platform-specific styling, and mobile UI best practices.",
+  "triggers": [
+    "ionic component",
+    "ionic ui",
+    "mobile ui",
+    "native look",
+    "ionic theming",
+    "ion-button",
+    "ion-list"
+  ],
+  "references": [
+    "https://ionicframework.com/docs",
+    "https://ionicframework.com/docs/components",
+    "https://ionic.io/ionicons"
+  ]
+}

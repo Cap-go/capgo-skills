@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "March 2026",
+  "abstract": "Version-specific guide for upgrading a Capacitor app from v5 to v6.",
+  "triggers": [
+    "capacitor 5 to 6",
+    "upgrade app to capacitor 6",
+    "v5 to v6 migration",
+    "capacitor app upgrade v6"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs"
+  ]
+}

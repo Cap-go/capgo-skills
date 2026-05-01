@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Guide to using Konsta UI for pixel-perfect iOS and Material Design components. Tailwind CSS native integration, works with React, Vue, and Svelte. Lightweight alternative to Ionic Framework.",
+  "triggers": [
+    "konsta ui",
+    "konsta",
+    "tailwind mobile",
+    "ios material components",
+    "lightweight ui",
+    "svelte capacitor"
+  ],
+  "references": [
+    "https://konstaui.com/",
+    "https://konstaui.com/react",
+    "https://github.com/konstaui/konsta"
+  ]
+}

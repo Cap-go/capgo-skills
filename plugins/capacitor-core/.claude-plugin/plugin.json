@@ -1,0 +1,14 @@
+{
+  "name": "capacitor-core",
+  "description": "Core Capacitor skills for best practices, plugin selection, and MCP automation.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Capgo",
+    "email": "support@capgo.app"
+  },
+  "homepage": "https://github.com/Cap-go/capgo-skills",
+  "repository": "https://github.com/Cap-go/capgo-skills",
+  "license": "MIT",
+  "keywords": ["capacitor", "mobile", "plugins", "best-practices", "mcp"],
+  "category": "development"
+}

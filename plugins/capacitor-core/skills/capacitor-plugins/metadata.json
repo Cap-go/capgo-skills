@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Complete catalog of 80+ Capacitor plugins maintained by Capgo. Covers authentication, media, payments, sensors, storage, and more. Use this skill to help users find the right plugin for their native mobile functionality needs.",
+  "triggers": [
+    "which plugin",
+    "add biometric",
+    "in-app purchase",
+    "camera plugin",
+    "audio plugin",
+    "native functionality",
+    "capacitor plugin for"
+  ],
+  "references": [
+    "https://capgo.app",
+    "https://github.com/Cap-go",
+    "https://capacitorjs.com/docs/plugins"
+  ]
+}

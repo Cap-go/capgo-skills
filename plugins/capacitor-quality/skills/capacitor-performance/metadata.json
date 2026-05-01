@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Performance optimization guide for Capacitor apps covering bundle size, rendering, memory management, bridge optimization, and profiling tools.",
+  "triggers": [
+    "performance",
+    "slow app",
+    "optimize",
+    "bundle size",
+    "memory leak",
+    "profiling",
+    "60fps"
+  ],
+  "references": [
+    "https://developer.chrome.com/docs/devtools",
+    "https://developer.apple.com/instruments"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Complete guide to handling safe areas in Capacitor apps. Covers iPhone notch, Dynamic Island, home indicator, and Android cutouts. Includes CSS, JavaScript, and native solutions.",
+  "triggers": [
+    "safe area",
+    "notch",
+    "home indicator",
+    "display cutout",
+    "env safe-area",
+    "viewport-fit",
+    "content under notch"
+  ],
+  "references": [
+    "https://developer.apple.com/design/human-interface-guidelines/layout",
+    "https://developer.android.com/develop/ui/views/layout/display-cutout",
+    "https://capacitorjs.com/docs/apis/status-bar"
+  ]
+}

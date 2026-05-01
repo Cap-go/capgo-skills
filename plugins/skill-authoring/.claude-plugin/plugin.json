@@ -1,0 +1,14 @@
+{
+  "name": "skill-authoring",
+  "description": "Skill authoring workflow for creating and validating new agent skills.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Capgo",
+    "email": "support@capgo.app"
+  },
+  "homepage": "https://github.com/Cap-go/capgo-skills",
+  "repository": "https://github.com/Cap-go/capgo-skills",
+  "license": "MIT",
+  "keywords": ["skills", "authoring", "validation", "agents"],
+  "category": "development"
+}

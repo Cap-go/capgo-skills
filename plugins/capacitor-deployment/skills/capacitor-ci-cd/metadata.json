@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Complete CI/CD guide for Capacitor apps covering GitHub Actions, GitLab CI, Fastlane, app signing, secrets management, and automated deployment to app stores and Capgo.",
+  "triggers": [
+    "ci/cd",
+    "github actions",
+    "gitlab ci",
+    "fastlane",
+    "automate build",
+    "release pipeline",
+    "app signing",
+    "deploy automatically"
+  ],
+  "references": [
+    "https://docs.github.com/actions",
+    "https://fastlane.tools",
+    "https://capgo.app/docs/cli"
+  ]
+}

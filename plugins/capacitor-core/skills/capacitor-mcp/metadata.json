@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Guide to using Model Context Protocol (MCP) for Ionic and Capacitor mobile development automation. Covers Ionic component APIs, Capacitor plugin documentation, CLI command execution via the awesome-ionic-mcp server.",
+  "triggers": [
+    "mcp capacitor",
+    "awesome-ionic-mcp",
+    "ionic mcp",
+    "ai mobile development",
+    "mcp tools",
+    "ionic components ai",
+    "capacitor plugins ai"
+  ],
+  "references": [
+    "https://github.com/Tommertom/awesome-ionic-mcp",
+    "https://modelcontextprotocol.io",
+    "https://github.com/modelcontextprotocol/sdk",
+    "https://ionicframework.com",
+    "https://capacitorjs.com"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "name": "@capgo/capgo-skills",
   "version": "1.1.0",
-  "description": "46 agent skills for Capacitor mobile development",
+  "description": "48 agent skills for Capacitor mobile development",
   "keywords": [
     "capacitor",
     "tanstack-intent",
@@ -33,6 +33,7 @@
     "capacitor-best-practices",
     "capgo-release-workflows",
     "capgo-live-updates",
+    "subscription-app-revenue",
     "capacitor-security",
     "capacitor-testing",
     "capacitor-ci-cd",
@@ -66,6 +67,7 @@
     "cocoapods-to-spm",
     "cordova-to-capacitor",
     "framework-to-capacitor",
+    "webapp-to-capacitor",
     "ionic-appflow-migration",
     "skill-creator",
     "sqlite-to-fast-sql",

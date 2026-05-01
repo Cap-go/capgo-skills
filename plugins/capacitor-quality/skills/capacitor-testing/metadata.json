@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "January 2026",
+  "abstract": "Complete testing guide for Capacitor apps covering unit tests with Vitest, component tests, E2E tests with Playwright and Appium, and native testing. Includes mocking strategies for Capacitor plugins.",
+  "triggers": [
+    "testing",
+    "unit test",
+    "e2e test",
+    "mock plugin",
+    "vitest",
+    "playwright",
+    "appium",
+    "test coverage"
+  ],
+  "references": [
+    "https://vitest.dev",
+    "https://playwright.dev",
+    "https://testing-library.com",
+    "https://appium.io"
+  ]
+}
