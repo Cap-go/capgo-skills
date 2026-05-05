@@ -186,15 +186,15 @@ async function validateMirroredSkills(errors) {
     let mirror;
     try {
       [canonical, mirror] = await Promise.all([
-        readFile(canonicalPath, 'utf8'),
-        readFile(mirrorPath, 'utf8'),
+        readFile(canonicalPath),
+        readFile(mirrorPath),
       ]);
     } catch {
       errors.push(`mirrored skills: ${mirrorRelative} must exist and mirror ${canonicalRelative}`);
       continue;
     }
 
-    if (canonical !== mirror) {
+    if (!canonical.equals(mirror)) {
       errors.push(`mirrored skills: ${mirrorRelative} must match ${canonicalRelative} byte-for-byte`);
     }
   }

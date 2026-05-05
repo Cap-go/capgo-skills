@@ -22,7 +22,7 @@ Do not use this skill for JavaScript-only OTA update uploads, generic CI/CD setu
 - Treat API keys, P12 passwords, keystore passwords, App Store Connect keys, and Play service account JSON as secrets. Use placeholders in examples and do not echo secret values back to the user.
 - Prefer Capgo CLI build flows before inventing custom CI scripts.
 - Confirm the platform, app ID, project path, desired output destination, and whether the user wants store upload or a temporary download link.
-- Credentials are stored locally by the CLI and are only sent to Capgo for the build job. They are not stored permanently on Capgo servers and are deleted after the build process.
+- Credentials are stored locally by the CLI and are only sent to Capgo for the build job. They are not stored permanently on Capgo servers and are deleted after the build process. See the [Capgo CLI credentials documentation](https://capgo.app/docs/cli/cloud-build/credentials/).
 
 ## First Checks
 
@@ -158,7 +158,6 @@ Useful request options:
 
 - `--platform ios|android`: required.
 - `--path <path>`: project directory, default is the current directory.
-- `--node-modules <paths>`: comma-separated `node_modules` paths for monorepos.
 - `--build-mode debug|release`: defaults to release.
 - `--ios-scheme <scheme>` and `--ios-target <target>` for custom Xcode projects.
 - `--ios-distribution app_store|ad_hoc`.
@@ -266,7 +265,7 @@ Use repository or CI secret storage. Do not commit signing files or generated cr
 - Legacy iOS provisioning profile error: run `npx @capgo/cli@latest build credentials migrate --appId com.example.app --platform ios`.
 - Android signing failure: verify keystore path, alias, key password, store password, and product flavor.
 - Play upload should be skipped: use `--output-upload --no-playstore-upload`.
-- Monorepo dependency mismatch: pass the app-specific `--path` and `--node-modules` values.
+- Monorepo path mismatch: pass the app-specific `--path` value and run from the app root when possible.
 - Need support evidence: rerun the failing command with `--verbose`.
 
 ## Supporting Docs
