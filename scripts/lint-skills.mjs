@@ -166,6 +166,40 @@ async function validateClaudeMarketplace(skillDirs, errors) {
   }
 }
 
+async function validateMirroredSkills(errors) {
+  const mirroredFiles = [
+    [
+      'skills/capgo-native-builds/SKILL.md',
+      'plugins/capgo-cloud/skills/capgo-native-builds/SKILL.md',
+    ],
+    [
+      'skills/capgo-native-builds/metadata.json',
+      'plugins/capgo-cloud/skills/capgo-native-builds/metadata.json',
+    ],
+  ];
+
+  for (const [canonicalRelative, mirrorRelative] of mirroredFiles) {
+    const canonicalPath = path.join(root, canonicalRelative);
+    const mirrorPath = path.join(root, mirrorRelative);
+
+    let canonical;
+    let mirror;
+    try {
+      [canonical, mirror] = await Promise.all([
+        readFile(canonicalPath),
+        readFile(mirrorPath),
+      ]);
+    } catch {
+      errors.push(`mirrored skills: ${mirrorRelative} must exist and mirror ${canonicalRelative}`);
+      continue;
+    }
+
+    if (!canonical.equals(mirror)) {
+      errors.push(`mirrored skills: ${mirrorRelative} must match ${canonicalRelative} byte-for-byte`);
+    }
+  }
+}
+
 async function main() {
   const entries = await readdir(skillsDir, { withFileTypes: true });
   const skillDirs = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
@@ -215,6 +249,7 @@ async function main() {
   }
 
   await validateClaudeMarketplace(skillDirs, errors);
+  await validateMirroredSkills(errors);
 
   if (errors.length > 0) {
     console.error('Skill lint failed:');

@@ -1,17 +1,25 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Guide for Capgo native cloud build requests, credential management, and build output configuration.",
+  "date": "May 2026",
+  "abstract": "Guide for Capgo Cloud Build login, native iOS and Android build onboarding, signing credential management, build requests, output upload links, CI secrets, and troubleshooting.",
   "triggers": [
     "capgo build",
+    "capgo build init",
+    "capgo login build",
     "native build",
     "cloud build ios",
     "cloud build android",
+    "build credentials",
+    "output upload",
     "capgo native build"
   ],
   "references": [
+    "https://capgo.app/docs/cli/reference/build/",
+    "https://capgo.app/docs/cli/reference/login/",
+    "https://capgo.app/docs/cli/cloud-build/getting-started/",
     "https://capgo.app/docs/cli/cloud-build/ios/",
-    "https://capgo.app/docs/cli/cloud-build/android/"
+    "https://capgo.app/docs/cli/cloud-build/android/",
+    "https://capgo.app/docs/cli/cloud-build/credentials/"
   ]
 }
