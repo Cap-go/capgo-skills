@@ -55,8 +55,8 @@ Authentication precedence for build commands:
 
 1. `-a, --apikey <apikey>` on the command.
 2. `CAPGO_TOKEN` environment variable.
-3. Global key saved by `login` in `~/.capgo`.
-4. Local key saved by `login --local` in `.capgo`.
+3. Local key saved by `login --local` in `.capgo`.
+4. Global key saved by `login` in `~/.capgo`.
 
 Use `CAPGO_TOKEN` for CI secrets. Use `-a, --apikey` when creating a single copy-pasteable command for onboarding or support. Use `login --local` only when the key should stay scoped to this repository; verify `.capgo` is ignored by git.
 
