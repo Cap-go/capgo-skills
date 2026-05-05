@@ -96,7 +96,7 @@ Use manual credential commands instead when the user already has certificates, p
 Use this when the user already has Apple signing files:
 
 ```bash
-npx @capgo/cli@latest build credentials save --platform ios \
+npx @capgo/cli@latest build credentials save --appId com.example.app --platform ios \
   --certificate ./cert.p12 --p12-password "P12_PASSWORD" \
   --ios-provisioning-profile ./profile.mobileprovision \
   --apple-key ./AuthKey_KEYID.p8 --apple-key-id "KEY_ID" \
@@ -106,7 +106,7 @@ npx @capgo/cli@latest build credentials save --platform ios \
 For apps with extensions or multiple targets, repeat `--ios-provisioning-profile` and map each bundle ID:
 
 ```bash
-npx @capgo/cli@latest build credentials save --platform ios \
+npx @capgo/cli@latest build credentials save --appId com.example.app --platform ios \
   --ios-provisioning-profile com.example.app=./App.mobileprovision \
   --ios-provisioning-profile com.example.app.widget=./Widget.mobileprovision
 ```
@@ -114,7 +114,7 @@ npx @capgo/cli@latest build credentials save --platform ios \
 For ad-hoc iOS builds, set the distribution mode and collect the IPA with `--output-upload`:
 
 ```bash
-npx @capgo/cli@latest build credentials save --platform ios \
+npx @capgo/cli@latest build credentials save --appId com.example.app --platform ios \
   --ios-distribution ad_hoc \
   --certificate ./cert.p12 \
   --ios-provisioning-profile ./adhoc.mobileprovision \
@@ -126,7 +126,7 @@ npx @capgo/cli@latest build credentials save --platform ios \
 Use this when the user already has Android signing files:
 
 ```bash
-npx @capgo/cli@latest build credentials save --platform android \
+npx @capgo/cli@latest build credentials save --appId com.example.app --platform android \
   --keystore ./release.jks --keystore-alias "release-key" \
   --keystore-key-password "KEY_PASSWORD" \
   --keystore-store-password "STORE_PASSWORD" \
@@ -136,7 +136,7 @@ npx @capgo/cli@latest build credentials save --platform android \
 If the user only needs an APK/AAB download link and not Play upload, save `--output-upload` and omit or override Play upload:
 
 ```bash
-npx @capgo/cli@latest build credentials save --platform android \
+npx @capgo/cli@latest build credentials save --appId com.example.app --platform android \
   --keystore ./release.jks --keystore-alias "release-key" \
   --keystore-key-password "KEY_PASSWORD" \
   --keystore-store-password "STORE_PASSWORD" \
@@ -204,10 +204,10 @@ npx @capgo/cli@latest build credentials list --local
 Update only changed fields:
 
 ```bash
-npx @capgo/cli@latest build credentials update --platform ios \
+npx @capgo/cli@latest build credentials update --appId com.example.app --platform ios \
   --ios-provisioning-profile ./new-profile.mobileprovision
 
-npx @capgo/cli@latest build credentials update --platform android \
+npx @capgo/cli@latest build credentials update --appId com.example.app --platform android \
   --keystore ./new-release.jks
 ```
 
@@ -219,7 +219,7 @@ For iOS provisioning profile updates:
 Migrate legacy iOS provisioning credentials:
 
 ```bash
-npx @capgo/cli@latest build credentials migrate --platform ios
+npx @capgo/cli@latest build credentials migrate --appId com.example.app --platform ios
 ```
 
 Clear credentials only when the user wants removal:
@@ -263,7 +263,7 @@ Use repository or CI secret storage. Do not commit signing files or generated cr
 - Missing output destination: add store upload credentials or enable `--output-upload`.
 - No download link: request or save credentials with `--output-upload` and set `--output-retention` if the default TTL is too short.
 - iOS signing failure: verify certificate password, Apple Team ID, distribution mode, and every bundle ID to provisioning profile mapping.
-- Legacy iOS provisioning profile error: run `npx @capgo/cli@latest build credentials migrate --platform ios`.
+- Legacy iOS provisioning profile error: run `npx @capgo/cli@latest build credentials migrate --appId com.example.app --platform ios`.
 - Android signing failure: verify keystore path, alias, key password, store password, and product flavor.
 - Play upload should be skipped: use `--output-upload --no-playstore-upload`.
 - Monorepo dependency mismatch: pass the app-specific `--path` and `--node-modules` values.
