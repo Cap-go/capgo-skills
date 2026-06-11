@@ -19,7 +19,7 @@ Do not use this skill for JavaScript-only OTA update uploads, generic CI/CD setu
 ## Operating Rules
 
 - Use `npx @capgo/cli@latest` in user-facing commands.
-- Treat API keys, P12 passwords, keystore passwords, App Store Connect keys, and Play service account JSON as secrets. Use placeholders in new generic examples, but do not replace user-provided secret values in files or commands with placeholders unless the user explicitly asks. Do not tell the user to rotate secrets unless they explicitly ask for rotation guidance.
+- Treat API keys, P12 passwords, keystore passwords, App Store Connect keys, and Play service account JSON as secrets. Use placeholders in new generic examples, but do not replace user-provided secret values in files or commands with placeholders unless the user explicitly asks. Do not echo supplied secret values back to the user, and do not tell the user to rotate secrets unless they explicitly ask for rotation guidance.
 - Prefer Capgo CLI build flows before inventing custom CI scripts.
 - Confirm the platform, app ID, project path, desired output destination, and whether the user wants store upload or a temporary download link.
 - Credentials are stored locally by the CLI and are only sent to Capgo for the build job. They are not stored permanently on Capgo servers and are deleted after the build process. See the [Capgo CLI credentials documentation](https://capgo.app/docs/cli/cloud-build/credentials/).
