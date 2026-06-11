@@ -30,7 +30,16 @@ Move dense rules, large schemas, and reusable templates into `references/` or `a
 
 Use `scripts/` only for fragile or repetitive logic that should not be re-authored by the agent.
 
-### Step 3: Use Progressive Disclosure
+### Step 3: Match Command Context
+
+Keep command examples aligned with how the skill will be consumed.
+
+- Use standard `npm` and `npx` examples in skill prose, public docs, and marketing copy unless the skill is specifically about Bun.
+- Use `npx ...@latest` for Capacitor and Capgo CLI examples so consumers get the expected package version.
+- Use `bun`, `bun run`, and `bunx` only for this repository's development commands, CI commands, or Bun-specific skills.
+- When a skill tells an agent to edit a target repository, tell it to read that repository's instructions and follow that repository's package-manager policy before executing commands.
+
+### Step 4: Use Progressive Disclosure
 
 Command the agent to read supporting files only when the current step needs them.
 
@@ -42,17 +51,23 @@ Only do this when the command materially improves the invoked prompt, and keep t
 
 If a skill uses inline commands, declare the minimum required `allowed-tools` entries in frontmatter and keep them read-only.
 
-### Step 4: Add Validation
+### Step 5: Add Validation
 
 Create a `skillgrade` eval when the skill needs regression testing.
 
 Use a deterministic grader for structural checks and an LLM rubric only when qualitative judgment is necessary.
 
-### Step 5: Review for Hallucination Gaps
+### Step 6: Review for Hallucination Gaps
 
 Inspect the skill for any step where the agent is forced to guess.
 
 Replace ambiguous prose with concrete commands, file names, or output expectations.
+
+### Step 7: Preserve Sensitive Values
+
+When a skill edits user files, instruct the agent not to replace user-provided tokens, keys, certificates, passwords, or other secrets with placeholders unless the user explicitly asks.
+
+Use placeholders for new generic examples only. Do not tell users to rotate secrets unless they explicitly ask for rotation guidance.
 
 ## Error Handling
 

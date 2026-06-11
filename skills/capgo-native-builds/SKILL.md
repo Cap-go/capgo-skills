@@ -11,7 +11,7 @@ Use this skill when the user wants Capgo to build native iOS or Android binaries
 
 - The user asks for a Capgo Cloud Build, native build, signed IPA/APK/AAB, TestFlight/App Store build, Play Store build, or temporary build download link.
 - The user needs Capgo CLI login, build API-key setup, or help choosing between `login`, `CAPGO_TOKEN`, and `-a, --apikey`.
-- The user needs iOS build onboarding, Apple signing setup, Android keystore setup, Play service account setup, or credential rotation.
+- The user needs iOS build onboarding, Apple signing setup, Android keystore setup, Play service account setup, or explicitly asks for credential rotation.
 - The user asks about `build init`, `build request`, `build credentials save`, `build credentials update`, `build credentials list`, `build credentials clear`, or `build credentials migrate`.
 
 Do not use this skill for JavaScript-only OTA update uploads, generic CI/CD setup, or local native builds that do not involve Capgo Cloud Build.
@@ -19,7 +19,7 @@ Do not use this skill for JavaScript-only OTA update uploads, generic CI/CD setu
 ## Operating Rules
 
 - Use `npx @capgo/cli@latest` in user-facing commands.
-- Treat API keys, P12 passwords, keystore passwords, App Store Connect keys, and Play service account JSON as secrets. Use placeholders in examples and do not echo secret values back to the user.
+- Treat API keys, P12 passwords, keystore passwords, App Store Connect keys, and Play service account JSON as secrets. Use placeholders in new generic examples, but do not replace user-provided secret values in files or commands with placeholders unless the user explicitly asks. Do not tell the user to rotate secrets unless they explicitly ask for rotation guidance.
 - Prefer Capgo CLI build flows before inventing custom CI scripts.
 - Confirm the platform, app ID, project path, desired output destination, and whether the user wants store upload or a temporary download link.
 - Credentials are stored locally by the CLI and are only sent to Capgo for the build job. They are not stored permanently on Capgo servers and are deleted after the build process. See the [Capgo CLI credentials documentation](https://capgo.app/docs/cli/cloud-build/credentials/).
