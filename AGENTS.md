@@ -29,6 +29,13 @@ bun run lint
 4. **Format** - `bun run fmt` auto-fixes ESLint, Prettier, and SwiftLint issues
 5. **Lint** - `bun run lint` checks code quality without modifying files
 
+## Command Context Rules
+
+- **Repository development and CI commands**: use `bun`, `bun run`, and `bunx`. Do not use `npm`, `npm run`, or `npx` for commands you execute in this repository.
+- **Skill content, documentation, and marketing copy**: keep standard JavaScript ecosystem commands such as `npm install`, `npm run build`, and `npx ...` unless the skill is specifically about Bun.
+- **Capacitor and Capgo commands inside skills**: prefer `npx ...@latest` examples. Do not rewrite skill examples to `bunx` just because this repository itself uses Bun.
+- **Nested target repositories**: if a task operates inside another repository, read that repository's instructions and use its local command policy.
+
 ### Individual Platform Verification
 
 ```bash
@@ -47,7 +54,7 @@ bun install
 bun run start
 ```
 
-The example app references the plugin via `file:..`. Use `npx cap sync <platform>` to sync native platforms.
+The example app references the plugin via `file:..`. In skill prose, use `npx cap sync <platform>` examples. When executing commands locally in this repository, use the repository command policy above.
 
 ## Project Structure
 
@@ -76,6 +83,16 @@ The plugin major version follows the Capacitor major version (e.g., plugin v8 fo
 
 `CHANGELOG.md` is managed automatically by CI/CD. Do not edit it manually.
 
+## Browser Automation
+
+Use headless browser automation by default. Use a visible browser only when the user needs to interact with the browser or the task requires an authenticated/manual web flow.
+
+## Secrets and Tokens
+
+- Do not replace user-provided tokens, API keys, passwords, certificates, or other secrets in repository files with placeholders unless the user explicitly asks.
+- Do not tell the user to rotate secrets unless they explicitly ask for rotation guidance.
+- Use placeholders only in generic examples, templates, or new documentation that is not preserving a user-supplied value.
+
 ## Pull Request Guidelines
 
 We welcome contributions, including AI-generated pull requests. Every PR must include:
@@ -92,13 +109,13 @@ We welcome contributions, including AI-generated pull requests. Every PR must in
 
 - **No breaking changes** unless aligned with a new Capacitor major release.
 - Run `bun run verify` and `bun run fmt` before opening a PR. CI will catch failures, but catching them locally saves time.
+- Open PRs as draft until CI/CD passes. Wait for all test runs to finish, fix failures, and rerun until green before marking ready for review.
 - If you are an AI agent, that is perfectly fine. Just be transparent about it. We care that the code is correct and helpful, not who wrote it.
 - We review PRs on a best-effort basis. We may request changes — you are expected to address them for the PR to be merged.
-- We use automated code review tools (CodeRabbit, and others). You will need to respond to their feedback and resolve any issues they raise.
+- We use automated code review tools (CodeRabbit, and others). Wait until any "Review in progress" state is gone, then address actionable comments, rerun checks, resolve the comments, and repeat until no actionable review comments remain.
 - We have automatic releases. Once merged, your change will ship in the next release cycle.
 
-Always use NPX in skills never use bunx. NPX will ensure the correct version of the plugin is used in skills, while Bun is for development and CI/CD tasks.
-It's allowed to use bun in skills if the skill is about Bun itself, but for any Capacitor-related skill, use NPX to run plugin commands. This ensures compatibility and prevents issues with different Bun versions across environments.
+Always use NPX in skills and never use Bunx in skill examples. NPX ensures the expected package version is used by the consumer. Bun and Bunx are for this repository's development and CI/CD tasks, or for skills specifically about Bun.
 
 ### PR Template
 
@@ -125,4 +142,4 @@ It's allowed to use bun in skills if the skill is about Bun itself, but for any 
 - We only use Java 21 for Android builds.
 - Keep temporary files clean: delete or mark with `deleteOnExit` after use.
 - `dist/` is fully regenerated on every build — never edit generated files.
-- Use Bun for everything. Do not use npm or npx. Use `bunx` if you need to run a package binary.
+- Use Bun for repository commands. Do not use npm or npx for commands you execute in this repo. Use `bunx` if you need to run a package binary locally.
