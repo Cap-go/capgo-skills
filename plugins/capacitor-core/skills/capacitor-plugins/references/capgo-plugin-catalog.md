@@ -81,7 +81,7 @@ Total packages: 138
 | Intune | `@capgo/capacitor-intune` | Capacitor plugin for Microsoft Intune MAM enrollment, app protection policies, app config, and MSAL authentication. | [source](https://github.com/Cap-go/capacitor-intune) |
 | Is Root | `@capgo/capacitor-is-root` | Jailbreak/Root Detection Plugin for Capacitor | [source](https://github.com/Cap-go/capacitor-is-root) |
 | IVS Player | `@capgo/capacitor-ivs-player` | Ivs player for capacitor app | [source](https://github.com/Cap-go/capacitor-ivs-player) |
-| JW Player | `@capgo/capacitor-jw-player` | Playes videos from jwplayer.com | [source](https://github.com/Cap-go/capacitor-jw-player) |
+| JW Player | `@capgo/capacitor-jw-player` | Plays videos from jwplayer.com | [source](https://github.com/Cap-go/capacitor-jw-player) |
 | Keep Awake | `@capgo/capacitor-keep-awake` | Prevent the device screen from dimming or sleeping. | [source](https://github.com/Cap-go/capacitor-keep-awake) |
 | Launch Navigator | `@capgo/capacitor-launch-navigator` | Capacitor plugin which launches native route navigation apps for Android, iOS | [source](https://github.com/Cap-go/capacitor-launch-navigator) |
 | Light Sensor | `@capgo/capacitor-light-sensor` | Capacitor plugin for accessing the device light sensor (Android only) | [source](https://github.com/Cap-go/capacitor-light-sensor) |
@@ -93,7 +93,7 @@ Total packages: 138
 | Mute | `@capgo/capacitor-mute` | Detect if the mute switch is enabled/disabled on a device | [source](https://github.com/Cap-go/capacitor-mute) |
 | Mux Player | `@capgo/capacitor-mux-player` | Native Mux Player SDK to play video on IOS and Android | [source](https://github.com/Cap-go/capacitor-mux-player) |
 | Native Audio | `@capgo/capacitor-native-audio` | A native plugin for native audio engine | [source](https://github.com/Cap-go/capacitor-native-audio) |
-| Native Biometric | `@capgo/capacitor-native-biometric` | This plugin gives access to the native biometric apis for android and iOS | [source](https://github.com/Cap-go/capacitor-native-biometric) |
+| Native Biometric | `@capgo/capacitor-native-biometric` | This plugin provides access to the native biometric APIs for Android and iOS | [source](https://github.com/Cap-go/capacitor-native-biometric) |
 | Native Loader | `@capgo/capacitor-native-loader` | Capacitor plugin for native animated loaders, fullscreen overlays, Lottie assets, and WebView resizing. | [source](https://github.com/Cap-go/capacitor-native-loader) |
 | Native Market | `@capgo/capacitor-native-market` | A native market plugin for linking to google play or app store. | [source](https://github.com/Cap-go/capacitor-native-market) |
 | Native Navigation | `@capgo/capacitor-native-navigation` | Capacitor plugin for native navbar, tabbar, safe-area handling, and WebView snapshot transitions. | [source](https://github.com/Cap-go/capacitor-native-navigation) |
@@ -129,7 +129,7 @@ Total packages: 138
 | SSL Pinning | `@capgo/capacitor-ssl-pinning` | Capacitor SSL pinning plugin for Android and iOS that integrates with CapacitorHttp. | [source](https://github.com/Cap-go/capacitor-ssl-pinning) |
 | Stream Call | `@capgo/capacitor-stream-call` | Uses the https://getstream.io/ SDK to implement calling in Capacitor | [source](https://github.com/Cap-go/capacitor-streamcall) |
 | Supabase | `@capgo/capacitor-supabase` | Native Supabase SDK integration for Capacitor - Auth, Database, and JWT access | [source](https://github.com/Cap-go/capacitor-supabase) |
-| Textinteraction | `@capgo/capacitor-textinteraction` | Toggle text interaction in Capacitor based iOS apps. | [source](https://github.com/Cap-go/capacitor-textinteraction) |
+| Text Interaction | `@capgo/capacitor-textinteraction` | Toggle text-interaction in Capacitor based iOS apps. | [source](https://github.com/Cap-go/capacitor-textinteraction) |
 | Transitions | `@capgo/capacitor-transitions` | Framework-agnostic page transitions for Capacitor apps - iOS-style navigation without opinions | [source](https://github.com/Cap-go/capacitor-transitions) |
 | Twilio Video | `@capgo/capacitor-twilio-video` | Capacitor plugin for joining Twilio Video rooms with a native in-app call surface and media controls. | [source](https://github.com/Cap-go/capacitor-twilio-video) |
 | Twilio Voice | `@capgo/capacitor-twilio-voice` | Integrates the Twilio Voice SDK into Capacitor | [source](https://github.com/Cap-go/capacitor-twilio-voice) |
@@ -144,10 +144,10 @@ Total packages: 138
 | Webview Crash | `@capgo/capacitor-webview-crash` | Capacitor plugin for detecting WebView crash recovery and restarting long-running WebViews natively. | [source](https://github.com/Cap-go/capacitor-webview-crash) |
 | Webview Guardian | `@capgo/capacitor-webview-guardian` | Capacitor plugin to Detect when the WebView was killed in the background and relaunch it on foreground. | [source](https://github.com/Cap-go/capacitor-webview-guardian) |
 | Webview Version Checker | `@capgo/capacitor-webview-version-checker` | Capacitor plugin for checking outdated Android WebView engines, emitting status events, and presenting native update prompts. | [source](https://github.com/Cap-go/capacitor-webview-version-checker) |
-| Wechat | `@capgo/capacitor-wechat` | WeChat SDK for Capacitor - enables authentication, sharing, payments, and mini-programs | [source](https://github.com/Cap-go/capacitor-wechat) |
+| WeChat | `@capgo/capacitor-wechat` | WeChat SDK for Capacitor - enables authentication, sharing, payments, and mini-programs | [source](https://github.com/Cap-go/capacitor-wechat) |
 | Widget Kit | `@capgo/capacitor-widget-kit` | Capacitor plugin for generic iOS Home Screen widgets, WidgetKit, and Live Activities using SVG templates, declarative actions, and shared App Group persistence. | [source](https://github.com/Cap-go/capacitor-widget-kit) |
 | WiFi | `@capgo/capacitor-wifi` | Manage WiFi connectivity for your Capacitor app | [source](https://github.com/Cap-go/capacitor-wifi) |
-| Youtube Player | `@capgo/capacitor-youtube-player` | Capacitor player to embed YouTube player controls in Capacitor apps | [source](https://github.com/Cap-go/capacitor-youtube-player) |
+| YouTube Player | `@capgo/capacitor-youtube-player` | Capacitor player to embed YouTube player controls in Capacitor apps | [source](https://github.com/Cap-go/capacitor-youtube-player) |
 | Zebra Datawedge | `@capgo/capacitor-zebra-datawedge` | Capacitor plugin for Zebra DataWedge profile management, notifications, queries, and soft scanning on Zebra Android devices. | [source](https://github.com/Cap-go/capacitor-zebra-datawedge) |
 | Zip | `@capgo/capacitor-zip` | A free Capacitor plugin for zipping and unzipping files on iOS, Android, and Web. | [source](https://github.com/Cap-go/capacitor-zip) |
 | Native Purchases | `@capgo/native-purchases` | In-app Subscriptions Made Easy | [source](https://github.com/Cap-go/capacitor-native-purchases) |

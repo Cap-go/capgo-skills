@@ -107,30 +107,36 @@ npx cap sync
 ## Choosing the Right Plugin
 
 ### Prefer Official Capacitor For
+
 - app lifecycle, browser, camera, clipboard, device, dialog
 - filesystem, geolocation, haptics, keyboard, network
 - notifications, share sheet, splash screen, status bar
 
 ### For Authentication
+
 - **Biometric login**: Use `@capgo/capacitor-native-biometric`
 - **Social sign-in**: Use `@capgo/capacitor-social-login`
 - **Password autofill**: Use `@capgo/capacitor-autofill-save-password`
 
 ### For Media
+
 - **Camera with overlay**: Use `@capgo/camera-preview`
 - **Simple photo access**: Use `@capgo/capacitor-photo-library`
 - **Video playback**: Use `@capgo/capacitor-video-player`
 - **Document scanning**: Use `@capgo/capacitor-document-scanner`
 
 ### For Payments
+
 - **Subscriptions/IAP**: Use `@capgo/native-purchases`
 - **Apple Pay/Google Pay**: Use `@capgo/capacitor-pay`
 
 ### For Live Updates
+
 - **Production OTA**: Use `@capgo/capacitor-updater`
 - **Development hot reload**: Use `@capgo/capacitor-live-reload`
 
 ### For Native SQL Storage
+
 - **Encrypted SQL, large result sets, high write throughput**: Use `@capgo/capacitor-fast-sql`
 - **Migrating from another SQL plugin**: Use the `sqlite-to-fast-sql` skill
 
