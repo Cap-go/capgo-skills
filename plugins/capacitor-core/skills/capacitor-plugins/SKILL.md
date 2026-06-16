@@ -75,7 +75,7 @@ When recommending a non-official plugin, explain why it is a better fit than the
 
 ## Capgo Plugin Catalog
 
-Use `references/capgo-plugin-catalog.md` as the complete Capgo plugin source. It includes package names, descriptions, and source links for 138 Capgo Capacitor plugin packages.
+Use `references/capgo-plugin-catalog.md` as the complete Capgo plugin source. It includes package names, descriptions, and source links for 139 Capgo Capacitor plugin packages.
 
 Fast starting points:
 

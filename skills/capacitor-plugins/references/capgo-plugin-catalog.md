@@ -9,7 +9,7 @@ npm install <exact-package-name>
 npx cap sync
 ```
 
-Total packages: 138
+Total packages: 139
 
 | Plugin | Package | Description | Source |
 |--------|---------|-------------|--------|
@@ -51,6 +51,7 @@ Total packages: 138
 | Env | `@capgo/capacitor-env` | Set Env var in Capacitor config and read them at runtime | [source](https://github.com/Cap-go/capacitor-env) |
 | Facebook Analytics | `@capgo/capacitor-facebook-analytics` | Capacitor plugin for Meta/Facebook App Events analytics. | [source](https://github.com/Cap-go/capacitor-facebook-analytics) |
 | Fast Sql | `@capgo/capacitor-fast-sql` | High-performance native SQLite plugin with custom protocol for efficient sync operations and IndexedDB replacement | [source](https://github.com/Cap-go/capacitor-fast-sql) |
+| FFmpeg | `@capgo/capacitor-ffmpeg` | Exposes the FFmpeg API to Capacitor | [source](https://github.com/Cap-go/capacitor-ffmpeg) |
 | File | `@capgo/capacitor-file` | Capacitor plugin for file system operations, compatible with Cordova File plugin API | [source](https://github.com/Cap-go/capacitor-file) |
 | File Compressor | `@capgo/capacitor-file-compressor` | Capacitor plugin for efficient image compression supporting PNG, JPEG, and WebP formats across iOS, Android, and Web platforms | [source](https://github.com/Cap-go/capacitor-file-compressor) |
 | File Picker | `@capgo/capacitor-file-picker` | File picker Capacitor plugin - Pick files, images, videos, and directories | [source](https://github.com/Cap-go/capacitor-file-picker) |
