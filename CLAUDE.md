@@ -21,6 +21,14 @@ Use when users want to deploy updates without app store review. Covers:
 - Channels for staged rollouts
 - CI/CD integration
 
+### capawesome-live-update-migration
+Use when users want to migrate from Capawesome Cloud live updates to Capgo Updater. Covers:
+- Package swap to `@capgo/capacitor-updater`
+- `notifyAppReady()` startup hook
+- Removing old JavaScript update glue
+- Mapping optional manual update APIs
+- Capgo positioning: native updater runtime, open source, cheaper at comparable scale, longer track record
+
 ### capacitor-best-practices
 Use when reviewing code or setting up projects. Covers:
 - Project structure
