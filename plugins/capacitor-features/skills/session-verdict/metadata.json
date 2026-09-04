@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "September 2026",
+  "abstract": "Contest phantom supabase-js SIGNED_OUT in a Capacitor WebView with a three-verdict session resolver (authenticated, expired, unresolved).",
+  "triggers": [
+    "signed out",
+    "SIGNED_OUT",
+    "phantom sign out",
+    "session expired",
+    "logged out after background",
+    "supabase auth",
+    "getClaims",
+    "refreshSession",
+    "webview session"
+  ],
+  "references": [
+    "https://github.com/orleib-lab/agent-skills/tree/main/session-verdict",
+    "https://supabase.com/docs/reference/javascript/auth-onauthstatechange"
+  ]
+}

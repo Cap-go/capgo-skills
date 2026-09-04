@@ -1,7 +1,7 @@
 {
   "name": "@capgo/capgo-skills",
   "version": "1.1.0",
-  "description": "49 agent skills for Capacitor mobile development",
+  "description": "50 agent skills for Capacitor mobile development",
   "keywords": [
     "capacitor",
     "tanstack-intent",
@@ -49,6 +49,7 @@
     "capacitor-deep-linking",
     "capacitor-offline-first",
     "capacitor-keyboard",
+    "session-verdict",
     "capacitor-performance",
     "capacitor-accessibility",
     "capacitor-app-store",

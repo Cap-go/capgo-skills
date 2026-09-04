@@ -9,7 +9,7 @@
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
 
-A collection of **49 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
+A collection of **50 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
 
 ## Compatibility
 
@@ -117,6 +117,7 @@ claude plugin install capgo-cloud@capgo-skills
 | [capacitor-deep-linking](./skills/capacitor-deep-linking) | Universal links and app links |
 | [capacitor-offline-first](./skills/capacitor-offline-first) | Offline-first architecture |
 | [capacitor-keyboard](./skills/capacitor-keyboard) | Keyboard handling |
+| [session-verdict](./skills/session-verdict) | Contest phantom supabase-js `SIGNED_OUT` in the WebView |
 
 ### Performance & Accessibility
 
@@ -205,6 +206,8 @@ Skills activate automatically when agents detect relevant tasks:
 - "Add push notifications" → capacitor-push-notifications
 - "Implement deep linking" → capacitor-deep-linking
 - "Make app work offline" → capacitor-offline-first
+- "Logged out after backgrounding iOS" → session-verdict
+- "supabase-js SIGNED_OUT bounce" → session-verdict
 
 ### Deployment
 - "Run a Capgo build" → capgo-native-builds
