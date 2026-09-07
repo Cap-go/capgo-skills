@@ -58,12 +58,12 @@ Done when no guard redirects on `unresolved`.
 On `onAuthStateChange` → `SIGNED_OUT`:
 
 1. If this process just requested sign-out (an **intentional** exit flag you set before `signOut()`), complete cleanup and leave. That tap is a request; the flag is how you know it is not a phantom.
-2. Otherwise call `resolveSession()`.
+2. Otherwise **return from the callback first**, then run `resolveSession()` (queue with `setTimeout(..., 0)` or equivalent). Do not `await` `getClaims()` / `refreshSession()` inside the listener — older auth-js can deadlock ([auth-js#762](https://github.com/supabase/gotrue-js/issues/762)).
 3. `authenticated` → mark a short contest window (~30s) and return. Do not wipe. Do not redirect.
 4. `unresolved` with reason `network` → return. Hold the current UI.
 5. `expired` → cleanup, redirect to re-auth.
 
-During the contest window, later auth errors are definitive: a real expiry right after a successful contest must not be swallowed.
+During the contest window, only a later **definitive invalid-session** result (`expired`) is terminal. Network, `storage_pending`, and other `unresolved` results stay unresolved — do not redirect to login.
 
 `peekSession()` is not enough here. Contesting requires `resolveSession()`.
 
@@ -73,9 +73,9 @@ Done when a background-resume `SIGNED_OUT` with a still-valid refresh token leav
 
 Full sequence: [references/algorithm.md](references/algorithm.md).
 
-1. Read the cached session (durable native storage on Capacitor, not WebView `localStorage` alone).
+1. Read an **app-owned durable snapshot** (Preferences key the Auth client does not `removeItem` on `SIGNED_OUT`). Do not contest by reading supabase-js’s own storage after the event — that wipe is why a naive `getSession()` always looks expired. Hydrate the client with `setSession` from that snapshot before `getClaims()` / `refreshSession()`.
 2. If native storage is still warming, return `unresolved` / `storage_pending` — not login.
-3. No cached user → `expired` / `no_token`.
+3. No snapshot tokens → `expired` / `no_token`.
 4. `getClaims()` up to twice (cached JWKS; faster than `getUser()`). Network errors stay `unresolved`.
 5. Claims rejected → `refreshSession()`. Network errors stay `unresolved`. Hard refresh failure → `expired`.
 
@@ -91,7 +91,7 @@ Done when you can answer, from production events, whether a login bounce was `ex
 
 ## Guardrails
 
-- **Intentional exit** is a flag you set, then call `signOut()`. A `SIGNED_OUT` without that flag is contested.
+- **Intentional exit** is a flag you set, then call `signOut()`, and clear in `finally` (success and failure). A `SIGNED_OUT` without that flag is contested.
 - Do not hard-redirect to `/` on `SIGNED_OUT`. Re-auth should keep `returnTo`.
 - Do not show the logged-out empty state (onboarding, marketing home, provider buttons) while the verdict is `unresolved`.
 - After a successful contest, do not also have a second listener wipe the query cache. Every listener contests or it races.

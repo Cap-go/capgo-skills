@@ -13,12 +13,23 @@ Portable sequence for `resolveSession()`. Adapt storage reads to the host; keep 
 | `refresh_failed` | `expired` |
 | `token_expired_no_refresh` | `expired` |
 
-Treat as network: `navigator.onLine === false`, and error messages matching `failed to fetch`, `networkerror`, `network request failed`, `load failed`, `timeout`, `aborted`, `net::err_`.
+Treat as network: `navigator.onLine === false`, or an error message that **case-insensitively** includes `failed to fetch`, `networkerror`, `network request failed`, `load failed`, `timeout`, `aborted`, or `net::err_` (so `Failed to fetch` is network, not expired).
+
+## App-owned session snapshot
+
+supabase-js `SIGNED_OUT` clears **its** storage (`removeItem` on the Auth adapter, usually `sb-<ref>-auth-token`). A resolver that then calls `getSession()` always sees no user and returns `expired` — the bounce this skill exists to stop.
+
+Keep a second copy the Auth client does not own:
+
+- On `SIGNED_IN` and `TOKEN_REFRESHED`, write `access_token` + `refresh_token` to an app-owned Preferences key (not the `sb-*-auth-token` key).
+- Auth may still use a Preferences adapter for the official key (WebView `localStorage` eviction). That adapter is for persistence. The contest snapshot is for recovery after a phantom wipe.
+- One hydration barrier: do not call `getClaims()` or `refreshSession()` until that snapshot (and the Auth adapter, if native) has been read to completion. While the bridge is warming, return `unresolved` / `storage_pending`.
+- To contest: `readDurableSession()` reads the **app-owned** snapshot. If tokens exist, `setSession` them into the client, then validate.
 
 ## Sequence
 
 ```
-cached = readDurableSession()          # Preferences on native, then seed localStorage
+cached = readDurableSession()          # app-owned snapshot; hydrate Auth before claims
 if !cached.definitive: return unresolved / storage_pending
 if !cached.user:       return expired / no_token
 
@@ -42,17 +53,21 @@ return expired / refresh_failed | token_expired_no_refresh
 
 ## Contest window
 
-After a phantom `SIGNED_OUT` resolves to `authenticated`, set a module-level flag for ~30 seconds. While it is set, treat subsequent auth errors as real expiry so a genuine dead refresh token is not recovered forever.
+After a phantom `SIGNED_OUT` resolves to `authenticated`, set a module-level flag for ~30 seconds. While it is set, only a later **definitive invalid-session** result (`expired` / `refresh_failed` / `token_expired_no_refresh`) is terminal. `unresolved` (network, `storage_pending`, claims timeout) stays `unresolved` — do not redirect to login.
 
 ## Intentional exit
 
 ```
 setIntentionalSignOutFlag()
-await supabase.auth.signOut()
-# SIGNED_OUT handler sees the flag → cleanup, no contest
+try {
+  await supabase.auth.signOut()
+  # SIGNED_OUT handler sees the flag → cleanup, no contest
+} finally {
+  clearIntentionalSignOutFlag()
+}
 ```
 
-Clear the flag after cleanup. If sign-out fails, leave the user authenticated (fail closed) rather than half-clearing.
+Clear the flag in `finally` on both success and failure so a rejected `signOut()` cannot leave the flag set. If sign-out fails, leave the user authenticated (fail closed) rather than half-clearing.
 
 ## Proactive refresh on resume
 
