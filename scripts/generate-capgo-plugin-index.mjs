@@ -1,3 +1,6 @@
+/**
+ * Build Capgo plugin catalog and index Markdown from Cap-go GitHub repositories.
+ */
 import { writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -10,6 +13,7 @@ const MIRROR_DIR = path.join(ROOT, 'plugins/capacitor-core/skills/capacitor-plug
 
 const REPO_FILTER = /^(capacitor-|cordova-updater)/;
 
+/** Call the GitHub REST API with optional retries on rate limits. */
 async function gh(pathname, retries = 4) {
   const headers = { Accept: 'application/vnd.github+json', 'User-Agent': 'capgo-skills-generator' };
   const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
@@ -25,6 +29,7 @@ async function gh(pathname, retries = 4) {
   }
 }
 
+/** Paginate a GitHub list endpoint until all pages are fetched. */
 async function ghPaginate(pathname) {
   const items = [];
   let page = 1;
@@ -39,6 +44,7 @@ async function ghPaginate(pathname) {
   return items;
 }
 
+/** Fetch a raw file from a repository branch, or null when missing. */
 async function rawText(repo, filePath, branch) {
   const url = `https://raw.githubusercontent.com/${ORG}/${repo}/${branch}/${filePath}`;
   const res = await fetch(url);
@@ -46,12 +52,14 @@ async function rawText(repo, filePath, branch) {
   return res.text();
 }
 
+/** Return whether a raw file exists on a repository branch. */
 async function rawExists(repo, filePath, branch) {
   const url = `https://raw.githubusercontent.com/${ORG}/${repo}/${branch}/${filePath}`;
   const res = await fetch(url, { method: 'HEAD' });
   return res.ok;
 }
 
+/** Load and parse package.json from a repository path. */
 async function fetchPackageJson(repo, pkgPath, branch) {
   const rel = pkgPath ? `${pkgPath}/package.json` : 'package.json';
   let text = await rawText(repo, rel, branch);
@@ -64,6 +72,7 @@ async function fetchPackageJson(repo, pkgPath, branch) {
   }
 }
 
+/** List publishable @capgo packages under packages/ in a monorepo. */
 async function listMonorepoPackages(repo, branch) {
   let contents;
   try {
@@ -84,6 +93,7 @@ async function listMonorepoPackages(repo, branch) {
   return out;
 }
 
+/** Discover Capgo plugin packages exported by one GitHub repository. */
 async function discoverPackages(repo, branch) {
   const rootPkg = await fetchPackageJson(repo, '', branch);
   const monorepo = await listMonorepoPackages(repo, branch);
@@ -96,6 +106,7 @@ async function discoverPackages(repo, branch) {
   return [];
 }
 
+/** Build a human-readable plugin title from an npm package name. */
 function titleFromPackage(name) {
   if (name === '@capgo/cordova-updater') return 'Cordova Updater';
   const base = name.replace(/^@capgo\//, '').replace(/^capacitor-/, '').replace(/^cordova-/, '');
@@ -105,6 +116,7 @@ function titleFromPackage(name) {
     .join(' ');
 }
 
+/** Extract Promise-returning plugin method names from definitions.ts. */
 function extractMethods(definitionsText) {
   if (!definitionsText) return [];
   const methods = [];
@@ -119,6 +131,7 @@ function extractMethods(definitionsText) {
   return unique.slice(0, 12);
 }
 
+/** Infer supported platforms from a package description when explicit. */
 function platformsFromDescription(description) {
   const desc = description || '';
   if (/\(android only\)|android-only|android only/i.test(desc)) return ['Android'];
@@ -126,6 +139,7 @@ function platformsFromDescription(description) {
   return null;
 }
 
+/** Return true when the web implementation is more than a stub. */
 async function hasFunctionalWeb(repo, pkgPath, branch) {
   const relBase = pkgPath ? `${pkgPath}/` : '';
   const text =
@@ -138,6 +152,7 @@ async function hasFunctionalWeb(repo, pkgPath, branch) {
   return true;
 }
 
+/** Detect iOS, Android, and Web support for a plugin package. */
 async function detectPlatforms(repo, pkgPath, branch, pkg) {
   const fromDescription = platformsFromDescription(pkg.description);
   if (fromDescription) return fromDescription;
@@ -165,6 +180,7 @@ async function detectPlatforms(repo, pkgPath, branch, pkg) {
   return platforms;
 }
 
+/** Prefer the repository whose name best matches the npm package slug. */
 function repoPreferenceScore(item) {
   const pkgSlug = item.pkg.name.replace(/^@capgo\/(capacitor-|cordova-)?/, '');
   const repoSlug = item.repo.replace(/^capacitor-/, '').replace(/^cordova-/, '');
@@ -173,6 +189,7 @@ function repoPreferenceScore(item) {
   return 0;
 }
 
+/** Deduplicate packages that share the same npm name across repositories. */
 function dedupePackages(packages) {
   const byName = new Map();
   for (const item of packages) {
@@ -187,6 +204,7 @@ function dedupePackages(packages) {
   return [...byName.values()];
 }
 
+/** Resolve the Capgo documentation URL for a plugin package. */
 function docsUrl(pkg) {
   const slug = pkg.name.replace(/^@capgo\/(capacitor-|cordova-)?/, '');
   const docsFromPackage = `https://capgo.app/docs/plugins/${slug}/`;
@@ -197,6 +215,7 @@ function docsUrl(pkg) {
   return docsFromPackage;
 }
 
+/** Normalize whitespace and replace dash characters in free text. */
 function sanitize(text) {
   return (text || '')
     .replace(/\u2013|\u2014/g, '-')
@@ -204,10 +223,12 @@ function sanitize(text) {
     .trim();
 }
 
+/** Escape pipe characters for markdown table cells. */
 function escapeTableCell(value) {
   return sanitize(value).replace(/\|/g, ',');
 }
 
+/** Format one compact catalog table row. */
 function formatCatalogRow(entry) {
   const { title, pkg, repo } = entry;
   const desc = escapeTableCell(pkg.description || '');
@@ -216,6 +237,7 @@ function formatCatalogRow(entry) {
   return `| ${safeTitle} | \`${pkg.name}\` | ${desc} | [source](${source}) |`;
 }
 
+/** Format one detailed plugin index section. */
 function formatIndexEntry(entry) {
   const { title, pkg, repo, platforms, methods, branch } = entry;
   const desc = sanitize(pkg.description || 'Capacitor plugin from Capgo.');
@@ -243,6 +265,7 @@ npx cap sync
 `;
 }
 
+/** Run an async mapper over items with bounded concurrency. */
 async function mapPool(items, concurrency, fn) {
   const results = [];
   let index = 0;
@@ -256,6 +279,7 @@ async function mapPool(items, concurrency, fn) {
   return results;
 }
 
+/** Generate catalog and index files, exiting non-zero on discovery errors. */
 async function main() {
   if (!process.env.GITHUB_TOKEN && !process.env.GH_TOKEN) {
     console.error('Set GITHUB_TOKEN or GH_TOKEN before generating the plugin index.');
