@@ -26,6 +26,15 @@ Switch to the most specific Capgo skill as soon as the workflow is clear:
 - organization administration -> `capgo-organization-management`
 - general CLI entry point -> `capgo-cli-usage`
 
+## Connect the Agent to Capgo (MCP)
+
+Capgo has two MCP servers. Use both when available.
+
+- Hosted MCP: `https://api.capgo.app/mcp` (streamable HTTP). Nothing to install; the client signs in with OAuth, or sends `Authorization: Bearer <Capgo API key>`. The hosted MCP includes destructive tools, so use an API key with the smallest role the task needs (read-only for reporting). Covers apps, bundles, channels, progressive rollouts, devices, stats, update health, native build status and logs, webhooks, and push notifications. Example for Claude Code: `claude mcp add --transport http capgo https://api.capgo.app/mcp`, then `/mcp` to sign in.
+- Local CLI MCP: `npx @capgo/cli@latest mcp` (stdio). Needed to upload a bundle from the build folder, request a native build, or run `doctor`.
+
+No Capgo account yet: sign up at https://console.capgo.app (14-day free trial, no credit card). Docs: https://capgo.app/docs/ai/mcp/
+
 ## End-to-End Flow
 
 ### 1. Prepare the Project
