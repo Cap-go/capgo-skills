@@ -65,7 +65,13 @@ async function fetchPackageJson(repo, pkgPath, branch) {
 }
 
 async function listMonorepoPackages(repo, branch) {
-  const contents = await gh(`/repos/${ORG}/${repo}/contents/packages?ref=${branch}`).catch(() => null);
+  let contents;
+  try {
+    contents = await gh(`/repos/${ORG}/${repo}/contents/packages?ref=${branch}`);
+  } catch (error) {
+    if (String(error.message).includes(': 404')) return [];
+    throw error;
+  }
   if (!Array.isArray(contents)) return [];
   const out = [];
   for (const entry of contents) {
@@ -113,7 +119,29 @@ function extractMethods(definitionsText) {
   return unique.slice(0, 12);
 }
 
+function platformsFromDescription(description) {
+  const desc = description || '';
+  if (/\(android only\)|android-only|android only/i.test(desc)) return ['Android'];
+  if (/\(ios only\)|ios-only|ios only/i.test(desc)) return ['iOS'];
+  return null;
+}
+
+async function hasFunctionalWeb(repo, pkgPath, branch) {
+  const relBase = pkgPath ? `${pkgPath}/` : '';
+  const text =
+    (await rawText(repo, `${relBase}src/web.ts`, branch)) ||
+    (await rawText(repo, `${relBase}src/web.tsx`, branch));
+  if (!text) return false;
+  if (/isSupported:\s*false/.test(text) && !/isSupported:\s*true/.test(text)) return false;
+  const stubMarkers = text.match(/\.unavailable\(|\.unimplemented\(|not available on web/gi) || [];
+  if (stubMarkers.length >= 2 && !/isSupported\(\)[\s\S]{0,120}true/.test(text)) return false;
+  return true;
+}
+
 async function detectPlatforms(repo, pkgPath, branch, pkg) {
+  const fromDescription = platformsFromDescription(pkg.description);
+  if (fromDescription) return fromDescription;
+
   const files = pkg.files || [];
   const relBase = pkgPath ? `${pkgPath}/` : '';
   let hasIos = files.some((f) => f.startsWith('ios/'));
@@ -128,8 +156,7 @@ async function detectPlatforms(repo, pkgPath, branch, pkg) {
       (await rawExists(repo, `${relBase}android/build.gradle`, branch)) ||
       (await rawExists(repo, `${relBase}src/android`, branch));
   }
-  let hasWeb = await rawExists(repo, `${relBase}src/web.ts`, branch);
-  if (!hasWeb) hasWeb = await rawExists(repo, `${relBase}src/web.tsx`, branch);
+  const hasWeb = await hasFunctionalWeb(repo, pkgPath, branch);
 
   const platforms = [];
   if (hasIos) platforms.push('iOS');
@@ -160,10 +187,14 @@ function dedupePackages(packages) {
   return [...byName.values()];
 }
 
-function docsUrl(pkg, repo) {
-  if (pkg.homepage && pkg.homepage.startsWith('http')) return pkg.homepage;
-  const slug = repo.replace(/^capacitor-/, '').replace(/^cordova-/, '');
-  return `https://capgo.app/docs/plugins/${slug}/`;
+function docsUrl(pkg) {
+  const slug = pkg.name.replace(/^@capgo\/(capacitor-|cordova-)?/, '');
+  const docsFromPackage = `https://capgo.app/docs/plugins/${slug}/`;
+  const homepage = pkg.homepage?.startsWith('http') ? pkg.homepage.replace(/\/$/, '') : '';
+  if (homepage?.includes('/docs/plugins/')) {
+    return homepage.endsWith('/') ? homepage : `${homepage}/`;
+  }
+  return docsFromPackage;
 }
 
 function sanitize(text) {
@@ -188,13 +219,13 @@ function formatCatalogRow(entry) {
 function formatIndexEntry(entry) {
   const { title, pkg, repo, platforms, methods, branch } = entry;
   const desc = sanitize(pkg.description || 'Capacitor plugin from Capgo.');
-  const docs = docsUrl(pkg, repo);
+  const docs = docsUrl(pkg);
   const source = `https://github.com/${ORG}/${repo}`;
   const platformStr = platforms.length ? platforms.join(', ') : 'See repository';
   const methodStr = methods.length ? methods.map((m) => `\`${m}()\``).join(', ') : 'See `src/definitions.ts` in the repository';
   const installPath = entry.pkgPath ? `${repo} (${entry.pkgPath})` : repo;
 
-  return `### ${title}
+  return `## ${title}
 
 - **Package**: \`${pkg.name}\`
 - **Purpose**: ${desc}
@@ -226,6 +257,12 @@ async function mapPool(items, concurrency, fn) {
 }
 
 async function main() {
+  if (!process.env.GITHUB_TOKEN && !process.env.GH_TOKEN) {
+    console.error('Set GITHUB_TOKEN or GH_TOKEN before generating the plugin index.');
+    process.exit(1);
+  }
+
+  const discoveryErrors = [];
   const repos = await ghPaginate(`/orgs/${ORG}/repos`);
   const pluginRepos = repos
     .filter((r) => !r.archived && REPO_FILTER.test(r.name))
@@ -238,9 +275,15 @@ async function main() {
       const packages = await discoverPackages(repo, branch);
       for (const p of packages) allPackages.push(p);
     } catch (error) {
-      console.warn(`Skip ${repo}: ${error.message}`);
+      discoveryErrors.push(`${repo}: ${error.message}`);
     }
   });
+
+  if (discoveryErrors.length > 0) {
+    console.error('Plugin discovery failed:');
+    for (const message of discoveryErrors) console.error(`- ${message}`);
+    process.exit(1);
+  }
 
   const uniquePackages = dedupePackages(allPackages).sort((a, b) => a.pkg.name.localeCompare(b.pkg.name));
 
@@ -261,7 +304,7 @@ async function main() {
 
   const catalogHeader = `# Capgo Plugin Catalog
 
-Complete catalog of canonical Capgo Capacitor plugin packages from the [Cap-go](https://github.com/Cap-go) GitHub organization and [capgo.app/plugins](https://capgo.app/plugins/). Excludes archived repositories, example apps, templates, and worktrees.
+Complete catalog of canonical Capgo Capacitor plugin packages from the [Cap-go](https://github.com/Cap-go) GitHub organization and [capgo.app/plugins](https://capgo.app/plugins/). Excludes archived repositories.
 
 For install commands, platforms, key API methods, and documentation links, use \`capgo-plugin-index.md\` in this folder.
 
@@ -286,6 +329,8 @@ Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go 
 Facts come from each repository \`package.json\` and \`src/definitions.ts\`. API method names are taken from TypeScript definitions only.
 
 Total packages: ${enriched.length} (generated ${generatedAt})
+
+## Plugins
 
 `;
 

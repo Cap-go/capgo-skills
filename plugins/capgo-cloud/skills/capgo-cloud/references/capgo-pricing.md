@@ -8,7 +8,7 @@ Always re-check the pricing page before quoting numbers to customers. This file 
 
 - **14-day unlimited free trial**
 - **No credit card** required to start (also stated on the homepage)
-- **14-day money-back guarantee** on paid plans (FAQ on the pricing page)
+- **Refunds**: paid subscription fees are non-refundable except when required by law; Capgo may consider other refund requests case by case (pricing FAQ accordion)
 - Sign up: https://console.capgo.app
 
 ## Billing periods
@@ -18,7 +18,7 @@ Each paid plan shows:
 - **Yearly billing** prices (examples below labeled "per month" when billed annually)
 - **Monthly billing** prices (higher list prices on the comparison table)
 
-Yearly checkout shows about **20% savings** versus paying monthly (pricing calculator label: "Yearly Plan -20%").
+The pricing calculator labels yearly billing **"Yearly Plan -20%"**. That is marketing copy on the page, not the exact discount you get from multiplying the monthly list price by 12. Using the listed monthly and annual checkout prices, approximate savings versus 12 monthly payments are: Solo about 13%, Maker about 15%, Team about 16%, Enterprise about 17%.
 
 ## Plans (yearly per-month display vs monthly list)
 

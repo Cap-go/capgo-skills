@@ -6,7 +6,9 @@ Facts come from each repository `package.json` and `src/definitions.ts`. API met
 
 Total packages: 145 (generated 2026-10-08)
 
-### Background Geolocation
+## Plugins
+
+## Background Geolocation
 
 - **Package**: `@capgo/background-geolocation`
 - **Purpose**: Accurate background geolocation and native geofencing for Capacitor apps on iOS and Android.
@@ -22,7 +24,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/background-geolocation/
 - **Repository**: https://github.com/Cap-go/capacitor-background-geolocation
 
-### Camera Preview
+## Camera Preview
 
 - **Package**: `@capgo/camera-preview`
 - **Purpose**: Camera preview
@@ -33,12 +35,12 @@ npm install @capgo/camera-preview
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `stop()`, `captureSample()`, `startBarcodeScanner()`, `stopBarcodeScanner()`, `getAspectRatio()`, `setGridMode()`, `getGridMode()`, `checkPermissions()`, `requestPermissions()`, `setFlashMode()`, `flip()`, `setOpacity()`
 - **Docs**: https://capgo.app/docs/plugins/camera-preview/
 - **Repository**: https://github.com/Cap-go/capacitor-camera-preview
 
-### Accelerometer
+## Accelerometer
 
 - **Package**: `@capgo/capacitor-accelerometer`
 - **Purpose**: Read device accelerometer measurements with Capacitor
@@ -54,7 +56,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/accelerometer/
 - **Repository**: https://github.com/Cap-go/capacitor-accelerometer
 
-### Admob
+## Admob
 
 - **Package**: `@capgo/capacitor-admob`
 - **Purpose**: Capacitor plugin to bridge AdMob SDKs for iOS and Android
@@ -70,7 +72,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/admob/
 - **Repository**: https://github.com/Cap-go/capacitor-admob
 
-### Age Range
+## Age Range
 
 - **Package**: `@capgo/capacitor-age-range`
 - **Purpose**: Cross-platform age range detection. Google Play Age Signals on Android, Apple DeclaredAgeRange on iOS.
@@ -86,7 +88,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/age-range/
 - **Repository**: https://github.com/Cap-go/capacitor-age-range
 
-### Alarm
+## Alarm
 
 - **Package**: `@capgo/capacitor-alarm`
 - **Purpose**: Manage native alarm Capacitor plugin
@@ -97,12 +99,12 @@ npm install @capgo/capacitor-alarm
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `createAlarm()`, `openAlarms()`, `getOSInfo()`, `requestPermissions()`, `checkPermissions()`, `getPluginVersion()`, `cancelAlarm()`
 - **Docs**: https://capgo.app/docs/plugins/alarm/
 - **Repository**: https://github.com/Cap-go/capacitor-alarm
 
-### Android Age Signals
+## Android Age Signals
 
 - **Package**: `@capgo/capacitor-android-age-signals`
 - **Purpose**: Capacitor plugin that exposes Google Play Age Signals to your app.
@@ -118,7 +120,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/age-signals/
 - **Repository**: https://github.com/Cap-go/capacitor-android-age-signals
 
-### Android Inline Install
+## Android Inline Install
 
 - **Package**: `@capgo/capacitor-android-inline-install`
 - **Purpose**: Capacitor plugin to trigger Android inline install feature.
@@ -134,7 +136,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/android-inline-install/
 - **Repository**: https://github.com/Cap-go/capacitor-android-inline-install
 
-### Android Kiosk
+## Android Kiosk
 
 - **Package**: `@capgo/capacitor-android-kiosk`
 - **Purpose**: Android Kiosk Mode plugin for Capacitor - Lock device into kiosk mode with launcher functionality
@@ -150,7 +152,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/android-kiosk/
 - **Repository**: https://github.com/Cap-go/capacitor-android-kiosk
 
-### Android Sms Retriever
+## Android Sms Retriever
 
 - **Package**: `@capgo/capacitor-android-sms-retriever`
 - **Purpose**: Capacitor plugin for Android SMS Retriever and Phone Number Hint APIs.
@@ -161,12 +163,12 @@ npm install @capgo/capacitor-android-sms-retriever
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `startWatch()`, `stopWatch()`, `getHashString()`, `getPhoneNumber()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/android-sms-retriever/
 - **Repository**: https://github.com/Cap-go/capacitor-android-sms-retriever
 
-### Android Usagestatsmanager
+## Android Usagestatsmanager
 
 - **Package**: `@capgo/capacitor-android-usagestatsmanager`
 - **Purpose**: Exposes the Android's UsageStatsManager SDK to Capacitor
@@ -182,7 +184,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/android-usagestatsmanager/
 - **Repository**: https://github.com/Cap-go/capacitor-android-usagestatsmanager
 
-### App Attest
+## App Attest
 
 - **Package**: `@capgo/capacitor-app-attest`
 - **Purpose**: App Attest on iOS, Play Integrity on Android, and optional device fraud signals for Capacitor
@@ -193,12 +195,12 @@ npm install @capgo/capacitor-app-attest
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `isSupported()`, `getCapabilities()`, `prepare()`, `createAttestation()`, `createAssertion()`, `getWidevineFingerprint()`, `getDeviceCheckToken()`, `storeKeyId()`, `getStoredKeyId()`, `clearStoredKeyId()`, `generateKey()`, `attestKey()`
 - **Docs**: https://capgo.app/docs/plugins/app-attest/
 - **Repository**: https://github.com/Cap-go/capacitor-app-attest
 
-### App Tracking Transparency
+## App Tracking Transparency
 
 - **Package**: `@capgo/capacitor-app-tracking-transparency`
 - **Purpose**: Capacitor plugin for iOS App Tracking Transparency framework. Request user authorization to access app-related data for tracking.
@@ -214,7 +216,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/app-tracking-transparency/
 - **Repository**: https://github.com/Cap-go/capacitor-app-tracking-transparency
 
-### Appinsights
+## Appinsights
 
 - **Package**: `@capgo/capacitor-appinsights`
 - **Purpose**: A wrapper around the https://github.com/apptopia/appinsights SDK
@@ -230,7 +232,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/appinsights/
 - **Repository**: https://github.com/Cap-go/capacitor-appinsights
 
-### Appsflyer
+## Appsflyer
 
 - **Package**: `@capgo/capacitor-appsflyer`
 - **Purpose**: Capacitor plugin for AppsFlyer attribution, analytics, and deep links.
@@ -246,7 +248,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/appsflyer/
 - **Repository**: https://github.com/Cap-go/capacitor-appsflyer
 
-### Asset Cache
+## Asset Cache
 
 - **Package**: `@capgo/capacitor-asset-cache`
 - **Purpose**: Capacitor plugin for transparent local caching of large images and videos.
@@ -262,7 +264,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/asset-cache/
 - **Repository**: https://github.com/Cap-go/capacitor-asset-cache
 
-### Audio Recorder
+## Audio Recorder
 
 - **Package**: `@capgo/capacitor-audio-recorder`
 - **Purpose**: Record audio on iOS, Android, and Web with Capacitor
@@ -273,12 +275,12 @@ npm install @capgo/capacitor-audio-recorder
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `startRecording()`, `pauseRecording()`, `resumeRecording()`, `stopRecording()`, `cancelRecording()`, `resetAudioSessionForPlayback()`, `getRecordingStatus()`, `getCurrentAmplitude()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/audio-recorder/
 - **Repository**: https://github.com/Cap-go/capacitor-audio-recorder
 
-### Audio Session
+## Audio Session
 
 - **Package**: `@capgo/capacitor-audio-session`
 - **Purpose**: This capacitor plugin allows iOS applications to get notified audio about interrupts & route changes (for example when a headset is connected), and also query and override the audio device in use.
@@ -294,7 +296,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/audiosession/
 - **Repository**: https://github.com/Cap-go/capacitor-audiosession
 
-### Auto
+## Auto
 
 - **Package**: `@capgo/capacitor-auto`
 - **Purpose**: Capacitor plugin for CarPlay and Android Auto communication.
@@ -310,7 +312,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/auto/
 - **Repository**: https://github.com/Cap-go/capacitor-auto
 
-### Autofill Save Password
+## Autofill Save Password
 
 - **Package**: `@capgo/capacitor-autofill-save-password`
 - **Purpose**: Prompt to display dialog for saving password to keychain from webview app
@@ -326,7 +328,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/autofill-save-password/
 - **Repository**: https://github.com/Cap-go/capacitor-autofill-save-password
 
-### Background Task
+## Background Task
 
 - **Package**: `@capgo/capacitor-background-task`
 - **Purpose**: Capacitor plugin for periodic background fetch tasks on iOS and Android.
@@ -342,7 +344,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/background-task/
 - **Repository**: https://github.com/Cap-go/capacitor-background-task
 
-### Barometer
+## Barometer
 
 - **Package**: `@capgo/capacitor-barometer`
 - **Purpose**: Access device barometer readings with Capacitor
@@ -353,12 +355,12 @@ npm install @capgo/capacitor-barometer
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `getMeasurement()`, `isAvailable()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/barometer/
 - **Repository**: https://github.com/Cap-go/capacitor-barometer
 
-### Bluetooth Low Energy
+## Bluetooth Low Energy
 
 - **Package**: `@capgo/capacitor-bluetooth-low-energy`
 - **Purpose**: Bluetooth Low Energy (BLE) plugin for Capacitor with support for scanning, connecting, reading, writing, and notifications.
@@ -374,7 +376,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/bluetooth-low-energy/
 - **Repository**: https://github.com/Cap-go/capacitor-bluetooth-low-energy
 
-### Brightness
+## Brightness
 
 - **Package**: `@capgo/capacitor-brightness`
 - **Purpose**: Control screen brightness on iOS and Android
@@ -385,12 +387,12 @@ npm install @capgo/capacitor-brightness
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `getBrightness()`, `setBrightness()`, `getSystemBrightness()`, `setSystemBrightness()`, `getSystemBrightnessMode()`, `setSystemBrightnessMode()`, `isUsingSystemBrightness()`, `restoreSystemBrightness()`, `isAvailable()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/brightness/
 - **Repository**: https://github.com/Cap-go/capacitor-brightness
 
-### Calendar
+## Calendar
 
 - **Package**: `@capgo/capacitor-calendar`
 - **Purpose**: Capacitor plugin for managing calendar events on iOS and Android, with reminders support on iOS.
@@ -406,7 +408,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/calendar/
 - **Repository**: https://github.com/Cap-go/capacitor-calendar
 
-### Compass
+## Compass
 
 - **Package**: `@capgo/capacitor-compass`
 - **Purpose**: Native compass heading plugin for Capacitor
@@ -417,12 +419,12 @@ npm install @capgo/capacitor-compass
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `getCurrentHeading()`, `getPluginVersion()`, `startListening()`, `stopListening()`, `checkPermissions()`, `requestPermissions()`, `watchAccuracy()`, `unwatchAccuracy()`, `getAccuracy()`
 - **Docs**: https://capgo.app/docs/plugins/compass/
 - **Repository**: https://github.com/Cap-go/capacitor-compass
 
-### Contacts
+## Contacts
 
 - **Package**: `@capgo/capacitor-contacts`
 - **Purpose**: Work with device contacts using Capacitor APIs
@@ -433,12 +435,12 @@ npm install @capgo/capacitor-contacts
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `countContacts()`, `createContact()`, `createGroup()`, `deleteContactById()`, `deleteGroupById()`, `displayContactById()`, `displayCreateContact()`, `displayUpdateContactById()`, `getAccounts()`, `getContactById()`, `getContacts()`, `getGroupById()`
 - **Docs**: https://capgo.app/docs/plugins/contacts/
 - **Repository**: https://github.com/Cap-go/capacitor-contacts
 
-### Contentsquare
+## Contentsquare
 
 - **Package**: `@capgo/capacitor-contentsquare`
 - **Purpose**: Capacitor plugin for the Contentsquare mobile analytics SDK on Capacitor 8.
@@ -454,7 +456,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/contentsquare/
 - **Repository**: https://github.com/Cap-go/capacitor-contentsquare
 
-### Crisp
+## Crisp
 
 - **Package**: `@capgo/capacitor-crisp`
 - **Purpose**: Crisp native SDK for capacitor
@@ -465,12 +467,12 @@ npm install @capgo/capacitor-crisp
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `configure()`, `openMessenger()`, `setTokenID()`, `sendMessage()`, `setSegment()`, `reset()`, `registerPushToken()`, `enableNotifications()`, `isCrispPushNotification()`, `setShouldPromptForNotificationPermission()`, `openChatboxFromNotification()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/crisp/
 - **Repository**: https://github.com/Cap-go/capacitor-crisp
 
-### Data Storage Sqlite
+## Data Storage Sqlite
 
 - **Package**: `@capgo/capacitor-data-storage-sqlite`
 - **Purpose**: SQLite Storage of key/value strings pair
@@ -486,7 +488,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/data-storage-sqlite/
 - **Repository**: https://github.com/Cap-go/capacitor-data-storage-sqlite
 
-### Date Picker
+## Date Picker
 
 - **Package**: `@capgo/capacitor-date-picker`
 - **Purpose**: Native Capacitor date picker for iOS, Android, and web with fixes for long-standing community issues.
@@ -502,7 +504,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/date-picker/
 - **Repository**: https://github.com/Cap-go/capacitor-date-picker
 
-### Device Info
+## Device Info
 
 - **Package**: `@capgo/capacitor-device-info`
 - **Purpose**: Capacitor plugin for reading CPU, memory, GPU, storage, and onboard sensor metrics.
@@ -518,7 +520,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/device-info/
 - **Repository**: https://github.com/Cap-go/capacitor-device-info
 
-### Device Integrity
+## Device Integrity
 
 - **Package**: `@capgo/capacitor-device-integrity`
 - **Purpose**: Device integrity and fraud signals for Capacitor using Android Widevine, Play Integrity, iOS App Attest, and DeviceCheck.
@@ -534,7 +536,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/device-integrity/
 - **Repository**: https://github.com/Cap-go/capacitor-device-integrity
 
-### Document Scanner
+## Document Scanner
 
 - **Package**: `@capgo/capacitor-document-scanner`
 - **Purpose**: Capacitor plugin to scan document iOS and Android
@@ -550,7 +552,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/document-scanner/
 - **Repository**: https://github.com/Cap-go/capacitor-document-scanner
 
-### Downloader
+## Downloader
 
 - **Package**: `@capgo/capacitor-downloader`
 - **Purpose**: Download file in background or foreground
@@ -566,7 +568,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/downloader/
 - **Repository**: https://github.com/Cap-go/capacitor-downloader
 
-### Env
+## Env
 
 - **Package**: `@capgo/capacitor-env`
 - **Purpose**: Set Env var in Capacitor config and read them at runtime
@@ -582,7 +584,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/env/
 - **Repository**: https://github.com/Cap-go/capacitor-env
 
-### Facebook Analytics
+## Facebook Analytics
 
 - **Package**: `@capgo/capacitor-facebook-analytics`
 - **Purpose**: Capacitor plugin for Meta/Facebook App Events analytics.
@@ -593,12 +595,12 @@ npm install @capgo/capacitor-facebook-analytics
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `initAppEvents()`, `logEvent()`, `logPurchase()`, `enableAdvertiserTracking()`, `disableAdvertiserTracking()`, `getAdvertiserTrackingStatus()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/facebook-analytics/
 - **Repository**: https://github.com/Cap-go/capacitor-facebook-analytics
 
-### Fast Sql
+## Fast Sql
 
 - **Package**: `@capgo/capacitor-fast-sql`
 - **Purpose**: High-performance native SQLite plugin with custom protocol for efficient sync operations and IndexedDB replacement
@@ -614,7 +616,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/fast-sql/
 - **Repository**: https://github.com/Cap-go/capacitor-fast-sql
 
-### Ffmpeg
+## Ffmpeg
 
 - **Package**: `@capgo/capacitor-ffmpeg`
 - **Purpose**: Exposes the FFmpeg API to Capacitor
@@ -625,12 +627,12 @@ npm install @capgo/capacitor-ffmpeg
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `getCapabilities()`, `reencodeVideo()`, `convertImage()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/ffmpeg/
 - **Repository**: https://github.com/Cap-go/capacitor-ffmpeg
 
-### File
+## File
 
 - **Package**: `@capgo/capacitor-file`
 - **Purpose**: Capacitor plugin for file system operations, compatible with Cordova File plugin API
@@ -646,7 +648,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/file/
 - **Repository**: https://github.com/Cap-go/capacitor-file
 
-### File Compressor
+## File Compressor
 
 - **Package**: `@capgo/capacitor-file-compressor`
 - **Purpose**: Capacitor plugin for efficient image compression supporting PNG, JPEG, and WebP formats across iOS, Android, and Web platforms
@@ -662,7 +664,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/file-compressor/
 - **Repository**: https://github.com/Cap-go/capacitor-file-compressor
 
-### File Picker
+## File Picker
 
 - **Package**: `@capgo/capacitor-file-picker`
 - **Purpose**: File picker Capacitor plugin - Pick files, images, videos, and directories
@@ -673,12 +675,12 @@ npm install @capgo/capacitor-file-picker
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `pickFiles()`, `pickImages()`, `pickVideos()`, `pickMedia()`, `pickDirectory()`, `convertHeicToJpeg()`, `copyFile()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/file-picker/
 - **Repository**: https://github.com/Cap-go/capacitor-file-picker
 
-### File Sharer
+## File Sharer
 
 - **Package**: `@capgo/capacitor-file-sharer`
 - **Purpose**: Capacitor plugin for sharing and saving files on Android, iOS, and Web.
@@ -694,7 +696,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/file-sharer/
 - **Repository**: https://github.com/Cap-go/capacitor-file-sharer
 
-### Firebase Analytics
+## Firebase Analytics
 
 - **Package**: `@capgo/capacitor-firebase-analytics`
 - **Purpose**: Capacitor plugin for Firebase Analytics.
@@ -705,12 +707,12 @@ npm install @capgo/capacitor-firebase-analytics
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `getAppInstanceId()`, `getSessionId()`, `setConsent()`, `setUserId()`, `setUserProperty()`, `setCurrentScreen()`, `logEvent()`, `setSessionTimeoutDuration()`, `setEnabled()`, `isEnabled()`, `resetAnalyticsData()`, `logTransaction()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-analytics/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/analytics`, branch `main`)
 
-### Firebase App
+## Firebase App
 
 - **Package**: `@capgo/capacitor-firebase-app`
 - **Purpose**: Capacitor plugin for Firebase App.
@@ -723,10 +725,10 @@ npx cap sync
 
 - **Platforms**: iOS, Android, Web
 - **Key API methods**: `getName()`, `getOptions()`, `getPluginVersion()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-app/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/app`, branch `main`)
 
-### Firebase App Check
+## Firebase App Check
 
 - **Package**: `@capgo/capacitor-firebase-app-check`
 - **Purpose**: Capacitor plugin for Firebase App Check.
@@ -739,10 +741,10 @@ npx cap sync
 
 - **Platforms**: iOS, Android, Web
 - **Key API methods**: `getToken()`, `initialize()`, `setTokenAutoRefreshEnabled()`, `getPluginVersion()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-app-check/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/appcheck`, branch `main`)
 
-### Firebase Authentication
+## Firebase Authentication
 
 - **Package**: `@capgo/capacitor-firebase-authentication`
 - **Purpose**: Capacitor plugin for Firebase Authentication.
@@ -753,12 +755,12 @@ npm install @capgo/capacitor-firebase-authentication
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `applyActionCode()`, `confirmPasswordReset()`, `confirmVerificationCode()`, `createUserWithEmailAndPassword()`, `deleteUser()`, `fetchSignInMethodsForEmail()`, `getCurrentUser()`, `getPendingAuthResult()`, `getIdToken()`, `getIdTokenResult()`, `getRedirectResult()`, `getTenantId()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-authentication/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/authentication`, branch `main`)
 
-### Firebase Crashlytics
+## Firebase Crashlytics
 
 - **Package**: `@capgo/capacitor-firebase-crashlytics`
 - **Purpose**: Capacitor plugin for Firebase Crashlytics.
@@ -769,12 +771,12 @@ npm install @capgo/capacitor-firebase-crashlytics
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `crash()`, `setCustomKey()`, `setUserId()`, `log()`, `setEnabled()`, `isEnabled()`, `didCrashOnPreviousExecution()`, `sendUnsentReports()`, `deleteUnsentReports()`, `recordException()`, `getPluginVersion()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-crashlytics/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/crashlytics`, branch `main`)
 
-### Firebase Firestore
+## Firebase Firestore
 
 - **Package**: `@capgo/capacitor-firebase-firestore`
 - **Purpose**: Capacitor plugin for Firebase Cloud Firestore.
@@ -787,10 +789,10 @@ npx cap sync
 
 - **Platforms**: iOS, Android, Web
 - **Key API methods**: `addDocument()`, `clearPersistence()`, `deleteDocument()`, `disableNetwork()`, `disablePersistence()`, `enablePersistence()`, `enableNetwork()`, `getCountFromServer()`, `removeSnapshotListener()`, `setDocument()`, `updateDocument()`, `useEmulator()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-firestore/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/firestore`, branch `main`)
 
-### Firebase Functions
+## Firebase Functions
 
 - **Package**: `@capgo/capacitor-firebase-functions`
 - **Purpose**: Capacitor plugin for Firebase Cloud Functions.
@@ -803,10 +805,10 @@ npx cap sync
 
 - **Platforms**: iOS, Android, Web
 - **Key API methods**: `useEmulator()`, `getPluginVersion()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-functions/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/functions`, branch `main`)
 
-### Firebase Messaging
+## Firebase Messaging
 
 - **Package**: `@capgo/capacitor-firebase-messaging`
 - **Purpose**: Capacitor plugin for Firebase Cloud Messaging (FCM).
@@ -819,10 +821,10 @@ npx cap sync
 
 - **Platforms**: iOS, Android, Web
 - **Key API methods**: `checkPermissions()`, `requestPermissions()`, `isSupported()`, `getToken()`, `deleteToken()`, `getDeliveredNotifications()`, `removeDeliveredNotifications()`, `removeAllDeliveredNotifications()`, `subscribeToTopic()`, `unsubscribeFromTopic()`, `createChannel()`, `deleteChannel()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-messaging/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/messaging`, branch `main`)
 
-### Firebase Performance
+## Firebase Performance
 
 - **Package**: `@capgo/capacitor-firebase-performance`
 - **Purpose**: Capacitor plugin for Firebase Performance Monitoring.
@@ -835,10 +837,10 @@ npx cap sync
 
 - **Platforms**: iOS, Android, Web
 - **Key API methods**: `startTrace()`, `stopTrace()`, `incrementMetric()`, `setEnabled()`, `isEnabled()`, `putAttribute()`, `getAttribute()`, `getAttributes()`, `removeAttribute()`, `putMetric()`, `getMetric()`, `record()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-performance/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/performance`, branch `main`)
 
-### Firebase Remote Config
+## Firebase Remote Config
 
 - **Package**: `@capgo/capacitor-firebase-remote-config`
 - **Purpose**: Capacitor plugin for Firebase Remote Config.
@@ -851,10 +853,10 @@ npx cap sync
 
 - **Platforms**: iOS, Android, Web
 - **Key API methods**: `activate()`, `fetchAndActivate()`, `fetchConfig()`, `getBoolean()`, `getNumber()`, `getString()`, `getAll()`, `getInfo()`, `setMinimumFetchInterval()`, `setDefaults()`, `setSettings()`, `addConfigUpdateListener()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-remote-config/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/remote-config`, branch `main`)
 
-### Firebase Storage
+## Firebase Storage
 
 - **Package**: `@capgo/capacitor-firebase-storage`
 - **Purpose**: Capacitor plugin for Firebase Cloud Storage.
@@ -867,10 +869,10 @@ npx cap sync
 
 - **Platforms**: iOS, Android, Web
 - **Key API methods**: `deleteFile()`, `getDownloadUrl()`, `getMetadata()`, `listFiles()`, `updateMetadata()`, `downloadFile()`, `uploadFile()`, `useEmulator()`, `getPluginVersion()`
-- **Docs**: https://capgo.app/
+- **Docs**: https://capgo.app/docs/plugins/firebase-storage/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/storage`, branch `main`)
 
-### Flash
+## Flash
 
 - **Package**: `@capgo/capacitor-flash`
 - **Purpose**: Switch the Flashlight / Torch of your device.
@@ -886,7 +888,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/flash/
 - **Repository**: https://github.com/Cap-go/capacitor-flash
 
-### Gtm
+## Gtm
 
 - **Package**: `@capgo/capacitor-gtm`
 - **Purpose**: Google Tag manager plugin for Capacitor
@@ -902,7 +904,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/gtm/
 - **Repository**: https://github.com/Cap-go/capacitor-gtm
 
-### Health
+## Health
 
 - **Package**: `@capgo/capacitor-health`
 - **Purpose**: Capacitor plugin to interact with data from Apple HealthKit and Health Connect
@@ -913,12 +915,12 @@ npm install @capgo/capacitor-health
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `isAvailable()`, `requestAuthorization()`, `checkAuthorization()`, `readSamples()`, `saveSample()`, `getPluginVersion()`, `openHealthConnectSettings()`, `showPrivacyPolicy()`, `queryWorkouts()`, `queryAggregated()`
 - **Docs**: https://capgo.app/docs/plugins/health/
 - **Repository**: https://github.com/Cap-go/capacitor-health
 
-### Home Indicator
+## Home Indicator
 
 - **Package**: `@capgo/capacitor-home-indicator`
 - **Purpose**: hide and show home button indicator in Capacitor app
@@ -929,12 +931,12 @@ npm install @capgo/capacitor-home-indicator
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `hide()`, `show()`, `isHidden()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/home-indicator/
 - **Repository**: https://github.com/Cap-go/capacitor-home-indicator
 
-### Ibeacon
+## Ibeacon
 
 - **Package**: `@capgo/capacitor-ibeacon`
 - **Purpose**: iBeacon plugin for Capacitor - proximity detection and beacon region monitoring
@@ -950,7 +952,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/ibeacon/
 - **Repository**: https://github.com/Cap-go/capacitor-ibeacon
 
-### In App Review
+## In App Review
 
 - **Package**: `@capgo/capacitor-in-app-review`
 - **Purpose**: Prompt users to submit app store ratings and reviews without leaving your app
@@ -966,7 +968,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/in-app-review/
 - **Repository**: https://github.com/Cap-go/capacitor-in-app-review
 
-### Inappbrowser
+## Inappbrowser
 
 - **Package**: `@capgo/capacitor-inappbrowser`
 - **Purpose**: Capacitor plugin in app browser
@@ -977,12 +979,12 @@ npm install @capgo/capacitor-inappbrowser
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `goBack()`, `open()`, `clearCookies()`, `clearAllCookies()`, `clearCache()`, `clearAllBrowsingData()`, `getCookies()`, `close()`, `hide()`, `show()`, `sendToBack()`, `bringToFront()`
 - **Docs**: https://capgo.app/docs/plugins/inappbrowser/
 - **Repository**: https://github.com/Cap-go/capacitor-inappbrowser
 
-### Incoming Call Kit
+## Incoming Call Kit
 
 - **Package**: `@capgo/capacitor-incoming-call-kit`
 - **Purpose**: Capacitor plugin for native incoming call UI with Android full-screen notifications and iOS CallKit.
@@ -998,7 +1000,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/incoming-call-kit/
 - **Repository**: https://github.com/Cap-go/capacitor-incoming-call-kit
 
-### Install Referrer
+## Install Referrer
 
 - **Package**: `@capgo/capacitor-install-referrer`
 - **Purpose**: Capacitor plugin for reading Google Play install referrer and Apple AdServices attribution.
@@ -1014,7 +1016,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/install-referrer/
 - **Repository**: https://github.com/Cap-go/capacitor-install-referrer
 
-### Intent Launcher
+## Intent Launcher
 
 - **Package**: `@capgo/capacitor-intent-launcher`
 - **Purpose**: Capacitor plugin to launch Android intents and open system settings screens on Android and iOS.
@@ -1025,12 +1027,12 @@ npm install @capgo/capacitor-intent-launcher
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `startActivityAsync()`, `openIOSSettings()`, `openApplication()`, `getApplicationIconAsync()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/intent-launcher/
 - **Repository**: https://github.com/Cap-go/capacitor-intent-launcher
 
-### Intercom
+## Intercom
 
 - **Package**: `@capgo/capacitor-intercom`
 - **Purpose**: Intercom Capacitor plugin
@@ -1041,12 +1043,12 @@ npm install @capgo/capacitor-intercom
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `loadWithKeys()`, `registerIdentifiedUser()`, `registerUnidentifiedUser()`, `updateUser()`, `logout()`, `logEvent()`, `displayMessenger()`, `displayMessageComposer()`, `displayHelpCenter()`, `hideMessenger()`, `displayLauncher()`, `hideLauncher()`
 - **Docs**: https://capgo.app/docs/plugins/intercom/
 - **Repository**: https://github.com/Cap-go/capacitor-intercom
 
-### Intune
+## Intune
 
 - **Package**: `@capgo/capacitor-intune`
 - **Purpose**: Capacitor plugin for Microsoft Intune MAM enrollment, app protection policies, app config, and MSAL authentication.
@@ -1057,12 +1059,12 @@ npm install @capgo/capacitor-intune
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `acquireToken()`, `acquireTokenSilent()`, `registerAndEnrollAccount()`, `loginAndEnrollAccount()`, `enrolledAccount()`, `deRegisterAndUnenrollAccount()`, `logoutOfAccount()`, `appConfig()`, `getPolicy()`, `groupName()`, `sdkVersion()`, `displayDiagnosticConsole()`
 - **Docs**: https://capgo.app/docs/plugins/intune/
 - **Repository**: https://github.com/Cap-go/capacitor-intune
 
-### Is Root
+## Is Root
 
 - **Package**: `@capgo/capacitor-is-root`
 - **Purpose**: Jailbreak/Root Detection Plugin for Capacitor
@@ -1078,7 +1080,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/is-root/
 - **Repository**: https://github.com/Cap-go/capacitor-is-root
 
-### Ivs Player
+## Ivs Player
 
 - **Package**: `@capgo/capacitor-ivs-player`
 - **Purpose**: Ivs player for capacitor app
@@ -1094,7 +1096,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/ivs-player/
 - **Repository**: https://github.com/Cap-go/capacitor-ivs-player
 
-### Jw Player
+## Jw Player
 
 - **Package**: `@capgo/capacitor-jw-player`
 - **Purpose**: Playes videos from jwplayer.com
@@ -1110,7 +1112,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/jw-player/
 - **Repository**: https://github.com/Cap-go/capacitor-jw-player
 
-### Keep Awake
+## Keep Awake
 
 - **Package**: `@capgo/capacitor-keep-awake`
 - **Purpose**: Prevent the device screen from dimming or sleeping.
@@ -1126,7 +1128,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/keep-awake/
 - **Repository**: https://github.com/Cap-go/capacitor-keep-awake
 
-### Launch Navigator
+## Launch Navigator
 
 - **Package**: `@capgo/capacitor-launch-navigator`
 - **Purpose**: Capacitor plugin which launches native route navigation apps for Android, iOS
@@ -1142,7 +1144,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/launch-navigator/
 - **Repository**: https://github.com/Cap-go/capacitor-launch-navigator
 
-### Light Sensor
+## Light Sensor
 
 - **Package**: `@capgo/capacitor-light-sensor`
 - **Purpose**: Capacitor plugin for accessing the device light sensor (Android only)
@@ -1153,12 +1155,12 @@ npm install @capgo/capacitor-light-sensor
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: Android
 - **Key API methods**: `isAvailable()`, `start()`, `stop()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/light-sensor/
 - **Repository**: https://github.com/Cap-go/capacitor-light-sensor
 
-### Live Activities
+## Live Activities
 
 - **Package**: `@capgo/capacitor-live-activities`
 - **Purpose**: Manage iOS Live Activities from Capacitor
@@ -1169,12 +1171,12 @@ npm install @capgo/capacitor-live-activities
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `areActivitiesSupported()`, `startActivity()`, `updateActivity()`, `endActivity()`, `getAllActivities()`, `saveImage()`, `removeImage()`, `listImages()`, `cleanupImages()`, `getPluginVersion()`, `startTimerSequence()`, `pauseTimerSequence()`
 - **Docs**: https://capgo.app/docs/plugins/live-activities/
 - **Repository**: https://github.com/Cap-go/capacitor-live-activities
 
-### Live Reload
+## Live Reload
 
 - **Package**: `@capgo/capacitor-live-reload`
 - **Purpose**: Capacitor plugin to live reload Capacitor apps from a remote Vite dev server.
@@ -1190,7 +1192,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/live-reload/
 - **Repository**: https://github.com/Cap-go/capacitor-live-reload
 
-### Llm
+## Llm
 
 - **Package**: `@capgo/capacitor-llm`
 - **Purpose**: Adds support for LLM locally runned for Capacitor
@@ -1206,7 +1208,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/llm/
 - **Repository**: https://github.com/Cap-go/capacitor-llm
 
-### Media Session
+## Media Session
 
 - **Package**: `@capgo/capacitor-media-session`
 - **Purpose**: Capacitor plugin to expose media session controls of the device
@@ -1217,12 +1219,12 @@ npm install @capgo/capacitor-media-session
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `setMetadata()`, `setPlaybackState()`, `setActionHandler()`, `setPositionState()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/media-session/
 - **Repository**: https://github.com/Cap-go/capacitor-media-session
 
-### Mock Location Detector
+## Mock Location Detector
 
 - **Package**: `@capgo/capacitor-mock-location-detector`
 - **Purpose**: Capacitor plugin for detecting simulated GPS locations and developer tooling that enables spoofing apps.
@@ -1233,12 +1235,12 @@ npm install @capgo/capacitor-mock-location-detector
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `getCapabilities()`, `analyze()`, `runCheck()`, `openDeveloperSettings()`, `startMonitoring()`, `stopMonitoring()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/mock-location-detector/
 - **Repository**: https://github.com/Cap-go/capacitor-mock-location-detector
 
-### Mqtt
+## Mqtt
 
 - **Package**: `@capgo/capacitor-mqtt`
 - **Purpose**: Capacitor plugin for MQTT connectivity on Android and iOS
@@ -1254,7 +1256,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/capacitor-mqtt/
 - **Repository**: https://github.com/Cap-go/capacitor-mqtt
 
-### Mute
+## Mute
 
 - **Package**: `@capgo/capacitor-mute`
 - **Purpose**: Detect if the mute switch is enabled/disabled on a device
@@ -1270,7 +1272,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/mute/
 - **Repository**: https://github.com/Cap-go/capacitor-mute
 
-### Mux Player
+## Mux Player
 
 - **Package**: `@capgo/capacitor-mux-player`
 - **Purpose**: Native Mux Player SDK to play video on IOS and Android
@@ -1286,7 +1288,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/mux-player/
 - **Repository**: https://github.com/Cap-go/capacitor-mux-player
 
-### Native Audio
+## Native Audio
 
 - **Package**: `@capgo/capacitor-native-audio`
 - **Purpose**: A native plugin for native audio engine
@@ -1302,7 +1304,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/native-audio/
 - **Repository**: https://github.com/Cap-go/capacitor-native-audio
 
-### Native Biometric
+## Native Biometric
 
 - **Package**: `@capgo/capacitor-native-biometric`
 - **Purpose**: This plugin gives access to the native biometric apis for android and iOS
@@ -1318,7 +1320,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/native-biometric/
 - **Repository**: https://github.com/Cap-go/capacitor-native-biometric
 
-### Native Loader
+## Native Loader
 
 - **Package**: `@capgo/capacitor-native-loader`
 - **Purpose**: Capacitor plugin for native animated loaders, fullscreen overlays, Lottie assets, and WebView resizing.
@@ -1334,7 +1336,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/native-loader/
 - **Repository**: https://github.com/Cap-go/capacitor-native-loader
 
-### Native Market
+## Native Market
 
 - **Package**: `@capgo/capacitor-native-market`
 - **Purpose**: A native market plugin for linking to google play or app store.
@@ -1350,7 +1352,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/native-market/
 - **Repository**: https://github.com/Cap-go/capacitor-native-market
 
-### Native Navigation
+## Native Navigation
 
 - **Package**: `@capgo/capacitor-native-navigation`
 - **Purpose**: Capacitor plugin for native navbar, tabbar, safe-area handling, and WebView snapshot transitions.
@@ -1366,7 +1368,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/native-navigation/
 - **Repository**: https://github.com/Cap-go/capacitor-native-navigation
 
-### Nativegeocoder
+## Nativegeocoder
 
 - **Package**: `@capgo/capacitor-nativegeocoder`
 - **Purpose**: Capacitor plugin for native forward and reverse geocoding
@@ -1382,7 +1384,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/nativegeocoder/
 - **Repository**: https://github.com/Cap-go/capacitor-nativegeocoder
 
-### Navigation Bar
+## Navigation Bar
 
 - **Package**: `@capgo/capacitor-navigation-bar`
 - **Purpose**: Capacitor plugin Set navigation bar color for android lollipop and higher
@@ -1398,7 +1400,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/navigation-bar/
 - **Repository**: https://github.com/Cap-go/capacitor-navigation-bar
 
-### Network Diagnostics
+## Network Diagnostics
 
 - **Package**: `@capgo/capacitor-network-diagnostics`
 - **Purpose**: Capacitor plugin for native network diagnostics.
@@ -1414,7 +1416,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/network-diagnostics/
 - **Repository**: https://github.com/Cap-go/capacitor-network-diagnostics
 
-### Nfc
+## Nfc
 
 - **Package**: `@capgo/capacitor-nfc`
 - **Purpose**: Native NFC tag discovery, reading and writing for Capacitor apps on iOS and Android.
@@ -1430,7 +1432,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/nfc/
 - **Repository**: https://github.com/Cap-go/capacitor-nfc
 
-### Passkey
+## Passkey
 
 - **Package**: `@capgo/capacitor-passkey`
 - **Purpose**: Capacitor passkey plugin with a WebAuthn-style shim for Capacitor apps.
@@ -1446,7 +1448,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/passkey/
 - **Repository**: https://github.com/Cap-go/capacitor-passkey
 
-### Patch
+## Patch
 
 - **Package**: `@capgo/capacitor-patch`
 - **Purpose**: Capacitor plugin for applying vetted Capgo patches during cap sync and cap update.
@@ -1462,7 +1464,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/capacitor-patch/
 - **Repository**: https://github.com/Cap-go/capacitor-patch
 
-### Pay
+## Pay
 
 - **Package**: `@capgo/capacitor-pay`
 - **Purpose**: Capacitor plugin to trigger native payment for iOS(Apple pay) and Android(Google Pay)
@@ -1478,7 +1480,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/pay/
 - **Repository**: https://github.com/Cap-go/capacitor-pay
 
-### Pdf Generator
+## Pdf Generator
 
 - **Package**: `@capgo/capacitor-pdf-generator`
 - **Purpose**: Generate PDF files from HTML strings or URLs on iOS and Android.
@@ -1489,12 +1491,12 @@ npm install @capgo/capacitor-pdf-generator
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `fromURL()`, `fromData()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/pdf-generator/
 - **Repository**: https://github.com/Cap-go/capacitor-pdf-generator
 
-### Pdf Viewer
+## Pdf Viewer
 
 - **Package**: `@capgo/capacitor-pdf-viewer`
 - **Purpose**: Capacitor plugin for opening PDFs inside the app.
@@ -1510,7 +1512,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/pdf-viewer/
 - **Repository**: https://github.com/Cap-go/capacitor-pdf-viewer
 
-### Pedometer
+## Pedometer
 
 - **Package**: `@capgo/capacitor-pedometer`
 - **Purpose**: Capacitor plugin for accessing pedometer data including steps, distance, pace, cadence, and floors
@@ -1521,12 +1523,12 @@ npm install @capgo/capacitor-pedometer
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `getMeasurement()`, `isAvailable()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/pedometer/
 - **Repository**: https://github.com/Cap-go/capacitor-pedometer
 
-### Permissions
+## Permissions
 
 - **Package**: `@capgo/capacitor-permissions`
 - **Purpose**: Capacitor plugin for checking and requesting app permissions.
@@ -1537,12 +1539,12 @@ npm install @capgo/capacitor-permissions
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `check()`, `request()`, `checkMultiple()`, `requestMultiple()`, `shouldShowRationale()`, `openSettings()`, `requestPreciseLocation()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/permissions/
 - **Repository**: https://github.com/Cap-go/capacitor-permissions
 
-### Persistent Account
+## Persistent Account
 
 - **Package**: `@capgo/capacitor-persistent-account`
 - **Purpose**: This plugin allows you to securely store account information for a user in Capacitor
@@ -1558,7 +1560,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/persistent-account/
 - **Repository**: https://github.com/Cap-go/capacitor-persistent-account
 
-### Persistent Uuid
+## Persistent Uuid
 
 - **Package**: `@capgo/capacitor-persistent-uuid`
 - **Purpose**: Capacitor plugin for a persistent app UUID that survives reinstalls and updates.
@@ -1574,7 +1576,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/persistent-uuid/
 - **Repository**: https://github.com/Cap-go/capacitor-persistent-uuid
 
-### Photo Library
+## Photo Library
 
 - **Package**: `@capgo/capacitor-photo-library`
 - **Purpose**: Capacitor plugin Displays photo gallery as web page, or boring native screen which you cannot modify but require no authorization
@@ -1585,12 +1587,12 @@ npm install @capgo/capacitor-photo-library
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `checkAuthorization()`, `requestAuthorization()`, `getAlbums()`, `getLibrary()`, `getPhotoUrl()`, `pickMedia()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/photo-library/
 - **Repository**: https://github.com/Cap-go/capacitor-photo-library
 
-### Pretty Toast
+## Pretty Toast
 
 - **Package**: `@capgo/capacitor-pretty-toast`
 - **Purpose**: Native-first pretty toast notifications for Capacitor and the web
@@ -1606,7 +1608,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/pretty-toast/
 - **Repository**: https://github.com/Cap-go/capacitor-pretty-toast
 
-### Printer
+## Printer
 
 - **Package**: `@capgo/capacitor-printer`
 - **Purpose**: Capacitor plugin for printing documents, HTML, PDFs, images and web views
@@ -1622,7 +1624,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/printer/
 - **Repository**: https://github.com/Cap-go/capacitor-printer
 
-### Privacy Screen
+## Privacy Screen
 
 - **Package**: `@capgo/capacitor-privacy-screen`
 - **Purpose**: Protect app content in Android screenshots and obscure the iOS app switcher snapshot.
@@ -1638,7 +1640,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/privacy-screen/
 - **Repository**: https://github.com/Cap-go/capacitor-privacy-screen
 
-### Proximity
+## Proximity
 
 - **Package**: `@capgo/capacitor-proximity`
 - **Purpose**: Capacitor plugin for enabling proximity monitoring in mobile apps.
@@ -1649,12 +1651,12 @@ npm install @capgo/capacitor-proximity
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `enable()`, `disable()`, `getStatus()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/proximity/
 - **Repository**: https://github.com/Cap-go/capacitor-proximity
 
-### Realtimekit
+## Realtimekit
 
 - **Package**: `@capgo/capacitor-realtimekit`
 - **Purpose**: Cloudflare Calls integration for Capacitor apps with built-in UI for meetings.
@@ -1670,7 +1672,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/realtimekit/
 - **Repository**: https://github.com/Cap-go/capacitor-realtimekit
 
-### Recaptcha
+## Recaptcha
 
 - **Package**: `@capgo/capacitor-recaptcha`
 - **Purpose**: Capacitor plugin for generating reCAPTCHA and reCAPTCHA Enterprise tokens.
@@ -1686,7 +1688,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/recaptcha/
 - **Repository**: https://github.com/Cap-go/capacitor-recaptcha
 
-### Rich Notifications
+## Rich Notifications
 
 - **Package**: `@capgo/capacitor-rich-notifications`
 - **Purpose**: Capacitor plugin for local rich notifications with channels, actions, progress, and schedules.
@@ -1697,12 +1699,12 @@ npm install @capgo/capacitor-rich-notifications
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `checkPermission()`, `requestPermission()`, `createChannel()`, `createChannelGroup()`, `deleteChannel()`, `display()`, `schedule()`, `cancel()`, `cancelAll()`, `getDisplayed()`, `getPending()`, `getInitialNotification()`
 - **Docs**: https://capgo.app/docs/plugins/rich-notifications/
 - **Repository**: https://github.com/Cap-go/capacitor-rich-notifications
 
-### Ricoh360
+## Ricoh360
 
 - **Package**: `@capgo/capacitor-ricoh360`
 - **Purpose**: Provides an SDK for the Ricoh360 cameras for Capacitor
@@ -1713,12 +1715,12 @@ npm install @capgo/capacitor-ricoh360
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `initialize()`, `getCameraAsset()`, `listFiles()`, `capturePicture()`, `captureVideo()`, `livePreview()`, `stopLivePreview()`, `readSettings()`, `setSettings()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/ricoh360-camera/
 - **Repository**: https://github.com/Cap-go/capacitor-ricoh360-camera-plugin
 
-### Rudderstack
+## Rudderstack
 
 - **Package**: `@capgo/capacitor-rudderstack`
 - **Purpose**: Capacitor plugin for RudderStack analytics, identity, and event tracking.
@@ -1734,7 +1736,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/rudderstack/
 - **Repository**: https://github.com/Cap-go/capacitor-rudderstack
 
-### Screen Orientation
+## Screen Orientation
 
 - **Package**: `@capgo/capacitor-screen-orientation`
 - **Purpose**: Screen orientation plugin with support for bypassing orientation lock
@@ -1745,12 +1747,12 @@ npm install @capgo/capacitor-screen-orientation
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `orientation()`, `lock()`, `unlock()`, `startOrientationTracking()`, `stopOrientationTracking()`, `isOrientationLocked()`, `isDeviceFoldable()`, `getFoldState()`, `getHingeAngle()`, `getReservedRegions()`, `getBarPlacement()`, `setVerticalBarBehavior()`
 - **Docs**: https://capgo.app/docs/plugins/screen-orientation/
 - **Repository**: https://github.com/Cap-go/capacitor-screen-orientation
 
-### Screen Recorder
+## Screen Recorder
 
 - **Package**: `@capgo/capacitor-screen-recorder`
 - **Purpose**: Record device's screen
@@ -1766,7 +1768,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/screen-recorder/
 - **Repository**: https://github.com/Cap-go/capacitor-screen-recorder
 
-### Shake
+## Shake
 
 - **Package**: `@capgo/capacitor-shake`
 - **Purpose**: Detect shake gesture in device
@@ -1782,7 +1784,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/shake/
 - **Repository**: https://github.com/Cap-go/capacitor-shake
 
-### Share Target
+## Share Target
 
 - **Package**: `@capgo/capacitor-share-target`
 - **Purpose**: Receive shared content from other apps
@@ -1798,7 +1800,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/share-target/
 - **Repository**: https://github.com/Cap-go/capacitor-share-target
 
-### Sheets
+## Sheets
 
 - **Package**: `@capgo/capacitor-sheets`
 - **Purpose**: Framework-agnostic swipeable sheets, drawers, dialogs, and scroll primitives for Capacitor apps
@@ -1814,7 +1816,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/sheets/
 - **Repository**: https://github.com/Cap-go/capacitor-sheets
 
-### Sim
+## Sim
 
 - **Package**: `@capgo/capacitor-sim`
 - **Purpose**: Capacitor plugin to get information from device's sim cards
@@ -1830,7 +1832,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/sim/
 - **Repository**: https://github.com/Cap-go/capacitor-sim
 
-### Social Login
+## Social Login
 
 - **Package**: `@capgo/capacitor-social-login`
 - **Purpose**: All social logins in one plugin
@@ -1846,7 +1848,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/social-login/
 - **Repository**: https://github.com/Cap-go/capacitor-social-login
 
-### Speech Recognition
+## Speech Recognition
 
 - **Package**: `@capgo/capacitor-speech-recognition`
 - **Purpose**: Capacitor plugin for comprehensive on-device speech recognition with live partial results.
@@ -1857,12 +1859,12 @@ npm install @capgo/capacitor-speech-recognition
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `available()`, `isOnDeviceRecognitionAvailable()`, `start()`, `stop()`, `forceStop()`, `getLastPartialResult()`, `setPTTState()`, `getSupportedLanguages()`, `isListening()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/speech-recognition/
 - **Repository**: https://github.com/Cap-go/capacitor-speech-recognition
 
-### Speech Synthesis
+## Speech Synthesis
 
 - **Package**: `@capgo/capacitor-speech-synthesis`
 - **Purpose**: Synthesize speech from text with full control over language, voice, pitch, rate, and volume.
@@ -1878,7 +1880,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/speech-synthesis/
 - **Repository**: https://github.com/Cap-go/capacitor-speech-synthesis
 
-### Ssl Pinning
+## Ssl Pinning
 
 - **Package**: `@capgo/capacitor-ssl-pinning`
 - **Purpose**: Capacitor SSL pinning plugin for Android and iOS that integrates with CapacitorHttp.
@@ -1894,7 +1896,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/ssl-pinning/
 - **Repository**: https://github.com/Cap-go/capacitor-ssl-pinning
 
-### Stream Call
+## Stream Call
 
 - **Package**: `@capgo/capacitor-stream-call`
 - **Purpose**: Uses the https://getstream.io/ SDK to implement calling in Capacitor
@@ -1910,7 +1912,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/streamcall/
 - **Repository**: https://github.com/Cap-go/capacitor-streamcall
 
-### Stripe Identity
+## Stripe Identity
 
 - **Package**: `@capgo/capacitor-stripe-identity`
 - **Purpose**: Capacitor plugin for Stripe Identity verification.
@@ -1926,7 +1928,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/stripe-identity/
 - **Repository**: https://github.com/Cap-go/capacitor-stripe-identity
 
-### Stripe Pay
+## Stripe Pay
 
 - **Package**: `@capgo/capacitor-stripe-pay`
 - **Purpose**: Capacitor plugin for Stripe Payment Sheet, Apple Pay, and Google Pay.
@@ -1942,7 +1944,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/stripe-pay/
 - **Repository**: https://github.com/Cap-go/capacitor-stripe-pay
 
-### Stripe Terminal
+## Stripe Terminal
 
 - **Package**: `@capgo/capacitor-stripe-terminal`
 - **Purpose**: Capacitor plugin for Stripe Terminal in-person payments.
@@ -1958,7 +1960,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/stripe-terminal/
 - **Repository**: https://github.com/Cap-go/capacitor-stripe-terminal
 
-### Supabase
+## Supabase
 
 - **Package**: `@capgo/capacitor-supabase`
 - **Purpose**: Native Supabase SDK integration for Capacitor - Auth, Database, and JWT access
@@ -1971,10 +1973,10 @@ npx cap sync
 
 - **Platforms**: iOS, Android, Web
 - **Key API methods**: `initialize()`, `signInWithPassword()`, `signUp()`, `signInAnonymously()`, `signInWithOAuth()`, `signInWithOtp()`, `verifyOtp()`, `signOut()`, `getSession()`, `refreshSession()`, `getUser()`, `setSession()`
-- **Docs**: https://capgo.app/docs/plugins/
+- **Docs**: https://capgo.app/docs/plugins/supabase/
 - **Repository**: https://github.com/Cap-go/capacitor-supabase
 
-### Textinteraction
+## Textinteraction
 
 - **Package**: `@capgo/capacitor-textinteraction`
 - **Purpose**: Toggle text interaction in Capacitor based iOS apps.
@@ -1985,12 +1987,12 @@ npm install @capgo/capacitor-textinteraction
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `toggle()`, `isEnabled()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/textinteraction/
 - **Repository**: https://github.com/Cap-go/capacitor-textinteraction
 
-### Transitions
+## Transitions
 
 - **Package**: `@capgo/capacitor-transitions`
 - **Purpose**: Framework-agnostic page transitions for Capacitor apps - iOS-style navigation without opinions
@@ -2006,7 +2008,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/transitions/
 - **Repository**: https://github.com/Cap-go/capacitor-transitions
 
-### Twilio Voice
+## Twilio Voice
 
 - **Package**: `@capgo/capacitor-twilio-voice`
 - **Purpose**: Integrates the Twilio Voice SDK into Capacitor
@@ -2017,12 +2019,12 @@ npm install @capgo/capacitor-twilio-voice
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `login()`, `logout()`, `acceptCall()`, `rejectCall()`, `endCall()`, `setSpeaker()`, `checkMicrophonePermission()`, `requestMicrophonePermission()`, `getPluginVersion()`, `remove()`
 - **Docs**: https://capgo.app/docs/plugins/twilio-voice/
 - **Repository**: https://github.com/Cap-go/capacitor-twilio-voice
 
-### Updater
+## Updater
 
 - **Package**: `@capgo/capacitor-updater`
 - **Purpose**: Live update for capacitor apps
@@ -2033,12 +2035,12 @@ npm install @capgo/capacitor-updater
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `notifyAppReady()`, `setUpdateUrl()`, `setStatsUrl()`, `setChannelUrl()`, `download()`, `next()`, `set()`, `startPreviewSession()`, `listPreviews()`, `setPreview()`, `resetPreview()`, `deletePreview()`
 - **Docs**: https://capgo.app/docs/plugins/updater/
 - **Repository**: https://github.com/Cap-go/capacitor-updater
 
-### Uploader
+## Uploader
 
 - **Package**: `@capgo/capacitor-uploader`
 - **Purpose**: Upload file natively
@@ -2054,7 +2056,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/uploader/
 - **Repository**: https://github.com/Cap-go/capacitor-uploader
 
-### Uwb
+## Uwb
 
 - **Package**: `@capgo/capacitor-uwb`
 - **Purpose**: Capacitor plugin for Ultra-Wideband (UWB) ranging on iOS and Android.
@@ -2065,12 +2067,12 @@ npm install @capgo/capacitor-uwb
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `isAvailable()`, `getDiscoveryToken()`, `startPeerSession()`, `startControllerSession()`, `startControleeSession()`, `stopSession()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/uwb/
 - **Repository**: https://github.com/Cap-go/capacitor-uwb
 
-### Verisoul
+## Verisoul
 
 - **Package**: `@capgo/capacitor-verisoul`
 - **Purpose**: Capacitor plugin for Verisoul fraud prevention sessions.
@@ -2081,12 +2083,12 @@ npm install @capgo/capacitor-verisoul
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `configure()`, `getSessionId()`, `reinitialize()`, `recordTouchEvent()`
-- **Docs**: https://github.com/Cap-go/capacitor-verisoul
+- **Docs**: https://capgo.app/docs/plugins/verisoul/
 - **Repository**: https://github.com/Cap-go/capacitor-verisoul
 
-### Video Player
+## Video Player
 
 - **Package**: `@capgo/capacitor-video-player`
 - **Purpose**: Capacitor plugin to play video in native player
@@ -2102,7 +2104,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/video-player/
 - **Repository**: https://github.com/Cap-go/capacitor-video-player
 
-### Video Thumbnails
+## Video Thumbnails
 
 - **Package**: `@capgo/capacitor-video-thumbnails`
 - **Purpose**: Generate video thumbnails from local or remote video files
@@ -2118,7 +2120,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/video-thumbnails/
 - **Repository**: https://github.com/Cap-go/capacitor-video-thumbnails
 
-### Volume Buttons
+## Volume Buttons
 
 - **Package**: `@capgo/capacitor-volume-buttons`
 - **Purpose**: Capacitor plugin to listen to volume button presses
@@ -2134,7 +2136,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/volume-buttons/
 - **Repository**: https://github.com/Cap-go/capacitor-volume-buttons
 
-### Watch
+## Watch
 
 - **Package**: `@capgo/capacitor-watch`
 - **Purpose**: Capacitor plugin for Apple Watch communication with bidirectional messaging support
@@ -2145,12 +2147,12 @@ npm install @capgo/capacitor-watch
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `sendMessage()`, `updateApplicationContext()`, `transferUserInfo()`, `replyToMessage()`, `getInfo()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/watch/
 - **Repository**: https://github.com/Cap-go/capacitor-watch
 
-### Webview Crash
+## Webview Crash
 
 - **Package**: `@capgo/capacitor-webview-crash`
 - **Purpose**: Capacitor plugin for detecting WebView crash recovery and restarting long-running WebViews natively.
@@ -2166,7 +2168,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/webview-crash/
 - **Repository**: https://github.com/Cap-go/capacitor-webview-crash
 
-### Webview Guardian
+## Webview Guardian
 
 - **Package**: `@capgo/capacitor-webview-guardian`
 - **Purpose**: Capacitor plugin to Detect when the WebView was killed in the background and relaunch it on foreground.
@@ -2177,12 +2179,12 @@ npm install @capgo/capacitor-webview-guardian
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `startMonitoring()`, `stopMonitoring()`, `getState()`, `checkNow()`
-- **Docs**: https://capgo.app/docs/plugins/
+- **Docs**: https://capgo.app/docs/plugins/webview-guardian/
 - **Repository**: https://github.com/Cap-go/capacitor-webview-guardian
 
-### Webview Version Checker
+## Webview Version Checker
 
 - **Package**: `@capgo/capacitor-webview-version-checker`
 - **Purpose**: Capacitor plugin for checking outdated Android WebView engines, emitting status events, and presenting native update prompts.
@@ -2198,7 +2200,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/webview-version-checker/
 - **Repository**: https://github.com/Cap-go/capacitor-webview-version-checker
 
-### Wechat
+## Wechat
 
 - **Package**: `@capgo/capacitor-wechat`
 - **Purpose**: WeChat SDK for Capacitor - enables authentication, sharing, payments, and mini-programs
@@ -2214,7 +2216,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/wechat/
 - **Repository**: https://github.com/Cap-go/capacitor-wechat
 
-### Widget Kit
+## Widget Kit
 
 - **Package**: `@capgo/capacitor-widget-kit`
 - **Purpose**: Capacitor plugin for generic iOS Home Screen widgets, WidgetKit, and Live Activities using SVG templates, declarative actions, and shared App Group persistence.
@@ -2230,7 +2232,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/widget-kit/
 - **Repository**: https://github.com/Cap-go/capacitor-widget-kit
 
-### Wifi
+## Wifi
 
 - **Package**: `@capgo/capacitor-wifi`
 - **Purpose**: Manage WiFi connectivity for your Capacitor app
@@ -2241,12 +2243,12 @@ npm install @capgo/capacitor-wifi
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **Key API methods**: `addNetwork()`, `connect()`, `disconnect()`, `getAvailableNetworks()`, `getIpAddress()`, `getRssi()`, `getSsid()`, `getWifiInfo()`, `isEnabled()`, `startScan()`, `checkPermissions()`, `requestPermissions()`
 - **Docs**: https://capgo.app/docs/plugins/wifi/
 - **Repository**: https://github.com/Cap-go/capacitor-wifi
 
-### Youtube Player
+## Youtube Player
 
 - **Package**: `@capgo/capacitor-youtube-player`
 - **Purpose**: Capacitor player to embed YouTube player controls in Capacitor apps
@@ -2262,7 +2264,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/youtube-player/
 - **Repository**: https://github.com/Cap-go/capacitor-youtube-player
 
-### Zebra Datawedge
+## Zebra Datawedge
 
 - **Package**: `@capgo/capacitor-zebra-datawedge`
 - **Purpose**: Capacitor plugin for Zebra DataWedge profile management, notifications, queries, and soft scanning on Zebra Android devices.
@@ -2278,7 +2280,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/zebra-datawedge/
 - **Repository**: https://github.com/Cap-go/capacitor-zebra-datawedge
 
-### Zip
+## Zip
 
 - **Package**: `@capgo/capacitor-zip`
 - **Purpose**: A free Capacitor plugin for zipping and unzipping files on iOS, Android, and Web.
@@ -2294,7 +2296,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/zip/
 - **Repository**: https://github.com/Cap-go/capacitor-zip
 
-### Cordova Updater
+## Cordova Updater
 
 - **Package**: `@capgo/cordova-updater`
 - **Purpose**: Live update Cordova plugin for Capgo
@@ -2310,7 +2312,7 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/updater/
 - **Repository**: https://github.com/Cap-go/cordova-updater
 
-### Native Purchases
+## Native Purchases
 
 - **Package**: `@capgo/native-purchases`
 - **Purpose**: In-app Subscriptions Made Easy

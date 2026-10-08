@@ -1,6 +1,6 @@
 # Capgo Plugin Catalog
 
-Complete catalog of canonical Capgo Capacitor plugin packages from the [Cap-go](https://github.com/Cap-go) GitHub organization and [capgo.app/plugins](https://capgo.app/plugins/). Excludes archived repositories, example apps, templates, and worktrees.
+Complete catalog of canonical Capgo Capacitor plugin packages from the [Cap-go](https://github.com/Cap-go) GitHub organization and [capgo.app/plugins](https://capgo.app/plugins/). Excludes archived repositories.
 
 For install commands, platforms, key API methods, and documentation links, use `capgo-plugin-index.md` in this folder.
 
