@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "organization": "Capgo",
   "date": "January 2026",
-  "abstract": "Complete index of 146 Capacitor plugin packages maintained by Capgo plus official Capacitor package guidance. Covers authentication, media, payments, sensors, storage, Firebase packages, and more. Use capgo-plugin-index.md for install steps, platforms, API methods, and docs links.",
+  "abstract": "Complete index of 145 Capacitor plugin packages maintained by Capgo plus official Capacitor package guidance. Covers authentication, media, payments, sensors, storage, Firebase packages, and more. Use capgo-plugin-index.md for install steps, platforms, API methods, and docs links.",
   "triggers": [
     "which plugin",
     "add biometric",

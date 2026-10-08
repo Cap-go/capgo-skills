@@ -29,6 +29,8 @@ Yearly checkout shows about **20% savings** versus paying monthly (pricing calcu
 | Team | $83/mo | $99/mo | $998/year |
 | Enterprise | $208+/mo | $249+/mo | $2,490/year |
 
+Annual checkout amounts are copied verbatim from the pricing page (for example Solo shows **Billed annually at $146** while the yearly plan is advertised as **$12/Month**). They are not always equal to the monthly list price times 12.
+
 Enterprise also shows **Talk to our team** for custom needs. Calculator defaults include **$249/mo** monthly Enterprise and **$0/month** "Credits only (no plan)" mode.
 
 ## Included usage by plan
@@ -51,7 +53,7 @@ Enterprise also shows **Talk to our team** for custom needs. Calculator defaults
 
 Build machines: **Large build machines (macOS M4)** on all listed plans.
 
-## Platform limits (same on Solo through Team unless noted)
+## Platform limits (public comparison table)
 
 - **Apps**: Unlimited
 - **Members**: Unlimited
@@ -59,9 +61,9 @@ Build machines: **Large build machines (macOS M4)** on all listed plans.
 - **Webhooks**: Unlimited
 - **Seat-based pricing**: No (unlimited members on every plan)
 - **Core products on every plan**: Live Updates, Native Builds, Notifications, Observe, Capgo plugins, Automations, MCP Server
-- **Org statistics retention**: 90 days
-- **Device logs retention**: 90 days
-- **Audit logs retention**: 90 days
+- **Org statistics retention**: 90 days (Solo, Maker, Team, and Enterprise rows on the pricing comparison table)
+- **Device logs retention**: 90 days (same table)
+- **Audit logs retention**: 90 days (same table)
 - **Notifications**: Unlimited on all plans
 - **Observe events**: Unlimited on all plans
 - **Uptime SLA**: 99.9% on listed plans

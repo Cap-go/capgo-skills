@@ -128,7 +128,7 @@ Portal: https://trust.capgo.app
 
 ## Capgo plugins ecosystem
 
-150+ maintained Capacitor plugins from Capgo, documented on the site and indexed in this repository under `skills/capacitor-plugins/references/capgo-plugin-index.md`.
+150+ maintained Capacitor plugins from Capgo on the marketing site. The agent index in this repository is generated from the Cap-go GitHub org (see the `capacitor-plugins` skill and its `references/capgo-plugin-index.md`).
 
 Catalog: https://capgo.app/plugins/
 

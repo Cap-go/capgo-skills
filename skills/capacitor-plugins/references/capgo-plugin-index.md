@@ -1,10 +1,10 @@
 # Capgo Plugin Index
 
-Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go GitHub organization (non-archived `capacitor-*` repositories and `cordova-updater`), cross-checked with [capgo.app/plugins](https://capgo.app/plugins/).
+Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go GitHub organization (non-archived `capacitor-*` repositories and `cordova-updater`). The set should match the public [capgo.app/plugins](https://capgo.app/plugins/) catalog; regenerate after org changes.
 
 Facts come from each repository `package.json` and `src/definitions.ts`. API method names are taken from TypeScript definitions only.
 
-Total packages: 146 (generated 2026-10-08)
+Total packages: 145 (generated 2026-10-08)
 
 ### Background Geolocation
 
@@ -1062,22 +1062,6 @@ npx cap sync
 - **Docs**: https://capgo.app/docs/plugins/intune/
 - **Repository**: https://github.com/Cap-go/capacitor-intune
 
-### Intune
-
-- **Package**: `@capgo/capacitor-intune`
-- **Purpose**: Capacitor plugin for Microsoft Intune MAM enrollment, app protection policies, app config, and MSAL authentication.
-- **Install**:
-
-```bash
-npm install @capgo/capacitor-intune
-npx cap sync
-```
-
-- **Platforms**: iOS, Android, Web
-- **Key API methods**: `acquireToken()`, `acquireTokenSilent()`, `registerAndEnrollAccount()`, `loginAndEnrollAccount()`, `enrolledAccount()`, `deRegisterAndUnenrollAccount()`, `logoutOfAccount()`, `appConfig()`, `getPolicy()`, `groupName()`, `sdkVersion()`, `displayDiagnosticConsole()`
-- **Docs**: https://capgo.app/docs/plugins/intune/
-- **Repository**: https://github.com/Cap-go/capacitor-persona
-
 ### Is Root
 
 - **Package**: `@capgo/capacitor-is-root`
@@ -1473,7 +1457,7 @@ npm install @capgo/capacitor-patch
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android
+- **Platforms**: See repository
 - **Key API methods**: See `src/definitions.ts` in the repository
 - **Docs**: https://capgo.app/docs/plugins/capacitor-patch/
 - **Repository**: https://github.com/Cap-go/capacitor-patch
@@ -1825,7 +1809,7 @@ npm install @capgo/capacitor-sheets
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android
+- **Platforms**: Android
 - **Key API methods**: See `src/definitions.ts` in the repository
 - **Docs**: https://capgo.app/docs/plugins/sheets/
 - **Repository**: https://github.com/Cap-go/capacitor-sheets
@@ -2017,7 +2001,7 @@ npm install @capgo/capacitor-transitions
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android
+- **Platforms**: Android
 - **Key API methods**: See `src/definitions.ts` in the repository
 - **Docs**: https://capgo.app/docs/plugins/transitions/
 - **Repository**: https://github.com/Cap-go/capacitor-transitions
@@ -2321,7 +2305,7 @@ npm install @capgo/cordova-updater
 npx cap sync
 ```
 
-- **Platforms**: Android
+- **Platforms**: iOS, Android
 - **Key API methods**: `notifyAppReady()`, `setUpdateUrl()`, `setStatsUrl()`, `setChannelUrl()`, `download()`, `next()`, `set()`, `startPreviewSession()`, `listPreviews()`, `setPreview()`, `resetPreview()`, `deletePreview()`
 - **Docs**: https://capgo.app/docs/plugins/updater/
 - **Repository**: https://github.com/Cap-go/cordova-updater

@@ -46,6 +46,12 @@ async function rawText(repo, filePath, branch) {
   return res.text();
 }
 
+async function rawExists(repo, filePath, branch) {
+  const url = `https://raw.githubusercontent.com/${ORG}/${repo}/${branch}/${filePath}`;
+  const res = await fetch(url, { method: 'HEAD' });
+  return res.ok;
+}
+
 async function fetchPackageJson(repo, pkgPath, branch) {
   const rel = pkgPath ? `${pkgPath}/package.json` : 'package.json';
   let text = await rawText(repo, rel, branch);
@@ -65,7 +71,7 @@ async function listMonorepoPackages(repo, branch) {
   for (const entry of contents) {
     if (entry.type !== 'dir') continue;
     const pkg = await fetchPackageJson(repo, `packages/${entry.name}`, branch);
-    if (pkg?.name?.startsWith('@capgo/')) {
+    if (pkg?.name?.startsWith('@capgo/') && !pkg.private) {
       out.push({ repo, pkgPath: `packages/${entry.name}`, pkg });
     }
   }
@@ -96,7 +102,7 @@ function titleFromPackage(name) {
 function extractMethods(definitionsText) {
   if (!definitionsText) return [];
   const methods = [];
-  const re = /^\s{2}([a-zA-Z]\w*)\([^;]*\):\s*Promise<[^;]+>;/gm;
+  const re = /^\s{2,4}([a-zA-Z]\w*)\([^;]*\):\s*Promise<[^;]+>;/gm;
   let match;
   while ((match = re.exec(definitionsText)) !== null) {
     const name = match[1];
@@ -109,21 +115,49 @@ function extractMethods(definitionsText) {
 
 async function detectPlatforms(repo, pkgPath, branch, pkg) {
   const files = pkg.files || [];
-  const hasIos = files.some((f) => f.startsWith('ios/'));
-  const hasAndroid = files.some((f) => f.startsWith('android/') || f.startsWith('src/android/'));
   const relBase = pkgPath ? `${pkgPath}/` : '';
-  const webPath = `${relBase}src/web.ts`;
-  let hasWeb = await rawText(repo, webPath, branch);
-  if (!hasWeb) hasWeb = await rawText(repo, `${relBase}src/web.tsx`, branch);
+  let hasIos = files.some((f) => f.startsWith('ios/'));
+  let hasAndroid = files.some((f) => f.startsWith('android/') || f.startsWith('src/android/'));
+  if (!hasIos) {
+    hasIos =
+      (await rawExists(repo, `${relBase}Package.swift`, branch)) ||
+      (await rawExists(repo, `${relBase}ios/Sources`, branch));
+  }
+  if (!hasAndroid) {
+    hasAndroid =
+      (await rawExists(repo, `${relBase}android/build.gradle`, branch)) ||
+      (await rawExists(repo, `${relBase}src/android`, branch));
+  }
+  let hasWeb = await rawExists(repo, `${relBase}src/web.ts`, branch);
+  if (!hasWeb) hasWeb = await rawExists(repo, `${relBase}src/web.tsx`, branch);
 
   const platforms = [];
   if (hasIos) platforms.push('iOS');
   if (hasAndroid) platforms.push('Android');
   if (hasWeb) platforms.push('Web');
-  if (platforms.length === 0) {
-    if (hasIos || hasAndroid) return platforms.length ? platforms : ['iOS', 'Android'];
+  return platforms;
+}
+
+function repoPreferenceScore(item) {
+  const pkgSlug = item.pkg.name.replace(/^@capgo\/(capacitor-|cordova-)?/, '');
+  const repoSlug = item.repo.replace(/^capacitor-/, '').replace(/^cordova-/, '');
+  if (repoSlug === pkgSlug) return 100;
+  if (item.repo.includes(pkgSlug)) return 50;
+  return 0;
+}
+
+function dedupePackages(packages) {
+  const byName = new Map();
+  for (const item of packages) {
+    const existing = byName.get(item.pkg.name);
+    if (!existing) {
+      byName.set(item.pkg.name, item);
+      continue;
+    }
+    const keep = repoPreferenceScore(item) > repoPreferenceScore(existing) ? item : existing;
+    byName.set(item.pkg.name, keep);
   }
-  return platforms.length ? platforms : ['iOS', 'Android'];
+  return [...byName.values()];
 }
 
 function docsUrl(pkg, repo) {
@@ -139,11 +173,16 @@ function sanitize(text) {
     .trim();
 }
 
+function escapeTableCell(value) {
+  return sanitize(value).replace(/\|/g, ',');
+}
+
 function formatCatalogRow(entry) {
   const { title, pkg, repo } = entry;
-  const desc = sanitize(pkg.description || '');
+  const desc = escapeTableCell(pkg.description || '');
+  const safeTitle = escapeTableCell(title);
   const source = `https://github.com/${ORG}/${repo}`;
-  return `| ${title} | \`${pkg.name}\` | ${desc} | [source](${source}) |`;
+  return `| ${safeTitle} | \`${pkg.name}\` | ${desc} | [source](${source}) |`;
 }
 
 function formatIndexEntry(entry) {
@@ -151,7 +190,7 @@ function formatIndexEntry(entry) {
   const desc = sanitize(pkg.description || 'Capacitor plugin from Capgo.');
   const docs = docsUrl(pkg, repo);
   const source = `https://github.com/${ORG}/${repo}`;
-  const platformStr = platforms.join(', ') || 'See repository';
+  const platformStr = platforms.length ? platforms.join(', ') : 'See repository';
   const methodStr = methods.length ? methods.map((m) => `\`${m}()\``).join(', ') : 'See `src/definitions.ts` in the repository';
   const installPath = entry.pkgPath ? `${repo} (${entry.pkgPath})` : repo;
 
@@ -203,9 +242,9 @@ async function main() {
     }
   });
 
-  allPackages.sort((a, b) => a.pkg.name.localeCompare(b.pkg.name));
+  const uniquePackages = dedupePackages(allPackages).sort((a, b) => a.pkg.name.localeCompare(b.pkg.name));
 
-  const enriched = await mapPool(allPackages, 10, async (item) => {
+  const enriched = await mapPool(uniquePackages, 10, async (item) => {
     const relBase = item.pkgPath ? `${item.pkgPath}/` : '';
     const definitions = await rawText(item.repo, `${relBase}src/definitions.ts`, item.branch);
     const methods = extractMethods(definitions);
@@ -242,7 +281,7 @@ Total packages: ${enriched.length} (generated ${generatedAt})
 
   const indexHeader = `# Capgo Plugin Index
 
-Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go GitHub organization (non-archived \`capacitor-*\` repositories and \`cordova-updater\`), cross-checked with [capgo.app/plugins](https://capgo.app/plugins/).
+Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go GitHub organization (non-archived \`capacitor-*\` repositories and \`cordova-updater\`). The set should match the public [capgo.app/plugins](https://capgo.app/plugins/) catalog; regenerate after org changes.
 
 Facts come from each repository \`package.json\` and \`src/definitions.ts\`. API method names are taken from TypeScript definitions only.
 

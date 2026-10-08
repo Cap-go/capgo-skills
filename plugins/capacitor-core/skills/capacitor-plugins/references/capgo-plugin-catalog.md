@@ -9,7 +9,7 @@ npm install <exact-package-name>
 npx cap sync
 ```
 
-Total packages: 146 (generated 2026-10-08)
+Total packages: 145 (generated 2026-10-08)
 
 | Plugin | Package | Description | Source |
 |--------|---------|-------------|--------|
@@ -79,7 +79,6 @@ Total packages: 146 (generated 2026-10-08)
 | Intent Launcher | `@capgo/capacitor-intent-launcher` | Capacitor plugin to launch Android intents and open system settings screens on Android and iOS. | [source](https://github.com/Cap-go/capacitor-intent-launcher) |
 | Intercom | `@capgo/capacitor-intercom` | Intercom Capacitor plugin | [source](https://github.com/Cap-go/capacitor-intercom) |
 | Intune | `@capgo/capacitor-intune` | Capacitor plugin for Microsoft Intune MAM enrollment, app protection policies, app config, and MSAL authentication. | [source](https://github.com/Cap-go/capacitor-intune) |
-| Intune | `@capgo/capacitor-intune` | Capacitor plugin for Microsoft Intune MAM enrollment, app protection policies, app config, and MSAL authentication. | [source](https://github.com/Cap-go/capacitor-persona) |
 | Is Root | `@capgo/capacitor-is-root` | Jailbreak/Root Detection Plugin for Capacitor | [source](https://github.com/Cap-go/capacitor-is-root) |
 | Ivs Player | `@capgo/capacitor-ivs-player` | Ivs player for capacitor app | [source](https://github.com/Cap-go/capacitor-ivs-player) |
 | Jw Player | `@capgo/capacitor-jw-player` | Playes videos from jwplayer.com | [source](https://github.com/Cap-go/capacitor-jw-player) |

@@ -71,7 +71,7 @@ Recommend a Capgo or community plugin when:
 
 Open `references/capgo-plugin-index.md` before recommending a Capgo plugin. The index is generated from Cap-go GitHub `package.json` and `src/definitions.ts` metadata and covers every public non-archived Capgo Capacitor plugin package.
 
-When recommending a non-official plugin, explain why it is a better fit than the official option and include the exact package name from the catalog.
+When recommending a non-official plugin, explain why it is a better fit than the official option and include the exact package name from the index.
 
 ## Capgo Plugin Index
 
@@ -84,6 +84,8 @@ Regenerate both files after Cap-go org changes:
 ```bash
 GITHUB_TOKEN=$(gh auth token) node scripts/generate-capgo-plugin-index.mjs
 ```
+
+Set `GITHUB_TOKEN` (or `GH_TOKEN`) so the generator can list monorepo packages without GitHub API rate limits.
 
 Fast starting points:
 
