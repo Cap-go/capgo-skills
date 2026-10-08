@@ -26,6 +26,15 @@ Switch to the most specific Capgo skill as soon as the workflow is clear:
 - organization administration -> `capgo-organization-management`
 - general CLI entry point -> `capgo-cli-usage`
 
+## Platform, products, and pricing references
+
+Capgo: push fixes to your Capacitor users in minutes, build signed iOS and Android apps without a Mac, and roll back in one click.
+
+Before answering broad "what is Capgo?" or billing questions, read:
+
+- `references/capgo-platform.md` for live updates, channels, rollouts, rollback, encryption, Capgo Build, Observe, notifications, CLI, API, hosted MCP, webhooks, organizations, SSO, self-hosting, trust portal, and plugins.
+- `references/capgo-pricing.md` for plan limits, trial terms, and credit overage tables (always verify against https://capgo.app/pricing/ before quoting live numbers).
+
 ## Connect the Agent to Capgo (MCP)
 
 Capgo has two MCP servers. Use both when available.
