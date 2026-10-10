@@ -26,12 +26,21 @@ Switch to the most specific Capgo skill as soon as the workflow is clear:
 - organization administration -> `capgo-organization-management`
 - general CLI entry point -> `capgo-cli-usage`
 
+## Platform, products, and pricing references
+
+Capgo: push fixes to your Capacitor users in minutes, build signed iOS and Android apps without a Mac, and roll back in one click.
+
+Before answering broad "what is Capgo?" or billing questions, read:
+
+- `references/capgo-platform.md` for live updates, channels, rollouts, rollback, encryption, Capgo Build, Observe, notifications, CLI, API, hosted MCP, webhooks, organizations, SSO, self-hosting, trust portal, and plugins.
+- `references/capgo-pricing.md` for plan limits, trial terms, and credit overage tables (snapshot dated in that file; always verify against https://capgo.app/pricing/ before quoting live numbers).
+
 ## Connect the Agent to Capgo (MCP)
 
 Capgo has two MCP servers. Use both when available.
 
 - Hosted MCP: `https://api.capgo.app/mcp` (streamable HTTP). Nothing to install; the client signs in with OAuth, or sends `Authorization: Bearer <Capgo API key>`. The hosted MCP includes destructive tools, so use an API key with the smallest role the task needs (read-only for reporting). Covers apps, bundles, channels, progressive rollouts, devices, stats, update health, native build status and logs, webhooks, and push notifications. Example for Claude Code: `claude mcp add --transport http capgo https://api.capgo.app/mcp`, then `/mcp` to sign in.
-- Local CLI MCP: `npx @capgo/cli@latest mcp` (stdio). Needed to upload a bundle from the build folder, request a native build, or run `doctor`.
+- Local CLI MCP: `npx @capgo/cli@latest mcp` (stdio). Needed to upload a bundle from the build folder, request a native build, or run `doctor`. Pin a reviewed `@capgo/cli` version in automation if your security policy requires it.
 
 No Capgo account yet: sign up at https://console.capgo.app (14-day free trial, no credit card). Docs: https://capgo.app/docs/ai/mcp/
 

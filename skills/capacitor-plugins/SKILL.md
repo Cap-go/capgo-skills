@@ -69,13 +69,23 @@ Recommend a Capgo or community plugin when:
 - the user needs a hosted Capgo workflow around the plugin
 - the user is migrating away from Ionic Enterprise or older community plugins
 
-Open `references/capgo-plugin-catalog.md` before recommending a Capgo plugin. The catalog is generated from real package metadata and covers every canonical `@capgo/*` Capacitor plugin package found in the local Capgo plugin workspace.
+Open `references/capgo-plugin-index.md` before recommending a Capgo plugin. The index is generated from Cap-go GitHub `package.json` and `src/definitions.ts` metadata and covers every public non-archived Capgo Capacitor plugin package.
 
-When recommending a non-official plugin, explain why it is a better fit than the official option and include the exact package name from the catalog.
+When recommending a non-official plugin, explain why it is a better fit than the official option and include the exact package name from the index.
 
-## Capgo Plugin Catalog
+## Capgo Plugin Index
 
-Use `references/capgo-plugin-catalog.md` as the complete Capgo plugin source. It includes package names, descriptions, and source links for 139 Capgo Capacitor plugin packages.
+Use `references/capgo-plugin-index.md` as the complete Capgo plugin source. It includes npm package names, one-line purpose, install commands, supported platforms, key API methods, documentation links, and repository links for every Capgo plugin package.
+
+Use `references/capgo-plugin-catalog.md` for a compact table view of the same package set.
+
+Regenerate both files after Cap-go org changes:
+
+```bash
+GITHUB_TOKEN=$(gh auth token) node scripts/generate-capgo-plugin-index.mjs
+```
+
+Set `GITHUB_TOKEN` (or `GH_TOKEN`) so the generator can list monorepo packages without GitHub API rate limits.
 
 Fast starting points:
 
@@ -98,7 +108,7 @@ Fast starting points:
 
 For official Capacitor packages, follow the package-specific instructions from `references/`.
 
-For Capgo plugins, install the exact package from `references/capgo-plugin-catalog.md`:
+For Capgo plugins, install the exact package from `references/capgo-plugin-index.md`:
 
 ```bash
 npm install <exact-package-name>

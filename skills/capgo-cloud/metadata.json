@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "organization": "Capgo",
   "date": "March 2026",
-  "abstract": "Umbrella guide for Capgo cloud workflows spanning native builds, OTA releases, store publishing, and organization operations.",
+  "abstract": "Umbrella guide for Capgo cloud workflows spanning live updates, native builds, Observe, notifications, pricing, native releases, store publishing, and organization operations.",
   "triggers": [
     "capgo cloud",
     "capgo build and release",
@@ -12,6 +12,9 @@
   ],
   "references": [
     "https://capgo.app",
+    "https://capgo.app/pricing/",
+    "https://capgo.app/docs/",
+    "https://trust.capgo.app",
     "https://capgo.app/docs/cli/cloud-build/ios/",
     "https://capgo.app/docs/cli/cloud-build/android/"
   ]
