@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "October 2026",
+  "abstract": "Audit-first migration of Capacitor iOS apps and plugins to the UIScene lifecycle (Capacitor 8.5, required by Xcode 27): SceneDelegate, Info.plist scene manifest, AppDelegate configurationForConnecting, pbxproj registration, moving custom URL and lifecycle code, plugin lifecycle audit, and device verification.",
+  "triggers": [
+    "capacitor 8.5",
+    "capacitor uiscene",
+    "add scenedelegate capacitor",
+    "adopt uiscene lifecycle",
+    "xcode 27 capacitor",
+    "CLIENT OF UIKIT REQUIRES UPDATE",
+    "UIApplicationSceneManifest",
+    "cap migrate partial state",
+    "appUrlOpen stopped working ios",
+    "tmpWindow removed"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://github.com/ionic-team/capacitor/blob/main/ios/Capacitor/Capacitor/CAPSceneDelegateProxy.swift",
+    "https://github.com/ionic-team/capacitor/blob/main/cli/src/tasks/migrate-uiscene.ts",
+    "https://developer.apple.com/documentation/uikit/uiscenedelegate"
+  ]
+}

@@ -1,16 +1,21 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Guide for Capgo account lookup, organization administration, member inspection, and security settings.",
+  "date": "October 2026",
+  "abstract": "Guide for Capgo account lookup (account whoami) and organization administration: list/add/members/set/delete, 2FA enforcement, password policy, API-key expiration and hashed keys, with inspect-before-enforce steps and exact CLI error strings.",
   "triggers": [
     "capgo organization",
-    "organization members",
-    "account id",
-    "capgo admin",
-    "organization security"
+    "capgo account id",
+    "capgo whoami",
+    "organization members 2fa",
+    "enforce 2fa capgo",
+    "capgo password policy",
+    "api key expiration capgo",
+    "Two-Factor Authentication Required capgo"
   ],
   "references": [
-    "https://capgo.app"
+    "https://capgo.app/docs/cli/reference/organization/",
+    "https://capgo.app/docs/cli/reference/account/",
+    "https://capgo.app/docs/webapp/2fa-enforcement/"
   ]
 }

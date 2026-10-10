@@ -1,571 +1,123 @@
 ---
 name: safe-area-handling
-description: Complete guide to handling safe areas in Capacitor apps for iPhone notch, Dynamic Island, home indicator, and Android cutouts. Covers CSS, JavaScript, and native solutions. Use this skill when users have layout issues on modern devices.
+description: Fixes notch, Dynamic Island, home indicator, display cutout, and system bar overlap in Capacitor apps. Covers `viewport-fit=cover` + `env(safe-area-inset-*)`, the Capacitor 8 SystemBars core plugin (`insetsHandling`, injected `--safe-area-inset-*` CSS variables for Android WebView < 140, removal of `android.adjustMarginsForEdgeToEdge`), Android 15/16 enforced edge-to-edge (`overlaysWebView` and `backgroundColor` of @capacitor/status-bar no longer work at targetSdk 36), iOS `contentInset`, and insets that change at runtime on rotation, iPad/foldable resizable windows. Use when headers sit under the status bar, tab bars hide behind the gesture bar, `env()` returns 0 on Android, or layout broke after upgrading to Capacitor 8 / targetSdk 35+. Do not use for keyboard overlap (capacitor-keyboard), Ionic/Konsta component theming (ionic-design, konsta-ui), Tailwind utility setup (tailwind-capacitor), or iOS multi-window/resizability adoption (capacitor-ios-resizability).
 ---
 
 # Safe Area Handling in Capacitor
 
-Handle iPhone notch, Dynamic Island, home indicator, and Android cutouts properly.
+## When to Use
 
-## When to Use This Skill
+TRIGGER when:
+- Content renders under the status bar, notch, Dynamic Island, cutout, home indicator, or Android navigation/gesture bar
+- `env(safe-area-inset-*)` is `0px` on Android, or correct only after rotation
+- Layout broke after Capacitor 8 upgrade or raising `targetSdkVersion` to 35/36
+- `StatusBar.setOverlaysWebView` / `setBackgroundColor` stopped working on Android
+- Landscape / split-screen / iPad windowed layouts have wrong side padding
 
-- User has layout issues on notched devices
-- User asks about safe areas
-- User sees content under the notch
-- User needs fullscreen layout
-- Content is hidden by home indicator
+Do not use:
+- Keyboard covering inputs: `capacitor-keyboard`
+- Ionic `ion-header`/`ion-toolbar` theming: `ionic-design`; Konsta `safeAreas`: `konsta-ui`
+- Tailwind plugin/utility setup: `tailwind-capacitor`
+- iOS scene sizing, `UIScreen.main`, multi-window: `capacitor-ios-resizability`
+- Splash screen colors: `capacitor-splash-screen`
 
-## Understanding Safe Areas
+## Facts that drive every decision
 
-### What Are Safe Areas?
+| Platform / version | Behavior |
+|--------------------|----------|
+| iOS (all) | WebView is full-screen. `env(safe-area-inset-*)` works only with `viewport-fit=cover`. `ios.contentInset` defaults to `never`. |
+| Android, Capacitor <= 7 | `android.adjustMarginsForEdgeToEdge` config could add native margins. |
+| Android, Capacitor 8+ | `adjustMarginsForEdgeToEdge` removed. SystemBars core plugin (in `@capacitor/core`) handles insets. |
+| Android 15 (targetSdk 35) | Edge-to-edge enforced; opt-out via `windowOptOutEdgeToEdgeEnforcement` still possible. |
+| Android 16 (targetSdk 36, Capacitor 8 default; 37 on Capacitor 9) | Opt-out ignored. `@capacitor/status-bar` `overlaysWebView` and `backgroundColor` have no effect. |
+| Android WebView < 140 | `env(safe-area-inset-*)` wrong/0 (Chromium bug). SystemBars injects `--safe-area-inset-*` variables (default `insetsHandling: 'css'`). |
 
-Safe areas are the regions of the screen not obscured by:
-- **iPhone**: Notch, Dynamic Island, home indicator, rounded corners
-- **Android**: Camera cutouts, navigation gestures, display cutouts
+How SystemBars behaves on Android (from core source): if the page has `viewport-fit=cover` **and** WebView >= 140, insets pass through to `env()` and the WebView is edge-to-edge. Otherwise Capacitor pads the WebView natively so content sits between the bars and `env()` reports 0. `--safe-area-inset-*` variables carry correct values in both cases when `insetsHandling` is `css`.
 
-### Safe Area Insets
+## Workflow
 
-| Inset | Description |
-|-------|-------------|
-| `safe-area-inset-top` | Notch/Dynamic Island/status bar |
-| `safe-area-inset-bottom` | Home indicator/navigation bar |
-| `safe-area-inset-left` | Left edge (landscape) |
-| `safe-area-inset-right` | Right edge (landscape) |
+1. **Inspect**: `index.html` viewport meta, `capacitor.config.*` (`ios.contentInset`, `android.adjustMarginsForEdgeToEdge`, `plugins.SystemBars`, `plugins.StatusBar`), `@capacitor/core` + `@capacitor/status-bar` versions, `android/variables.gradle` `targetSdkVersion`, global CSS that sets `padding-top`, UI framework (Ionic / Konsta handle insets themselves).
+2. **Decide the design**: full-bleed (draw under bars, pad content) vs. contained (content between bars). Ask the user if mockups are unclear.
+3. **Full-bleed (recommended)**: `viewport-fit=cover` + the CSS fallback chain below, applied once at the layout shell, not per component.
+4. **Remove legacy config**: delete `android.adjustMarginsForEdgeToEdge`; drop Android uses of `StatusBar.setOverlaysWebView` / `setBackgroundColor` (keep for iOS if wanted); prefer `SystemBars.setStyle` for icon color.
+5. **Framework check**: Ionic already applies `--ion-safe-area-*`; Konsta uses `safeAreas`. Do not double-pad.
+6. **Verify** on devices (below).
 
-## CSS Solution
+Only load a reference when its topic is in play:
+- [references/android-edge-to-edge.md](references/android-edge-to-edge.md) - SystemBars config, status-bar migration, nav bar color, WebView version checks
+- [references/css-patterns.md](references/css-patterns.md) - layout shell, tab bars, reading insets in JS, debug overlay, resizable windows
 
-### Enable Viewport Coverage
+## Baseline
 
 ```html
-<!-- index.html -->
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 ```
-
-**Important**: `viewport-fit=cover` is required to access safe area insets.
-
-### Using CSS Environment Variables
 
 ```css
-/* Basic usage */
-.header {
-  padding-top: env(safe-area-inset-top);
+:root {
+  --sat: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --sar: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+  --sab: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  --sal: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
 }
-
-.footer {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-/* With fallback */
-.header {
-  padding-top: env(safe-area-inset-top, 20px);
-}
-
-/* Combined with other padding */
-.content {
-  padding-top: calc(env(safe-area-inset-top) + 16px);
-  padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
-}
+.app-header { padding-top: var(--sat); padding-inline: var(--sal) var(--sar); }
+.app-tabbar { padding-bottom: var(--sab); padding-inline: var(--sal) var(--sar); }
 ```
 
-### Full Page Layout
+The `--safe-area-inset-*` names are injected by Capacitor's SystemBars on Android; on iOS and web they are undefined, so the `env()` fallback applies.
 
-```css
-/* App container */
-.app {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Header respects notch */
-.header {
-  padding-top: env(safe-area-inset-top);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  background: #fff;
-}
-
-/* Scrollable content */
-.content {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-}
-
-/* Footer respects home indicator */
-.footer {
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  background: #fff;
-}
+```ts
+import { SystemBars, SystemBarsStyle } from '@capacitor/core';
+await SystemBars.setStyle({ style: SystemBarsStyle.Dark }); // light icons on dark background
 ```
 
-### Tab Bar with Safe Area
+`SystemBarsStyle.Dark` = light content for dark backgrounds; `Light` = dark content. iOS needs `UIViewControllerBasedStatusBarAppearance = YES` (template default).
 
-```css
-.tab-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  background: #fff;
-  border-top: 1px solid #eee;
+## Traps
 
-  /* Add padding for home indicator */
-  padding-bottom: env(safe-area-inset-bottom);
-}
+- Missing `viewport-fit=cover` is the #1 cause of `env()` = 0 on iOS and of Capacitor padding the WebView on Android.
+- Do not combine `ios.contentInset: 'always'` with CSS safe-area padding: insets apply twice.
+- Do not hardcode 20/44/47/59 px status bar heights; heights differ per device, orientation, and window size.
+- Insets change at runtime (rotation, iPad windowed mode, foldables, Android split screen, keyboard). Use CSS, or re-read on `resize`; never cache once at startup.
+- On iOS the bottom inset stays while the keyboard is visible; use `max()` with keyboard height (see `capacitor-keyboard`).
+- `100vh` includes the area under system bars; use `100dvh` or flex layout with a fixed shell.
+- Ionic: `ion-content` with `fullscreen` + `ion-header` already pads; adding body padding shifts everything twice.
 
-.tab-bar-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8px 0;
-  min-height: 49px; /* iOS standard height */
-}
+## Verification
+
+1. `npx cap sync`, run on: iPhone with Dynamic Island, iPhone SE-class (home button, small top inset), iPad (rotate + Stage Manager/windowed), Android 15/16 device or emulator in gesture **and** 3-button navigation, landscape.
+2. Check Android WebView version: `adb shell dumpsys package com.google.android.webview | grep versionName` (< 140 relies on injected variables).
+3. In Safari Web Inspector / `chrome://inspect`, run:
+
+```js
+getComputedStyle(document.documentElement).getPropertyValue('--sat');
+document.querySelector('meta[name=viewport]').content.includes('viewport-fit=cover');
 ```
 
-### Full-Bleed Background with Safe Content
-
-```css
-.hero {
-  /* Background extends to edges */
-  background: linear-gradient(to bottom, #4f46e5, #7c3aed);
-  padding-top: calc(env(safe-area-inset-top) + 20px);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-}
-
-.hero-content {
-  /* Content stays in safe area */
-  max-width: 100%;
-}
-```
-
-## JavaScript Solution
-
-### Reading Safe Area Values
-
-```typescript
-function getSafeAreaInsets() {
-  const computedStyle = getComputedStyle(document.documentElement);
-
-  return {
-    top: parseInt(computedStyle.getPropertyValue('--sat') || '0'),
-    bottom: parseInt(computedStyle.getPropertyValue('--sab') || '0'),
-    left: parseInt(computedStyle.getPropertyValue('--sal') || '0'),
-    right: parseInt(computedStyle.getPropertyValue('--sar') || '0'),
-  };
-}
-
-// Set CSS custom properties
-function setSafeAreaProperties() {
-  const style = document.documentElement.style;
-
-  // Create temporary element to read values
-  const temp = document.createElement('div');
-  temp.style.paddingTop = 'env(safe-area-inset-top)';
-  temp.style.paddingBottom = 'env(safe-area-inset-bottom)';
-  temp.style.paddingLeft = 'env(safe-area-inset-left)';
-  temp.style.paddingRight = 'env(safe-area-inset-right)';
-  document.body.appendChild(temp);
-
-  const computed = getComputedStyle(temp);
-  style.setProperty('--sat', computed.paddingTop);
-  style.setProperty('--sab', computed.paddingBottom);
-  style.setProperty('--sal', computed.paddingLeft);
-  style.setProperty('--sar', computed.paddingRight);
-
-  document.body.removeChild(temp);
-}
-
-// Update on orientation change
-window.addEventListener('orientationchange', () => {
-  setTimeout(setSafeAreaProperties, 100);
-});
-```
-
-### React Hook
-
-```typescript
-import { useState, useEffect } from 'react';
-
-interface SafeAreaInsets {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-}
-
-function useSafeArea(): SafeAreaInsets {
-  const [insets, setInsets] = useState<SafeAreaInsets>({
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  });
-
-  useEffect(() => {
-    function updateInsets() {
-      const temp = document.createElement('div');
-      temp.style.cssText = `
-        position: fixed;
-        top: 0;
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
-      `;
-      document.body.appendChild(temp);
-
-      const computed = getComputedStyle(temp);
-      setInsets({
-        top: parseFloat(computed.paddingTop) || 0,
-        bottom: parseFloat(computed.paddingBottom) || 0,
-        left: parseFloat(computed.paddingLeft) || 0,
-        right: parseFloat(computed.paddingRight) || 0,
-      });
-
-      document.body.removeChild(temp);
-    }
-
-    const handleOrientationChange = () => {
-      setTimeout(updateInsets, 100);
-    };
-
-    updateInsets();
-    window.addEventListener('resize', updateInsets);
-    window.addEventListener('orientationchange', handleOrientationChange);
-
-    return () => {
-      window.removeEventListener('resize', updateInsets);
-      window.removeEventListener('orientationchange', handleOrientationChange);
-    };
-  }, []);
-
-  return insets;
-}
-
-// Usage
-function Header() {
-  const { top } = useSafeArea();
-
-  return (
-    <header style={{ paddingTop: top }}>
-      App Header
-    </header>
-  );
-}
-```
-
-### Vue Composable
-
-```typescript
-import { ref, onMounted, onUnmounted } from 'vue';
-
-export function useSafeArea() {
-  const insets = ref({
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  });
-
-  function updateInsets() {
-    const temp = document.createElement('div');
-    temp.style.cssText = `
-      position: fixed;
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
-      padding-left: env(safe-area-inset-left);
-      padding-right: env(safe-area-inset-right);
-    `;
-    document.body.appendChild(temp);
-
-    const computed = getComputedStyle(temp);
-    insets.value = {
-      top: parseFloat(computed.paddingTop) || 0,
-      bottom: parseFloat(computed.paddingBottom) || 0,
-      left: parseFloat(computed.paddingLeft) || 0,
-      right: parseFloat(computed.paddingRight) || 0,
-    };
-
-    document.body.removeChild(temp);
-  }
-
-  onMounted(() => {
-    updateInsets();
-    window.addEventListener('resize', updateInsets);
-  });
-
-  onUnmounted(() => {
-    window.removeEventListener('resize', updateInsets);
-  });
-
-  return insets;
-}
-```
-
-## Native iOS Configuration
-
-### Status Bar Style
-
-```typescript
-// capacitor.config.ts
-import type { CapacitorConfig } from '@capacitor/cli';
-
-const config: CapacitorConfig = {
-  ios: {
-    // Content extends behind status bar
-    contentInset: 'automatic', // or 'always', 'scrollableAxes', 'never'
-  },
-};
-```
-
-### Extend Behind Safe Areas
-
-```swift
-// ios/App/App/AppDelegate.swift
-import UIKit
-import Capacitor
-
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    ) -> Bool {
-        // Extend content to edges
-        if let window = UIApplication.shared.windows.first {
-            window.backgroundColor = .clear
-        }
-        return true
-    }
-}
-```
-
-### Info.plist Settings
-
-```xml
-<!-- ios/App/App/Info.plist -->
-<!-- Allow full screen content -->
-<key>UIViewControllerBasedStatusBarAppearance</key>
-<true/>
-
-<!-- For landscape support -->
-<key>UISupportedInterfaceOrientations</key>
-<array>
-    <string>UIInterfaceOrientationPortrait</string>
-    <string>UIInterfaceOrientationLandscapeLeft</string>
-    <string>UIInterfaceOrientationLandscapeRight</string>
-</array>
-```
-
-## Native Android Configuration
-
-### Display Cutout Mode
-
-```xml
-<!-- android/app/src/main/res/values-v28/styles.xml -->
-<resources>
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Extend content into cutout area -->
-        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
-    </style>
-</resources>
-```
-
-### Edge-to-Edge Display
-
-```kotlin
-// android/app/src/main/java/.../MainActivity.kt
-import android.os.Build
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
-
-class MainActivity : BridgeActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Enable edge-to-edge
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.setDecorFitsSystemWindows(false)
-        } else {
-            @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility = (
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            )
-        }
-    }
-}
-```
-
-### AndroidManifest Configuration
-
-```xml
-<!-- android/app/src/main/AndroidManifest.xml -->
-<activity
-    android:name=".MainActivity"
-    android:theme="@style/AppTheme"
-    android:windowSoftInputMode="adjustResize"
-    android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode">
-</activity>
-```
-
-## Capacitor Status Bar Plugin
-
-### Installation
+4. Confirm no element overlaps bars; tab bar taps work above the gesture bar; no double padding.
+5. Grep for leftovers:
 
 ```bash
-npm install @capacitor/status-bar
-npx cap sync
+grep -rn "adjustMarginsForEdgeToEdge\|setOverlaysWebView\|setBackgroundColor\|windowOptOutEdgeToEdgeEnforcement" capacitor.config.* src android/app/src/main/res 2>/dev/null
 ```
 
-### Usage
+## Error Handling
 
-```typescript
-import { StatusBar, Style } from '@capacitor/status-bar';
-
-// Set status bar style
-await StatusBar.setStyle({ style: Style.Dark });
-
-// Set background color (Android)
-await StatusBar.setBackgroundColor({ color: '#ffffff' });
-
-// Show/hide status bar
-await StatusBar.hide();
-await StatusBar.show();
-
-// Overlay mode
-await StatusBar.setOverlaysWebView({ overlay: true });
-```
-
-## Common Issues and Solutions
-
-### Issue: Content Behind Notch
-
-**Solution**: Add viewport-fit and safe area padding
-
-```html
-<meta name="viewport" content="viewport-fit=cover">
-```
-
-```css
-body {
-  padding-top: env(safe-area-inset-top);
-}
-```
-
-### Issue: Tab Bar Under Home Indicator
-
-**Solution**: Add bottom safe area padding
-
-```css
-.tab-bar {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-```
-
-### Issue: Landscape Layout Broken
-
-**Solution**: Handle left/right insets
-
-```css
-.content {
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-}
-```
-
-### Issue: Keyboard Pushes Content
-
-**Solution**: Use adjustResize and handle insets dynamically
-
-```typescript
-import { Keyboard } from '@capacitor/keyboard';
-
-Keyboard.addListener('keyboardWillShow', (info) => {
-  document.body.style.paddingBottom = `${info.keyboardHeight}px`;
-});
-
-Keyboard.addListener('keyboardWillHide', () => {
-  document.body.style.paddingBottom = 'env(safe-area-inset-bottom)';
-});
-```
-
-### Issue: Safe Areas Not Working in WebView
-
-**Cause**: Missing viewport-fit=cover
-
-**Solution**:
-```html
-<!-- Must be exactly like this -->
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-/>
-```
-
-## Testing Safe Areas
-
-### iOS Simulator
-
-1. Use iPhone with notch (iPhone 14 Pro, etc.)
-2. Test both portrait and landscape
-3. Test with keyboard visible
-
-### Android Emulator
-
-1. Create emulator with camera cutout
-2. Test navigation gesture mode
-3. Test 3-button navigation mode
-
-### Preview Different Devices
-
-```css
-/* Debug mode - visualize safe areas */
-.debug-safe-areas::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top);
-  background: rgba(255, 0, 0, 0.3);
-  z-index: 9999;
-  pointer-events: none;
-}
-
-.debug-safe-areas::after {
-  content: '';
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-bottom);
-  background: rgba(0, 0, 255, 0.3);
-  z-index: 9999;
-  pointer-events: none;
-}
-```
+| Symptom / message | Cause | Fix |
+|-------------------|-------|-----|
+| Header under status bar on iOS, `env()` = 0 | No `viewport-fit=cover` | Add to viewport meta |
+| Android: content correct but no edge-to-edge, `env()` = 0 | No `viewport-fit=cover` or WebView < 140, so Capacitor pads natively | Add `viewport-fit=cover`; use `--safe-area-inset-*` fallback |
+| Android: double gap at top | Native padding + your CSS padding with `insetsHandling: 'disable'` or custom MainActivity insets code | Remove custom `setDecorFitsSystemWindows` / inset listeners; keep SystemBars default |
+| `StatusBar.setBackgroundColor` / `setOverlaysWebView` no effect on Android | targetSdk 35+/36 edge-to-edge | Draw a background under the bar in CSS; use `SystemBars.setStyle` for icon color |
+| `android.adjustMarginsForEdgeToEdge` still in config after Capacitor 8 upgrade, margins gone | Option removed and ignored | Delete it; rely on SystemBars + CSS |
+| Logcat `Unknown insetsHandling value '...'. Falling back to 'css'.` | Invalid `SystemBars.insetsHandling` | Use a value listed in the current docs (`css`, `disable`; newer cores also accept `native`) |
+| Status bar text invisible (white on white) | Style mismatch | `SystemBars.setStyle({ style: SystemBarsStyle.Light })` |
+| Layout jumps on first paint (Android) | SystemBars detects `viewport-fit` after page commit | Set `plugins.SystemBars.initialViewportFitValueHint: 'cover'` (in core config declarations; verify in your version) |
 
 ## Resources
 
-- Apple Human Interface Guidelines: https://developer.apple.com/design/human-interface-guidelines/layout
-- Android Display Cutouts: https://developer.android.com/develop/ui/views/layout/display-cutout
-- CSS env() specification: https://drafts.csswg.org/css-env-1/
-- Capacitor Status Bar: https://capacitorjs.com/docs/apis/status-bar
+- System Bars API: https://capacitorjs.com/docs/apis/system-bars
+- Status Bar API (Android 16 note): https://capacitorjs.com/docs/apis/status-bar
+- Updating to 8.0: https://capacitorjs.com/docs/updating/8-0
+- Android edge-to-edge: https://developer.android.com/develop/ui/views/layout/edge-to-edge
+- WebKit viewport-fit / env(): https://webkit.org/blog/7929/designing-websites-for-iphone-x/

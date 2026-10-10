@@ -1,848 +1,132 @@
 ---
 name: framework-to-capacitor
-description: Guide for integrating modern web frameworks with Capacitor. Covers Next.js static export, React, Vue, Angular, Svelte, and others. Use this skill when converting framework apps to mobile apps with Capacitor.
+description: Configures a web framework build so Capacitor can ship it as an iOS/Android app. Use for Next.js static export (output 'export', out/), Nuxt 4 (ssr false, nuxt generate, .output/public), Angular (dist/<project>/browser), SvelteKit adapter-static (SvelteKit 2 svelte.config.js or SvelteKit 3 vite.config), React/Vue/Svelte/Solid on Vite, and React Router framework SPA mode. Covers webDir mismatch, blank white screen after cap sync, missing index.html, SSR/API routes/middleware/server actions that cannot run in the app, next/image errors, deep-link reloads landing on the home page, router base paths, and env variables. Do not use for whole-app store readiness (webapp-to-capacitor), Cordova projects (cordova-to-capacitor), Capacitor major upgrades (capacitor-app-upgrades), or UI kits (ionic-design, konsta-ui, tailwind-capacitor).
 allowed-tools:
   - Bash(node -e *)
   - Bash(find *)
 ---
 
-# Framework to Capacitor Integration
+# Framework to Capacitor
 
-Comprehensive guide for integrating web frameworks with Capacitor to build mobile apps.
+Make a framework emit a static bundle that Capacitor can copy into the native projects, and wire the scripts so `build -> cap sync` is one step.
 
-## When to Use This Skill
+## When to Use
 
-- Converting a Next.js app to a mobile app
-- Integrating React, Vue, Angular, or Svelte with Capacitor
-- Configuring static exports for Capacitor
-- Setting up routing for mobile apps
-- Optimizing framework builds for native platforms
+TRIGGER when:
+- Adding Capacitor to a Next.js, Nuxt, Angular, SvelteKit, Vite (React/Vue/Svelte/Solid), React Router, Qwik, or Astro project.
+- `npx cap sync` fails with `The web assets directory (./dist) must contain an index.html file.` or `Could not find the web assets directory: ./dist.`
+- The app launches to a white screen or loads the wrong page after a reload or deep link.
+- The framework build fails because of SSR-only features (`output: 'export'` errors, `prerender` errors, API routes, middleware, server actions).
+
+Do not use for:
+- Store readiness, native UX, permissions, billing, review risk -> `webapp-to-capacitor`, `capacitor-app-store`, `capacitor-apple-review-preflight`.
+- Cordova/PhoneGap apps -> `cordova-to-capacitor`.
+- Capacitor version upgrades -> `capacitor-app-upgrades`.
+- Live updates setup -> `capgo-live-updates`.
 
 ## Live Project Snapshot
 
 Detected framework and build dependencies:
-!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const matchers=['next','react','vue','@angular/core','@sveltejs/kit','@builder.io/qwik','@remix-run/react','solid-js','vite','@capacitor/core','@capacitor/cli'];const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(matchers.includes(name))out.push(section+'.'+name+'='+version)}}for(const [name,cmd] of Object.entries(pkg.scripts||{})){if(['build','export','sync','cap:sync'].includes(name))out.push('scripts.'+name+'='+cmd)}console.log(out.join('\n'))"`
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const matchers=['next','nuxt','react','react-router','@react-router/dev','vue','@angular/core','@angular/build','@sveltejs/kit','@sveltejs/adapter-static','@builder.io/qwik','@qwik.dev/core','astro','@remix-run/react','solid-js','@solidjs/start','vite','@capacitor/core','@capacitor/cli'];const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(matchers.includes(name))out.push(section+'.'+name+'='+version)}}for(const [name,cmd] of Object.entries(pkg.scripts||{})){if(['build','export','generate','sync','cap:sync'].includes(name))out.push('scripts.'+name+'='+cmd)}console.log(out.join('\n'))"`
 
 Relevant framework and Capacitor config paths:
-!`find . -maxdepth 3 \( -name 'next.config.js' -o -name 'next.config.mjs' -o -name 'vite.config.ts' -o -name 'vite.config.js' -o -name 'angular.json' -o -name 'svelte.config.js' -o -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' \)`
+!`find . -maxdepth 3 -not -path '*/node_modules/*' \( -name 'next.config.*' -o -name 'nuxt.config.*' -o -name 'vite.config.*' -o -name 'angular.json' -o -name 'svelte.config.*' -o -name 'react-router.config.*' -o -name 'astro.config.*' -o -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' \)`
 
-## Framework Support Matrix
+## Core Facts (apply to every framework)
 
-| Framework | Static Export | SSR Support | Recommended Approach |
-|-----------|--------------|-------------|---------------------|
-| Next.js | ✅ Yes | ❌ No | Static export (output: 'export') |
-| React | ✅ Yes | N/A | Create React App or Vite |
-| Vue | ✅ Yes | ❌ No | Vite or Vue CLI |
-| Angular | ✅ Yes | ❌ No | Angular CLI |
-| Svelte | ✅ Yes | ❌ No | SvelteKit with adapter-static |
-| Remix | ✅ Yes | ❌ No | SPA mode |
-| Solid | ✅ Yes | ❌ No | Vite |
-| Qwik | ✅ Yes | ❌ No | Static site mode |
+- Capacitor copies `webDir` into the native app. It never runs Node. SSR, API routes, middleware, ISR, server actions, `cookies()`/`headers()`, and image optimization servers do not exist at runtime. Move them to a hosted backend and call it over HTTPS.
+- The app is served from `capacitor://localhost` (iOS) and `https://localhost` (Android). Your backend must allow those origins for CORS, or use `CapacitorHttp`.
+- Capacitor's local server returns the root `index.html` for any path without a file extension. History-mode SPA routing (`createWebHistory`, `BrowserRouter`, Angular default `PathLocationStrategy`) works; hash routing is not required.
+- The same fallback means per-route HTML files (Next.js export, SvelteKit prerender, Astro) are never served for extensionless URLs. A cold start or `location.reload()` on `/settings/` loads the root `index.html`. Keep navigation client-side and route deep links through `App.addListener('appUrlOpen', ...)` + your router.
+- Asset paths: keep the framework's base at `/` (Vite `base`, Angular `<base href="/">`, Next `basePath`/`assetPrefix` unset). A CDN or sub-path base used for web hosting breaks asset loading in the app; use a separate mobile build config.
+- Environment variables are inlined at build time (`NEXT_PUBLIC_*`, `VITE_*`, `NUXT_PUBLIC_*`, `PUBLIC_*` in SvelteKit, Angular `environment.ts`). Rebuild before every `cap sync`; never point production builds at `localhost`.
+- Capacitor 8 needs Node 22+. Capacitor 9 (currently `@next`, not GA) needs Node 24+. Some framework majors also raise Node minimums (SvelteKit 3: Node 22.17+).
 
-**CRITICAL**: Capacitor requires **static HTML/CSS/JS files**. SSR (Server-Side Rendering) does not work in native apps.
+## Procedure
 
----
+1. Read the snapshot. Identify framework, major version, and the current build output directory. If several apps live in a monorepo, ask which one ships to mobile.
+2. Load the matching reference (only the one in play):
 
-## Next.js + Capacitor
+| Framework in package.json | Load | webDir |
+|---|---|---|
+| `next` | `references/nextjs.md` | `out` |
+| `nuxt` | `references/vue-nuxt.md` | `.output/public` |
+| `vue` + `vite` (no Nuxt) | `references/vue-nuxt.md` | `dist` |
+| `react` + `vite`, `react-router`/`@react-router/dev`, CRA | `references/react.md` | `dist`, `build/client`, or `build` |
+| `@angular/core` | `references/angular.md` | `dist/<project>/browser` |
+| `@sveltejs/kit` or `svelte` + `vite` | `references/svelte.md` | `build` or `dist` |
+| `solid-js`, `@builder.io/qwik`/`@qwik.dev/core`, `astro`, `@remix-run/*` | `references/other-frameworks.md` | varies |
 
-Next.js is popular for React apps. Capacitor requires static export.
-
-### Step 1: Create or Update next.config.js
-
-**For Next.js 13+ (App Router):**
-```javascript
-// next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',
-  images: {
-    unoptimized: true, // Required for static export
-  },
-  trailingSlash: true, // Helps with routing on mobile
-};
-
-module.exports = nextConfig;
-```
-
-**For Next.js 12 (Pages Router):**
-```javascript
-// next.config.js
-module.exports = {
-  output: 'export',
-  images: {
-    unoptimized: true,
-  },
-  trailingSlash: true,
-};
-```
-
-### Step 2: Build Static Files
+3. Inventory server-only features before changing config (grep for `app/api/`, `pages/api/`, `middleware.ts`/`proxy.ts`, `'use server'`, `getServerSideProps`, `+page.server.ts`, `+server.ts`, `server/api/`, `@angular/ssr`). Report the list to the user and agree where each moves (external API, client fetch, or native plugin) before deleting anything.
+4. Make the static build work and inspect the output directory: it must contain `index.html` at its root.
+5. Install and initialise Capacitor (use the repo's package manager for installs):
 
 ```bash
-npm run build
+npm install @capacitor/core @capacitor/ios @capacitor/android
+npm install -D @capacitor/cli
+npx cap init "App Name" com.company.app --web-dir <webDir>
+npx cap add ios
+npx cap add android
 ```
 
-This creates an `out/` directory with static files.
+6. Add one script that always builds before syncing, e.g. `"build:mobile": "<framework build> && cap sync"`.
+7. Run the verification below on both platforms.
 
-### Step 3: Install Capacitor
+Minimal config (`androidScheme: 'https'` is the default since Capacitor 6; only set it to keep an older origin):
 
-```bash
-npm install @capacitor/core @capacitor/cli
-npx cap init
-```
-
-**Configuration:**
-- **App name**: Your app name
-- **App ID**: com.company.app
-- **Web directory**: `out` (Next.js static export output)
-
-### Step 4: Configure Capacitor
-
-**Create capacitor.config.ts:**
-```typescript
+```ts
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.company.app',
-  appName: 'My App',
-  webDir: 'out', // Next.js static export directory
-  server: {
-    androidScheme: 'https',
-  },
-};
-
-export default config;
-```
-
-### Step 5: Add Platforms
-
-```bash
-npm install @capacitor/ios @capacitor/android
-npx cap add ios
-npx cap add android
-```
-
-### Step 6: Build and Sync
-
-```bash
-# Build Next.js
-npm run build
-
-# Sync with native projects
-npx cap sync
-```
-
-### Step 7: Run on Device
-
-**iOS:**
-```bash
-npx cap open ios
-# Build and run in Xcode
-```
-
-**Android:**
-```bash
-npx cap open android
-# Build and run in Android Studio
-```
-
-### Next.js Routing Considerations
-
-**Use hash routing for complex apps:**
-
-```typescript
-// next.config.js
-const nextConfig = {
-  output: 'export',
-  basePath: '',
-  assetPrefix: '',
-};
-```
-
-**Or use Next.js's built-in routing** (works with `trailingSlash: true`).
-
-### Next.js Image Optimization
-
-**next/image doesn't work with static export. Use alternatives:**
-
-**Option 1: Use standard img tag**
-```jsx
-// Instead of next/image
-<img src="/images/photo.jpg" alt="Photo" />
-```
-
-**Option 2: Use a custom Image component**
-```tsx
-// components/CapacitorImage.tsx
-import { Capacitor } from '@capacitor/core';
-
-export const CapacitorImage = ({ src, alt, ...props }) => {
-  const isNative = Capacitor.isNativePlatform();
-  const imageSrc = isNative ? src : src;
-  
-  return <img src={imageSrc} alt={alt} {...props} />;
-};
-```
-
-### Next.js API Routes
-
-**API routes don't work in static export.** Use alternatives:
-
-1. **External API**: Call a separate backend
-2. **Capacitor plugins**: Use native features
-3. **Local storage**: Use `@capacitor/preferences`
-
-```typescript
-import { Preferences } from '@capacitor/preferences';
-
-// Save data
-await Preferences.set({
-  key: 'user',
-  value: JSON.stringify(userData),
-});
-
-// Load data
-const { value } = await Preferences.get({ key: 'user' });
-const userData = JSON.parse(value || '{}');
-```
-
-### Next.js Middleware
-
-**Middleware doesn't work in static export.** Handle logic client-side:
-
-```typescript
-// In your React components
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-
-export default function ProtectedPage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { value } = await Preferences.get({ key: 'token' });
-      if (!value) {
-        router.push('/login');
-      }
-    };
-    checkAuth();
-  }, []);
-
-  return <div>Protected content</div>;
-}
-```
-
-### Complete Next.js + Capacitor Example
-
-**package.json:**
-```json
-{
-  "name": "my-capacitor-app",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "build:mobile": "next build && cap sync",
-    "ios": "cap open ios",
-    "android": "cap open android"
-  },
-  "dependencies": {
-    "next": "^14.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@capacitor/core": "^6.0.0",
-    "@capacitor/ios": "^6.0.0",
-    "@capacitor/android": "^6.0.0",
-    "@capacitor/camera": "^6.0.0"
-  },
-  "devDependencies": {
-    "@capacitor/cli": "^6.0.0",
-    "typescript": "^5.0.0"
-  }
-}
-```
-
----
-
-## React + Capacitor
-
-React works great with Capacitor using Vite or Create React App.
-
-### Option 1: Vite (Recommended)
-
-**Create new project:**
-```bash
-npx create-vite@latest my-app --template react-ts
-cd my-app
-npm install
-```
-
-**Install Capacitor:**
-```bash
-npm install @capacitor/core @capacitor/cli
-npx cap init
-```
-
-**Configure vite.config.ts:**
-```typescript
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    outDir: 'dist', // Capacitor webDir
-  },
-});
-```
-
-**capacitor.config.ts:**
-```typescript
-import type { CapacitorConfig } from '@capacitor/cli';
-
-const config: CapacitorConfig = {
-  appId: 'com.company.app',
-  appName: 'My App',
+  appName: 'App Name',
   webDir: 'dist',
 };
 
 export default config;
 ```
 
-**Add platforms and build:**
-```bash
-npm install @capacitor/ios @capacitor/android
-npx cap add ios
-npx cap add android
-npm run build
-npx cap sync
-```
+## Live Reload
 
-### Option 2: Create React App
+Capacitor 8: `npx cap run ios -l --host <LAN-IP> --port <port>`. Capacitor 9: `npx cap run ios --url http://<LAN-IP>:<port>` (the `-l/--host/--port/--https` flags were merged into `--url`). The dev server must listen on the LAN (`--host 0.0.0.0` / `server.host: true` in Vite). Never commit `server.url` into `capacitor.config.*`.
 
-**Create new project:**
-```bash
-npx create-react-app my-app --template typescript
-cd my-app
-```
+## Verification
 
-**Install Capacitor:**
-```bash
-npm install @capacitor/core @capacitor/cli
-npx cap init
-```
-
-**capacitor.config.ts:**
-```typescript
-const config: CapacitorConfig = {
-  appId: 'com.company.app',
-  appName: 'My App',
-  webDir: 'build', // CRA outputs to build/
-};
-```
-
-**Build and sync:**
 ```bash
 npm run build
+test -f <webDir>/index.html && echo "index.html OK"
 npx cap sync
+npx cap run ios        # or open in Xcode
+npx cap run android
 ```
 
-### React Router Configuration
-
-**Use HashRouter for mobile:**
-```tsx
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </Router>
-  );
-}
-```
-
----
-
-## Vue + Capacitor
-
-Vue works seamlessly with Capacitor.
-
-### Create Vue + Capacitor Project
-
-**Using Vite:**
-```bash
-npx create-vite@latest my-app --template vue-ts
-cd my-app
-npm install
-```
-
-**Install Capacitor:**
-```bash
-npm install @capacitor/core @capacitor/cli
-npx cap init
-```
-
-**vite.config.ts:**
-```typescript
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-
-export default defineConfig({
-  plugins: [vue()],
-  build: {
-    outDir: 'dist',
-  },
-});
-```
-
-**capacitor.config.ts:**
-```typescript
-const config: CapacitorConfig = {
-  appId: 'com.company.app',
-  appName: 'My App',
-  webDir: 'dist',
-};
-```
-
-**Add platforms:**
-```bash
-npm install @capacitor/ios @capacitor/android
-npx cap add ios
-npx cap add android
-npm run build
-npx cap sync
-```
-
-### Vue Router Configuration
-
-**Use hash mode for mobile:**
-```typescript
-// router/index.ts
-import { createRouter, createWebHashHistory } from 'vue-router';
-
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    { path: '/', component: Home },
-    { path: '/about', component: About },
-  ],
-});
-
-export default router;
-```
-
----
-
-## Angular + Capacitor
-
-Angular has excellent Capacitor integration.
-
-### Create Angular + Capacitor Project
-
-**Create Angular app:**
-```bash
-npx @angular/cli new my-app
-cd my-app
-```
-
-**Install Capacitor:**
-```bash
-npm install @capacitor/core @capacitor/cli
-npx cap init
-```
-
-**capacitor.config.ts:**
-```typescript
-const config: CapacitorConfig = {
-  appId: 'com.company.app',
-  appName: 'My App',
-  webDir: 'dist/my-app/browser', // Angular 17+ output
-};
-```
-
-**For Angular 16 and below:**
-```typescript
-webDir: 'dist/my-app',
-```
-
-**Add platforms:**
-```bash
-npm install @capacitor/ios @capacitor/android
-npx cap add ios
-npx cap add android
-npm run build
-npx cap sync
-```
-
-### Angular Router Configuration
-
-**HashLocationStrategy for mobile:**
-```typescript
-// app.config.ts (Angular 17+)
-import { provideRouter, withHashLocation } from '@angular/router';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideRouter(routes, withHashLocation()),
-  ],
-};
-```
-
-**For Angular 16 and below:**
-```typescript
-// app.module.ts
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-
-@NgModule({
-  providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
-  ],
-})
-export class AppModule {}
-```
-
----
-
-## Svelte + Capacitor
-
-Svelte and SvelteKit work great with Capacitor.
-
-### SvelteKit + Capacitor
-
-**Create SvelteKit app:**
-```bash
-npx create-svelte my-app
-cd my-app
-npm install
-```
-
-**Install adapter-static:**
-```bash
-npm install -D @sveltejs/adapter-static
-```
-
-**Configure svelte.config.js:**
-```javascript
-import adapter from '@sveltejs/adapter-static';
-
-const config = {
-  kit: {
-    adapter: adapter({
-      pages: 'build',
-      assets: 'build',
-      fallback: 'index.html',
-    }),
-  },
-};
-
-export default config;
-```
-
-**Install Capacitor:**
-```bash
-npm install @capacitor/core @capacitor/cli
-npx cap init
-```
-
-**capacitor.config.ts:**
-```typescript
-const config: CapacitorConfig = {
-  appId: 'com.company.app',
-  appName: 'My App',
-  webDir: 'build',
-};
-```
-
-**Build and sync:**
-```bash
-npm run build
-npx cap sync
-```
-
-### Vite + Svelte (Simpler Option)
-
-**Create with Vite:**
-```bash
-npx create-vite@latest my-app --template svelte-ts
-cd my-app
-npm install
-```
-
-**Install Capacitor:**
-```bash
-npm install @capacitor/core @capacitor/cli
-npx cap init
-```
-
-**capacitor.config.ts:**
-```typescript
-const config: CapacitorConfig = {
-  appId: 'com.company.app',
-  appName: 'My App',
-  webDir: 'dist',
-};
-```
-
----
-
-## Common Patterns Across Frameworks
-
-### 1. Environment Detection
-
-**Detect if running in native app:**
-```typescript
-import { Capacitor } from '@capacitor/core';
-
-const isNative = Capacitor.isNativePlatform();
-const platform = Capacitor.getPlatform(); // 'ios', 'android', or 'web'
-
-if (isNative) {
-  // Use native plugins
-} else {
-  // Use web APIs
-}
-```
-
-### 2. Deep Linking
-
-**Handle deep links in your app:**
-```typescript
-import { App } from '@capacitor/app';
-
-App.addListener('appUrlOpen', (data) => {
-  // Handle deep link
-  const slug = data.url.split('.app').pop();
-  // Navigate to route
-});
-```
-
-### 3. Live Updates with Capgo
-
-**Add live updates to any framework:**
-```bash
-npm install @capgo/capacitor-updater
-```
-
-```typescript
-import { CapacitorUpdater } from '@capgo/capacitor-updater';
-
-// Check for updates
-const { id } = await CapacitorUpdater.download({
-  url: 'https://api.capgo.app/updates',
-});
-
-// Apply update
-await CapacitorUpdater.set({ id });
-```
-
-### 4. Native UI Components
-
-**Use Ionic Framework for any framework:**
-```bash
-npm install @ionic/core
-```
-
-**React:**
-```bash
-npm install @ionic/react @ionic/react-router
-```
-
-**Vue:**
-```bash
-npm install @ionic/vue @ionic/vue-router
-```
-
-**Angular:**
-```bash
-npm install @ionic/angular
-```
-
-### 5. Storage
-
-**Use Capacitor Preferences for all frameworks:**
-```typescript
-import { Preferences } from '@capacitor/preferences';
-
-// Set value
-await Preferences.set({ key: 'theme', value: 'dark' });
-
-// Get value
-const { value } = await Preferences.get({ key: 'theme' });
-
-// Remove value
-await Preferences.remove({ key: 'theme' });
-
-// Clear all
-await Preferences.clear();
-```
-
-### 6. Camera Access
-
-**Same API across all frameworks:**
-```typescript
-import { Camera, CameraResultType } from '@capacitor/camera';
-
-const photo = await Camera.getPhoto({
-  quality: 90,
-  allowEditing: true,
-  resultType: CameraResultType.Uri,
-});
-
-const imageUrl = photo.webPath;
-```
-
----
-
-## Build Scripts for All Frameworks
-
-**Add these to package.json:**
-```json
-{
-  "scripts": {
-    "dev": "vite", // or next dev, ng serve, etc.
-    "build": "vite build", // or next build, ng build, etc.
-    "build:mobile": "vite build && cap sync",
-    "ios": "cap run ios",
-    "android": "cap run android",
-    "sync": "cap sync"
-  }
-}
-```
-
----
-
-## Routing Best Practices
-
-### Hash vs. History Mode
-
-**Hash mode (recommended for mobile):**
-- Works without server configuration
-- URLs look like: `#/about`
-- No server-side routing needed
-
-**History mode (requires server):**
-- Clean URLs: `/about`
-- Requires server fallback to index.html
-- Can have issues on mobile
-
-**Recommendation**: Use hash mode for Capacitor apps.
-
----
-
-## Common Issues and Solutions
-
-### Issue: Blank Screen on Mobile
-
-**Cause**: Incorrect `webDir` or build output.
-
-**Solution:**
-1. Check build output directory matches `webDir` in capacitor.config.ts
-2. Rebuild: `npm run build`
-3. Sync: `npx cap sync`
-4. Check browser console in device
-
-### Issue: Routing Doesn't Work
-
-**Cause**: Using history mode without proper configuration.
-
-**Solution:**
-Switch to hash routing:
-- React: `HashRouter`
-- Vue: `createWebHashHistory()`
-- Angular: `HashLocationStrategy`
-- SvelteKit: Configure fallback
-
-### Issue: Environment Variables Not Working
-
-**Cause**: Build-time variables not being replaced.
-
-**Solution:**
-Use framework-specific env variable patterns:
-- Next.js: `NEXT_PUBLIC_`
-- Vite: `VITE_`
-- Create React App: `REACT_APP_`
-- Angular: `environment.ts`
-
-### Issue: API Calls Fail on Device
-
-**Cause**: CORS or localhost URLs.
-
-**Solution:**
-1. Use production API URLs
-2. Configure CORS on backend
-3. Use Capacitor HTTP plugin for native requests:
-
-```typescript
-import { CapacitorHttp } from '@capacitor/core';
-
-const response = await CapacitorHttp.get({
-  url: 'https://api.example.com/data',
-});
-```
-
----
-
-## Framework-Specific Plugins
-
-**Ionic Framework provides native UI components:**
-
-- **@ionic/react** - React components
-- **@ionic/vue** - Vue components
-- **@ionic/angular** - Angular components
-
-**Konsta UI for Tailwind CSS:**
-
-- Works with React, Vue, Svelte
-- iOS and Material Design themes
-
-See `ionic-design` and `konsta-ui` skills for details.
-
----
-
-## Deployment Checklist
-
-- [ ] Configure static export (Next.js: `output: 'export'`)
-- [ ] Set correct `webDir` in capacitor.config.ts
-- [ ] Use hash routing for mobile
-- [ ] Disable image optimization (Next.js)
-- [ ] Remove SSR/API routes dependencies
-- [ ] Add native permissions (Info.plist, AndroidManifest.xml)
-- [ ] Test on physical devices
-- [ ] Configure splash screen and icons
-- [ ] Set up live updates with Capgo (optional)
-- [ ] Build and test on iOS and Android
-
----
-
-## Resources
-
-- **Capacitor Docs**: https://capacitorjs.com/docs
-- **Next.js Static Export**: https://nextjs.org/docs/app/building-your-application/deploying/static-exports
-- **Ionic Framework**: https://ionicframework.com
-- **Capgo Blog**: https://capgo.app/blog
-- **Community Forum**: https://forum.ionicframework.com
-
----
-
-## Framework-Specific Guides
-
-For detailed guides on specific frameworks:
-- **Next.js + Capacitor**: https://capgo.app/blog/how-to-use-capacitor-with-nextjs
-- **Ionic Framework**: See `ionic-design` skill
-- **Konsta UI**: See `konsta-ui` skill
-
----
-
-## Next Steps
-
-1. Choose your framework and follow the setup above
-2. Configure static export/build
-3. Install and configure Capacitor
-4. Add platforms (iOS/Android)
-5. Build and sync
-6. Test on devices
-7. Add native features with plugins
-8. Set up live updates with Capgo
+Then on device/simulator:
+- App opens on the first screen without a white flash beyond the splash.
+- Navigate to a nested route, background + resume, and confirm the route survives.
+- Open a deep link (`xcrun simctl openurl booted <url>` / `adb shell am start -a android.intent.action.VIEW -d <url>`) and confirm it lands on the right screen.
+- Inspect the WebView (Safari Web Inspector / `chrome://inspect`) for 404s on JS/CSS and CORS errors.
+- `grep -rn "localhost:\|127.0.0.1" <webDir>` returns nothing unexpected.
+
+## Error Handling
+
+| Symptom / error | Cause | Fix |
+|---|---|---|
+| `The web assets directory (./dist) must contain an index.html file.` | `webDir` points at the wrong folder or SSR build has no `index.html` | Set `webDir` to the static output listed above; enable static/SPA mode |
+| `Could not find the web assets directory: ./out.` | Build not run or different output dir | Run the build first; match `webDir` to the real folder |
+| White screen, console `Failed to load resource` for `/_next/...` or `/assets/...` | Non-root base path / CDN `assetPrefix` | Use `/` base for the mobile build |
+| White screen, no 404s | JS error at boot (often `window`/`document` during prerender, or SSR-only import) | Inspect WebView console; guard browser-only code |
+| Reload or deep link opens home page or hydration error | Capacitor serves root `index.html` for extensionless paths | Client-side navigation + `appUrlOpen` handler; see framework reference |
+| `Page "/x/[id]" is missing "generateStaticParams()"` (Next.js) | Dynamic route in export mode | Pre-generate params or switch to a query-string/client route |
+| `Image Optimization using the default loader is not compatible with` `output: export` | `next/image` default loader | `images.unoptimized: true` or custom loader |
+| API call works in browser, fails on device | CORS for `capacitor://localhost` / `https://localhost`, or `localhost` URL baked in | Allow origins on backend, or enable `CapacitorHttp`; fix env var |
+
+## References
+
+- `references/nextjs.md` - Next.js 14-16 static export, App Router traps, dynamic routes, images.
+- `references/react.md` - Vite React, React Router framework SPA mode, CRA legacy.
+- `references/vue-nuxt.md` - Vue + Vite, Nuxt 4 SPA generate.
+- `references/angular.md` - Angular 17+ application builder output, SSR removal.
+- `references/svelte.md` - SvelteKit 2 and 3 with adapter-static, plain Svelte + Vite.
+- `references/other-frameworks.md` - Solid, Qwik, Astro, Remix v2.
+
+Related skills: `webapp-to-capacitor` (store readiness), `capacitor-deep-linking`, `safe-area-handling`, `capgo-live-updates`.

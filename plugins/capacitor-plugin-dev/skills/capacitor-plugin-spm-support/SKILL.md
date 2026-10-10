@@ -1,86 +1,101 @@
 ---
 name: capacitor-plugin-spm-support
-description: Guides the agent through adding Swift Package Manager support to an existing Capacitor plugin. Covers Package.swift, CAPBridgedPlugin conversion, bridge cleanup, and package manifest updates. Do not use for app projects or non-Capacitor plugin frameworks.
+description: Adds Swift Package Manager support to an existing Capacitor plugin repository so apps using CapApp-SPM can consume it after CocoaPods Trunk goes read-only (expected December 2, 2026). Covers root Package.swift naming rules the Capacitor CLI depends on, CAPBridgedPlugin conversion (identifier, jsName, pluginMethods), removing the ObjC CAP_PLUGIN bridge (.m/.h), Sources/Tests layout, podspec and package.json files updates, third-party pod to SPM dependency mapping, resources/PrivacyInfo.xcprivacy, binary xcframeworks, and Capacitor 9 removal of the unconditional Cordova product. Use when app sync warns "<plugin> does not have a Package.swift" for a plugin you own, or "plugin is not implemented on ios" only in SPM apps. Do not use for migrating an app project (use cocoapods-to-spm), version bumps of plugins (use capacitor-plugin-upgrades / capacitor-plugin-upgrade-v8-to-v9), or choosing plugins (use capacitor-plugins).
 ---
 
 # Add Swift Package Manager Support to a Capacitor Plugin
 
-Add SPM support to an existing Capacitor plugin so it can be consumed without CocoaPods.
+Make a plugin installable in SPM-based Capacitor apps while keeping its podspec for CocoaPods apps.
 
-## When to Use This Skill
+## When to Use
 
-- User wants a plugin to work through Xcode's package manager
-- User is converting an existing iOS plugin from Obj-C bridge files to bridged Swift registration
-- User needs the plugin package manifest and file exports updated for SPM
+TRIGGER when:
+- A plugin repo has `ios/Plugin/*.swift` + `*.m`/`*.h` with `CAP_PLUGIN(...)` and no root `Package.swift`.
+- An app's `npx cap sync ios` prints `<plugin id> does not have a Package.swift` for a plugin the user maintains.
+- A plugin works with CocoaPods but JS gets `"X" plugin is not implemented on ios` in SPM apps.
+- Preparing a plugin for Capacitor 9 / CocoaPods Trunk read-only.
 
-## Procedures
+Do not use:
+- App-side CocoaPods removal -> `cocoapods-to-spm`.
+- Capacitor major bumps of a plugin -> `capacitor-plugin-upgrades`, `capacitor-plugin-upgrade-v8-to-v9`.
+- Android-only plugin work, or non-Capacitor (pure Cordova, React Native) plugins.
 
-### Step 1: Gather Plugin Information
+## Rules the CLI Enforces (non-obvious)
 
-Read these files in the plugin root:
+- `Package.swift` must be at the **npm package root** (next to `package.json`), not under `ios/`. The app CLI only checks `<plugin root>/Package.swift`.
+- The CLI references the plugin in the app's `CapApp-SPM/Package.swift` as `.package(name: "<Name>", path: ...)` and `.product(name: "<Name>", package: "<Name>")`, where `<Name>` is derived from the npm name: drop `@`, turn `/` and `-` into word breaks, PascalCase. `@capgo/capacitor-updater` -> `CapgoCapacitorUpdater`, `@acme/capacitor-foo-bar` -> `AcmeCapacitorFooBar`. The `Package(name:)` **and** the `.library(name:)` product must both equal `<Name>`, or app builds fail to resolve the product.
+- Runtime registration uses `ios/App/App/capacitor.config.json` -> `packageClassList`, filled by scanning the plugin's iOS sources (`capacitor.ios.src` in package.json, default `ios`) for `@objc(ClassName)`. Keep `@objc(<Class>Plugin)` on the class; without it the plugin is never registered.
+- The `capacitor-swift-pm` dependency must use `from: "<major>.0.0"`. If the major differs from the app's Capacitor, app sync rewrites it in `node_modules` and warns `<id> is built for Capacitor <N>, it might cause issues`.
+- Capacitor 9: depend only on `.product(name: "Capacitor", package: "capacitor-swift-pm")`. Remove the unconditional `Cordova` product; it is only present in apps that install a Cordova plugin. Keep it on Capacitor 8 only if your code imports Cordova.
 
-- `package.json`
-- the `.podspec`
-- the main Swift plugin class under `ios/`
+## Procedure
 
-Record:
+### 1. Inspect
 
-- the package name
-- the pod name
-- the iOS deployment target
-- the plugin class name
-- the JavaScript plugin name
-- all exposed plugin methods
-- any third-party CocoaPods dependencies that also need SPM equivalents
+Read `package.json` (name, `files`, `capacitor.ios.src`, scripts), the `.podspec` (`s.name`, `s.ios.deployment_target`, `s.dependency`, `s.resources`, `s.vendored_frameworks`), every file in `ios/`, and the `CAP_PLUGIN(...)` macro in the `.m` file.
 
-### Step 2: Create `Package.swift`
+Record: SPM `<Name>` (rule above), class name, `jsName`, every `CAP_PLUGIN_METHOD(name, returnType)`, iOS deployment target, third-party pods, resources, vendored frameworks, ObjC/C sources other than the bridge.
 
-Add a `Package.swift` manifest that:
+Check each third-party pod has an official SPM package. Report any that do not before editing; ask whether to drop, vendor as `.xcframework`, or keep the plugin CocoaPods-only.
 
-- declares the plugin package name
-- sets the iOS minimum version
-- points the target at the plugin's iOS source directory
-- depends on the Capacitor Swift package support package used by the project
-- adds any resolved third-party SPM packages
+### 2. Fast path: converter
 
-Keep the target structure aligned with the actual plugin source tree.
+If the iOS code is Swift-only apart from the `[Name]Plugin.m` / `.h` bridge, the official converter does most of the work (adds `CAPBridgedPlugin`, creates `Package.swift`, moves code to `ios/Sources` and `ios/Tests`, removes `Plugin.xcodeproj`/`xcworkspace`/`Podfile`, updates podspec `source_files`, `files`, and `verify:ios`): https://github.com/ionic-team/capacitor-plugin-converter. Review its diff against the rules above, especially the package/product name.
 
-### Step 3: Convert the Swift Plugin Class
+### 3. Manual conversion
 
-Update the plugin class to conform to `CAPBridgedPlugin`.
+1. Move sources: `ios/Plugin/` -> `ios/Sources/<ClassName>/`, tests -> `ios/Tests/<ClassName>Tests/`.
+2. Convert the class (keep method names and return types exactly as in the `.m` macro):
+   ```swift
+   import Capacitor
 
-Add the bridge properties at the top of the class:
+   @objc(FooPlugin)
+   public class FooPlugin: CAPPlugin, CAPBridgedPlugin {
+       public let identifier = "FooPlugin"     // first CAP_PLUGIN argument
+       public let jsName = "Foo"               // second CAP_PLUGIN argument (registerPlugin name)
+       public let pluginMethods: [CAPPluginMethod] = [
+           CAPPluginMethod(name: "doThing", returnType: CAPPluginReturnPromise),
+           CAPPluginMethod(name: "watch", returnType: CAPPluginReturnCallback),
+           CAPPluginMethod(name: "fireAndForget", returnType: CAPPluginReturnNone)
+       ]
+       @objc func doThing(_ call: CAPPluginCall) { call.resolve() }
+   }
+   ```
+3. Delete `FooPlugin.m` and `FooPlugin.h` (the `CAP_PLUGIN` bridge) and stale `Plugin.xcodeproj`, `Plugin.xcworkspace`, `Podfile`, `Info.plist` files under `ios/`.
+4. Add root `Package.swift`. Template and variants (resources, binary targets, third-party packages, mixed ObjC) in `references/package-swift-templates.md`.
+5. Update the podspec: `s.source_files = 'ios/Sources/**/*.{swift,h,m,c,cc,mm,cpp}'`, keep `s.dependency 'Capacitor'`, and mirror deployment target and resources.
+6. Update `package.json`:
+   - `files`: add `ios/Sources/`, `Package.swift`; keep the `.podspec`; remove old `ios/Plugin/`.
+   - `verify:ios`: `xcodebuild -scheme <Name> -destination generic/platform=iOS`.
 
-- `identifier`
-- `jsName`
-- `pluginMethods`
+## Verification
 
-Preserve each method name and return type exactly as the plugin already exposes them.
+```bash
+# Package resolves and builds standalone (from plugin root)
+swift package describe >/dev/null && echo "manifest ok"
+xcodebuild -scheme <Name> -destination generic/platform=iOS build
+# Published tarball contains the manifest and sources
+npm pack --dry-run 2>&1 | grep -E 'Package.swift|ios/Sources'
+# No leftover ObjC bridge
+grep -rn "CAP_PLUGIN(" ios/ && echo "LEFTOVER BRIDGE"
+```
 
-### Step 4: Remove Objective-C Bridge Files
-
-Delete the old bridge header and implementation files once the Swift bridge is in place.
-
-Then clean the Xcode project file so it no longer references them.
-
-### Step 5: Update Package Metadata
-
-Update the plugin package manifest so it exports:
-
-- the iOS sources
-- the podspec
-- `Package.swift`
-
-Add an iOS SPM install command if the project maintains script helpers.
-
-### Step 6: Verify
-
-Install dependencies with the repository's existing package manager.
-
-Then `cd` into the example or test app directory that contains `capacitor.config.*`, run `npx cap sync` (or the repository's equivalent runner) there, and build that same app.
+Then in an SPM example/test app (directory with `capacitor.config.*`): install the plugin (`npm install ../path` or a packed tarball), run `npx cap sync ios`, confirm no `does not have a Package.swift` warning, confirm `<Name>` appears in `ios/App/CapApp-SPM/Package.swift` and the class appears in `ios/App/App/capacitor.config.json` `packageClassList`, build, and call one method from JS. Also run `pod lib lint` (or a CocoaPods example app) if the podspec is still published.
 
 ## Error Handling
 
-- Start with the Swift package resolver: check the target path and package dependency names first.
-- Verify bridge registration by matching the class name, `identifier`, and `jsName` against the exported API.
-- For unsupported CocoaPods dependencies, replace them with SPM-compatible packages or keep CocoaPods for that dependency.
+| Error | Fix |
+|---|---|
+| `product '<Name>' required by package 'capapp-spm' target 'CapApp-SPM' not found in package '<Name>'` | `Package(name:)` / `.library(name:)` do not match the CLI-derived `<Name>`. |
+| `"Foo" plugin is not implemented on ios` | Missing `@objc(FooPlugin)`, wrong `jsName`, or class not in `packageClassList`; re-sync after fixing. |
+| `"Foo.bar()" is not implemented on ios` | Method missing from `pluginMethods` or not marked `@objc`. |
+| `No such module 'Capacitor'` building the package | Missing `capacitor-swift-pm` dependency or wrong product name. |
+| `public headers ("include") directory path for 'X' is invalid or not contained in the target` | Mixed ObjC target without `publicHeadersPath`; split ObjC into its own target (see reference). |
+| `<id> is built for Capacitor <N>, it might cause issues` (in app) | Bump `capacitor-swift-pm` `from:` to the app's major. |
+| `Cordova` product missing (Capacitor 9 app) | Remove the `Cordova` product dependency. |
+| Resource not found at runtime | Declare `resources:` and load via `Bundle.module`, not `Bundle.main`. |
+
+## References
+
+Only load when the topic is in play:
+- `references/package-swift-templates.md`: base manifest, resources and privacy manifest, third-party SPM dependencies, binary `.xcframework`, mixed Swift/ObjC targets, Capacitor 8 vs 9 dependency blocks.

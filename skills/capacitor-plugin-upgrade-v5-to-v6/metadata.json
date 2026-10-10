@@ -1,15 +1,19 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
+  "date": "October 2026",
   "abstract": "Version-specific guide for upgrading a Capacitor plugin from v5 to v6.",
   "triggers": [
     "capacitor plugin 5 to 6",
+    "plugin-migration-v5-to-v6",
     "upgrade plugin to capacitor 6",
-    "v5 to v6 plugin migration",
-    "capacitor plugin upgrade v6"
+    "addListener PluginListenerHandle promise",
+    "removeAllListeners CAP_PLUGIN_METHOD",
+    "plugin compileSdk 34"
   ],
   "references": [
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/updating/plugins/6-0",
+    "https://capacitorjs.com/docs/ios/spm",
+    "https://www.npmjs.com/package/@capacitor/plugin-migration-v5-to-v6"
   ]
 }

@@ -43,4 +43,6 @@ await SplashScreen.hide({ fadeOutDuration: 500 });
 ## Notes
 
 - Android 12+ uses native Splash Screen API. Compatibility library can be disabled by modifying `AppTheme.NoActionBarLaunch` parent theme in `android/app/src/main/res/values/styles.xml`.
-- Additional config: `spinnerColor`, `layoutName` (custom Android layout), `useDialog`.
+- On the Android 12 Splash Screen API, `hide({ fadeOutDuration })` is ignored; use the `launchFadeOutDuration` config instead. Capacitor 9 changes its default from 200 to 0.
+- Additional config: `launchFadeOutDuration`, `androidSplashResourceName`, `spinnerColor`, `layoutName` (custom Android layout), `useDialog`.
+- Splash assets, white flash, or hide-timing issues: load the `capacitor-splash-screen` skill.

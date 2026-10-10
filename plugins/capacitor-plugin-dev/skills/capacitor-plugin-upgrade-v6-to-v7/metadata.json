@@ -1,15 +1,20 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
+  "date": "October 2026",
   "abstract": "Version-specific guide for upgrading a Capacitor plugin from v6 to v7.",
   "triggers": [
     "capacitor plugin 6 to 7",
+    "plugin-migration-v6-to-v7",
     "upgrade plugin to capacitor 7",
-    "v6 to v7 plugin migration",
-    "capacitor plugin upgrade v7"
+    "call.success call.error removed",
+    "registerWebPlugin removed",
+    "capacitor-swift-pm from 7.0.0",
+    "rollup.config.mjs plugin"
   ],
   "references": [
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/updating/plugins/7-0",
+    "https://capacitorjs.com/docs/ios/spm",
+    "https://www.npmjs.com/package/@capacitor/plugin-migration-v6-to-v7"
   ]
 }

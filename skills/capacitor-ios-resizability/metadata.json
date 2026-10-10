@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "October 2026",
+  "abstract": "Makes Capacitor iOS apps work in windows that resize while running (iPad Split View, Slide Over, Stage Manager, windowed apps, the foldable iPhone, external displays). Audits the web layer for device-based layout and stale sizes, the app's native code and node_modules plugins for UIScreen.main, interfaceOrientation, userInterfaceIdiom, keyWindow and AppDelegate lifecycle use, checks Info.plist UIRequiresFullScreen, iPad orientations, launch screen and the UIScene lifecycle (Capacitor 8.5+), and covers SwiftUI screens presented by plugins.",
+  "triggers": [
+    "ipad multitasking",
+    "stage manager",
+    "split view",
+    "resizable window",
+    "foldable iphone",
+    "UIRequiresFullScreen",
+    "UIScreen.main",
+    "userInterfaceIdiom",
+    "interfaceOrientation",
+    "app does not resize",
+    "ITMS-90870",
+    "plugin overlay wrong size"
+  ],
+  "references": [
+    "https://developer.apple.com/documentation/technotes/tn3192-migrating-your-app-from-the-deprecated-uirequiresfullscreen-key",
+    "https://developer.apple.com/documentation/technotes/tn3208-preparing-your-apps-launch-screen-to-meet-app-store-requirements",
+    "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle",
+    "https://developer.apple.com/documentation/uikit/uitraitcollection",
+    "https://developer.apple.com/design/human-interface-guidelines/multitasking",
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://capacitorjs.com/docs/ios/viewcontroller"
+  ]
+}

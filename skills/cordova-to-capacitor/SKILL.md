@@ -1,6 +1,6 @@
 ---
 name: cordova-to-capacitor
-description: Complete guide for migrating from Apache Cordova to Capacitor. Use this skill when users need to modernize a Cordova/PhoneGap app to Capacitor, migrate plugins, or understand platform differences.
+description: Migrates an Apache Cordova, PhoneGap, or Ionic-Cordova app to Capacitor. Use when the project has config.xml, a platforms/ or plugins/ folder, cordova-* or phonegap-* dependencies, @awesome-cordova-plugins or @ionic-native wrappers, deviceready listeners, or cordova.plugins.* calls, and the user wants Capacitor native projects, Capacitor/Capgo plugin replacements, config.xml preference migration, and preserved localStorage/IndexedDB data (iosScheme/androidScheme). Covers keeping Cordova plugins temporarily, Capacitor 9 making the Cordova runtime optional (CapacitorCordova only bundled when a Cordova plugin is installed), skipped incompatible plugins, and removing Cordova afterwards. Do not use for porting a single Cordova plugin's native source into a Capacitor plugin, Capacitor major upgrades (capacitor-app-upgrades), Appflow/cordova-plugin-ionic live updates (ionic-appflow-migration), or non-Cordova web apps (webapp-to-capacitor, framework-to-capacitor).
 allowed-tools:
   - Bash(node -e *)
   - Bash(find *)
@@ -11,539 +11,111 @@ allowed-tools:
 
 # Cordova to Capacitor Migration
 
-Step-by-step guide for migrating from Apache Cordova/PhoneGap to Capacitor.
+Move a Cordova app onto Capacitor incrementally: Capacitor first, plugins one by one, Cordova removed last.
 
-## When to Use This Skill
+## When to Use
 
-- Migrating an existing Cordova app to Capacitor
-- Converting PhoneGap projects to Capacitor
-- Understanding Cordova vs Capacitor differences
-- Finding Capacitor equivalents for Cordova plugins
-- Modernizing hybrid mobile apps
+TRIGGER when:
+- `config.xml`, `platforms/`, `plugins/`, `cordova-android`/`cordova-ios`, or `cordova-plugin-*` are present and the user wants Capacitor.
+- Code waits on `deviceready` or calls `navigator.camera`, `window.plugins.*`, `cordova.plugins.*`, `@awesome-cordova-plugins/*`, `@ionic-native/*`.
+- After migration: data loss on first launch, missing Cordova plugin behaviour, or Capacitor 9 build errors referencing Cordova symbols.
+
+Do not use for:
+- Rewriting a Cordova plugin's Java/Objective-C as a Capacitor plugin (plugin-level port) -> follow Capacitor plugin docs; `capacitor-plugins` for existing replacements.
+- Upgrading Capacitor majors -> `capacitor-app-upgrades`.
+- Replacing Appflow Live Updates (`cordova-plugin-ionic`) -> `ionic-appflow-migration` + `capgo-live-updates`.
+- Framework build config (Angular output path, Vite) -> `framework-to-capacitor`.
 
 ## Live Project Snapshot
 
 Current migration-related packages:
-!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(name.includes('cordova')||name.startsWith('@capacitor/')||name.startsWith('@ionic-enterprise/'))out.push(section+'.'+name+'='+version)}}console.log(out.sort().join('\n'))"`
+!`node -e "const fs=require('fs');if(!fs.existsSync('package.json'))process.exit(0);const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));const out=[];for(const section of ['dependencies','devDependencies']){for(const [name,version] of Object.entries(pkg[section]||{})){if(name.includes('cordova')||name.includes('phonegap')||name.startsWith('@capacitor/')||name.startsWith('@capgo/')||name.startsWith('@ionic-native/')||name.startsWith('@awesome-cordova-plugins/')||name.startsWith('@ionic-enterprise/'))out.push(section+'.'+name+'='+version)}}if(pkg.cordova)out.push('cordova.plugins='+Object.keys(pkg.cordova.plugins||{}).join(','));console.log(out.sort().join('\n'))"`
 
 Relevant config and platform paths:
-!`find . -maxdepth 3 \( -name 'config.xml' -o -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' -o -path './ios' -o -path './android' \)`
+!`find . -maxdepth 3 -not -path '*/node_modules/*' \( -name 'config.xml' -o -name 'capacitor.config.json' -o -name 'capacitor.config.ts' -o -name 'capacitor.config.js' -o -path './ios' -o -path './android' -o -path './platforms' -o -path './plugins' -o -name 'www' \)`
 
-## Why Migrate from Cordova?
+## Key Differences That Drive Decisions
 
-| Aspect | Cordova | Capacitor |
-|--------|---------|-----------|
-| Native IDE | Builds via CLI | First-class Xcode/Android Studio |
-| Plugin Management | Separate ecosystem | npm packages |
-| Updates | Full app store review | Live updates with Capgo |
-| Web App Platform | Any | Any (React, Vue, Angular, etc.) |
-| Maintenance | Slowing down | Active development |
-| TypeScript | Limited | Full support |
-| Modern APIs | Older patterns | Modern Promise-based APIs |
+- Capacitor native projects (`ios/`, `android/`) are source code you commit and edit; `npx cap sync` never regenerates them. Cordova `platforms/` is a build artifact.
+- Capacitor does not apply `config.xml` or plugin `<config-file>` / `<edit-config>` edits at build time beyond what `cap sync` does for Cordova plugins. Permissions, entitlements, and Info.plist keys become manual, one-time edits.
+- Cordova plugins still work in Capacitor (installed via npm, applied on `cap sync`). Hooks and `<variable>` install prompts do not run; set variables via `cordova.preferences` in `capacitor.config.*`.
+- Origin changes: the app is served from `capacitor://localhost` (iOS) and `https://localhost` (Android) by default. Existing `localStorage`, IndexedDB, cookies, and service-worker data are tied to the old origin and look "lost" after the update unless you keep the scheme (see `references/config-and-data.md`).
+- `deviceready` is not needed. Plugins are available after import; for remaining Cordova plugins, `deviceready` still fires because Capacitor's Cordova layer injects `cordova.js`.
 
-## Migration Process Overview
+### Capacitor 9: Cordova runtime is optional
 
-### Step 1: Assess Your Current App
+On Capacitor 9, `npx cap sync` only wires in the Cordova compatibility layer when at least one installed plugin is a Cordova plugin:
+- Android: `capacitor-cordova-android` / `capacitor-cordova-android-plugins` modules disappear from `settings.gradle` and `app/build.gradle` when there are none.
+- iOS: `CapacitorCordova` is no longer added to the `Podfile` or `Package.swift`.
 
-Start from the injected snapshot above before falling back to manual inspection.
+Implications:
+- Removing the last Cordova plugin shrinks the app and drops `cordova.js` - good, but any app/native code that references Cordova symbols (`com.getcapacitor.cordova.CordovaPlugin`, `CDVPlugin`, `CDVPluginHandleOpenURL`, `window.cordova`) without a Cordova plugin installed fails to compile or is `undefined` at runtime.
+- There is no config flag to force-include the runtime. Either remove those references or keep a Cordova plugin installed.
+- `deviceready` listeners left in JS never fire once the runtime is gone. Remove them before removing the last Cordova plugin.
+- On Capacitor 8 the runtime is always bundled, so this only surfaces on upgrade; check before moving to 9.
 
-**Check Cordova version:**
-```bash
-cordova --version
-cordova platform version
-```
+## Procedure
 
-**List installed plugins:**
-```bash
-cordova plugin list
-```
+1. Audit (report to the user before editing):
+   - `cordova --version`, `cordova platform ls`, `cordova plugin ls` (or `package.json` `cordova.plugins`).
+   - `config.xml`: widget `id`, `version`, `<preference>`s, `<platform>` blocks, `<access>`/`<allow-navigation>`, icons/splash.
+   - Which webview plugin is installed (`cordova-plugin-ionic-webview`, `cordova-plugin-wkwebview-engine`) and the current scheme/hostname - decides data preservation.
+   - Every plugin: replacement exists, keep as Cordova plugin, or blocker. Use `references/plugin-mapping.md`.
+   - Code using `deviceready`, `navigator.*` Cordova globals, `window.plugins`, Ionic Native wrappers.
+2. Install Capacitor in the existing project and keep the same app ID:
+   ```bash
+   npm install @capacitor/core @capacitor/ios @capacitor/android
+   npm install -D @capacitor/cli
+   npx cap init "<name from config.xml>" <widget id from config.xml> --web-dir www
+   ```
+   `cap init` reads `config.xml` preferences into `cordova.preferences` in the Capacitor config. Make sure the web build outputs to the `webDir` (Ionic Angular: `www`).
+3. Decide data preservation (scheme) before the first release: `references/config-and-data.md`.
+4. `npm run build && npx cap add ios && npx cap add android`. Cordova plugins listed in `package.json` dependencies are installed into the new native projects; known-incompatible ones are skipped with a warning.
+5. Port native configuration by hand: usage strings, permissions, entitlements, URL schemes, orientation, splash/icons (`npx @capacitor/assets generate`). See `references/config-and-data.md`.
+6. Replace plugins one at a time (`references/plugin-mapping.md`), convert callback code to promises (`references/code-patterns.md`), `npx cap sync`, test on device after each.
+7. Remove Cordova when nothing depends on it (see Removal). Keep Cordova plugins that have no replacement; they work.
+8. Offer Capgo live updates once the Capacitor build is stable (`capgo-live-updates`).
 
-**Review config.xml:**
-```bash
-cat config.xml
-```
+## Removal
 
-### Step 2: Install Capacitor
-
-**In your existing Cordova project:**
-```bash
-# Install Capacitor
-npm install @capacitor/core @capacitor/cli
-
-# Initialize Capacitor
-npx cap init
-```
-
-**When prompted:**
-- **App name**: Your app's display name
-- **App ID**: Use the same ID from config.xml (e.g., `com.company.app`)
-- **Web directory**: Usually `www` for Cordova projects
-
-### Step 3: Add Platforms
-
-**Capacitor doesn't modify web assets. Add platforms separately:**
+Only after every flow is verified on both platforms:
 
 ```bash
-# Add iOS platform
-npm install @capacitor/ios
-npx cap add ios
-
-# Add Android platform
-npm install @capacitor/android
-npx cap add android
-```
-
-This creates:
-- `ios/` directory with Xcode project
-- `android/` directory with Android Studio project
-
-### Step 4: Migrate Plugins
-
-**CRITICAL: Check plugin compatibility first.**
-
-#### Core Cordova Plugins → Capacitor Equivalents
-
-| Cordova Plugin | Capacitor Equivalent | Install Command |
-|----------------|---------------------|-----------------|
-| cordova-plugin-camera | @capacitor/camera | `npm install @capacitor/camera` |
-| cordova-plugin-geolocation | @capacitor/geolocation | `npm install @capacitor/geolocation` |
-| cordova-plugin-device | @capacitor/device | `npm install @capacitor/device` |
-| cordova-plugin-network-information | @capacitor/network | `npm install @capacitor/network` |
-| cordova-plugin-statusbar | @capacitor/status-bar | `npm install @capacitor/status-bar` |
-| cordova-plugin-splashscreen | @capacitor/splash-screen | `npm install @capacitor/splash-screen` |
-| cordova-plugin-keyboard | @capacitor/keyboard | `npm install @capacitor/keyboard` |
-| cordova-plugin-dialogs | @capacitor/dialog | `npm install @capacitor/dialog` |
-| cordova-plugin-file | @capacitor/filesystem | `npm install @capacitor/filesystem` |
-| cordova-plugin-inappbrowser | @capacitor/browser | `npm install @capacitor/browser` |
-| cordova-plugin-media | @capacitor/media | Custom or use @capgo plugins |
-| cordova-plugin-vibration | @capacitor/haptics | `npm install @capacitor/haptics` |
-| cordova-plugin-local-notifications | @capacitor/local-notifications | `npm install @capacitor/local-notifications` |
-| cordova-plugin-push | @capacitor/push-notifications | `npm install @capacitor/push-notifications` |
-
-#### Third-Party Cordova Plugins → Capgo Equivalents
-
-**For biometrics:**
-```bash
-# Cordova
-cordova plugin add cordova-plugin-fingerprint-aio
-
-# Capacitor
-npm install @capgo/capacitor-native-biometric
-```
-
-**For payments:**
-```bash
-# Cordova
-cordova plugin add cordova-plugin-purchase
-
-# Capacitor
-npm install @capgo/capacitor-purchases
-```
-
-**For social login:**
-```bash
-# Facebook
-npm install @capgo/capacitor-social-login
-
-# Google
-npm install @codetrix-studio/capacitor-google-auth
-```
-
-**Check the full plugin catalog:**
-https://github.com/Cap-go/awesome-capacitor
-
-### Step 5: Update Code
-
-#### Import Changes
-
-**Cordova (old):**
-```javascript
-document.addEventListener('deviceready', () => {
-  navigator.camera.getPicture(success, error, options);
-});
-```
-
-**Capacitor (new):**
-```typescript
-import { Camera } from '@capacitor/camera';
-
-// No deviceready event needed
-const image = await Camera.getPhoto({
-  quality: 90,
-  allowEditing: true,
-  resultType: CameraResultType.Uri
-});
-```
-
-#### Common Pattern Changes
-
-**Device Information:**
-```typescript
-// Cordova
-const uuid = device.uuid;
-const platform = device.platform;
-
-// Capacitor
-import { Device } from '@capacitor/device';
-const info = await Device.getId();
-const platform = await Device.getInfo();
-```
-
-**Network Status:**
-```typescript
-// Cordova
-const networkState = navigator.connection.type;
-
-// Capacitor
-import { Network } from '@capacitor/network';
-const status = await Network.getStatus();
-console.log('Connected:', status.connected);
-```
-
-**Geolocation:**
-```typescript
-// Cordova
-navigator.geolocation.getCurrentPosition(success, error);
-
-// Capacitor
-import { Geolocation } from '@capacitor/geolocation';
-const position = await Geolocation.getCurrentPosition();
-```
-
-#### Remove deviceready Event
-
-**Capacitor doesn't need deviceready.** Plugins work immediately.
-
-```typescript
-// Cordova (remove this)
-document.addEventListener('deviceready', onDeviceReady, false);
-
-function onDeviceReady() {
-  // Your code
-}
-
-// Capacitor (just use directly)
-import { Camera } from '@capacitor/camera';
-
-async function takePicture() {
-  const photo = await Camera.getPhoto();
-}
-```
-
-### Step 6: Update Configuration
-
-**Cordova uses config.xml. Capacitor uses capacitor.config.ts**
-
-#### Create capacitor.config.ts
-
-```typescript
-import type { CapacitorConfig } from '@capacitor/cli';
-
-const config: CapacitorConfig = {
-  appId: 'com.company.app', // From config.xml widget id
-  appName: 'My App',         // From config.xml name
-  webDir: 'www',             // From Cordova build output
-  server: {
-    androidScheme: 'https'
-  },
-  plugins: {
-    SplashScreen: {
-      launchShowDuration: 3000,
-      backgroundColor: '#ffffff',
-      androidScaleType: 'CENTER_CROP',
-      showSpinner: false
-    }
-  }
-};
-
-export default config;
-```
-
-#### Migrate config.xml Settings
-
-**Preferences:**
-```xml
-<!-- Cordova config.xml -->
-<preference name="Orientation" value="portrait" />
-<preference name="StatusBarOverlaysWebView" value="false" />
-<preference name="StatusBarBackgroundColor" value="#000000" />
-```
-
-**Capacitor equivalent:**
-- Orientation: Set in Xcode/Android Studio per platform
-- StatusBar: Use `@capacitor/status-bar` plugin
-
-**Platform-specific config:**
-```xml
-<!-- Cordova config.xml -->
-<platform name="ios">
-  <allow-intent href="itms:*" />
-</platform>
-```
-
-**Capacitor equivalent:**
-```typescript
-// capacitor.config.ts
-const config: CapacitorConfig = {
-  ios: {
-    contentInset: 'always',
-  },
-  android: {
-    allowMixedContent: true,
-  }
-};
-```
-
-### Step 7: Handle Permissions
-
-**Capacitor requires explicit permission configuration.**
-
-#### iOS: Info.plist
-
-**Add to ios/App/App/Info.plist:**
-```xml
-<key>NSCameraUsageDescription</key>
-<string>We need camera access to take photos</string>
-
-<key>NSPhotoLibraryUsageDescription</key>
-<string>We need photo library access to select images</string>
-
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>We need location to show nearby places</string>
-
-<key>NSMicrophoneUsageDescription</key>
-<string>We need microphone access for audio recording</string>
-```
-
-#### Android: AndroidManifest.xml
-
-**Add to android/app/src/main/AndroidManifest.xml:**
-```xml
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-```
-
-### Step 8: Sync and Build
-
-**Sync web code with native projects:**
-```bash
+npm uninstall cordova cordova-ios cordova-android
+npm uninstall cordova-plugin-ionic-webview cordova-plugin-splashscreen cordova-plugin-statusbar cordova-plugin-ionic-keyboard
+rm -rf platforms plugins
+git mv config.xml config.xml.bak   # keep for reference until release
 npx cap sync
+grep -rn "deviceready\|cordova\.\|window\.plugins" src --include=*.ts --include=*.js --include=*.tsx --include=*.vue
 ```
 
-**This copies:**
-- Web assets from `www/` to native projects
-- Installs native dependencies
-- Updates plugin configurations
+Remove the `cordova` block from `package.json` if no Cordova plugins remain. Do not run `cordova plugin rm` loops; they edit `platforms/` you are deleting anyway.
 
-**Build for iOS:**
-```bash
-npx cap open ios
-# Then build in Xcode (Cmd+R)
-```
+## Verification
 
-**Build for Android:**
-```bash
-npx cap open android
-# Then build in Android Studio (Run)
-```
+- `npx cap sync` output lists only intended Cordova plugins and no "incompatible" surprises.
+- `npx cap doctor` shows matching versions for core, cli, ios, android.
+- Install the Capacitor build over the existing store version (same bundle ID, higher build number) on a device and confirm the user is still logged in and local data is present.
+- Exercise every migrated plugin on real devices (camera, files, push token, geolocation, purchases).
+- Capacitor 9: after removing the last Cordova plugin, `grep -rn "CapacitorCordova\|capacitor-cordova-android" ios android` returns nothing and the native build succeeds.
 
-### Step 9: Test the App
+## Error Handling
 
-**Test all plugin functionality:**
-- Camera/photo picker
-- Geolocation
-- File operations
-- Network detection
-- Device information
-- Push notifications
+| Error / symptom | Fix |
+|---|---|
+| `Found 1 incompatible Cordova plugin for ios, skipped install:` during sync | Plugin is on Capacitor's known-incompatible list; use the Capacitor equivalent |
+| User data / login gone after updating from the Cordova build | Origin changed; set `server.iosScheme: 'ionic'` (old ionic-webview iOS) or match the old Android scheme/hostname, then ship again |
+| `deviceready` handler never runs | Capacitor 9 with no Cordova plugins, or code expecting Cordova globals; call plugins directly |
+| `"Camera" plugin is not implemented on ios` (any plugin name) | Plugin not installed in native project; `npx cap sync`, check `npx cap ls` |
+| Cordova plugin variable missing (API key etc.) at build | Add it under `cordova.preferences` in `capacitor.config.*`, then `npx cap sync` |
+| Android: `cannot find symbol class CordovaPlugin` / iOS: `No such module 'Cordova'` after Capacitor 9 upgrade | Cordova runtime no longer bundled; remove the reference or keep a Cordova plugin |
+| Plugin with install hooks does nothing | Hooks do not run in Capacitor; replicate the hook's file edits manually |
+| White screen after `cap add` | `webDir` wrong or web build not run; `npm run build` then `npx cap sync` |
 
-**Check for:**
-- Missing permissions
-- API differences
-- Callback → Promise conversions
-- Removed plugins
+## References
 
-### Step 10: Remove Cordova
+- `references/plugin-mapping.md` - Cordova plugin -> Capacitor/Capgo replacement table, incompatible list, keep-as-Cordova guidance.
+- `references/config-and-data.md` - config.xml mapping, preferences, schemes and data preservation, permissions, splash/icons.
+- `references/code-patterns.md` - callback-to-promise conversions for common plugins.
 
-**Once migration is complete and tested:**
-
-```bash
-# Remove Cordova platforms
-cordova platform remove ios
-cordova platform remove android
-
-# Remove Cordova
-npm uninstall cordova
-npm uninstall cordova-ios
-npm uninstall cordova-android
-
-# Remove Cordova plugins
-cordova plugin list | xargs -I {} cordova plugin remove {}
-
-# Remove config.xml (after backing up)
-mv config.xml config.xml.backup
-```
-
-## Common Issues and Solutions
-
-### Issue: Plugin Not Found
-
-**Problem:**
-```text
-Error: Plugin not found
-```
-
-**Solution:**
-1. Check if plugin is installed: `npm list`
-2. Sync native projects: `npx cap sync`
-3. Clean and rebuild in Xcode/Android Studio
-
-### Issue: deviceready Never Fires
-
-**Problem:**
-Cordova's deviceready event doesn't exist in Capacitor.
-
-**Solution:**
-Remove all `deviceready` event listeners. Capacitor plugins work immediately.
-
-```typescript
-// Remove this
-document.addEventListener('deviceready', onDeviceReady);
-
-// Use this
-import { App } from '@capacitor/app';
-App.addListener('appStateChange', (state) => {
-  console.log('App state changed:', state.isActive);
-});
-```
-
-### Issue: White Screen on Startup
-
-**Problem:**
-App shows white screen or crashes.
-
-**Solution:**
-1. Check `webDir` in capacitor.config.ts points to correct build output
-2. Rebuild web app: `npm run build`
-3. Sync: `npx cap sync`
-4. Check browser console in device for errors
-
-### Issue: Permissions Not Working
-
-**Problem:**
-Camera/location/etc. fail silently.
-
-**Solution:**
-1. Add permission strings to Info.plist (iOS)
-2. Add permission declarations to AndroidManifest.xml (Android)
-3. Request permissions explicitly in code:
-
-```typescript
-import { Camera } from '@capacitor/camera';
-
-// Capacitor handles permission prompts automatically
-const photo = await Camera.getPhoto();
-```
-
-### Issue: Plugins Using Old Cordova API
-
-**Problem:**
-Some third-party Cordova plugins still reference Cordova global.
-
-**Solution:**
-Use the Capacitor Cordova compatibility layer:
-
-```bash
-npm install cordova-plugin-example
-npx cap sync
-```
-
-Capacitor includes Cordova compatibility, but:
-- It's best to migrate to native Capacitor plugins when possible
-- Not all Cordova plugins will work
-
-## Hybrid Approach: Run Both
-
-**You can run Cordova and Capacitor side-by-side during migration.**
-
-1. Install Capacitor alongside Cordova
-2. Keep both config.xml and capacitor.config.ts
-3. Migrate plugins incrementally
-4. Test each platform independently
-
-**When ready, remove Cordova entirely.**
-
-## Plugin Migration Checklist
-
-- [ ] List all Cordova plugins: `cordova plugin list`
-- [ ] Find Capacitor equivalents (use table above)
-- [ ] Install Capacitor plugins: `npm install @capacitor/plugin-name`
-- [ ] Update imports in code
-- [ ] Convert callbacks to async/await
-- [ ] Remove `deviceready` event listeners
-- [ ] Add permission strings (iOS Info.plist, Android AndroidManifest.xml)
-- [ ] Sync native projects: `npx cap sync`
-- [ ] Test on physical devices
-- [ ] Remove Cordova plugins after verification
-
-## Live Updates with Capgo
-
-**Capacitor enables instant updates without app store review.**
-
-After migration, add Capgo for OTA updates:
-
-```bash
-# Install Capgo plugin
-npm install @capgo/capacitor-updater
-
-# Create account at capgo.app
-npm install -g @capgo/cli
-capgo login
-
-# Initialize and deploy
-capgo init
-npm run build
-capgo upload
-```
-
-Users get updates instantly. See the `capgo-live-updates` skill for details.
-
-## Resources
-
-- **Official Migration Guide**: https://capacitorjs.com/docs/cordova/migrating-from-cordova-to-capacitor
-- **Capacitor Docs**: https://capacitorjs.com/docs
-- **Plugin Search**: https://github.com/Cap-go/awesome-capacitor
-- **Capgo Plugins**: https://github.com/Cap-go?q=capacitor
-- **Community Forum**: https://forum.ionicframework.com/c/capacitor
-
-## Migration Timeline Estimate
-
-| App Size | Estimated Time |
-|----------|----------------|
-| Small (1-3 plugins) | 2-4 hours |
-| Medium (4-8 plugins) | 1-2 days |
-| Large (9+ plugins) | 3-5 days |
-| Enterprise (custom plugins) | 1-2 weeks |
-
-## Post-Migration Benefits
-
-After migrating from Cordova to Capacitor:
-
-✅ **Faster development** - Direct access to Xcode/Android Studio
-✅ **Live updates** - Deploy updates without app store review (with Capgo)
-✅ **Better TypeScript** - Full type safety
-✅ **Modern APIs** - Promise-based, async/await
-✅ **Active maintenance** - Regular updates and improvements
-✅ **Better debugging** - Native IDE debugging tools
-✅ **Improved performance** - Optimized native bridge
-
-## Next Steps
-
-1. Complete the migration using steps above
-2. Test thoroughly on physical devices
-3. Set up CI/CD (see `capacitor-ci-cd` skill)
-4. Add live updates (see `capgo-live-updates` skill)
-5. Submit to app stores (see `capacitor-app-store` skill)
+Related skills: `capacitor-plugins`, `capacitor-app-upgrades`, `capgo-live-updates`, `capacitor-app-store`.

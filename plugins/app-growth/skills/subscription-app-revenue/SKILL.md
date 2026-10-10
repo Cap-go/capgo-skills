@@ -1,6 +1,6 @@
 ---
 name: subscription-app-revenue
-description: Revenue playbook for getting a mobile or web subscription app from zero to early MRR. Use when users ask how to make revenue, reach $1K MRR, monetize an app, get first users, improve ASO, plan TikTok/Reels/Shorts or Reddit acquisition, design a paywall, choose freemium vs trial, price subscriptions, reduce churn, or build a simple growth loop for an app.
+description: Revenue playbook for taking a mobile or web subscription app from zero to early MRR (around $1K). Use when users ask how to make money from an app, reach first subscribers or $1K MRR, validate an app idea against app-store demand, plan ASO, TikTok/Reels/Shorts or Reddit acquisition, choose freemium vs trial vs rewarded unlock, place and word a paywall, price monthly/annual plans, read churn, or diagnose a weak install-to-paid funnel. Do not use for implementing in-app purchase code (capacitor-plugins, @capgo/native-purchases), store submission mechanics (capacitor-app-store), App Review rejections (capacitor-apple-review-preflight), or shipping OTA experiments (capgo-live-updates).
 allowed-tools:
   - Bash(node -e *)
   - Bash(rg *)
@@ -11,13 +11,22 @@ allowed-tools:
 
 Build a practical path from an app idea or MVP to early subscription revenue. Keep the plan small, measurable, and biased toward shipping.
 
-## When to Use This Skill
+## When to Use
 
-- User wants to make money from an app, SaaS-like mobile app, PWA, or Capacitor app
-- User asks how to get to first revenue, first subscribers, or around $1K MRR
-- User needs a launch, ASO, short-form video, Reddit, paywall, pricing, or churn plan
-- User has a rough app idea and wants to validate demand without a long research phase
-- User has an existing app with weak installs, activation, paywall views, conversion, retention, or MRR
+TRIGGER when:
+
+- The user wants to make money from an app, a SaaS-like mobile app, a PWA, or a Capacitor app
+- The user asks how to get to first revenue, first subscribers, or about $1K MRR
+- The user needs a launch, ASO, short-form video, Reddit, paywall, pricing, or churn plan
+- The user has a rough app idea and wants to validate demand without a long research phase
+- The user has an existing app with weak installs, activation, paywall views, conversion, retention, or MRR
+
+Do not use when:
+
+- The user needs StoreKit or Play Billing code. Use `capacitor-plugins` (`@capgo/native-purchases`).
+- The user is submitting to the stores or fixing listing mechanics. Use `capacitor-app-store`.
+- The app was rejected, or the user needs a guideline check. Use `capacitor-apple-review-preflight`.
+- The user is wiring OTA updates to ship paywall or onboarding experiments. Use `capgo-live-updates`.
 
 ## Core Principle
 
@@ -204,6 +213,15 @@ Example framing:
 - If 80% of users see the paywall and 3% subscribe, 8,400 new users can roughly produce 201 subscribers before churn.
 
 Use this math to expose the real bottleneck. If installs are tiny, work on acquisition. If paywall views are low, fix onboarding. If paywall views are high but purchases are low, fix offer, pricing, or trust. If conversion works but MRR does not grow, fix retention and churn.
+
+## Verification
+
+Before you hand over a plan, check:
+
+- Every metric in the plan maps to an event that exists in the project or that the plan adds (see Live Project Snapshot). Name the event.
+- The revenue math uses the user's real or stated price and conversion numbers, and states the assumptions.
+- The 7-day sprint has one measurable outcome per day and only one primary acquisition channel.
+- Any recommendation that depends on store rules (trial wording, price display, subscription disclosure) points the user to `capacitor-apple-review-preflight` or the store guidelines rather than guessing.
 
 ## Guardrails
 

@@ -35,10 +35,30 @@ npx cap sync
 - Enable Background Modes capability: "Background fetch" and "Background processing".
 - Add `BGTaskSchedulerPermittedIdentifiers` to `ios/App/App/Info.plist`.
 - In `ios/App/App/AppDelegate.swift`, import `CapacitorBackgroundRunner`.
-- Call `BackgroundRunnerPlugin.handleApplicationDidFinishLaunching(launchOptions: launchOptions)` inside `application(_:didFinishLaunchingWithOptions:)`.
-- Register the task with `BackgroundRunnerPlugin.registerBackgroundTask()`.
+- Inside `application(_:didFinishLaunchingWithOptions:)`:
+
+```swift
+BackgroundRunnerPlugin.registerBackgroundTask()
+BackgroundRunnerPlugin.handleApplicationDidFinishLaunching(launchOptions: launchOptions)
+```
+
+- The `BGTaskSchedulerPermittedIdentifiers` entry must equal the config `label`.
+- Geolocation in runners needs `NSLocationAlwaysUsageDescription` and `NSLocationWhenInUseUsageDescription`; push needs the `Remote notifications` background mode.
 
 ### Android
+
+Add the plugin's bundled JS engine to the `flatDir` repositories in `android/app/build.gradle`:
+
+```groovy
+repositories {
+    flatDir {
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+        dirs '../../node_modules/@capacitor/background-runner/android/src/main/libs', 'libs'
+    }
+}
+```
+
+Missing this line causes Gradle to fail resolving `android-js-engine-release`.
 
 - Geolocation: `ACCESS_COARSE_LOCATION` and `ACCESS_FINE_LOCATION` permissions in `android/app/src/main/AndroidManifest.xml`.
 - Android 13+: call `checkPermissions()` / `requestPermissions()` for notifications.

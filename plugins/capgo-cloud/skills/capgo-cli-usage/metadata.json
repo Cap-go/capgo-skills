@@ -1,16 +1,24 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Entry-point guide for routing Capgo CLI requests to setup, OTA, native build, and organization workflows.",
+  "date": "October 2026",
+  "abstract": "Entry point for the Capgo CLI: full command map (CLI 8.x), API-key precedence, hosted MCP (api.capgo.app/mcp) and local CLI MCP setup, diagnostics (doctor, probe, app todo, app debug, observe), monorepo flags, and routing to narrower Capgo skills.",
   "triggers": [
     "capgo cli",
     "capgo doctor",
     "capgo login",
     "capgo init",
-    "capgo usage"
+    "capgo probe",
+    "capgo mcp",
+    "connect claude to capgo",
+    "capgo observe",
+    "CAPGO_TOKEN",
+    "No Capgo API key found"
   ],
   "references": [
-    "https://capgo.app"
+    "https://capgo.app/docs/cli/commands/",
+    "https://capgo.app/docs/ai/mcp/",
+    "https://capgo.app/docs/cli/reference/mcp/",
+    "https://capgo.app/docs/cli/reference/login/"
   ]
 }

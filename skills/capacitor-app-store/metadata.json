@@ -1,22 +1,33 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Complete guide to publishing Capacitor apps to Apple App Store and Google Play Store. Covers app icons, screenshots, metadata, privacy requirements, submission process, and handling rejections.",
+  "date": "October 2026",
+  "abstract": "Release and submission guide for Capacitor apps on the Apple App Store and Google Play: current SDK and target API deadlines (iOS 26 SDK since April 2026, iOS 27 SDK from April 2027, UIScene for Xcode 27, Play API 36 from August 31 2026, 16 KB page size), version/build numbers, signing, archive and upload paths, TestFlight, Play tracks and the 12-tester closed test, privacy manifest and forms, icons and screenshot sizes, phased rollout, verification, and exact upload error fixes. Platform detail in references/.",
   "triggers": [
-    "app store",
-    "play store",
-    "publish app",
-    "submit app",
-    "app rejection",
-    "app review",
-    "screenshots",
-    "release app"
+    "app store submission capacitor",
+    "play store submission capacitor",
+    "publish capacitor app",
+    "upload ipa app store connect",
+    "upload aab play console",
+    "testflight capacitor",
+    "app store screenshot sizes",
+    "google play target api 36",
+    "xcode 27 required app store",
+    "ITMS-91053",
+    "ITMS-90725",
+    "version code has already been used",
+    "play closed testing 12 testers",
+    "phased release"
   ],
   "references": [
-    "https://developer.apple.com/app-store/review/guidelines",
-    "https://play.google.com/about/developer-content-policy",
-    "https://appstoreconnect.apple.com",
-    "https://play.google.com/console"
+    "https://developer.apple.com/news/upcoming-requirements/",
+    "https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications",
+    "https://developer.apple.com/documentation/bundleresources/privacy-manifest-files",
+    "https://developer.apple.com/support/third-party-SDK-requirements/",
+    "https://developer.android.com/google/play/requirements/target-sdk",
+    "https://developer.android.com/guide/practices/page-sizes",
+    "https://support.google.com/googleplay/android-developer/answer/14151465",
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://github.com/ionic-team/capacitor-assets"
   ]
 }

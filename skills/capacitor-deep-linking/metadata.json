@@ -1,20 +1,26 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Complete guide to implementing deep links in Capacitor apps. Covers iOS Universal Links, Android App Links, custom URL schemes, OAuth callbacks, and advanced routing patterns.",
+  "date": "October 2026",
+  "abstract": "Implement and debug deep links in Capacitor apps: custom URL schemes, iOS Universal Links, Android App Links, appUrlOpen and getLaunchUrl routing, Capacitor 8.5 UIScene SceneDelegate URL handling, and cold vs warm launch testing.",
   "triggers": [
     "deep link",
     "universal link",
     "app link",
     "url scheme",
-    "applinks",
-    "open app from link",
-    "aasa file"
+    "apple-app-site-association",
+    "assetlinks.json",
+    "appUrlOpen",
+    "getLaunchUrl",
+    "SceneDelegate openURLContexts",
+    "link opens in browser",
+    "oauth redirect"
   ],
   "references": [
+    "https://capacitorjs.com/docs/guides/deep-links",
     "https://capacitorjs.com/docs/apis/app",
-    "https://developer.apple.com/documentation/xcode/supporting-universal-links-in-your-app",
-    "https://developer.android.com/training/app-links"
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://developer.apple.com/documentation/xcode/supporting-associated-domains",
+    "https://developer.android.com/training/app-links/verify-android-applinks"
   ]
 }

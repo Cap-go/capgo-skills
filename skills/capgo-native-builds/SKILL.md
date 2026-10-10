@@ -1,278 +1,156 @@
 ---
 name: capgo-native-builds
-description: Use for Capgo Cloud Build native iOS and Android workflows, including CLI login, API-key handling, iOS build onboarding, signing credential storage, build requests, store upload settings, output download links, and troubleshooting. Do not use for OTA bundle uploads or generic Capacitor setup unless a native Capgo build is requested.
+description: Use for Capgo Cloud Build (Capgo Build) native iOS and Android workflows, including CLI login and API-key precedence, `build init` onboarding, signing credential save/update/export, `build request` with TestFlight, App Store, or Play upload, temporary IPA/APK/AAB download links (`--output-upload`), prescan failures, `build needed` OTA-vs-native gating, and CI secrets. Use when errors mention "No credentials found for this app and platform", "Legacy provisioning profile format detected", "Missing required argument: --platform", or prescan check ids. Do not use for OTA bundle uploads (capgo-release-management), updater plugin setup (capgo-live-updates), or local Xcode/Gradle builds and generic CI runners (capacitor-ci-cd).
 ---
 
 # Capgo Native Builds
 
-Use this skill when the user wants Capgo to build native iOS or Android binaries in the cloud.
+Build signed iOS and Android binaries on Capgo Cloud Build and deliver them to the stores or to a temporary download link.
 
-## When to Use This Skill
+Facts below were checked against `@capgo/cli` 8.77 and https://capgo.app/docs/builder/ (October 2026). The CLI describes native cloud builds as "limited beta".
 
-- The user asks for a Capgo Cloud Build, native build, signed IPA/APK/AAB, TestFlight/App Store build, Play Store build, or temporary build download link.
-- The user needs Capgo CLI login, build API-key setup, or help choosing between `login`, `CAPGO_TOKEN`, and `-a, --apikey`.
-- The user needs iOS build onboarding, Apple signing setup, Android keystore setup, Play service account setup, or explicitly asks for credential rotation.
-- The user asks about `build init`, `build request`, `build credentials save`, `build credentials update`, `build credentials list`, `build credentials clear`, or `build credentials migrate`.
+## When to Use
 
-Do not use this skill for JavaScript-only OTA update uploads, generic CI/CD setup, or local native builds that do not involve Capgo Cloud Build.
+TRIGGER when:
+
+- The user asks for a Capgo Cloud Build, a native build in the cloud, a signed IPA/APK/AAB, a TestFlight, App Store, or Play upload through Capgo, or a temporary build download link or QR code.
+- The user runs or asks about `build init`, `build request`, `build prescan`, `build needed`, `build last-output`, `build sync-ios-version`, or any `build credentials ...` subcommand.
+- A Capgo build fails on signing, provisioning, keystore, prescan, or store upload.
+
+Do not use when:
+
+- Only JavaScript/web assets change. That is an OTA release: use `capgo-release-management`, or `capgo-live-updates` for plugin wiring.
+- The user builds locally in Xcode or Gradle, or on their own CI runners without Capgo Build. Use `capacitor-ci-cd`.
+- The user needs store listing, metadata, or review prep. Use `capacitor-app-store` and `capacitor-apple-review-preflight`.
+- The user is upgrading Capacitor itself. Use `capacitor-app-upgrades`.
+
+## Reference Index
+
+Only load a reference when its topic is in play.
+
+| File | Load when |
+| --- | --- |
+| `references/request-options.md` | Building the exact `build request` flags: store submission, tracks, release notes, versioning, cache, Xcode version, prescan flags |
+| `references/credentials-and-ci.md` | Saving, updating, exporting, or migrating credentials, and pushing them into CI secrets |
 
 ## Operating Rules
 
 - Use `npx @capgo/cli@latest` in user-facing commands.
-- Treat API keys, P12 passwords, keystore passwords, App Store Connect keys, and Play service account JSON as secrets. Use placeholders in new generic examples, but do not replace user-provided secret values in files or commands with placeholders unless the user explicitly asks. Do not echo supplied secret values back to the user, and do not tell the user to rotate secrets unless they explicitly ask for rotation guidance.
-- Prefer Capgo CLI build flows before inventing custom CI scripts.
-- Confirm the platform, app ID, project path, desired output destination, and whether the user wants store upload or a temporary download link.
-- Credentials are stored locally by the CLI and are only sent to Capgo for the build job. They are not stored permanently on Capgo servers and are deleted after the build process. See the [Capgo CLI credentials documentation](https://capgo.app/docs/cli/cloud-build/credentials/).
+- API keys, P12 passwords, keystore passwords, `.p8` keys, and Play service-account JSON are secrets. Use placeholders only in new generic examples. Never replace values the user already supplied with placeholders unless they ask. Never echo secrets back. Do not suggest rotation unless the user asks.
+- Credentials are stored locally (`~/.capgo-credentials/credentials.json`, or `.capgo-credentials.json` with `--local`). They are uploaded only for the build job, and the temporary server copies are deleted when the build finishes. Never commit either file.
+- Confirm these before requesting: platform, app ID, project path, flavor or scheme, and destination (store upload, download link, or both).
 
-## First Checks
+## Auth and API-key precedence
 
-Before requesting a build, verify:
+The CLI resolves the key in this order:
 
-- The project is a Capacitor app and has the native folder for the target platform (`ios/` or `android/`).
-- The Capgo app exists. If needed, add it first:
+1. `-a, --apikey <key>` on the command
+2. The `CAPGO_TOKEN` environment variable
+3. `~/.capgo`, the global key saved by `npx @capgo/cli@latest login <key>`
+4. `./.capgo`, the project key saved by `login --local <key>`
+
+Trap: a global key **wins over** a project-local key. If a repository must use a different org's key, pass `-a` or set `CAPGO_TOKEN`. Make sure `.capgo` is git-ignored.
+
+## Procedure
+
+### 1. Inspect
+
+- `ls ios android` and confirm the target native folder exists and `npx cap sync <platform>` has run.
+- Read `capacitor.config.*` for `appId`. It must match the iOS bundle ID and Android `applicationId` (prescan check `shared/bundle-id-consistency`).
+- iOS: check the Xcode scheme and target names (default `App`) and any extensions that need their own provisioning profiles.
+- Android: check `android/app/build.gradle` for `productFlavors`. If there is more than one flavor, `--android-flavor` is required.
+- Check that the app exists: `npx @capgo/cli@latest app list`. Add it with `npx @capgo/cli@latest app add com.example.app`.
+
+### 2. Decide whether a native build is needed at all
 
 ```bash
-npx @capgo/cli@latest app add com.example.app
+npx @capgo/cli@latest build needed com.example.app --channel production
+# prints "yes" and exits 1 -> native build required
+# prints "no" and exits 0 -> ship OTA instead
+# exits 2 -> the command itself failed
 ```
 
-- The user has a Capgo API key with permission to trigger native builds for the app.
-- Signing credentials exist or the workflow will create/save them before `build request`.
-- The output destination is clear:
-  - Store upload: provide App Store Connect credentials for iOS or Play config for Android.
-  - Download link only: use `--output-upload`, optionally with `--output-retention <duration>`.
+It compares native package metadata only. Raw edits under `ios/` or `android/` still need a native build.
 
-## Authentication and Login
+### 3. Set up credentials
 
-Use `login` when the machine should remember the Capgo API key:
+First build, interactive (preferred):
 
 ```bash
-npx @capgo/cli@latest login
-npx @capgo/cli@latest login YOUR_API_KEY
-npx @capgo/cli@latest login --local YOUR_API_KEY
+npx @capgo/cli@latest build init        # alias: build onboarding
 ```
 
-Authentication precedence for build commands:
+- iOS: verifies or creates the App Store Connect API key, then creates or reuses the certificate, bundle ID, and App Store provisioning profiles. It saves everything locally and can fire the first build. Progress persists under `~/.capgo-credentials/onboarding/`, so the user can resume.
+- Android: sets up the keystore. Google OAuth then provisions a GCP service account and sends the Play Console invite.
+- macOS helper for the `.p8` key: `npx @capgo/cli@latest build credentials apple-key --appId com.example.app`.
 
-1. `-a, --apikey <apikey>` on the command.
-2. `CAPGO_TOKEN` environment variable.
-3. Local key saved by `login --local` in `.capgo`.
-4. Global key saved by `login` in `~/.capgo`.
+When the user already has signing files, use `build credentials save` instead. See `references/credentials-and-ci.md`.
 
-Use `CAPGO_TOKEN` for CI secrets. Use `-a, --apikey` when creating a single copy-pasteable command for onboarding or support. Use `login --local` only when the key should stay scoped to this repository; verify `.capgo` is ignored by git.
-
-## Recommended Build Flows
-
-### iOS Fast Path: `build init`
-
-For a first iOS cloud build, prefer the interactive onboarding command:
+### 4. Pre-flight
 
 ```bash
-npx @capgo/cli@latest build init
+npx @capgo/cli@latest build prescan com.example.app --platform ios
 ```
 
-If no key is saved, pass one explicitly:
+Prescan runs automatically inside `build request`. Run it alone to fix problems before you upload anything. If one finding is intentional, skip only that check: `--prescan-skip <check-id>`. Avoid `--no-prescan`.
+
+### 5. Request the build
 
 ```bash
-npx @capgo/cli@latest build init -a YOUR_API_KEY
-```
-
-`build init` also has the alias `build onboarding`. It is best when the user wants the CLI to create and save iOS signing material with the fewest manual steps.
-
-What it handles:
-
-- Verifies the App Store Connect API key.
-- Creates or reuses Apple signing assets where possible.
-- Registers or reuses the bundle ID.
-- Creates App Store provisioning profiles.
-- Saves build credentials into the same local store used by `build request`.
-- Can request the first cloud build at the end.
-- Persists onboarding progress under `~/.capgo-credentials/onboarding/` so the user can resume.
-- Saves recovery/support material under `~/.capgo-credentials/support/` after unexpected failures.
-
-Use manual credential commands instead when the user already has certificates, profiles, or CI secrets prepared.
-
-### Manual iOS Credential Save
-
-Use this when the user already has Apple signing files:
-
-```bash
-npx @capgo/cli@latest build credentials save --appId com.example.app --platform ios \
-  --certificate ./cert.p12 --p12-password "P12_PASSWORD" \
-  --ios-provisioning-profile ./profile.mobileprovision \
-  --apple-key ./AuthKey_KEYID.p8 --apple-key-id "KEY_ID" \
-  --apple-issuer-id "ISSUER_UUID" --apple-team-id "TEAM_ID"
-```
-
-For apps with extensions or multiple targets, repeat `--ios-provisioning-profile` and map each bundle ID:
-
-```bash
-npx @capgo/cli@latest build credentials save --appId com.example.app --platform ios \
-  --ios-provisioning-profile com.example.app=./App.mobileprovision \
-  --ios-provisioning-profile com.example.app.widget=./Widget.mobileprovision
-```
-
-For ad-hoc iOS builds, set the distribution mode and collect the IPA with `--output-upload`:
-
-```bash
-npx @capgo/cli@latest build credentials save --appId com.example.app --platform ios \
-  --ios-distribution ad_hoc \
-  --certificate ./cert.p12 \
-  --ios-provisioning-profile ./adhoc.mobileprovision \
-  --output-upload
-```
-
-### Manual Android Credential Save
-
-Use this when the user already has Android signing files:
-
-```bash
-npx @capgo/cli@latest build credentials save --appId com.example.app --platform android \
-  --keystore ./release.jks --keystore-alias "release-key" \
-  --keystore-key-password "KEY_PASSWORD" \
-  --keystore-store-password "STORE_PASSWORD" \
-  --play-config ./service-account.json
-```
-
-If the user only needs an APK/AAB download link and not Play upload, save `--output-upload` and omit or override Play upload:
-
-```bash
-npx @capgo/cli@latest build credentials save --appId com.example.app --platform android \
-  --keystore ./release.jks --keystore-alias "release-key" \
-  --keystore-key-password "KEY_PASSWORD" \
-  --keystore-store-password "STORE_PASSWORD" \
-  --output-upload
-```
-
-Use `--android-flavor <flavor>` when the Android project has multiple product flavors.
-
-### Request a Build
-
-Use `build request [appId]` after login and credentials are ready:
-
-```bash
+# App Store / TestFlight (default ios distribution app_store)
 npx @capgo/cli@latest build request com.example.app --platform ios --path .
+
+# Android to Play internal track (default track internal, status draft)
 npx @capgo/cli@latest build request com.example.app --platform android --path .
+
+# Artifact only, no store upload
+npx @capgo/cli@latest build request com.example.app --platform ios --ios-distribution ad_hoc --output-upload --output-retention 2d
+npx @capgo/cli@latest build request com.example.app --platform android --no-playstore-upload --output-upload
 ```
 
-Useful request options:
+The `--output-retention` range is `1h` to `7d`. The default TTL saved in credentials is `1h`.
 
-- `--platform ios|android`: required.
-- `--path <path>`: project directory, default is the current directory.
-- `--build-mode debug|release`: defaults to release.
-- `--ios-scheme <scheme>` and `--ios-target <target>` for custom Xcode projects.
-- `--ios-distribution app_store|ad_hoc`.
-- `--android-flavor <flavor>` for Android product flavors.
-- `--output-upload` to create temporary IPA/APK/AAB download links.
-- `--output-retention <duration>` from `1h` to `7d`.
-- `--no-playstore-upload` to skip Play upload for an Android build. This requires `--output-upload`.
-- `--skip-build-number-bump` when the project owns native build numbers itself.
-- `--verbose` for support/debugging.
+## Traps
 
-Example: collect an iOS ad-hoc IPA link:
+- **Xcode / Capacitor 9:** the Capgo Build docs list macOS Tahoe 26.2 with Xcode 26.2. You can pin with `--xcode-version <major[.minor]>` (or `CAPGO_IOS_XCODE_VERSION`). Capacitor 9 needs Xcode 27+. Capgo's docs and CLI 8.77 do not confirm an Xcode 27 builder. Before promising a Capacitor 9 iOS cloud build, check with `--xcode-version 27` or current docs.
+- **`--no-playstore-upload` requires `--output-upload`**. Otherwise the build has no destination.
+- **Ad hoc iOS** skips the store. Use it with `--output-upload` when the App Store record does not exist yet.
+- **`--submit-to-store-review`** changes the Android defaults to the `production` track with status `completed`. Confirm with the user before you add it.
+- **Build numbers auto-increment** by default. If the project owns build numbers, add `--skip-build-number-bump`. Marketing versions can also auto-bump (`--skip-marketing-version-bump` turns this off).
+- **Build timeout** defaults to 15 minutes. Raise it with `npx @capgo/cli@latest app set com.example.app --build-timeout-minutes 60` (range 5 to 360).
+- **`server.url` left in `capacitor.config`** (live reload) fails prescan `ios/capacitor-server-url-shipped` for store builds. Remove it rather than skipping the check.
 
-```bash
-npx @capgo/cli@latest build request com.example.app \
-  --platform ios \
-  --ios-distribution ad_hoc \
-  --output-upload \
-  --output-retention 2d
-```
+## Verification
 
-Example: Android flavor with a download link instead of Play upload:
+1. `npx @capgo/cli@latest build credentials list --appId com.example.app` shows masked credentials for the target platform.
+2. `npx @capgo/cli@latest build prescan com.example.app --platform <p> --fail-on-warnings` exits 0.
+3. `build request` ends with a success status. With `--output-upload` it prints a download link and QR code. With `--output-record /tmp/build.json`, check `npx @capgo/cli@latest build last-output --path /tmp/build.json --field outputUrl`.
+4. Store path: the build appears in TestFlight or the Play Console track you chose.
+5. Install the artifact on a device and check the version and build number.
 
-```bash
-npx @capgo/cli@latest build request com.example.app \
-  --platform android \
-  --android-flavor production \
-  --output-upload \
-  --no-playstore-upload
-```
+## Error Handling
 
-## Credential Management
+| String / symptom | Fix |
+| --- | --- |
+| `No Capgo API key found. Run ... first, then retry this command.` | `npx @capgo/cli@latest login`, set `CAPGO_TOKEN`, or pass `-a` |
+| `Insufficient permissions for <key>` / prescan `shared/apikey-permission` | The key's role cannot request native builds for this app or org. Use a key with build rights |
+| `Missing required argument: --platform <ios\|android>` | Add `--platform ios` or `--platform android` |
+| `❌ No credentials found for this app and platform` | Run `build init` or `build credentials save --appId <id> --platform <p> ...`. Check `--local` versus the global store |
+| `Legacy provisioning profile format detected. Run: npx @capgo/cli build credentials migrate --platform ios` | Run `npx @capgo/cli@latest build credentials migrate --platform ios` |
+| `Missing argument, you need to provide a appId, or be in a capacitor project` | Pass the app ID positionally or run from the app root |
+| `output-retention must be a number with optional unit: s, m, h, d` | Use `1h`, `6h`, `2d`, and so on (max `7d`) |
+| Prescan `ios/cert-profile-pairing` / `ios/profile-type-vs-mode` | The profile does not embed the certificate or does not match `app_store`/`ad_hoc`. Regenerate it with `build credentials ios-provisioning` |
+| Prescan `ios/targets-covered` | An extension has no profile. Add `--ios-provisioning-profile <bundleId>=<path>` |
+| Android "Key alias not found" / wrong password | Check the alias and passwords. If they differ, pass both `--keystore-key-password` and `--keystore-store-password` |
+| Multiple flavors error | Add `--android-flavor <flavor>` |
+| Need diagnosis | Re-run with `--verbose`. `--ai-analytics` sends the failure logs to Capgo AI. `--send-logs-to-support` sends them to support |
 
-Build credentials are stored globally in `~/.capgo-credentials/credentials.json` by default. Add `--local` to use `.capgo-credentials.json` in the project root. Never commit either credentials file.
-
-List masked saved credentials:
-
-```bash
-npx @capgo/cli@latest build credentials list
-npx @capgo/cli@latest build credentials list --appId com.example.app
-npx @capgo/cli@latest build credentials list --local
-```
-
-Update only changed fields:
-
-```bash
-npx @capgo/cli@latest build credentials update --appId com.example.app --platform ios \
-  --ios-provisioning-profile ./new-profile.mobileprovision
-
-npx @capgo/cli@latest build credentials update --appId com.example.app --platform android \
-  --keystore ./new-release.jks
-```
-
-For iOS provisioning profile updates:
-
-- By default, new `--ios-provisioning-profile` entries are merged into the existing map.
-- Use `--overwrite-ios-provisioning-map` only when replacing the whole mapping intentionally.
-
-Migrate legacy iOS provisioning credentials:
-
-```bash
-npx @capgo/cli@latest build credentials migrate --appId com.example.app --platform ios
-```
-
-Clear credentials only when the user wants removal:
-
-```bash
-npx @capgo/cli@latest build credentials clear --appId com.example.app --platform ios
-npx @capgo/cli@latest build credentials clear --local
-```
-
-## CI Guidance
-
-For CI, prefer secrets in environment variables instead of local credential files:
-
-```bash
-CAPGO_TOKEN=YOUR_CAPGO_TOKEN \
-BUILD_CERTIFICATE_BASE64=BASE64_P12 \
-P12_PASSWORD=P12_PASSWORD \
-APPLE_KEY_ID=KEY_ID \
-APPLE_ISSUER_ID=ISSUER_UUID \
-APPLE_KEY_CONTENT=BASE64_P8 \
-APP_STORE_CONNECT_TEAM_ID=TEAM_ID \
-CAPGO_IOS_PROVISIONING_MAP=PROVISIONING_MAP_JSON \
-npx @capgo/cli@latest build request com.example.app --platform ios
-```
-
-Android CI commonly uses:
-
-- `CAPGO_TOKEN`
-- `ANDROID_KEYSTORE_FILE`
-- `KEYSTORE_KEY_ALIAS`
-- `KEYSTORE_KEY_PASSWORD`
-- `KEYSTORE_STORE_PASSWORD`
-- `PLAY_CONFIG_JSON` or `--output-upload`
-
-Use repository or CI secret storage. Do not commit signing files or generated credential JSON.
-
-## Troubleshooting
-
-- `No Capgo API key found`: run `npx @capgo/cli@latest login`, set `CAPGO_TOKEN`, or pass `-a YOUR_API_KEY`.
-- `Insufficient permissions`: verify the API key can access the app and includes native build permission.
-- Missing output destination: add store upload credentials or enable `--output-upload`.
-- No download link: request or save credentials with `--output-upload` and set `--output-retention` if the default TTL is too short.
-- iOS signing failure: verify certificate password, Apple Team ID, distribution mode, and every bundle ID to provisioning profile mapping.
-- Legacy iOS provisioning profile error: run `npx @capgo/cli@latest build credentials migrate --appId com.example.app --platform ios`.
-- Android signing failure: verify keystore path, alias, key password, store password, and product flavor.
-- Play upload should be skipped: use `--output-upload --no-playstore-upload`.
-- Monorepo path mismatch: pass the app-specific `--path` value and run from the app root when possible.
-- Need support evidence: rerun the failing command with `--verbose`.
+More fixes: https://capgo.app/docs/builder/troubleshooting/
 
 ## Supporting Docs
 
-- Build command reference: `https://capgo.app/docs/cli/reference/build/`
-- Login command reference: `https://capgo.app/docs/cli/reference/login/`
-- Cloud Build getting started: `https://capgo.app/docs/cli/cloud-build/getting-started/`
-- iOS build setup: `https://capgo.app/docs/cli/cloud-build/ios/`
-- Android build setup: `https://capgo.app/docs/cli/cloud-build/android/`
-- Credential management: `https://capgo.app/docs/cli/cloud-build/credentials/`
+- Build reference: https://capgo.app/docs/cli/reference/build/
+- Getting started: https://capgo.app/docs/builder/getting-started/
+- iOS: https://capgo.app/docs/builder/ios/ · Android: https://capgo.app/docs/builder/android/
+- Credentials: https://capgo.app/docs/builder/credentials/ · Prescan: https://capgo.app/docs/builder/prescan/
+- OTA vs native in CI: https://capgo.app/docs/builder/ci-ota-or-native/

@@ -1,21 +1,35 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Comprehensive debugging guide for Capacitor applications covering WebView debugging with Safari and Chrome DevTools, native debugging with Xcode and Android Studio, crash analysis, network inspection, and solutions to common issues.",
+  "date": "October 2026",
+  "abstract": "Layer-by-layer debugging workflow for Capacitor 8.5/9 apps: WebView inspection with Safari and Chrome, native debugging with Xcode 27 and Android Studio, simctl/devicectl/adb device control, live reload with cap run --url, an error-string-to-fix table (plugin not implemented, cleartext, ATS, CORS, permissions, white screen), and Capacitor 8.5 UIScene regressions for deep links and pause/resume.",
   "triggers": [
     "debug capacitor",
-    "app crash",
     "white screen",
-    "plugin not found",
-    "permission denied",
-    "network error",
-    "inspect webview"
+    "blank screen on launch",
+    "plugin is not implemented on ios",
+    "plugin is not implemented on android",
+    "ERR_CLEARTEXT_NOT_PERMITTED",
+    "App Transport Security",
+    "CORS capacitor://localhost",
+    "inspect webview",
+    "safari web inspector",
+    "chrome://inspect",
+    "live reload not working",
+    "cap run --url",
+    "appUrlOpen not firing after 8.5",
+    "pause resume not firing",
+    "app crash on startup"
   ],
   "references": [
-    "https://capacitorjs.com/docs/guides/debugging",
-    "https://webkit.org/web-inspector",
-    "https://developer.chrome.com/docs/devtools",
-    "https://developer.apple.com/documentation/xcode/debugging"
+    "https://capacitorjs.com/docs/ios/troubleshooting",
+    "https://capacitorjs.com/docs/android/troubleshooting",
+    "https://capacitorjs.com/docs/guides/live-reload",
+    "https://capacitorjs.com/docs/cli/commands/run",
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://capacitorjs.com/docs/updating/9-0",
+    "https://webkit.org/web-inspector/",
+    "https://developer.chrome.com/docs/devtools/remote-debugging/webviews",
+    "https://developer.apple.com/documentation/xcode/diagnosing-and-resolving-bugs-in-your-running-app"
   ]
 }

@@ -1,20 +1,27 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Accessibility guide for Capacitor apps covering screen readers, semantic HTML, focus management, touch targets, color contrast, and WCAG compliance.",
+  "date": "October 2026",
+  "abstract": "Accessibility for Capacitor apps: WebView-specific gaps (Dynamic Type, Android font scale, zoom, SPA announcements, native views under the WebView), @capacitor/screen-reader and @capacitor/text-zoom, native plugin view accessibility, device and automated testing commands, WCAG 2.2 checklist.",
   "triggers": [
-    "accessibility",
-    "a11y",
-    "screen reader",
-    "voiceover",
-    "talkback",
-    "wcag",
-    "aria"
+    "capacitor accessibility",
+    "voiceover capacitor",
+    "talkback capacitor",
+    "dynamic type webview",
+    "larger text not working capacitor",
+    "android font scale layout broken",
+    "screen reader route change",
+    "@capacitor/screen-reader",
+    "@capacitor/text-zoom",
+    "wcag 2.2 mobile app",
+    "accessibility audit capacitor"
   ],
   "references": [
-    "https://www.w3.org/WAI/WCAG21/quickref",
-    "https://developer.apple.com/accessibility",
-    "https://developer.android.com/accessibility"
+    "https://capacitorjs.com/docs/apis/screen-reader",
+    "https://capacitorjs.com/docs/apis/text-zoom",
+    "https://www.w3.org/WAI/WCAG22/quickref/",
+    "https://developer.apple.com/accessibility/",
+    "https://developer.android.com/guide/topics/ui/accessibility",
+    "https://github.com/dequelabs/axe-core-npm"
   ]
 }

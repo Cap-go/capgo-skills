@@ -1,16 +1,23 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Migration guide for moving SQLite and SQL-style Capacitor plugins to @capgo/capacitor-fast-sql with better performance, encryption, transactions, and key-value storage.",
+  "date": "October 2026",
+  "abstract": "Migration from bridge-based SQLite and SQL-style Capacitor plugins (@capacitor-community/sqlite, cordova-sqlite-storage, ORM drivers) to @capgo/capacitor-fast-sql: inventory, API mapping table, iOS ATS local networking and Android localhost cleartext setup, SQLCipher encryption, web OPFS headers, data carry-over options that preserve existing database files, cleanup, verification, and exact error fixes.",
   "triggers": [
     "sqlite to fast sql",
+    "migrate @capacitor-community/sqlite",
+    "replace cordova-sqlite-storage",
     "migrate sqlite plugin",
-    "migrate sql plugin",
-    "replace sqlite storage",
-    "fast sql migration"
+    "capacitor sqlite slow large queries",
+    "fast sql migration",
+    "fast sql encryption sqlcipher",
+    "NSAllowsLocalNetworking fast sql",
+    "keyvaluestore fast sql"
   ],
   "references": [
-    "https://capgo.app/docs/plugins/fast-sql/getting-started/"
+    "https://capgo.app/docs/plugins/fast-sql/getting-started/",
+    "https://github.com/Cap-go/capacitor-fast-sql",
+    "https://www.zetetic.net/sqlcipher/",
+    "https://github.com/sqlite/sqlite-wasm"
   ]
 }

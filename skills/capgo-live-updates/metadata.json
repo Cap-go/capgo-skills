@@ -1,20 +1,32 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Complete guide to implementing live updates in Capacitor apps using Capgo. Covers account creation, plugin installation, update strategies, channels for staged rollouts, CI/CD integration, security with encryption, and monitoring.",
+  "date": "October 2026",
+  "abstract": "Sets up and debugs Capgo live updates with @capgo/capacitor-updater: version-matched install (no Capacitor 9 line yet), notifyAppReady, autoUpdate modes, manual download/next/set flows, channels and progressive rollouts, CI uploads, and backend error codes.",
   "triggers": [
     "live updates",
     "ota updates",
     "capgo",
-    "skip app store",
-    "instant deploy",
-    "hotfix",
-    "capacitor updater"
+    "capacitor updater",
+    "@capgo/capacitor-updater",
+    "notifyAppReady",
+    "skip app store review",
+    "hotfix without store",
+    "update not applying",
+    "update rolled back",
+    "no_new_version_available",
+    "disable_auto_update_to_major",
+    "cannot_update_via_private_channel",
+    "autoUpdate onLaunch"
   ],
   "references": [
-    "https://capgo.app/docs",
-    "https://web.capgo.app",
+    "https://capgo.app/docs/getting-started/add-an-app/",
+    "https://capgo.app/docs/plugins/updater/settings/",
+    "https://capgo.app/docs/plugins/updater/api/",
+    "https://capgo.app/docs/live-updates/update-behavior/",
+    "https://capgo.app/docs/live-updates/channels/",
+    "https://capgo.app/docs/live-updates/progressive-rollouts/",
+    "https://capgo.app/docs/plugins/updater/commonproblems/",
     "https://github.com/Cap-go/capacitor-updater"
   ]
 }

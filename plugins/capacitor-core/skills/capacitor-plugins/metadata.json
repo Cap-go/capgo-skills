@@ -1,20 +1,32 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Complete catalog of 139 Capacitor plugin packages maintained by Capgo plus official Capacitor package guidance. Covers authentication, media, payments, sensors, storage, Firebase packages, and more. Use this skill to help users find the right plugin for native mobile functionality needs.",
+  "date": "October 2026",
+  "abstract": "Pick, install, configure, and verify Capacitor plugins. Covers official @capacitor/* packages for Capacitor 8.5 (and 9 alpha on next), including the 8.1+ Camera API and new Calendar, Contacts, Health Fitness, and Local LLM plugins, plus a verified catalog of 136 @capgo/* packages. Includes native permission setup, npx cap sync / cap ls verification, and fixes for 'plugin is not implemented', UNIMPLEMENTED, and OS-PLUG-* errors.",
   "triggers": [
     "which plugin",
+    "capacitor plugin for",
+    "native functionality",
     "add biometric",
     "in-app purchase",
     "camera plugin",
-    "audio plugin",
-    "native functionality",
-    "capacitor plugin for"
+    "takePhoto",
+    "getPhoto deprecated",
+    "calendar plugin",
+    "contacts plugin",
+    "healthkit health connect",
+    "plugin is not implemented on ios",
+    "plugin is not implemented on android",
+    "UNIMPLEMENTED",
+    "unable to find plugin",
+    "npx cap ls",
+    "OS-PLUG"
   ],
   "references": [
-    "https://capgo.app",
+    "https://capacitorjs.com/docs/apis",
+    "https://capacitorjs.com/docs/plugins",
+    "https://capgo.app/docs/plugins/",
     "https://github.com/Cap-go",
-    "https://capacitorjs.com/docs/plugins"
+    "https://www.npmjs.com/org/capgo"
   ]
 }

@@ -15,7 +15,19 @@ npx cap sync
 
 ### iOS
 
-Enable Push Notifications capability in Xcode. Add two delegate methods to `ios/App/App/AppDelegate.swift` for registration callbacks.
+Enable the Push Notifications capability in Xcode, then add to `ios/App/App/AppDelegate.swift`:
+
+```swift
+func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+  NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: deviceToken)
+}
+
+func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+  NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+}
+```
+
+Without these, `register()` never fires the `registration` event on iOS.
 
 ### Android
 
@@ -34,7 +46,7 @@ Enable Push Notifications capability in Xcode. Add two delegate methods to `ios/
 {
   "plugins": {
     "PushNotifications": {
-      "presentationOptions": ["badge", "sound", "alert"]
+      "presentationOptions": ["badge", "sound", "banner", "list"]
     }
   }
 }
@@ -75,5 +87,8 @@ PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
 
 ## Notes
 
-- iOS does not support silent/background push via this plugin.
-- Android won't trigger callbacks for data-only notifications if app is killed.
+- `presentationOptions`: use `banner` / `list` on iOS. `alert` is Android-only and is removed in Capacitor 9.
+- iOS silent/background push (remote notifications) is not supported by this plugin; handle it natively.
+- Android data-only notifications do not call `pushNotificationReceived` when the app is killed; use a native `FirebaseMessagingService`.
+- Token registration callbacks are app-level, so they stay in `AppDelegate.swift` even after the Capacitor 8.5+ UIScene migration.
+- Full setup, FCM/APNs keys, and troubleshooting: load the `capacitor-push-notifications` skill.

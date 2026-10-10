@@ -1,21 +1,32 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Complete CI/CD guide for Capacitor apps covering GitHub Actions, GitLab CI, Fastlane, app signing, secrets management, and automated deployment to app stores and Capgo.",
+  "date": "October 2026",
+  "abstract": "CI/CD for Capacitor apps: toolchain matrix for Capacitor 8 and 9 (Node 22/24, macos-26 vs xcode-27 runners, JDK 21, Gradle/AGP 8.13 vs 9.2.1), pipeline shape choice between Capgo Cloud Build, GitHub Actions/GitLab, and Fastlane, iOS archive/export/upload with App Store Connect API keys, Android AAB signing from env, Capgo OTA uploads, caching, build numbers, verification steps, and fixes for common CI signing, JDK, Node engine, and Capgo auth errors. Full workflows in references/.",
   "triggers": [
-    "ci/cd",
-    "github actions",
-    "gitlab ci",
-    "fastlane",
-    "automate build",
-    "release pipeline",
-    "app signing",
-    "deploy automatically"
+    "capacitor ci/cd",
+    "github actions capacitor",
+    "gitlab ci capacitor",
+    "fastlane capacitor",
+    "xcodebuild archive ci",
+    "android aab ci signing",
+    "testflight upload ci",
+    "play store upload ci",
+    "capgo cloud build ci",
+    "capgo bundle upload github action",
+    "macos runner xcode 27",
+    "capacitor 9 node 24 ci",
+    "unsupported class file major version",
+    "no signing certificate ios distribution"
   ],
   "references": [
-    "https://docs.github.com/actions",
-    "https://fastlane.tools",
-    "https://capgo.app/docs/cli"
+    "https://capacitorjs.com/docs/updating/9-0",
+    "https://github.com/actions/runner-images",
+    "https://developer.android.com/build/releases/agp-9-2-0-release-notes",
+    "https://developer.apple.com/documentation/appstoreconnectapi",
+    "https://docs.fastlane.tools",
+    "https://capgo.app/docs/cli/reference/build/",
+    "https://capgo.app/docs/builder/github-actions/",
+    "https://capgo.app/docs/cli/reference/bundle/"
   ]
 }

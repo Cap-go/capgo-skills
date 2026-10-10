@@ -106,3 +106,30 @@ Use when users want to integrate web frameworks with Capacitor. Covers:
 - Build configuration
 - Environment detection
 - Common issues and solutions
+
+### capacitor-uiscene-migration
+Use when an iOS app or plugin must adopt the UIScene lifecycle (Capacitor 8.5, required by Xcode 27). Covers:
+- SceneDelegate.swift, Info.plist scene manifest, AppDelegate hook
+- Moving custom URL and lifecycle logic out of AppDelegate
+- Plugin lifecycle observer audit
+
+### capacitor-app-upgrade-v8-to-v9 / capacitor-plugin-upgrade-v8-to-v9
+Use when moving an app or plugin to Capacitor 9 (`@next` until GA). Covers:
+- Node 24, Xcode 27, iOS 16, AGP 9 / Gradle 9, SDK 37
+- Removed deprecated Swift/Java APIs
+- Optional Cordova runtime, `cap run --url`
+
+### capacitor-app-intents
+Use when exposing app features to Siri, Shortcuts, Spotlight, or Apple Intelligence from a Capacitor app.
+
+### capacitor-ios-resizability
+Use when the app must adapt to iPad multitasking, Stage Manager, foldable iPhone, or multiple windows.
+
+### capacitor-ios-security-hardening
+Use when auditing or enabling Xcode security build settings, static analysis, and Enhanced Security for the iOS app and native plugin code.
+
+## Repository Layout
+
+- Canonical skills live in `skills/<name>/`.
+- Claude Code plugins in `plugins/<plugin>/skills/<name>/` are byte-for-byte copies. Edit `skills/` only, then run `bun run sync-skills` and `bun run lint-skills`.
+- Register new skills in `package.json` `skills` and in a plugin folder.

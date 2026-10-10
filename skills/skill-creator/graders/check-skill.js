@@ -31,7 +31,7 @@ const frontmatter = frontmatterMatch?.[1] ?? '';
 addCheck('frontmatter', Boolean(frontmatterMatch), 'Missing YAML frontmatter at the top of the file');
 addCheck('name', /^name:\s*\S.+$/m.test(frontmatter), 'name missing');
 addCheck('description', /^description:\s*\S.+$/m.test(frontmatter), 'description missing');
-addCheck('usage', /## When to Use This Skill/.test(skill), 'Missing usage section');
+addCheck('usage', /^## When to Use( This Skill)?\s*$/m.test(skill), 'Missing usage section');
 addCheck('error-handling', /## Error Handling/.test(skill), 'Missing error handling section');
 
 const score = (passed / checks.length).toFixed(2);

@@ -49,8 +49,29 @@ grep -rn "NWListener\|GCDWebServer\|Swifter\|Vapor\|HttpServer\|startServer" --i
 grep -rn "Downloads\|downloadsDirectory\|FileManager.*downloads" --include="*.swift" .
 
 # HealthKit — is HealthKit actually used?
-grep -rn "HKHealthStore\|HealthKit\|health_kit" --include="*.swift" --include="*.dart" .
+grep -rn "HKHealthStore\|HealthKit\|health_kit" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
 ```
+
+### Capacitor cross-check (iOS)
+
+The App target entitlements file is usually `ios/App/App/App.entitlements`. Match each key to a plugin and a reachable feature:
+
+| Entitlement | Expected evidence in a Capacitor app |
+|---|---|
+| `aps-environment` | `@capacitor/push-notifications` or another push plugin in `package.json`, and code that calls `register()` |
+| `com.apple.developer.associated-domains` | Universal links: `applinks:` domains with a live `apple-app-site-association` file and an `appUrlOpen` handler |
+| `com.apple.developer.applesignin` | Sign in with Apple button reachable in the UI (for example `@capgo/capacitor-social-login` with `provider: 'apple'`) |
+| `com.apple.developer.healthkit` | A HealthKit plugin in `package.json` and screens that read/write health data |
+| `com.apple.developer.icloud-*` / `ubiquity-*` | iCloud storage plugin or native code using CloudKit / iCloud Documents |
+| `com.apple.developer.in-app-payments` | Apple Pay merchant ID and an Apple Pay flow |
+| `com.apple.security.application-groups` | Widget, share extension, or notification service extension that shares data |
+
+```bash
+plutil -p ios/App/App/App.entitlements
+node -e "const p=require('./package.json');console.log(Object.keys({...p.dependencies,...p.devDependencies}).filter(n=>/push|social|health|icloud|pay|widget/i.test(n)).join('\n'))"
+```
+
+Capabilities left over from a template, a removed plugin, or a Cordova migration are the most common source of this request.
 
 ### Automated audit
 ```bash

@@ -1,6 +1,6 @@
 # Capgo Plugin Catalog
 
-Complete catalog of canonical Capgo Capacitor plugin packages from Capgo plugin package metadata. Excludes example apps, templates, security advisory worktrees, issue worktrees, and PR worktrees.
+Catalog of canonical `@capgo/*` Capacitor plugin packages. Every package listed here was confirmed published on npm (October 2026); unpublished repos were removed. Re-check `npm view <pkg> version` before pinning.
 
 Use exact package names when recommending installation:
 
@@ -9,7 +9,7 @@ npm install <exact-package-name>
 npx cap sync
 ```
 
-Total packages: 139
+Total packages: 136 (each verified as published on npm, October 2026)
 
 | Plugin | Package | Description | Source |
 |--------|---------|-------------|--------|
@@ -56,7 +56,6 @@ Total packages: 139
 | File Compressor | `@capgo/capacitor-file-compressor` | Capacitor plugin for efficient image compression supporting PNG, JPEG, and WebP formats across iOS, Android, and Web platforms | [source](https://github.com/Cap-go/capacitor-file-compressor) |
 | File Picker | `@capgo/capacitor-file-picker` | File picker Capacitor plugin - Pick files, images, videos, and directories | [source](https://github.com/Cap-go/capacitor-file-picker) |
 | File Sharer | `@capgo/capacitor-file-sharer` | Capacitor plugin for sharing and saving files on Android, iOS, and Web. | [source](https://github.com/Cap-go/capacitor-file-sharer) |
-| Firebase | `@capgo/capacitor-firebase` | Firebase plugin monorepo. | [source](https://github.com/Cap-go/capacitor-firebase) |
 | Firebase Analytics | `@capgo/capacitor-firebase-analytics` | Capacitor plugin for Firebase Analytics. | [source](https://github.com/Cap-go/capacitor-firebase) |
 | Firebase App | `@capgo/capacitor-firebase-app` | Capacitor plugin for Firebase App. | [source](https://github.com/Cap-go/capacitor-firebase) |
 | Firebase App Check | `@capgo/capacitor-firebase-app-check` | Capacitor plugin for Firebase App Check. | [source](https://github.com/Cap-go/capacitor-firebase) |
@@ -132,7 +131,6 @@ Total packages: 139
 | Supabase | `@capgo/capacitor-supabase` | Native Supabase SDK integration for Capacitor - Auth, Database, and JWT access | [source](https://github.com/Cap-go/capacitor-supabase) |
 | Text Interaction | `@capgo/capacitor-textinteraction` | Toggle text-interaction in Capacitor based iOS apps. | [source](https://github.com/Cap-go/capacitor-textinteraction) |
 | Transitions | `@capgo/capacitor-transitions` | Framework-agnostic page transitions for Capacitor apps - iOS-style navigation without opinions | [source](https://github.com/Cap-go/capacitor-transitions) |
-| Twilio Video | `@capgo/capacitor-twilio-video` | Capacitor plugin for joining Twilio Video rooms with a native in-app call surface and media controls. | [source](https://github.com/Cap-go/capacitor-twilio-video) |
 | Twilio Voice | `@capgo/capacitor-twilio-voice` | Integrates the Twilio Voice SDK into Capacitor | [source](https://github.com/Cap-go/capacitor-twilio-voice) |
 | Updater | `@capgo/capacitor-updater` | Live update for capacitor apps | [source](https://github.com/Cap-go/capacitor-updater) |
 | Uploader | `@capgo/capacitor-uploader` | Upload file natively | [source](https://github.com/Cap-go/capacitor-uploader) |
@@ -141,7 +139,6 @@ Total packages: 139
 | Video Thumbnails | `@capgo/capacitor-video-thumbnails` | Generate video thumbnails from local or remote video files | [source](https://github.com/Cap-go/capacitor-video-thumbnails) |
 | Volume Buttons | `@capgo/capacitor-volume-buttons` | Capacitor plugin to listen to volume button presses | [source](https://github.com/Cap-go/capacitor-volume-buttons) |
 | Watch | `@capgo/capacitor-watch` | Capacitor plugin for Apple Watch communication with bidirectional messaging support | [source](https://github.com/Cap-go/capacitor-watch) |
-| Website Updater | `@capgo/capacitor-website-updater` | Cache a static website locally and use it as a Capacitor app update source | [source](https://github.com/Cap-go/capacitor-website-updater) |
 | Webview Crash | `@capgo/capacitor-webview-crash` | Capacitor plugin for detecting WebView crash recovery and restarting long-running WebViews natively. | [source](https://github.com/Cap-go/capacitor-webview-crash) |
 | Webview Guardian | `@capgo/capacitor-webview-guardian` | Capacitor plugin to Detect when the WebView was killed in the background and relaunch it on foreground. | [source](https://github.com/Cap-go/capacitor-webview-guardian) |
 | Webview Version Checker | `@capgo/capacitor-webview-version-checker` | Capacitor plugin for checking outdated Android WebView engines, emitting status events, and presenting native update prompts. | [source](https://github.com/Cap-go/capacitor-webview-version-checker) |

@@ -24,10 +24,10 @@ Apps must only require personal information that is **directly relevant** to the
 ### Code Inspection
 ```bash
 # Find registration/onboarding/profile forms
-grep -rn "phone\|gender\|marital\|birthdate\|date.of.birth\|address\|registration\|onboarding\|signup\|sign.up\|profile" --include="*.swift" --include="*.dart" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" .
+grep -rn "phone\|gender\|marital\|birthdate\|date.of.birth\|address\|registration\|onboarding\|signup\|sign.up\|profile" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
 
 # Check if fields are marked as required vs optional
-grep -rn "required\|validator\|isRequired\|optional" --include="*.swift" --include="*.dart" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" .
+grep -rn "required\|validator\|isRequired\|optional" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
 ```
 
 ### UI Inspection

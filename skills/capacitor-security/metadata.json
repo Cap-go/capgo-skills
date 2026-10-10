@@ -1,21 +1,40 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Comprehensive security guide for Capacitor apps using Capsec scanner. Covers 63+ security rules across secrets detection, storage, network, authentication, cryptography, WebView, and platform-specific vulnerabilities for iOS and Android.",
+  "date": "October 2026",
+  "abstract": "App-level security audit and hardening for Capacitor 8.5/9 apps: the Capgo scanner (@capgo/capgo-sec, capsec CLI), secrets in the web bundle, Keychain/Keystore token storage, HTTPS/ATS/cleartext, certificate pinning via CapacitorHttp, CSP and native bridge exposure through allowNavigation, Android manifest and iOS Info.plist review, screenshot protection, root/jailbreak detection, and live update bundle encryption. Xcode build-setting hardening lives in capacitor-ios-security-hardening.",
   "triggers": [
-    "security",
+    "capacitor security audit",
     "capsec",
-    "vulnerability",
-    "hardcoded secret",
-    "security audit",
-    "owasp",
-    "penetration test",
-    "secure app"
+    "@capgo/capgo-sec",
+    "hardcoded api key",
+    "secure token storage",
+    "certificate pinning",
+    "ssl pinning",
+    "content security policy",
+    "allowNavigation",
+    "webContentsDebuggingEnabled",
+    "server.cleartext",
+    "NSAllowsArbitraryLoads",
+    "usesCleartextTraffic",
+    "allowBackup",
+    "net::ERR_CLEARTEXT_NOT_PERMITTED",
+    "app transport security",
+    "root detection",
+    "jailbreak detection",
+    "owasp masvs"
   ],
   "references": [
-    "https://capacitor-sec.dev",
-    "https://owasp.org/www-project-mobile-top-10",
-    "https://mas.owasp.org/MASTG"
+    "https://capacitorjs.com/docs/guides/security",
+    "https://capacitorjs.com/docs/config",
+    "https://capacitorjs.com/docs/apis/http",
+    "https://capgo.app/security-scanner/",
+    "https://github.com/Cap-go/capgo-sec",
+    "https://capgo.app/docs/plugins/ssl-pinning/",
+    "https://capgo.app/docs/plugins/native-biometric/",
+    "https://capgo.app/docs/live-updates/encryption/",
+    "https://developer.android.com/privacy-and-security/security-config",
+    "https://owasp.org/www-project-mobile-top-10/",
+    "https://mas.owasp.org/"
   ]
 }

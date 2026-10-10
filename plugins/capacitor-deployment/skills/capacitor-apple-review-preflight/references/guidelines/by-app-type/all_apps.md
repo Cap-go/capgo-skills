@@ -11,6 +11,15 @@ Guidelines that apply to **every** app regardless of category. Check these befor
 - [ ] **2.1(b)** — All configured IAP items are findable and functional (or explained in review notes)
 - [ ] **2.3** — Review notes describe all non-obvious features
 
+## Build and Upload (fails before review)
+
+- [ ] **SDK** — Built with Xcode 26+ / iOS 26 SDK (required since April 28, 2026); Xcode 27 / iOS 27 SDK from April 2027
+- [ ] **UIScene** — Xcode 27 builds adopt the scene lifecycle (Capacitor 8.5+, `SceneDelegate.swift`, `UIApplicationSceneManifest`)
+- [ ] **Privacy manifest** — App target has `PrivacyInfo.xcprivacy`; no ITMS-91053/91061 warnings on the last upload
+- [ ] **Purpose strings** — Every `NS...UsageDescription` a plugin can trigger is present and specific (ITMS-90683)
+- [ ] **Age rating** — Updated questionnaire answered (4+, 9+, 13+, 16+, 18+)
+- [ ] **Release config** — No `server.url` / live-reload URL in `capacitor.config.*` for the store build
+
 ## Metadata
 
 - [ ] **2.3.7** — App name ≤ 30 characters; unique; no trademark stuffing
@@ -30,7 +39,8 @@ Guidelines that apply to **every** app regardless of category. Check these befor
 - [ ] **5.1.1(iii)** — Only request data relevant to core functionality
 - [ ] **5.1.1(v)** — If account creation exists, account deletion must be offered
 - [ ] **5.1.2** — ATT framework required for cross-app tracking
-- [ ] **Privacy Manifest** — `PrivacyInfo.xcprivacy` includes all Required Reason APIs
+- [ ] **Privacy Manifest** — `PrivacyInfo.xcprivacy` includes all Required Reason APIs used by app code and manifest-less plugins
+- [ ] **5.1.2(i)** — Personal data sent to third-party AI services is disclosed in-app with explicit permission
 
 ## Design & UX
 

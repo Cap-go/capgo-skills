@@ -1,16 +1,23 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Guide for upgrading a Capacitor app across major versions with sequential migration, native platform checks, and verification.",
+  "date": "October 2026",
+  "abstract": "Router for upgrading a Capacitor app across major versions (4 to 9): version detection, hop planning including the 8.5 UIScene step before Capacitor 9, per-hop delegation to version skills, prerelease guidance, and native build verification between hops.",
   "triggers": [
     "upgrade capacitor app",
     "capacitor major version",
     "migrate capacitor app",
     "cap migrate",
-    "update capacitor app"
+    "update capacitor app",
+    "latest capacitor",
+    "upgrade to capacitor 9",
+    "capacitor 8.5 uiscene",
+    "xcode 27 capacitor"
   ],
   "references": [
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/updating/9-0",
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://capacitorjs.com/docs/updating/8-0",
+    "https://capacitorjs.com/docs/updating/7-0"
   ]
 }

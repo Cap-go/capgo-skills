@@ -1,20 +1,25 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Guide to building offline-first Capacitor apps with data synchronization, caching strategies, conflict resolution, SQLite storage, and service workers.",
+  "date": "October 2026",
+  "abstract": "Design offline-first Capacitor apps: SQLite source of truth with @capgo/capacitor-fast-sql, outbox sync queue, delta pulls, conflict resolution, network detection, background sync, and avoiding WebView storage eviction and service worker pitfalls.",
   "triggers": [
     "offline",
     "offline first",
     "sync data",
     "work offline",
-    "no internet",
-    "cache",
-    "local storage"
+    "outbox",
+    "conflict resolution",
+    "fast sql",
+    "localStorage evicted",
+    "service worker capacitor",
+    "networkStatusChange"
   ],
   "references": [
+    "https://capgo.app/docs/plugins/fast-sql/",
+    "https://capacitorjs.com/docs/guides/storage",
     "https://capacitorjs.com/docs/apis/network",
-    "https://developer.chrome.com/docs/workbox",
-    "http://offlinefirst.org"
+    "https://capgo.app/docs/plugins/background-task/",
+    "https://capacitorjs.com/docs/ios/troubleshooting"
   ]
 }

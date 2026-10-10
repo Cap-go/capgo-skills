@@ -1,19 +1,27 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Performance optimization guide for Capacitor apps covering bundle size, rendering, memory management, bridge optimization, and profiling tools.",
+  "date": "October 2026",
+  "abstract": "Capacitor-specific performance diagnosis: bridge payload size, WebView process termination, CapacitorHttp, Preferences misuse, logging, old Android WebView, listener leaks, startup sequencing, plus profiling with Safari, Chrome, Instruments, Android Profiler and adb.",
   "triggers": [
-    "performance",
-    "slow app",
-    "optimize",
-    "bundle size",
-    "memory leak",
-    "profiling",
-    "60fps"
+    "capacitor slow app",
+    "slow cold start",
+    "white screen after camera",
+    "WebView process terminated",
+    "base64 bridge slow",
+    "capacitor memory leak",
+    "android webview jank",
+    "profiling capacitor",
+    "instruments capacitor",
+    "chrome inspect performance",
+    "onRenderProcessGone"
   ],
   "references": [
-    "https://developer.chrome.com/docs/devtools",
-    "https://developer.apple.com/instruments"
+    "https://capacitorjs.com/docs/config",
+    "https://capacitorjs.com/docs/apis/camera",
+    "https://capacitorjs.com/docs/apis/filesystem",
+    "https://developer.chrome.com/docs/devtools/performance",
+    "https://developer.apple.com/documentation/xcode/improving-your-app-s-performance",
+    "https://developer.android.com/studio/profile"
   ]
 }

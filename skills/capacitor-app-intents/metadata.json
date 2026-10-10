@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "October 2026",
+  "abstract": "Native App Intents for Capacitor apps: Siri, Shortcuts, App Shortcuts, Spotlight, Action button, Apple Intelligence, widgets and controls. Covers routing intents into the web layer through Universal Links / OpenURLIntent and appUrlOpen or a local plugin with a pending-route store, headless background intents, App Group data sharing, entity/query/phrase traps, the iOS 26/27 APIs (supportedModes, continueInForeground, LongRunningIntent, execution targets, Spotlight indexing, AppIntentsTesting) with availability gating for Capacitor 8 (iOS 15) and 9 (iOS 16), file placement and target membership, and the UIScene (Capacitor 8.5+) effect on URL delivery.",
+  "triggers": [
+    "app intents",
+    "siri shortcut",
+    "shortcuts app",
+    "app shortcuts",
+    "AppShortcutsProvider",
+    "spotlight action",
+    "action button",
+    "apple intelligence",
+    "control center control",
+    "widget button intent",
+    "openAppWhenRun",
+    "supportedModes",
+    "OpenURLIntent"
+  ],
+  "references": [
+    "https://developer.apple.com/documentation/appintents",
+    "https://developer.apple.com/documentation/appintents/app-shortcuts",
+    "https://developer.apple.com/documentation/appintents/openurlintent",
+    "https://developer.apple.com/documentation/widgetkit/adding-interactivity-to-widgets-and-live-activities",
+    "https://developer.apple.com/documentation/sirikit/specifying-synonyms-for-your-app-name",
+    "https://capacitorjs.com/docs/ios/custom-code",
+    "https://capacitorjs.com/docs/ios/viewcontroller",
+    "https://capacitorjs.com/docs/apis/app",
+    "https://capgo.app/docs/plugins/widget-kit/getting-started/"
+  ]
+}

@@ -22,10 +22,10 @@ The subscription purchase flow must display the **actual billed amount** as the 
 ### Code Inspection
 ```bash
 # Find subscription UI code
-grep -rn "paywall\|subscribe\|pricing\|subscription" --include="*.swift" --include="*.dart" .
+grep -rn "paywall\|subscribe\|pricing\|subscription" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
 
 # Look for calculated pricing patterns
-grep -rn "perMonth\|per_month\|monthly.*price\|price.*month\|calculated\|divided" --include="*.swift" --include="*.dart" .
+grep -rn "perMonth\|per_month\|monthly.*price\|price.*month\|calculated\|divided" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
 ```
 
 ### Visual Inspection

@@ -1,28 +1,30 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "May 2026",
-  "abstract": "Guide for migrating existing web apps, PWAs, and SPAs into store-ready Capacitor iOS and Android apps. Covers static build readiness, native-feeling UX, safe areas, permissions, offline behavior, account deletion, billing risks, App Store and Play Store testing, and Capgo live updates.",
+  "date": "October 2026",
+  "abstract": "Plans and executes migrating an existing web app, PWA, or SPA into a store-ready Capacitor iOS and Android app: audit, static build, Capacitor 8.5+ shell, native-feeling UX against guideline 4.2, plugins and permissions, account deletion, IAP vs web billing, Apple SDK and Google Play target API deadlines, closed testing, Capgo live updates, verification, and common failure fixes.",
   "triggers": [
     "web app to capacitor",
     "webapp to capacitor",
     "pwa to capacitor",
     "convert web app to mobile app",
-    "wrap web app with capacitor",
-    "make website into app",
+    "wrap website as app",
     "turn website into ios app",
     "turn website into android app",
-    "capacitor app store wrapper rejection",
-    "thin webview wrapper",
+    "guideline 4.2 minimum functionality webview",
+    "thin webview wrapper rejection",
     "store ready capacitor migration",
-    "native feeling capacitor app"
+    "native feeling capacitor app",
+    "google play 12 testers closed testing"
   ],
   "references": [
-    "https://www.reddit.com/r/capacitor/comments/1sztt6t/how_easy_is_it_to_make_a_web_app_into_app_with/",
-    "https://capacitorjs.com/docs",
-    "https://capgo.app/docs/cli/reference/init/",
-    "https://capgo.app/docs/plugins/updater/getting-started/",
+    "https://capacitorjs.com/docs/getting-started",
+    "https://capacitorjs.com/docs/updating/8-5",
     "https://developer.apple.com/app-store/review/guidelines/",
-    "https://support.google.com/googleplay/android-developer/answer/14151465"
+    "https://developer.apple.com/news/upcoming-requirements/",
+    "https://developer.android.com/google/play/requirements/target-sdk",
+    "https://support.google.com/googleplay/android-developer/answer/14151465",
+    "https://capgo.app/docs/cli/reference/init/",
+    "https://capgo.app/docs/plugins/updater/getting-started/"
   ]
 }

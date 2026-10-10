@@ -1,17 +1,26 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Migration guide for replacing Ionic Appflow with Capgo live updates plus repository-owned CI/CD and store publishing workflows.",
+  "date": "October 2026",
+  "abstract": "Migration off Ionic Appflow (access ends December 31, 2027): inventory of Live Updates, native builds, and store deploys; @capacitor/live-updates or cordova-plugin-ionic replaced by @capgo/capacitor-updater with config and API mapping; Capgo Cloud Build or repo-owned CI for native builds; store publishing; overlap and cut-over plan; verification and common failure fixes.",
   "triggers": [
     "ionic appflow migration",
     "migrate off appflow",
     "replace ionic appflow",
-    "appflow live updates",
-    "appflow build migration"
+    "appflow shutting down",
+    "appflow live updates to capgo",
+    "@capacitor/live-updates",
+    "cordova-plugin-ionic",
+    "LiveUpdates.sync",
+    "appflow build migration",
+    "appflow alternative"
   ],
   "references": [
-    "https://capgo.app",
+    "https://capgo.app/docs/upgrade/from-appflow-to-capgo/",
+    "https://ionic.io/blog/?p=6282",
+    "https://capgo.app/docs/plugins/updater/getting-started/",
+    "https://capgo.app/docs/live-updates/version-targeting/",
+    "https://capgo.app/docs/builder/",
     "https://capacitorjs.com/docs"
   ]
 }

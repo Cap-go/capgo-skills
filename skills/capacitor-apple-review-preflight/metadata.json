@@ -1,22 +1,32 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Apple App Store preflight review skill for Capacitor apps covering project inspection, metadata review, privacy manifests, entitlements, subscriptions, Sign in with Apple, and common rejection patterns before submission or after a rejection.",
+  "date": "October 2026",
+  "abstract": "Apple App Store preflight and rejection audit for Capacitor apps: current upload requirements (iOS 26 SDK since April 2026, iOS 27 SDK from April 2027, UIScene lifecycle, privacy manifests, new age ratings, 5.1.2(i) AI data sharing), app-type checklists, Capacitor-aware rule passes for metadata, subscriptions, privacy, design, entitlements and build, a severity-ordered report format, reviewer notes, verification commands, and fixes for ITMS-91053, ITMS-91061, ITMS-90683, ITMS-90725 and common guideline rejections.",
   "triggers": [
-    "apple review",
-    "app store review",
-    "app store rejection",
-    "ios preflight",
-    "apple preflight",
-    "review guidelines",
-    "sign in with apple",
-    "privacy manifest",
-    "minimum functionality"
+    "apple review preflight",
+    "app store rejection capacitor",
+    "guideline 4.2 minimum functionality",
+    "guideline 4.8 sign in with apple",
+    "guideline 5.1.1 account deletion",
+    "guideline 5.1.2 third-party ai",
+    "guideline 3.1.1 in-app purchase",
+    "ITMS-91053 missing api declaration",
+    "ITMS-91061 missing privacy manifest",
+    "privacy manifest capacitor",
+    "PrivacyInfo.xcprivacy",
+    "unused entitlements",
+    "reviewer notes",
+    "xcode 27 uiscene app store"
   ],
   "references": [
-    "https://developer.apple.com/app-store/review/guidelines",
-    "https://github.com/truongduy2611/app-store-preflight-skills",
-    "https://appstoreconnect.apple.com"
+    "https://developer.apple.com/app-store/review/guidelines/",
+    "https://developer.apple.com/news/upcoming-requirements/",
+    "https://developer.apple.com/documentation/bundleresources/privacy-manifest-files",
+    "https://developer.apple.com/documentation/bundleresources/describing-use-of-required-reason-api",
+    "https://developer.apple.com/support/third-party-SDK-requirements/",
+    "https://developer.apple.com/documentation/technotes/tn3187-migrating-to-the-uikit-scene-based-life-cycle",
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://github.com/truongduy2611/app-store-preflight-skills"
   ]
 }

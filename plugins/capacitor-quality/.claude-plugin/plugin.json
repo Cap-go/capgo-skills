@@ -1,7 +1,7 @@
 {
   "name": "capacitor-quality",
-  "description": "Capacitor quality skills for testing, debugging, logs, performance, accessibility, and security.",
-  "version": "1.0.0",
+  "description": "Capacitor quality skills for testing, debugging, logs, performance, accessibility, security, and Xcode build hardening.",
+  "version": "1.1.0",
   "author": {
     "name": "Capgo",
     "email": "support@capgo.app"
@@ -9,6 +9,13 @@
   "homepage": "https://github.com/Cap-go/capgo-skills",
   "repository": "https://github.com/Cap-go/capgo-skills",
   "license": "MIT",
-  "keywords": ["capacitor", "testing", "debugging", "performance", "security"],
+  "keywords": [
+    "capacitor",
+    "testing",
+    "debugging",
+    "performance",
+    "security",
+    "xcode-hardening"
+  ],
   "category": "development"
 }
