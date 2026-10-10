@@ -2,7 +2,7 @@
   "version": "1.1.0",
   "organization": "Capgo",
   "date": "October 2026",
-  "abstract": "Umbrella guide mapping Capgo Cloud products (Live Updates, channels and rollouts, Capgo Build, store upload, Observe, notifications, organizations, hosted and local MCP) and the end-to-end order of operations, with routing to the specific Capgo skills.",
+  "abstract": "Umbrella guide mapping Capgo Cloud products (Live Updates, channels and rollouts, Capgo Build, store upload, Observe, notifications, organizations, hosted and local MCP), platform overview and pricing snapshot, and the end-to-end order of operations, with routing to the specific Capgo skills.",
   "triggers": [
     "capgo cloud",
     "capgo build and release",
@@ -13,6 +13,9 @@
     "replace hosted mobile ci with capgo"
   ],
   "references": [
+    "https://capgo.app",
+    "https://capgo.app/pricing/",
+    "https://trust.capgo.app",
     "https://capgo.app/docs/",
     "https://capgo.app/docs/builder/",
     "https://capgo.app/docs/live-updates/",

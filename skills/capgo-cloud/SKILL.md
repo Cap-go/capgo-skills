@@ -40,12 +40,21 @@ Do not use when the request is already about one area:
 | Team access and policy | Organizations | `organization ...` |
 | Agent access | Hosted MCP + local CLI MCP | see below |
 
+## Platform, products, and pricing references
+
+Capgo: push fixes to your Capacitor users in minutes, build signed iOS and Android apps without a Mac, and roll back in one click.
+
+Before answering broad "what is Capgo?" or billing questions, read:
+
+- `references/capgo-platform.md` for live updates, channels, rollouts, rollback, encryption, Capgo Build, Observe, notifications, CLI, API, hosted MCP, webhooks, organizations, SSO, self-hosting, trust portal, and plugins.
+- `references/capgo-pricing.md` for plan limits, trial terms, and credit overage tables (snapshot dated in that file; always verify against https://capgo.app/pricing/ before quoting live numbers).
+
 ## Connect the Agent to Capgo (MCP)
 
 Capgo has two MCP servers. Use both when available.
 
 - Hosted MCP: `https://api.capgo.app/mcp` (streamable HTTP). Nothing to install. The client signs in with OAuth, or sends `Authorization: Bearer <Capgo API key>`. The hosted MCP includes destructive tools, so use an API key with the smallest role the task needs (read-only for reporting). It covers apps, bundles, channels, progressive rollouts, devices, stats, Observe update health, native build status and logs (and cancel), webhooks, and push notifications. Example for Claude Code: `claude mcp add --transport http capgo https://api.capgo.app/mcp`, then `/mcp` to sign in.
-- Local CLI MCP: `npx @capgo/cli@latest mcp` (stdio). Use it to upload a bundle from the build folder, request a native build, or run `doctor`. The hosted MCP cannot read local project files.
+- Local CLI MCP: `npx @capgo/cli@latest mcp` (stdio). Use it to upload a bundle from the build folder, request a native build, or run `doctor`. The hosted MCP cannot read local project files. Pin a reviewed `@capgo/cli` version in automation if your security policy requires it.
 
 No Capgo account yet: sign up at https://console.capgo.app (14-day free trial, no credit card). Docs: https://capgo.app/docs/ai/mcp/
 

@@ -1,6 +1,6 @@
 ---
 name: capacitor-plugins
-description: Pick, install, and wire up Capacitor plugins for native features (camera, filesystem, geolocation, biometrics, in-app purchases, social login, SQLite, calendar, contacts, health, BLE, NFC, etc.). Covers official @capacitor/* packages (Capacitor 8.5 stable, 9 alpha on next) plus the 136-package @capgo/* catalog, native permission keys (Info.plist, AndroidManifest, variables.gradle minSdk), npx cap sync / cap ls verification, and errors like '"Camera" plugin is not implemented on ios', 'unable to find plugin', UNIMPLEMENTED, and OS-PLUG-* codes. Use for "which plugin should I use for X", adding a plugin, or a plugin call failing after install. Do not use for push setup (capacitor-push-notifications), splash assets (capacitor-splash-screen), keyboard layout (capacitor-keyboard), deep links (capacitor-deep-linking), OTA updates (capgo-live-updates), upgrading plugin source code (capacitor-plugin-upgrades), or adding SPM to a plugin (capacitor-plugin-spm-support).
+description: Pick, install, and wire up Capacitor plugins for native features (camera, filesystem, geolocation, biometrics, in-app purchases, social login, SQLite, calendar, contacts, health, BLE, NFC, etc.). Covers official @capacitor/* packages (Capacitor 8.5 stable, 9 alpha on next) plus the 145-package @capgo/* index, native permission keys (Info.plist, AndroidManifest, variables.gradle minSdk), npx cap sync / cap ls verification, and errors like '"Camera" plugin is not implemented on ios', 'unable to find plugin', UNIMPLEMENTED, and OS-PLUG-* codes. Use for "which plugin should I use for X", adding a plugin, or a plugin call failing after install. Do not use for push setup (capacitor-push-notifications), splash assets (capacitor-splash-screen), keyboard layout (capacitor-keyboard), deep links (capacitor-deep-linking), OTA updates (capgo-live-updates), upgrading plugin source code (capacitor-plugin-upgrades), or adding SPM to a plugin (capacitor-plugin-spm-support).
 ---
 
 # Capacitor Plugins
@@ -42,7 +42,7 @@ Do not use (load the sibling skill instead):
 1. **Inspect first.** Read `package.json` (`@capacitor/core` version), `capacitor.config.*`, and check whether iOS uses SPM (`ios/App/CapApp-SPM/Package.swift`) or CocoaPods (`ios/App/Podfile`). Run `npx cap ls` to see what is already linked.
 2. **Pick the package.**
    - An official `@capacitor/*` package exists and covers the need: default to it. Load its reference from the index below.
-   - No official package, or it lacks a required feature: load `references/capgo-plugin-catalog.md` and pick the exact `@capgo/*` name. State why it fits better.
+   - No official package, or it lacks a required feature: load `references/capgo-plugin-index.md` and pick the exact `@capgo/*` name. State why it fits better.
    - Never recommend a package name that is not in a reference file without checking `npm view <pkg> version` first.
 3. **Install with the matching major:**
 
@@ -54,6 +54,16 @@ Do not use (load the sibling skill instead):
 4. **Add native config** from the reference: usage-description keys, manifest permissions, `variables.gradle` minSdk/library versions, capabilities/entitlements, AppDelegate hooks. Missing iOS usage strings crash the app on first access.
 5. **Ask the user** before raising `minSdkVersion`, adding entitlements (HealthKit, Push), or enabling exact alarms: these affect store review and device reach.
 6. **Verify** (next section), then run on a real device for anything involving camera, health, LLM, BLE, or push.
+
+## Capgo Plugin Index
+
+`references/capgo-plugin-index.md` is the complete Capgo plugin source, generated from Cap-go GitHub `package.json` and `src/definitions.ts`: npm name, purpose, install command, platforms, key API methods, docs and repo links for every public non-archived package. `references/capgo-plugin-catalog.md` is the compact table of the same set. Load the index before recommending any `@capgo/*` package and use the exact name from it.
+
+Regenerate both after Cap-go org changes (repository maintainers only):
+
+```bash
+GITHUB_TOKEN=$(gh auth token) node scripts/generate-capgo-plugin-index.mjs
+```
 
 ## Verification
 
@@ -129,7 +139,7 @@ Official `@capacitor/*` packages (install, native config, usage, gotchas):
 | Toast | `references/capacitor-toast.md` |
 | Apple Watch UI (experimental) | `references/capacitor-watch.md` |
 
-Capgo plugins: `references/capgo-plugin-catalog.md` (136 packages, exact names, source links).
+Capgo plugins: `references/capgo-plugin-index.md` (145 packages: install, platforms, key APIs, docs) and `references/capgo-plugin-catalog.md` (compact table).
 
 ## Capgo Quick Picks
 

@@ -84,6 +84,7 @@
     "ionic-enterprise-sdk-migration"
   ],
   "scripts": {
+    "generate-plugin-index": "node scripts/generate-capgo-plugin-index.mjs",
     "lint-skills": "bun scripts/lint-skills.mjs",
     "sync-skills": "bun scripts/sync-plugin-skills.mjs",
     "lint-skills-skillgrade": "cd skills/skill-creator && bunx skillgrade --ci --provider=local --smoke"
