@@ -1,5 +1,6 @@
-import { cp, readdir, rm } from 'node:fs/promises';
+import { cp, mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { buildAgentManifests } from './agent-manifests.mjs';
 
 // Plugin skill folders are byte-for-byte copies of the canonical skills/ folders.
 // To add a skill to a plugin, create an empty plugins/<plugin>/skills/<skill>/ folder and run this script.
@@ -35,4 +36,11 @@ if (missing.length > 0) {
   process.exit(1);
 }
 
-console.log(`Synced ${synced} plugin skill copies from skills/.`);
+const manifests = await buildAgentManifests(root);
+for (const [relativePath, content] of Object.entries(manifests)) {
+  const target = path.join(root, relativePath);
+  await mkdir(path.dirname(target), { recursive: true });
+  await writeFile(target, content);
+}
+
+console.log(`Synced ${synced} plugin skill copies from skills/ and ${Object.keys(manifests).length} agent manifests.`);
