@@ -17,5 +17,9 @@
     "security",
     "xcode-hardening"
   ],
-  "category": "development"
+  "icon": "./.claude-plugin/icon.png",
+  "documentationUrl": "https://github.com/Cap-go/capgo-skills#readme",
+  "supportUrl": "https://github.com/Cap-go/capgo-skills/issues",
+  "privacyPolicyUrl": "https://capgo.app/privacy/",
+  "termsOfServiceUrl": "https://capgo.app/tos/"
 }

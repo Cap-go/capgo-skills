@@ -9,6 +9,16 @@
   "homepage": "https://github.com/Cap-go/capgo-skills",
   "repository": "https://github.com/Cap-go/capgo-skills",
   "license": "MIT",
-  "keywords": ["capacitor", "mobile", "plugins", "best-practices", "mcp"],
-  "category": "development"
+  "keywords": [
+    "capacitor",
+    "mobile",
+    "plugins",
+    "best-practices",
+    "mcp"
+  ],
+  "icon": "./.claude-plugin/icon.png",
+  "documentationUrl": "https://github.com/Cap-go/capgo-skills#readme",
+  "supportUrl": "https://github.com/Cap-go/capgo-skills/issues",
+  "privacyPolicyUrl": "https://capgo.app/privacy/",
+  "termsOfServiceUrl": "https://capgo.app/tos/"
 }

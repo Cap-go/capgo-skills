@@ -9,6 +9,15 @@
   "homepage": "https://github.com/Cap-go/capgo-skills",
   "repository": "https://github.com/Cap-go/capgo-skills",
   "license": "MIT",
-  "keywords": ["skills", "authoring", "validation", "agents"],
-  "category": "development"
+  "keywords": [
+    "skills",
+    "authoring",
+    "validation",
+    "agents"
+  ],
+  "icon": "./.claude-plugin/icon.png",
+  "documentationUrl": "https://github.com/Cap-go/capgo-skills#readme",
+  "supportUrl": "https://github.com/Cap-go/capgo-skills/issues",
+  "privacyPolicyUrl": "https://capgo.app/privacy/",
+  "termsOfServiceUrl": "https://capgo.app/tos/"
 }
