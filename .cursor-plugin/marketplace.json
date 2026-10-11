@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Agent skills for Capgo and Capacitor mobile development.",
-    "version": "1.2.0"
+    "version": "1.2.1"
   },
   "plugins": [
     {
