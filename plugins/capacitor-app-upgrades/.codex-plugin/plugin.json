@@ -1,0 +1,22 @@
+{
+  "name": "capacitor-app-upgrades",
+  "version": "1.1.0",
+  "description": "Capacitor app upgrade skills for cross-version and major-version app migrations, including the Capacitor 8.5 UIScene adoption and Capacitor 9.",
+  "author": {
+    "name": "Capgo",
+    "email": "support@capgo.app"
+  },
+  "homepage": "https://github.com/Cap-go/capgo-skills",
+  "repository": "https://github.com/Cap-go/capgo-skills",
+  "license": "MIT",
+  "keywords": [
+    "capacitor",
+    "app-upgrades",
+    "migration",
+    "v8",
+    "v7",
+    "v9",
+    "uiscene"
+  ],
+  "skills": "./skills/"
+}

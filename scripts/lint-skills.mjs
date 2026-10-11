@@ -1,6 +1,7 @@
 import { lstat, readFile, readdir, realpath } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
+import { buildAgentManifests } from './agent-manifests.mjs';
 
 const root = process.cwd();
 const skillsDir = path.join(root, 'skills');
@@ -211,6 +212,16 @@ async function validateMirroredSkills(errors) {
   }
 }
 
+async function validateAgentManifests(errors) {
+  const manifests = await buildAgentManifests(root);
+  for (const [relativePath, expected] of Object.entries(manifests)) {
+    const actual = await readFile(path.join(root, relativePath), 'utf8').catch(() => null);
+    if (actual !== expected) {
+      errors.push(`agent manifests: ${relativePath} is missing or stale (run bun run sync-skills)`);
+    }
+  }
+}
+
 async function main() {
   const entries = await readdir(skillsDir, { withFileTypes: true });
   const skillDirs = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
@@ -261,6 +272,7 @@ async function main() {
 
   await validateClaudeMarketplace(skillDirs, errors);
   await validateMirroredSkills(errors);
+  await validateAgentManifests(errors);
 
   if (errors.length > 0) {
     console.error('Skill lint failed:');

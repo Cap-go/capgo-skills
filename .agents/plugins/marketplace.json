@@ -1,0 +1,140 @@
+{
+  "name": "capgo-skills",
+  "interface": {
+    "displayName": "Capgo Capacitor Skills"
+  },
+  "plugins": [
+    {
+      "name": "capgo-cloud",
+      "source": {
+        "source": "local",
+        "path": "./plugins/capgo-cloud"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "app-growth",
+      "source": {
+        "source": "local",
+        "path": "./plugins/app-growth"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "capacitor-core",
+      "source": {
+        "source": "local",
+        "path": "./plugins/capacitor-core"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "capacitor-features",
+      "source": {
+        "source": "local",
+        "path": "./plugins/capacitor-features"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "capacitor-ui",
+      "source": {
+        "source": "local",
+        "path": "./plugins/capacitor-ui"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "capacitor-quality",
+      "source": {
+        "source": "local",
+        "path": "./plugins/capacitor-quality"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "capacitor-deployment",
+      "source": {
+        "source": "local",
+        "path": "./plugins/capacitor-deployment"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "capacitor-app-migrations",
+      "source": {
+        "source": "local",
+        "path": "./plugins/capacitor-app-migrations"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "capacitor-app-upgrades",
+      "source": {
+        "source": "local",
+        "path": "./plugins/capacitor-app-upgrades"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "capacitor-plugin-dev",
+      "source": {
+        "source": "local",
+        "path": "./plugins/capacitor-plugin-dev"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "skill-authoring",
+      "source": {
+        "source": "local",
+        "path": "./plugins/skill-authoring"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    }
+  ]
+}

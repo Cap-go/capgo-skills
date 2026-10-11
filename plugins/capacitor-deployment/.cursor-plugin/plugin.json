@@ -1,0 +1,19 @@
+{
+  "name": "capacitor-deployment",
+  "version": "1.0.0",
+  "description": "Capacitor deployment skills for CI/CD, App Store publishing, Play Store publishing, and Apple review preflight checks.",
+  "author": {
+    "name": "Capgo",
+    "email": "support@capgo.app"
+  },
+  "homepage": "https://github.com/Cap-go/capgo-skills",
+  "repository": "https://github.com/Cap-go/capgo-skills",
+  "license": "MIT",
+  "keywords": [
+    "capacitor",
+    "app-store",
+    "play-store",
+    "ci-cd",
+    "apple-review"
+  ]
+}

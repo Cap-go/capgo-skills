@@ -1,0 +1,19 @@
+{
+  "name": "capacitor-app-migrations",
+  "version": "1.0.0",
+  "description": "Migration skills for web apps, frameworks, Cordova, SPM, Appflow, Ionic Enterprise SDK, and SQLite alternatives.",
+  "author": {
+    "name": "Capgo",
+    "email": "support@capgo.app"
+  },
+  "homepage": "https://github.com/Cap-go/capgo-skills",
+  "repository": "https://github.com/Cap-go/capgo-skills",
+  "license": "MIT",
+  "keywords": [
+    "capacitor",
+    "migration",
+    "cordova",
+    "spm",
+    "webapp"
+  ]
+}
