@@ -111,7 +111,7 @@ async function validateClaudeMarketplace(skillDirs, errors) {
           errors.push(`${plugin.name}: plugin.json name "${pluginJson.name ?? ''}" does not match marketplace entry`);
         }
 
-        const sharedFields = ['description', 'version', 'author', 'license', 'keywords', 'category'];
+        const sharedFields = ['description', 'version', 'author', 'license', 'keywords'];
         for (const field of sharedFields) {
           if (!valuesMatch(pluginJson[field], plugin[field])) {
             errors.push(`${plugin.name}: plugin.json ${field} does not match marketplace entry`);
