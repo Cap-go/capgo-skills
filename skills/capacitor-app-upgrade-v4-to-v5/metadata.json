@@ -1,15 +1,19 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
+  "date": "October 2026",
   "abstract": "Version-specific guide for upgrading a Capacitor app from v4 to v5.",
   "triggers": [
     "capacitor 4 to 5",
     "upgrade app to capacitor 5",
-    "v4 to v5 migration",
-    "capacitor app upgrade v5"
+    "npx cap migrate capacitor 5",
+    "Namespace not specified capacitor",
+    "capacitor 5 java 17",
+    "androidScheme http capacitor 5",
+    "DeviceId uuid identifier"
   ],
   "references": [
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/updating/5-0",
+    "https://capacitorjs.com/docs/config"
   ]
 }

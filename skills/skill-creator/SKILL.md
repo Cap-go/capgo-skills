@@ -1,77 +1,119 @@
 ---
 name: skill-creator
-description: Guides the agent through authoring and validating agent skills. Use when creating new skill directories, tightening skill metadata, extracting supporting references, or preparing skillgrade evals. Do not use for general app documentation, generic README editing, or non-agentic library code.
+description: Guides authoring, reviewing, and validating agent skills (SKILL.md + metadata.json + references/ + scripts/) in this Capgo skills repository and similar ones. Covers trigger and negative-trigger design, lean SKILL.md with a when-to-load reference index, traps over basics, verification and error-handling sections, version tagging of facts, subagent-oriented skills (main-agent vs subagent split), optional when_to_use frontmatter, inline snapshots with allowed-tools, skillgrade evals, and this repo's canonical skills/ to plugins/ mirroring and registration. Use when creating a new skill, tightening a skill's description or triggers, splitting a long skill into references, or fixing `bun run lint-skills` failures. Do not use for app documentation, README or marketing copy, or library code that is not a skill.
 ---
 
-# Skill Authoring Procedure
+# Skill Authoring
 
-Create professional-grade skills with lean context, deterministic structure, and validation.
+Write skills that load at the right moment, teach what the model does not already know, and prove their own results.
 
-## When to Use This Skill
+## When to Use
 
-- User wants to create a new skill directory
-- User wants to improve a skill's discoverability or metadata
-- User wants to split large instructions into references or scripts
-- User wants to add or update skillgrade validation
+TRIGGER when:
 
-## Procedures
+- The user creates a skill directory, or asks to improve, review, or split an existing skill.
+- A skill triggers too often, too rarely, or collides with a sibling skill.
+- `bun run lint-skills` fails, or a skill must be registered in a plugin or the marketplace.
+- The user wants a skillgrade eval for a skill.
 
-### Step 1: Validate the Skill Metadata
+Do not use when:
 
-Check that the frontmatter uses a unique lowercase name, a specific description, and clear negative triggers.
+- The user is writing app docs, a README, a changelog, or marketing copy.
+- The user is editing library or plugin source that is not a skill.
 
-Keep the description short enough to fit within the agent router's metadata budget.
+## Reference Index
 
-### Step 2: Keep the Main Skill Lean
+Only load a reference when its topic is in play.
 
-Write the main `SKILL.md` as a high-level workflow.
+| File | Load when |
+| --- | --- |
+| `references/repo-layout.md` | Adding, renaming, or registering a skill in this repository, mirroring into `plugins/`, or reading lint errors |
+| `references/authoring-patterns.md` | Writing the body: trigger design, reference index, traps, verification, version tags, subagent skills, inline snapshots |
 
-Move dense rules, large schemas, and reusable templates into `references/` or `assets/`.
+## Procedure
 
-Use `scripts/` only for fragile or repetitive logic that should not be re-authored by the agent.
+### 1. Scope the skill
 
-### Step 3: Match Command Context
+- Write one sentence: "Load this when <concrete situation>, so the agent can <outcome>."
+- List the sibling skills that could also match. Each one becomes a negative trigger.
+- Split the skill if it covers two unrelated workflows. Merge it if it would be a one-paragraph stub.
+- Ask the user at real judgement calls (scope, audience, which product to prefer). Do not ask about things you can read from the repo.
 
-Keep command examples aligned with how the skill will be consumed.
+### 2. Write the frontmatter
 
-- Use standard `npm` and `npx` examples in skill prose, public docs, and marketing copy unless the skill is specifically about Bun.
-- Use `npx ...@latest` for Capacitor and Capgo CLI examples so consumers get the expected package version.
-- Use `bun`, `bun run`, and `bunx` only for this repository's development commands, CI commands, or Bun-specific skills.
-- When a skill tells an agent to edit a target repository, tell it to read that repository's instructions and follow that repository's package-manager policy before executing commands.
+```yaml
+---
+name: my-skill                      # lowercase, hyphenated, equals the folder name
+description: <what it does>. Use when <symptoms, APIs, file names, error strings>. Do not use for <case> (sibling-skill).
+---
+```
 
-### Step 4: Use Progressive Disclosure
+- The description is the only text the router sees. Put concrete triggers in it: command names, config keys, file names, exact error strings. Name the sibling skills in the negative clause.
+- Keep it to one line and at most 1024 characters (lint enforces both).
+- Optional `when_to_use:` is appended to `description` in Claude Code's skill listing. The combined text is truncated at 1,536 characters, so put the key use case first. Other agents ignore it, so never move the core trigger out of `description`.
+- `allowed-tools:` only when the skill runs inline commands. Keep it minimal and read-only.
 
-Command the agent to read supporting files only when the current step needs them.
+### 3. Write a lean body
 
-Prefer one-level-deep support files with explicit relative paths.
+Target fewer than about 250 lines. Use this order:
 
-When a skill depends on repository state that will differ at invocation time, prefer a guarded inline shell snapshot such as ``!`node -e "..."` `` instead of baking the current state into prose.
+1. One-line purpose, plus a version line ("Checked against X 8.77, October 2026").
+2. `## When to Use`: TRIGGER bullets and a `Do not use when` list that points to sibling skills by name. Lint requires the `## When to Use` heading.
+3. `## Reference Index`: a table of each file and *when* to load it, with "Only load a reference when its topic is in play."
+4. `## Procedure`: numbered steps. Inspect before you edit, and report findings before invasive changes.
+5. `## Traps`: the non-obvious failures. Skip basics the model already knows.
+6. `## Verification`: exact commands or checks that prove success.
+7. `## Error Handling`: exact error strings mapped to fixes.
 
-Only do this when the command materially improves the invoked prompt, and keep the output short and deterministic.
+Move dense tables, long code, and per-topic depth into `references/<topic>.md`, one level deep. Put fragile or repetitive logic in `scripts/`.
 
-If a skill uses inline commands, declare the minimum required `allowed-tools` entries in frontmatter and keep them read-only.
+### 4. Fact-check everything
 
-### Step 5: Add Validation
+- Verify every command, flag, config key, and API against source or official docs. Prefer the package's `--help`, its type definitions, or its repo over memory.
+- Tag time-sensitive facts with versions ("Capacitor 8.5+", "Xcode 27", "CLI 8.77"). Gate optional behavior on feature detection when the targets can be older.
+- If you cannot verify a fact, write "check current docs" and do not guess. List any commands that do not exist but are commonly hallucinated.
 
-Create a `skillgrade` eval when the skill needs regression testing.
+### 5. Match command context
 
-Use a deterministic grader for structural checks and an LLM rubric only when qualitative judgment is necessary.
+- Skill prose uses standard `npm` / `npx` examples. Capacitor and Capgo CLI examples use `npx ...@latest`.
+- Use `bun` / `bunx` only for this repository's own development and CI commands, or in Bun-specific skills.
+- When a skill edits another repository, tell the agent to read that repository's instructions and follow its package-manager policy.
 
-### Step 6: Review for Hallucination Gaps
+### 6. Preserve secrets
 
-Inspect the skill for any step where the agent is forced to guess.
+When a skill edits user files, tell the agent never to replace user-provided tokens, keys, certificates, or passwords with placeholders unless asked. Placeholders are for new generic examples only. Do not suggest rotating secrets unless the user asks.
 
-Replace ambiguous prose with concrete commands, file names, or output expectations.
+### 7. Register and validate (this repo)
 
-### Step 7: Preserve Sensitive Values
+Follow `references/repo-layout.md`: canonical folder in `skills/`, `metadata.json`, an entry in `package.json` `skills`, exposure through a plugin folder plus `.claude-plugin/marketplace.json`, then `bun run sync-skills` and `bun run lint-skills`.
 
-When a skill edits user files, instruct the agent not to replace user-provided tokens, keys, certificates, passwords, or other secrets with placeholders unless the user explicitly asks.
+### 8. Add an eval when behavior must not regress
 
-Use placeholders for new generic examples only. Do not tell users to rotate secrets unless they explicitly ask for rotation guidance.
+Use `skillgrade` (`eval.yaml` + `graders/`). Prefer deterministic graders for structure. Use an LLM rubric only for qualitative judgement. Run it with `bun run lint-skills-skillgrade`, or `ENABLE_SKILLGRADE=1` with an API key during lint.
+
+## Traps
+
+- A vague description ("Helps with X") never triggers. A greedy one ("Use for anything about mobile") steals sibling requests.
+- An index entry like "see references/" with no load condition makes the agent read everything or nothing. Always say *when*.
+- Stale facts age faster than structure. Put the version line at the top so reviewers know what to re-check.
+- Editing a mirrored copy under `plugins/<plugin>/skills/` is wrong. Edit the canonical `skills/<name>/`, then sync.
+- Inline `!`command`` snapshots run on every load. Keep them guarded (`fs.existsSync`), fast, short in output, and read-only.
+
+## Verification
+
+1. `bun run lint-skills` passes. It checks the name against the folder, the description length, the `## When to Use` heading, valid `metadata.json`, marketplace exposure, and byte-identical mirrors.
+2. `wc -l skills/<name>/SKILL.md` is about 250 or less, and every file in `references/` is named in the Reference Index.
+3. A grep for each command in the skill matches the tool's `--help` or source.
+4. Mental routing test: three prompts that should trigger the skill do, and one prompt for each sibling skill does not.
 
 ## Error Handling
 
-- If a skill cannot be validated, reduce scope until the missing behavior becomes testable.
-- If the description is too broad, tighten the trigger text before adding more instructions.
-- If the supporting material grows too large, extract it into a separate file and point the agent to it explicitly.
-- If an inline command would require broad shell access or produce noisy output, keep the skill static and tell the agent to inspect the files explicitly instead.
+| Lint message | Fix |
+| --- | --- |
+| `<skill>: name "<x>" does not match folder name` | Make the frontmatter `name` equal the directory |
+| `<skill>: description exceeds 1024 characters` | Cut filler, keep concrete triggers and the negative clause |
+| `<skill>: missing usage guidance` | Add a `## When to Use` heading |
+| `<skill>: missing metadata.json` / `invalid metadata.json` | Create or fix the JSON (see `references/repo-layout.md`) |
+| `claude marketplace: skill "<x>" is not exposed by any plugin` | Create `plugins/<plugin>/skills/<x>/`, then `bun run sync-skills` |
+| `mirrored skills: ... (run bun run sync-skills)` | Run `bun run sync-skills`. Never hand-edit the mirror |
+| `<plugin>: unknown skill "<x>"` | The plugin folder has no matching `skills/<x>`. Create the canonical skill or remove the folder |

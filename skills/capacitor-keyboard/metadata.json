@@ -1,16 +1,22 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Guide to handling keyboard in Capacitor apps including visibility detection, height management, accessory bar, and scroll behavior.",
+  "date": "October 2026",
+  "abstract": "Fix on-screen keyboard behavior in Capacitor apps with @capacitor/keyboard: iOS resize modes, keyboard height events, accessory bar, autoBackdropColor, iOS 26 fixes, and Android edge-to-edge/SystemBars interaction.",
   "triggers": [
     "keyboard",
     "keyboard height",
+    "keyboard covers input",
     "hide keyboard",
-    "keyboard overlap",
-    "input focus"
+    "keyboard resize",
+    "accessory bar",
+    "resizeOnFullScreen",
+    "white space above keyboard",
+    "ios input zoom"
   ],
   "references": [
-    "https://capacitorjs.com/docs/apis/keyboard"
+    "https://capacitorjs.com/docs/apis/keyboard",
+    "https://github.com/ionic-team/capacitor-keyboard/blob/main/CHANGELOG.md",
+    "https://capacitorjs.com/docs/apis/system-bars"
   ]
 }

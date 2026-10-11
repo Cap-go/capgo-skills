@@ -1,20 +1,25 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Comprehensive guide to using Ionic Framework for building native-looking Capacitor apps. Covers components, navigation patterns, theming, platform-specific styling, and mobile UI best practices.",
+  "date": "October 2026",
+  "abstract": "Build and review Ionic Framework UI in Capacitor apps: Ionic 9 components, modern form syntax, routing outlets, CSS variable theming, dark and high-contrast palettes, iOS/MD modes, and the Ionic 8 to 9 migration.",
   "triggers": [
     "ionic component",
     "ionic ui",
-    "mobile ui",
-    "native look",
     "ionic theming",
     "ion-button",
-    "ion-list"
+    "ion-list",
+    "ion-modal",
+    "ionic dark mode",
+    "ionic 9",
+    "ionic migrate",
+    "ion-picker-legacy",
+    "IonReactRouter"
   ],
   "references": [
     "https://ionicframework.com/docs",
-    "https://ionicframework.com/docs/components",
-    "https://ionic.io/ionicons"
+    "https://github.com/ionic-team/ionic-framework/blob/main/BREAKING.md",
+    "https://ionicframework.com/docs/theming/basics",
+    "https://ionicframework.com/docs/theming/dark-mode"
   ]
 }

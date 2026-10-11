@@ -1,22 +1,29 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Guide to using Model Context Protocol (MCP) for Ionic and Capacitor mobile development automation. Covers Ionic component APIs, Capacitor plugin documentation, CLI command execution via the awesome-ionic-mcp server.",
+  "date": "October 2026",
+  "abstract": "Set up, verify, and troubleshoot MCP servers for Capacitor development: awesome-ionic-mcp (Ionic components, plugin docs, Ionic/Capacitor CLI tools), the Capgo hosted MCP at api.capgo.app/mcp, the local Capgo CLI MCP, and Xcode's MCP bridge (xcrun mcpbridge).",
   "triggers": [
     "mcp capacitor",
     "awesome-ionic-mcp",
     "ionic mcp",
-    "ai mobile development",
-    "mcp tools",
-    "ionic components ai",
-    "capacitor plugins ai"
+    "capgo mcp",
+    "api.capgo.app/mcp",
+    "@capgo/cli mcp",
+    "xcode mcp",
+    "xcrun mcpbridge",
+    "claude mcp add",
+    "cursor mcp.json",
+    "mcp server no tools",
+    "GitHub API rate limit exceeded"
   ],
   "references": [
     "https://github.com/Tommertom/awesome-ionic-mcp",
-    "https://modelcontextprotocol.io",
-    "https://github.com/modelcontextprotocol/sdk",
-    "https://ionicframework.com",
-    "https://capacitorjs.com"
+    "https://www.npmjs.com/package/awesome-ionic-mcp",
+    "https://capgo.app/docs/ai/mcp/",
+    "https://capgo.app/docs/cli/reference/mcp/",
+    "https://developer.apple.com/documentation/xcode/giving-external-agents-access-to-xcode",
+    "https://docs.anthropic.com/en/docs/claude-code/mcp",
+    "https://modelcontextprotocol.io"
   ]
 }

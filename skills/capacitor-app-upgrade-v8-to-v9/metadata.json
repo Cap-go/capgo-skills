@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "October 2026",
+  "abstract": "Version-specific guide for upgrading a Capacitor app from v8 to the v9 prerelease: tooling preflight (Node 24, Xcode 27, Android Studio 2026.1.1), UIScene prerequisite, cap migrate, iOS 16 and @main, removed CAPBridge APIs, AGP 9.2.1 / Gradle 9.5.1 / SDK 37 Android changes, plugin and CLI changes, and grep-based verification.",
+  "triggers": [
+    "capacitor 8 to 9",
+    "upgrade app to capacitor 9",
+    "v8 to v9 migration",
+    "capacitor 9 next",
+    "@UIApplicationMain deprecated capacitor",
+    "jcenter removed capacitor",
+    "proguard-android.txt agp 9",
+    "agp 9 capacitor",
+    "cap run --url",
+    "android.builtInKotlin"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/updating/9-0",
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://capacitorjs.com/docs/ios/spm",
+    "https://github.com/ionic-team/capacitor/releases"
+  ]
+}

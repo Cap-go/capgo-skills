@@ -1,16 +1,26 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Guide for Capgo OTA bundle uploads, channel management, compatibility checks, cleanup, and encryption keys.",
+  "date": "October 2026",
+  "abstract": "CLI guide for Capgo OTA releases: bundle upload flags, releaseType/compatibility gating, channel add/set/promote, progressive rollouts and rollback, cleanup, preview QR, encryption keys, and exact upload error strings.",
   "triggers": [
     "capgo bundle upload",
-    "capgo channels",
-    "capgo release management",
+    "capgo channel",
+    "capgo channel promote",
+    "capgo rollback",
+    "capgo progressive rollout",
     "bundle compatibility",
-    "capgo encryption key"
+    "bundle releaseType",
+    "capgo encryption key",
+    "bundle cleanup",
+    "Version already exists capgo",
+    "Bundle NOT compatible with channel"
   ],
   "references": [
-    "https://capgo.app"
+    "https://capgo.app/docs/cli/reference/bundle/",
+    "https://capgo.app/docs/cli/reference/channel/",
+    "https://capgo.app/docs/live-updates/progressive-rollouts/",
+    "https://capgo.app/docs/live-updates/encryption/",
+    "https://capgo.app/docs/live-updates/compatibility/"
   ]
 }

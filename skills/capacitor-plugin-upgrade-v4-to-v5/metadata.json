@@ -1,15 +1,18 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
+  "date": "October 2026",
   "abstract": "Version-specific guide for upgrading a Capacitor plugin from v4 to v5.",
   "triggers": [
     "capacitor plugin 4 to 5",
+    "plugin-migration-v4-to-v5",
     "upgrade plugin to capacitor 5",
-    "v4 to v5 plugin migration",
-    "capacitor plugin upgrade v5"
+    "CAPBridgedPlugin identifier pluginId",
+    "PluginCall getObject null",
+    "plugin namespace build.gradle"
   ],
   "references": [
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/updating/plugins/5-0",
+    "https://www.npmjs.com/package/@capacitor/plugin-migration-v4-to-v5"
   ]
 }

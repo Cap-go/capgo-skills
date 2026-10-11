@@ -1,256 +1,118 @@
 ---
 name: capacitor-splash-screen
-description: Guide to configuring splash screens in Capacitor apps including asset generation, animation, and programmatic control. Use this skill when users need to customize their app launch experience.
+description: Configures and debugs launch splash screens in Capacitor apps with @capacitor/splash-screen and @capacitor/assets - `launchAutoHide`, `SplashScreen.hide()`, `launchFadeOutDuration` (Android default changed 200 -> 0 in Capacitor 9), Android 12+ SplashScreen API theme (`Theme.SplashScreen`, `windowSplashScreenAnimatedIcon`), iOS `LaunchScreen.storyboard` + `Splash.imageset`, and Capacitor 8.5 UIScene/SceneDelegate effects (window created in code, Main.storyboard no longer supplies the root view controller). Use for white/black flash at launch, splash never hiding, cropped/tiny Android 12 icon, dark-mode splash, or regenerating icons and splash assets. Do not use for status/navigation bar color and insets (safe-area-handling), the UIScene migration itself (capacitor-uiscene-migration), or startup performance profiling (capacitor-performance).
 ---
 
 # Splash Screen in Capacitor
 
-Configure and customize splash screens for iOS and Android.
+## When to Use
 
-## When to Use This Skill
+TRIGGER when:
+- Configuring or regenerating splash / icon assets (`npx capacitor-assets generate`)
+- Splash never disappears, disappears too early, or flashes white/black before the web app paints
+- Android 12+ shows a small cropped icon on a solid color instead of the full image
+- Upgrading to Capacitor 9 and the Android fade-out animation vanished
+- iOS shows a black screen after adding `SceneDelegate.swift` (8.5+)
 
-- User wants to customize splash screen
-- User needs splash screen assets
-- User wants animated splash
-- User has splash screen issues
+Do not use:
+- Status bar / navigation bar styling and edge-to-edge insets: `safe-area-handling`
+- Migrating AppDelegate to SceneDelegate: `capacitor-uiscene-migration`
+- Slow first paint / bundle size: `capacitor-performance`
+- Icon requirements for store submission: `capacitor-app-store`
 
-## Quick Start
+## How launch works (decide what to edit)
 
-### Install Plugin
+| Phase | iOS | Android 12+ | Android <= 11 |
+|-------|-----|-------------|---------------|
+| OS launch screen (before any code) | `LaunchScreen.storyboard` (`UILaunchStoryboardName`), image `Splash` in `Assets.xcassets/Splash.imageset` | System SplashScreen API: theme `AppTheme.NoActionBarLaunch` with `Theme.SplashScreen` parent - icon + background color only | `androidx.core:core-splashscreen` compat, or `android:background` drawable |
+| Plugin splash (until `hide()`) | Plugin overlay on the bridge view | Same system splash held via the API | Plugin ImageView / Dialog (`androidSplashResourceName`, `androidScaleType`) |
 
-```bash
-npm install @capacitor/splash-screen
-npx cap sync
-```
+Most `androidScaleType`, `showSpinner`, `splashFullScreen`, `layoutName`, `useDialog`, `backgroundColor` options do **not** apply on Android 12+ launch (the OS draws it). They only affect `show()` and pre-12 devices.
 
-### Basic Configuration
+## Workflow
 
-```typescript
-// capacitor.config.ts
-import type { CapacitorConfig } from '@capacitor/cli';
+1. **Inspect**: `capacitor.config.*` `plugins.SplashScreen`, `android/app/src/main/res/values/styles.xml`, `android/variables.gradle` (`coreSplashScreenVersion`), `ios/App/App/Info.plist`, `ios/App/App/SceneDelegate.swift`, `assets/` or `resources/` folder.
+2. **Install**: `npm install @capacitor/splash-screen && npx cap sync`.
+3. **Assets**: put sources in `assets/` (`icon-only.png`, `icon-foreground.png`, `icon-background.png`, `splash.png`, `splash-dark.png`; splash >= 2732x2732, icons >= 1024x1024), then `npm install -D @capacitor/assets && npx capacitor-assets generate` (`--ios`, `--android`, `--pwa` to scope). Keep the logo inside the center ~1/3 so Android 12+ circular masking does not crop it.
+4. **Hide deliberately**: set `launchAutoHide: false` and call `hide()` after the first meaningful render (below).
+5. **Android 12+ tuning** if needed: [references/android-12-splash.md](references/android-12-splash.md).
+6. **Verify** (below).
 
-const config: CapacitorConfig = {
-  plugins: {
-    SplashScreen: {
-      launchShowDuration: 2000,
-      launchAutoHide: true,
-      backgroundColor: '#ffffff',
-      androidSplashResourceName: 'splash',
-      androidScaleType: 'CENTER_CROP',
-      showSpinner: false,
-      splashFullScreen: true,
-      splashImmersive: true,
-    },
-  },
-};
-```
+## Recommended config
 
-### Programmatic Control
-
-```typescript
-import { SplashScreen } from '@capacitor/splash-screen';
-
-// Hide after app is ready
-async function initApp() {
-  // Initialize your app
-  await loadUserData();
-  await setupServices();
-
-  // Hide splash screen
-  await SplashScreen.hide();
-}
-
-// Show splash (useful for app refresh)
-await SplashScreen.show({
-  autoHide: false,
-});
-
-// Hide with animation
-await SplashScreen.hide({
-  fadeOutDuration: 500,
-});
-```
-
-## Generate Assets
-
-### Using Capacitor Assets
-
-```bash
-npm install -D @capacitor/assets
-
-# Place source images in resources/
-# resources/splash.png (2732x2732 recommended)
-# resources/splash-dark.png (optional)
-
-npx capacitor-assets generate
-```
-
-### iOS Sizes
-
-| Size | Usage |
-|------|-------|
-| 2732x2732 | iPad Pro 12.9" |
-| 2048x2732 | iPad Pro portrait |
-| 2732x2048 | iPad Pro landscape |
-| 1668x2388 | iPad Pro 11" |
-| 1536x2048 | iPad |
-| 1242x2688 | iPhone XS Max |
-| 828x1792 | iPhone XR |
-| 1125x2436 | iPhone X/XS |
-| 1242x2208 | iPhone Plus |
-| 750x1334 | iPhone 8 |
-| 640x1136 | iPhone SE |
-
-### Android Sizes
-
-| Density | Size |
-|---------|------|
-| mdpi | 320x480 |
-| hdpi | 480x800 |
-| xhdpi | 720x1280 |
-| xxhdpi | 960x1600 |
-| xxxhdpi | 1280x1920 |
-
-## iOS Storyboard
-
-```xml
-<!-- ios/App/App/Base.lproj/LaunchScreen.storyboard -->
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0">
-    <scenes>
-        <scene sceneID="1">
-            <objects>
-                <viewController id="2" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0" y="0" width="414" height="896"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <subviews>
-                            <imageView
-                                contentMode="scaleAspectFit"
-                                image="splash"
-                                translatesAutoresizingMaskIntoConstraints="NO"
-                                id="4">
-                            </imageView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="4" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" id="5"/>
-                            <constraint firstItem="4" firstAttribute="centerY" secondItem="3" secondAttribute="centerY" id="6"/>
-                        </constraints>
-                    </view>
-                </viewController>
-            </objects>
-        </scene>
-    </scenes>
-</document>
-```
-
-## Android Configuration
-
-### XML Splash Screen (Android 11+)
-
-```xml
-<!-- android/app/src/main/res/values/styles.xml -->
-<resources>
-    <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/splash_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/splash</item>
-        <item name="windowSplashScreenAnimationDuration">1000</item>
-        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
-    </style>
-</resources>
-```
-
-### Colors
-
-```xml
-<!-- android/app/src/main/res/values/colors.xml -->
-<resources>
-    <color name="splash_background">#FFFFFF</color>
-</resources>
-
-<!-- android/app/src/main/res/values-night/colors.xml -->
-<resources>
-    <color name="splash_background">#121212</color>
-</resources>
-```
-
-## Dark Mode Support
-
-```typescript
+```ts
 // capacitor.config.ts
 plugins: {
   SplashScreen: {
-    launchAutoHide: false, // Control manually
-    backgroundColor: '#ffffff',
-    // iOS will use LaunchScreen.storyboard variations
-    // Android uses values-night/colors.xml
+    launchAutoHide: false,     // hide from JS when the UI is ready
+    launchFadeOutDuration: 200, // explicit: Capacitor 9 default on Android is 0
+    backgroundColor: '#ffffff', // match the first web paint to avoid a flash
   },
 },
 ```
 
-```typescript
-// Detect dark mode and configure
+```ts
 import { SplashScreen } from '@capacitor/splash-screen';
 
-const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-// Show appropriate themed content
-await SplashScreen.hide({
-  fadeOutDuration: 300,
-});
+// after the router's first view has rendered (e.g. in a root component's mounted/useEffect)
+await SplashScreen.hide(); // optional: { fadeOutDuration: 300 }
 ```
 
-## Animated Splash
+Traps:
+- With `launchAutoHide: false`, a JS crash before `hide()` leaves the app stuck on the splash. Add a fallback: `setTimeout(() => SplashScreen.hide(), 8000)`.
+- Default when auto-hiding is 500 ms (`launchShowDuration`). Long fixed durations hurt perceived startup; hide on readiness instead.
+- Set `<body>` / root background to the splash background color, or the gap between native splash and first web paint flashes white (dark mode: black).
+- Live updates (`capgo-live-updates`): call `notifyAppReady()` independently of `hide()`; do not gate one on the other.
 
-### Lottie Animation
+## Version notes
 
-```typescript
-import { SplashScreen } from '@capacitor/splash-screen';
+| Version | Change |
+|---------|--------|
+| 4 | Android uses the Android 12 SplashScreen API + compat library |
+| 7 | `SplashScreenShowOptions` / `SplashScreenHideOptions` types removed -> `ShowOptions` / `HideOptions` |
+| 8 | `coreSplashScreenVersion = '1.2.0'` |
+| 8.5 (iOS) | UIScene template creates the window and `CAPBridgeViewController` in `SceneDelegate`; `Main.storyboard` no longer supplies the root view controller. `LaunchScreen.storyboard` is unchanged and still required. |
+| 9 | Android `launchFadeOutDuration` default `200` -> `0` (the old default could block UI changes right after `hide()`). Set `200` explicitly to keep the fade. |
 
-async function showAnimatedSplash() {
-  // Keep native splash while loading
-  await SplashScreen.show({ autoHide: false });
+## iOS notes (Capacitor 8.5+ scenes)
 
-  // Load Lottie animation in web
-  const lottie = await import('lottie-web');
+- Keep `UILaunchStoryboardName = LaunchScreen` in Info.plist. Apple requires a launch storyboard; deleting it causes letterboxed / wrong-size rendering.
+- Do not add views or a custom view controller to `Main.storyboard` expecting them to show: the 8.5 SceneDelegate sets `window.rootViewController = CAPBridgeViewController()` in code. Put a custom `CAPBridgeViewController` subclass there instead.
+- Black screen right after launch with a scene manifest = SceneDelegate creates no window (missing `window = UIWindow(windowScene:)` + `makeKeyAndVisible()`) or `UISceneDelegateClassName` points to a missing class. Fix with `capacitor-uiscene-migration`.
+- The storyboard is cached by iOS. After changing it, delete the app from the device/simulator and reinstall.
+- On resizable windows / iPad / foldables the launch storyboard must use Auto Layout constraints, not fixed frames (see `capacitor-ios-resizability` if present).
 
-  // Show web-based animated splash
-  document.getElementById('splash-animation').style.display = 'block';
+## Verification
 
-  const animation = lottie.loadAnimation({
-    container: document.getElementById('splash-animation'),
-    path: '/animations/splash.json',
-    loop: false,
-  });
+1. `npx cap sync` then a clean native build (`Product > Clean Build Folder` in Xcode; `./gradlew clean` in `android/`).
+2. Delete and reinstall the app (both platforms cache launch screens).
+3. Cold launch on: iOS device light + dark mode, Android 12+ device, Android <= 11 emulator (if minSdk allows; Capacitor 9 minSdk is 26).
+4. Confirm: no white/black flash, splash hides once the first screen is visible, fade matches the configured duration.
+5. Grep for leftovers:
 
-  animation.addEventListener('complete', async () => {
-    // Hide native splash
-    await SplashScreen.hide({ fadeOutDuration: 0 });
-    // Hide web splash
-    document.getElementById('splash-animation').style.display = 'none';
-  });
-}
+```bash
+grep -rn "launchFadeOutDuration\|launchAutoHide" capacitor.config.*
+grep -n "Theme.SplashScreen\|postSplashScreenTheme" android/app/src/main/res/values/styles.xml
+/usr/libexec/PlistBuddy -c "Print :UILaunchStoryboardName" ios/App/App/Info.plist
 ```
 
-## Best Practices
+## Error Handling
 
-1. **Keep it fast** - Under 2 seconds total
-2. **Match branding** - Use consistent colors/logo
-3. **Support dark mode** - Provide dark variants
-4. **Don't block** - Load essentials only
-5. **Progressive reveal** - Fade out smoothly
-
-## Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| White flash | Match splash background to app |
-| Stretching | Use correct asset sizes |
-| Not hiding | Call `hide()` manually |
-| Dark mode wrong | Add values-night resources |
+| Symptom / message | Cause | Fix |
+|-------------------|-------|-----|
+| Splash stays forever | `launchAutoHide: false` and `hide()` never runs (JS error, wrong import, called before plugin load) | Check web console; add timeout fallback |
+| Fade-out gone after Capacitor 9 upgrade (Android) | Default `launchFadeOutDuration` is now 0 | Set `launchFadeOutDuration: 200` |
+| UI changes right after `hide()` not visible (Android, pre-9) | 200 ms fade blocked updates | Set `launchFadeOutDuration: 0` |
+| Android 12+ shows small icon, image cropped | OS splash is icon-only by design | Provide adaptive icon-safe artwork; tune `windowSplashScreenAnimatedIcon` |
+| Android 12/12L no splash from third-party launchers or Android Studio | Platform bug fixed in Android 13 | Test from the stock launcher |
+| `error: resource drawable/splash not found` | `androidSplashResourceName` or styles reference a missing drawable | Regenerate assets or fix the name in both config and `styles.xml` |
+| `AAPT: error: style attribute 'attr/windowSplashScreenAnimatedIcon' not found` | `core-splashscreen` dependency missing | Restore `implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"` |
+| iOS black screen after 8.5 scene adoption | No window created in SceneDelegate | See iOS notes / `capacitor-uiscene-migration` |
+| Old splash still shows on iOS | Launch screen cache | Delete app, reboot device if needed, reinstall |
 
 ## Resources
 
-- Capacitor Splash Screen: https://capacitorjs.com/docs/apis/splash-screen
-- Capacitor Assets: https://github.com/ionic-team/capacitor-assets
-- Android Splash Screens: https://developer.android.com/develop/ui/views/launch/splash-screen
+- Plugin API: https://capacitorjs.com/docs/apis/splash-screen
+- Splash screens and icons guide: https://capacitorjs.com/docs/guides/splash-screens-and-icons
+- Updating to 9.0: https://capacitorjs.com/docs/updating/9-0
+- Android SplashScreen API: https://developer.android.com/develop/ui/views/launch/splash-screen

@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "October 2026",
+  "abstract": "Version-specific guide for upgrading a Capacitor plugin library from v8 to the v9 prerelease: official migrator, dependency ranges, removed Android and iOS APIs with replacements, AGP 9 / Gradle 9 build.gradle changes, unique namespace, iOS 16 podspec and Package.swift, dropping the Cordova SPM product, UIScene lifecycle audit, and example-app verification.",
+  "triggers": [
+    "capacitor plugin 8 to 9",
+    "update plugin to capacitor 9",
+    "plugin-migration-v8-to-v9",
+    "NativePlugin removed",
+    "CAPBridge removed",
+    "capacitor 9 plugin api removals",
+    "agp 9 plugin namespace",
+    "capacitor-swift-pm 9.0.0-alpha",
+    "remove Cordova product Package.swift"
+  ],
+  "references": [
+    "https://capacitorjs.com/docs/updating/plugins/9-0",
+    "https://capacitorjs.com/docs/updating/plugins/3-0",
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://github.com/ionic-team/capacitor-swift-pm"
+  ]
+}

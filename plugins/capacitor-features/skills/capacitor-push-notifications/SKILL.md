@@ -1,479 +1,145 @@
 ---
 name: capacitor-push-notifications
-description: Complete guide to implementing push notifications in Capacitor apps using Firebase Cloud Messaging (FCM) and Apple Push Notification Service (APNs). Covers setup, handling, and best practices. Use this skill when users need to add push notifications.
+description: Sets up and debugs remote push in Capacitor apps with @capacitor/push-notifications (FCM on Android, APNs on iOS), or Capgo alternatives @capgo/capacitor-firebase-messaging and @capgo/capacitor-notifications. Covers APNs keys, Push Notifications capability, AppDelegate `didRegisterForRemoteNotificationsWithDeviceToken` forwarding (stays in AppDelegate under the Capacitor 8.5 UIScene lifecycle), Android 13+ POST_NOTIFICATIONS permission, notification channels and icons, `firebaseMessagingVersion`, foreground `presentationOptions` (Capacitor 9 removes iOS `alert`; use `banner`/`list`), and tap routing. Use when `registration` never fires, iOS returns an APNs token instead of an FCM token, errors like "no valid aps-environment entitlement string found" appear, or notifications do not show. Do not use for local-only notifications or deep link URL handling (capacitor-deep-linking), UIScene migration (capacitor-uiscene-migration), or log capture (ios-android-logs).
 ---
 
 # Push Notifications in Capacitor
 
-Implement push notifications for iOS and Android using Firebase and APNs.
+## When to Use
 
-## When to Use This Skill
+TRIGGER when:
+- Adding remote push (FCM / APNs) to a Capacitor app
+- `registration` / `registrationError` never fire, or the token works on one platform only
+- iOS token is a 64-hex APNs token but the backend expects an FCM token
+- Notifications arrive in background but not in foreground (or vice versa)
+- Android 13+ shows no prompt and nothing is delivered
+- Upgrading to Capacitor 8.5 (UIScene) or 9 (`alert` presentation option removed)
 
-- User wants push notifications
-- User needs FCM setup
-- User asks about APNs
-- User has notification issues
-- User wants rich notifications
+Do not use:
+- Opening the app from `https://` / `myapp://` links: `capacitor-deep-linking`
+- Moving AppDelegate code to SceneDelegate: `capacitor-uiscene-migration`
+- Device log capture: `ios-android-logs`
+- Choosing other native plugins: `capacitor-plugins`
 
-## Quick Start
+## Choose the plugin first (ask the user if unclear)
 
-### Install Plugin
+| Need | Plugin |
+|------|--------|
+| Official plugin; APNs token on iOS, FCM token on Android | `@capacitor/push-notifications` |
+| FCM token on both platforms, topics, Firebase-first backend | `@capgo/capacitor-firebase-messaging` |
+| Capgo-managed delivery (dashboard campaigns, badges, silent live-update checks, no own push server) | `@capgo/capacitor-notifications` |
+| Local notifications only, rich layouts | `@capgo/capacitor-rich-notifications` or `@capacitor/local-notifications` |
 
-```bash
-npm install @capacitor/push-notifications
-npx cap sync
-```
+The rest of this file covers `@capacitor/push-notifications`. For Capgo plugins follow https://capgo.app/docs/plugins/firebase-messaging/ or https://capgo.app/docs/plugins/notifications/getting-started/.
 
-### Basic Implementation
+## Workflow
 
-```typescript
-import { PushNotifications } from '@capacitor/push-notifications';
+1. **Inspect**: `package.json` versions (`@capacitor/core`, `@capacitor/push-notifications`), `capacitor.config.*` `plugins.PushNotifications`, `ios/App/App/AppDelegate.swift`, `ios/App/App/*.entitlements`, `android/app/google-services.json`, `android/variables.gradle`, `AndroidManifest.xml`.
+2. **Install**: `npm install @capacitor/push-notifications && npx cap sync`.
+3. **iOS**: capability + APNs key + AppDelegate forwarding. Details: [references/ios-setup.md](references/ios-setup.md).
+4. **Android**: `google-services.json`, channel, icon, permission. Details: [references/android-setup.md](references/android-setup.md).
+5. **JS**: listeners first, then permission, then `register()` (below).
+6. **Backend**: send a test message. Payload shapes: [references/sending.md](references/sending.md).
+7. **Verify** with the checklist below on physical devices.
 
-async function initPushNotifications() {
-  // Request permission
-  const permission = await PushNotifications.requestPermissions();
+Only load a reference when its topic is in play.
 
-  if (permission.receive === 'granted') {
-    // Register for push
-    await PushNotifications.register();
-  }
-
-  // Get FCM token
-  PushNotifications.addListener('registration', (token) => {
-    console.log('Push token:', token.value);
-    // Send token to your server
-    sendTokenToServer(token.value);
-  });
-
-  // Handle registration error
-  PushNotifications.addListener('registrationError', (error) => {
-    console.error('Registration error:', error);
-  });
-
-  // Handle incoming notification (foreground)
-  PushNotifications.addListener('pushNotificationReceived', (notification) => {
-    console.log('Notification received:', notification);
-    // Show in-app notification
-    showInAppNotification(notification);
-  });
-
-  // Handle notification tap
-  PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
-    console.log('Notification action:', action);
-    // Navigate based on notification data
-    handleNotificationTap(action.notification);
-  });
-}
-```
-
-## Firebase Setup
-
-### 1. Create Firebase Project
-
-1. Go to https://console.firebase.google.com
-2. Create new project
-3. Add iOS and Android apps
-
-### 2. Android Configuration
-
-Download `google-services.json` to `android/app/`
-
-```groovy
-// android/build.gradle
-buildscript {
-    dependencies {
-        classpath 'com.google.gms:google-services:4.4.0'
-    }
-}
-```
-
-```groovy
-// android/app/build.gradle
-apply plugin: 'com.google.gms.google-services'
-
-dependencies {
-    implementation platform('com.google.firebase:firebase-bom:32.7.0')
-    implementation 'com.google.firebase:firebase-messaging'
-}
-```
-
-### 3. iOS Configuration
-
-Download `GoogleService-Info.plist` to `ios/App/App/`
-
-```ruby
-# ios/App/Podfile
-pod 'Firebase/Messaging'
-```
-
-```swift
-// ios/App/App/AppDelegate.swift
-import Firebase
-import FirebaseMessaging
-
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    ) -> Bool {
-        FirebaseApp.configure()
-        return true
-    }
-
-    func application(
-        _ application: UIApplication,
-        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
-    ) {
-        Messaging.messaging().apnsToken = deviceToken
-    }
-}
-```
-
-### 4. iOS Capabilities
-
-In Xcode:
-1. Select App target
-2. Signing & Capabilities
-3. Add "Push Notifications"
-4. Add "Background Modes" > "Remote notifications"
-
-## APNs Key Setup (iOS)
-
-### Create APNs Key
-
-1. Go to https://developer.apple.com/account
-2. Certificates, IDs & Profiles
-3. Keys > Create Key
-4. Enable Apple Push Notifications service (APNs)
-5. Download .p8 file
-
-### Add to Firebase
-
-1. Firebase Console > Project Settings
-2. Cloud Messaging tab
-3. iOS app configuration
-4. Upload APNs Authentication Key (.p8)
-5. Enter Key ID and Team ID
-
-## Sending Notifications
-
-### Firebase Admin SDK (Node.js)
-
-```typescript
-import admin from 'firebase-admin';
-
-// Initialize
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
-
-// Send to single device
-async function sendToDevice(token: string) {
-  await admin.messaging().send({
-    token,
-    notification: {
-      title: 'Hello!',
-      body: 'You have a new message',
-    },
-    data: {
-      type: 'message',
-      messageId: '123',
-    },
-    android: {
-      priority: 'high',
-      notification: {
-        channelId: 'messages',
-        icon: 'ic_notification',
-        color: '#4285f4',
-      },
-    },
-    apns: {
-      payload: {
-        aps: {
-          badge: 1,
-          sound: 'default',
-        },
-      },
-    },
-  });
-}
-
-// Send to topic
-async function sendToTopic(topic: string) {
-  await admin.messaging().send({
-    topic,
-    notification: {
-      title: 'Breaking News',
-      body: 'Something important happened',
-    },
-  });
-}
-
-// Send to multiple devices
-async function sendToMultiple(tokens: string[]) {
-  await admin.messaging().sendEachForMulticast({
-    tokens,
-    notification: {
-      title: 'Update',
-      body: 'New features available',
-    },
-  });
-}
-```
-
-### HTTP v1 API
-
-```bash
-curl -X POST \
-  'https://fcm.googleapis.com/v1/projects/YOUR_PROJECT/messages:send' \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "message": {
-      "token": "DEVICE_TOKEN",
-      "notification": {
-        "title": "Hello",
-        "body": "World"
-      }
-    }
-  }'
-```
-
-## Advanced Features
-
-### Notification Channels (Android)
+## JS registration (order matters)
 
 ```typescript
 import { PushNotifications } from '@capacitor/push-notifications';
 
-// Create channel
-await PushNotifications.createChannel({
-  id: 'messages',
-  name: 'Messages',
-  description: 'Message notifications',
-  importance: 5, // Max importance
-  visibility: 1, // Public
-  sound: 'notification.wav',
-  vibration: true,
-  lights: true,
-  lightColor: '#FF0000',
-});
-
-// Delete channel
-await PushNotifications.deleteChannel({ id: 'old-channel' });
-
-// List channels
-const channels = await PushNotifications.listChannels();
-```
-
-### Topic Subscription
-
-```typescript
-// Subscribe to topic
-await PushNotifications.addListener('registration', async () => {
-  // Subscribe to topics based on user preferences
-  const messaging = getMessaging();
-  await subscribeToTopic(messaging, 'news');
-  await subscribeToTopic(messaging, 'promotions');
-});
-```
-
-### Rich Notifications (iOS)
-
-```swift
-// ios/App/NotificationService/NotificationService.swift
-import UserNotifications
-
-class NotificationService: UNNotificationServiceExtension {
-    override func didReceive(
-        _ request: UNNotificationRequest,
-        withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
-    ) {
-        guard let mutableContent = request.content.mutableCopy() as? UNMutableNotificationContent else {
-            contentHandler(request.content)
-            return
-        }
-
-        // Add image
-        if let imageUrl = request.content.userInfo["image"] as? String,
-           let url = URL(string: imageUrl) {
-            downloadImage(url: url) { attachment in
-                if let attachment = attachment {
-                    mutableContent.attachments = [attachment]
-                }
-                contentHandler(mutableContent)
-            }
-        } else {
-            contentHandler(mutableContent)
-        }
-    }
-}
-```
-
-### Notification Actions
-
-```typescript
-// Handle action buttons
-PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
-  switch (action.actionId) {
-    case 'reply':
-      // Handle reply action
-      const input = action.inputValue;
-      sendReply(input);
-      break;
-    case 'dismiss':
-      // Handle dismiss
-      break;
-    default:
-      // Handle tap
-      navigateToContent(action.notification.data);
-  }
-});
-```
-
-## Background Handling
-
-### Data-Only Notifications
-
-```typescript
-// Server-side: Send data-only message
-{
-  "to": "DEVICE_TOKEN",
-  "data": {
-    "type": "sync",
-    "action": "refresh"
-  }
-  // No "notification" key = data-only
-}
-```
-
-```kotlin
-// android/app/src/main/java/.../FirebaseService.kt
-class FirebaseService : FirebaseMessagingService() {
-    override fun onMessageReceived(message: RemoteMessage) {
-        // Handle data message in background
-        message.data["type"]?.let { type ->
-            when (type) {
-                "sync" -> performBackgroundSync()
-                "update" -> checkForUpdates()
-            }
-        }
-    }
-}
-```
-
-## Local Notifications Fallback
-
-```typescript
-import { LocalNotifications } from '@capacitor/local-notifications';
-
-// Show local notification when in foreground
-PushNotifications.addListener('pushNotificationReceived', async (notification) => {
-  await LocalNotifications.schedule({
-    notifications: [
-      {
-        id: Date.now(),
-        title: notification.title || '',
-        body: notification.body || '',
-        extra: notification.data,
-      },
-    ],
+export async function initPush() {
+  // 1. Listeners before register(), or the first token is missed
+  await PushNotifications.addListener('registration', ({ value }) => sendTokenToServer(value));
+  await PushNotifications.addListener('registrationError', (err) => console.error('push reg', err.error));
+  await PushNotifications.addListener('pushNotificationReceived', (n) => {
+    // foreground only (and Android data-only while app is alive)
   });
-});
-```
-
-## Best Practices
-
-### Permission Handling
-
-```typescript
-async function requestNotificationPermission() {
-  const { receive } = await PushNotifications.checkPermissions();
-
-  if (receive === 'prompt') {
-    // Show explanation first
-    const shouldRequest = await showPermissionExplanation();
-
-    if (shouldRequest) {
-      const result = await PushNotifications.requestPermissions();
-      return result.receive === 'granted';
-    }
-    return false;
-  }
-
-  if (receive === 'denied') {
-    // Guide user to settings
-    showSettingsPrompt();
-    return false;
-  }
-
-  return receive === 'granted';
-}
-```
-
-### Token Refresh
-
-```typescript
-// Handle token refresh
-PushNotifications.addListener('registration', async (token) => {
-  const oldToken = await getStoredToken();
-
-  if (oldToken !== token.value) {
-    // Token changed, update server
-    await updateServerToken(oldToken, token.value);
-    await storeToken(token.value);
-  }
-});
-```
-
-### Error Handling
-
-```typescript
-PushNotifications.addListener('registrationError', (error) => {
-  console.error('Push registration failed:', error);
-
-  // Log to analytics
-  analytics.logEvent('push_registration_failed', {
-    error: error.error,
+  await PushNotifications.addListener('pushNotificationActionPerformed', ({ notification, actionId }) => {
+    routeFromNotification(notification.data); // tap handling
   });
 
-  // Retry with backoff
-  scheduleRetry();
-});
+  // 2. Permission (required on iOS and Android 13+ / targetSdk 33+)
+  let perm = await PushNotifications.checkPermissions();
+  if (perm.receive === 'prompt' || perm.receive === 'prompt-with-rationale') {
+    perm = await PushNotifications.requestPermissions();
+  }
+  if (perm.receive !== 'granted') return; // explain + link to settings, do not loop prompts
+
+  // 3. Register
+  await PushNotifications.register();
+}
 ```
 
-## Troubleshooting
+Traps:
+- Call `initPush()` at bootstrap so `pushNotificationActionPerformed` from a cold-start tap is captured.
+- Tokens rotate. Send every `registration` value to the server and upsert by user + device.
+- On iOS the plugin reports the raw APNs token unless AppDelegate swaps in the FCM token (see ios-setup). Sending an APNs token to FCM fails with `messaging/invalid-registration-token`.
+- Ask permission after a user action that explains the value; iOS shows the system prompt only once.
 
-### iOS Not Receiving
+## Foreground presentation
 
-1. Check APNs key in Firebase
-2. Verify Push Notifications capability
-3. Check provisioning profile
-4. Verify device token format
-5. Test with Firebase Console
+```ts
+// capacitor.config.ts
+plugins: {
+  PushNotifications: {
+    presentationOptions: ['badge', 'sound', 'banner', 'list'],
+  },
+},
+```
 
-### Android Not Receiving
+- `banner` + `list` replace the deprecated iOS `alert`. **Capacitor 9 removes `alert` on iOS**; replace it when upgrading. `badge` is iOS only.
+- Empty array = nothing shown in foreground; handle `pushNotificationReceived` yourself.
 
-1. Verify google-services.json
-2. Check notification channel exists
-3. Verify FCM token
-4. Check battery optimization
-5. Test with Firebase Console
+## Capacitor version notes
 
-### Common Issues
+| Version | Change |
+|---------|--------|
+| 7 | `firebaseMessagingVersion` default 24.1.0 |
+| 8 | `firebaseMessagingVersion` default 25.0.1 |
+| 8.5 | UIScene lifecycle. Remote-notification callbacks (`didRegisterForRemoteNotificationsWithDeviceToken`, `didFailToRegister...`) **stay in AppDelegate** and keep working. Do not move them to SceneDelegate. Tap routing that used AppDelegate `application(_:open:)` must move (see `capacitor-deep-linking`). |
+| 9 | iOS `alert` presentation option removed; iOS 16 min; `@main` replaces `@UIApplicationMain`; google-services Gradle plugin 4.5.0 |
 
-| Issue | Solution |
-|-------|----------|
-| No token | Check permissions, network |
-| Foreground only | Implement background handler |
-| Delayed delivery | Use high priority, data-only |
-| No sound | Configure notification channel |
-| Badge not updating | Set badge in payload |
+## Verification
+
+1. iOS: `codesign -d --entitlements :- path/to/App.app | grep aps-environment` shows `development` (debug) or `production` (TestFlight/App Store).
+2. Android: `adb shell dumpsys package com.example.app | grep POST_NOTIFICATIONS` shows `granted=true` after accepting the prompt.
+3. App logs a `registration` token on a real device (iOS Simulator on Apple silicon can receive pushes via `xcrun simctl push`, but test real APNs on device).
+4. Send a test from Firebase Console (Messaging -> "Send test message") or your backend to that token.
+5. Check all three states: foreground (presentation + `pushNotificationReceived`), background (system tray), killed (tap -> `pushNotificationActionPerformed` routes correctly).
+6. iOS simulator smoke test without a server:
+
+```bash
+cat > /tmp/push.apns <<'EOF'
+{ "Simulator Target Bundle": "com.example.app", "aps": { "alert": { "title": "Test", "body": "Hello" } }, "route": "/inbox" }
+EOF
+xcrun simctl push booted com.example.app /tmp/push.apns
+```
+
+(`aps.alert` in the APNs payload is the message content and is unaffected by the `presentationOptions` change.)
+
+## Error Handling
+
+| Error / symptom | Cause | Fix |
+|-----------------|-------|-----|
+| `no valid "aps-environment" entitlement string found for application` | Push Notifications capability missing or profile not regenerated | Add capability in Xcode, re-sign, rebuild |
+| `registration` never fires on iOS, no error | AppDelegate does not post `.capacitorDidRegisterForRemoteNotifications` | Add forwarding methods to AppDelegate |
+| `Default FirebaseApp is not initialized in this process` (Android) | `google-services.json` missing/empty, so google-services plugin was not applied (`google-services.json not found, google-services plugin not applied. Push Notifications won't work`) | Put file in `android/app/`, rebuild |
+| `messaging/registration-token-not-registered` | Token stale (app reinstalled / data cleared) | Delete token server-side; rely on next `registration` |
+| `messaging/invalid-registration-token` / `BadDeviceToken` | APNs token sent to FCM, or sandbox token sent to production APNs | Use FCM token on iOS (ios-setup) or match APNs environment |
+| `messaging/third-party-auth-error` | APNs key not uploaded to Firebase, wrong Key ID / Team ID | Upload .p8 under Firebase Project Settings -> Cloud Messaging |
+| Android 13+: nothing shown, no prompt | `requestPermissions()` never called | Call it; manifest permission is added by the plugin |
+| Android shows white square icon | No monochrome notification icon | Set `default_notification_icon` meta-data |
+| Android notification silent / wrong importance | Channel created with low importance (importance is immutable after creation) | Create a new channel id; delete the old one |
+| Data-only message ignored when app killed (Android) | Plugin only delivers while app process lives | Native `FirebaseMessagingService` (android-setup) |
+| iOS silent / background push not delivered to JS | Plugin does not support iOS silent push | Native handling, or `@capgo/capacitor-notifications` silent update checks |
+| Duplicate class errors with Firebase after Capacitor 9 | Old `core-ktx` / Kotlin stdlib pins | See `capacitor-app-upgrade-v8-to-v9` |
 
 ## Resources
 
-- Capacitor Push Notifications: https://capacitorjs.com/docs/apis/push-notifications
-- Firebase Cloud Messaging: https://firebase.google.com/docs/cloud-messaging
-- APNs Documentation: https://developer.apple.com/documentation/usernotifications
+- Plugin API: https://capacitorjs.com/docs/apis/push-notifications
+- Firebase guide: https://capacitorjs.com/docs/guides/push-notifications-firebase
+- Updating to 9.0: https://capacitorjs.com/docs/updating/9-0
+- Capgo Firebase Messaging: https://capgo.app/docs/plugins/firebase-messaging/
+- Capgo Notifications: https://capgo.app/docs/plugins/notifications/

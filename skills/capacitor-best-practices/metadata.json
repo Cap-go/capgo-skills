@@ -1,19 +1,32 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Comprehensive best practices guide for Capacitor app development. Covers project structure, plugin usage patterns, performance optimization, security hardening, error handling, live updates, and deployment preparation.",
+  "date": "October 2026",
+  "abstract": "Review and setup guide for Capacitor 8.5/9 apps: capacitor.config hygiene and env-specific builds, version alignment across @capacitor/* and plugin majors, sync and generated-asset traps, plugin availability, permission and error-code patterns, iOS SPM and UIScene lifecycle, Android variables.gradle and R8, live update readiness, and a release checklist that routes deep topics to sibling skills.",
   "triggers": [
-    "capacitor best practice",
-    "optimize capacitor",
-    "capacitor security",
-    "capacitor performance",
-    "capacitor project structure",
-    "review capacitor code"
+    "capacitor best practices",
+    "review capacitor app",
+    "capacitor code review",
+    "capacitor.config.ts review",
+    "capacitor project setup",
+    "plugin is not implemented on ios",
+    "Could not find the web assets directory",
+    "platform has not been added yet",
+    "server.url in production",
+    "cap sync",
+    "cap doctor",
+    "capacitor version mismatch",
+    "capacitor release checklist",
+    "capacitor spm or cocoapods",
+    "capacitor uiscene appdelegate"
   ],
   "references": [
     "https://capacitorjs.com/docs",
-    "https://capgo.app/docs",
-    "https://ionicframework.com/docs"
+    "https://capacitorjs.com/docs/config",
+    "https://capacitorjs.com/docs/guides/environment-specific-configurations",
+    "https://capacitorjs.com/docs/guides/mocking-plugins",
+    "https://capacitorjs.com/docs/ios/spm",
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://capgo.app/docs/"
   ]
 }

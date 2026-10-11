@@ -17,16 +17,22 @@ If the app offers **Sign in with Apple** (SIWA), the implementation must follow 
 ### Check for post-SIWA data requests
 ```bash
 # Find SIWA implementation
-grep -rn "ASAuthorizationAppleIDProvider\|SignInWithApple\|appleIDCredential\|apple.*sign.*in" --include="*.swift" --include="*.dart" .
+grep -rn "ASAuthorizationAppleIDProvider\|SignInWithApple\|appleIDCredential\|apple.*sign.*in" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
 
 # Check if name/email is requested AFTER sign-in
-grep -rn "askForName\|askForEmail\|nameTextField\|emailTextField\|profileSetup\|completeProfile" --include="*.swift" --include="*.dart" .
+grep -rn "askForName\|askForEmail\|nameTextField\|emailTextField\|profileSetup\|completeProfile" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
 ```
 
 ### Check for relay email handling
 ```bash
 # Ensure the app doesn't reject relay emails
-grep -rn "privaterelay.appleid.com\|@privaterelay\|email.*validation\|isValid.*email" --include="*.swift" --include="*.dart" .
+grep -rn "privaterelay.appleid.com\|@privaterelay\|email.*validation\|isValid.*email" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
+```
+
+### Capacitor check
+```bash
+grep -rn "provider: *'apple'\|SignInWithApple\|appleid" --include="*.ts" --include="*.tsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules src
+plutil -p ios/App/App/App.entitlements | grep applesignin
 ```
 
 ### Visual Inspection
@@ -40,7 +46,9 @@ grep -rn "privaterelay.appleid.com\|@privaterelay\|email.*validation\|isValid.*e
 1. **Use the data from SIWA credentials**: `ASAuthorizationAppleIDCredential` provides `fullName` and `email` — cache these on first use
 2. **Don't re-ask for provided data**: If the user shared their name/email via SIWA, use it directly
 3. **Handle missing data gracefully**: If the user chose to hide email, use the relay address; if they hid their name, use a default
-4. **Use standard SIWA button**: Use `ASAuthorizationAppleIDButton` (Swift) or `sign_in_with_apple` package (Flutter)
+4. **Use standard SIWA button**: native `ASAuthorizationAppleIDButton`, or in a Capacitor web UI follow Apple's Sign in with Apple button guidelines (official logo, "Sign in with Apple" text, black/white/outline styles, same size as other providers). `@capgo/capacitor-social-login` (`provider: 'apple'`) uses the native AuthenticationServices sheet on iOS.
+5. **Name is only returned on the first authorization**: persist `givenName`/`familyName` from the first login on your backend; later logins return only the user identifier and (possibly relay) email.
+6. **Account deletion**: if the user deletes their account, revoke the Sign in with Apple token server-side (`/auth/revoke`) as Apple requires.
 
 ## Example Rejection
 > **Guideline 4.0 - Design**

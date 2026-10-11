@@ -1,21 +1,25 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Umbrella guide for Capgo cloud workflows spanning live updates, native builds, Observe, notifications, pricing, native releases, store publishing, and organization operations.",
+  "date": "October 2026",
+  "abstract": "Umbrella guide mapping Capgo Cloud products (Live Updates, channels and rollouts, Capgo Build, store upload, Observe, notifications, organizations, hosted and local MCP), platform overview and pricing snapshot, and the end-to-end order of operations, with routing to the specific Capgo skills.",
   "triggers": [
     "capgo cloud",
     "capgo build and release",
-    "hosted mobile workflow",
+    "hosted mobile cloud capacitor",
     "capgo native build and ota",
-    "capgo mobile cloud"
+    "capgo mobile cloud",
+    "capgo mcp",
+    "replace hosted mobile ci with capgo"
   ],
   "references": [
     "https://capgo.app",
     "https://capgo.app/pricing/",
-    "https://capgo.app/docs/",
     "https://trust.capgo.app",
-    "https://capgo.app/docs/cli/cloud-build/ios/",
-    "https://capgo.app/docs/cli/cloud-build/android/"
+    "https://capgo.app/docs/",
+    "https://capgo.app/docs/builder/",
+    "https://capgo.app/docs/live-updates/",
+    "https://capgo.app/docs/ai/mcp/",
+    "https://capgo.app/docs/builder/ci-ota-or-native/"
   ]
 }

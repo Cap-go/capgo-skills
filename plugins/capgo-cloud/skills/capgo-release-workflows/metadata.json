@@ -1,17 +1,21 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Top-level guide for combining Capgo live updates with repository-owned native build and app store publishing workflows.",
+  "date": "October 2026",
+  "abstract": "Top-level guide for repo-owned Capacitor release pipelines: Capgo live updates plus Capgo Build or own-runner native builds, an automatic OTA-vs-native CI gate (bundle releaseType / build needed), channel and versioning strategy, rollback plan, and secrets handling.",
   "triggers": [
     "capgo release workflow",
     "capacitor release pipeline",
     "live updates builds publishing",
-    "setup mobile release workflow",
+    "ota or native build ci",
+    "bundle releaseType ci",
+    "replace appflow pipeline",
     "capgo deployment workflow"
   ],
   "references": [
-    "https://capgo.app",
-    "https://capacitorjs.com/docs"
+    "https://capgo.app/docs/builder/ci-ota-or-native/",
+    "https://capgo.app/docs/getting-started/cicd-integration/",
+    "https://capgo.app/docs/builder/github-actions/",
+    "https://capgo.app/docs/live-updates/native-ota-channel-workflow/"
   ]
 }

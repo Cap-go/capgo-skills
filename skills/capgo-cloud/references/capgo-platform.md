@@ -58,7 +58,7 @@ Compile signed iOS and Android binaries on Capgo macOS M4 build machines without
 - Concurrency limits depend on plan.
 - Build minutes count toward plan limits; extra minutes can use credits.
 
-Docs: https://capgo.app/docs/cli/cloud-build/
+Docs: https://capgo.app/docs/builder/
 
 ## Monitoring, stats, and device logs
 
@@ -142,7 +142,7 @@ Docs: https://capgo.app/docs/ci-cd/
 
 Assistance and workflows for store submission alongside native builds (feature availability varies by plan and workflow).
 
-Docs: https://capgo.app/docs/cli/cloud-build/
+Docs: https://capgo.app/docs/builder/
 
 ## Console
 

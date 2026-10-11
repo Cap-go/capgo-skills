@@ -166,36 +166,47 @@ async function validateClaudeMarketplace(skillDirs, errors) {
   }
 }
 
+async function listFiles(dir, base = dir) {
+  const files = [];
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) files.push(...(await listFiles(fullPath, base)));
+    else files.push(path.relative(base, fullPath));
+  }
+  return files.sort();
+}
+
 async function validateMirroredSkills(errors) {
-  const mirroredFiles = [
-    [
-      'skills/capgo-native-builds/SKILL.md',
-      'plugins/capgo-cloud/skills/capgo-native-builds/SKILL.md',
-    ],
-    [
-      'skills/capgo-native-builds/metadata.json',
-      'plugins/capgo-cloud/skills/capgo-native-builds/metadata.json',
-    ],
-  ];
+  const pluginsRoot = path.join(root, 'plugins');
+  if (!(await pathExists(pluginsRoot))) return;
 
-  for (const [canonicalRelative, mirrorRelative] of mirroredFiles) {
-    const canonicalPath = path.join(root, canonicalRelative);
-    const mirrorPath = path.join(root, mirrorRelative);
+  for (const plugin of await readdir(pluginsRoot, { withFileTypes: true })) {
+    if (!plugin.isDirectory()) continue;
+    const pluginSkillsDir = path.join(pluginsRoot, plugin.name, 'skills');
+    const entries = await readdir(pluginSkillsDir, { withFileTypes: true }).catch(() => []);
 
-    let canonical;
-    let mirror;
-    try {
-      [canonical, mirror] = await Promise.all([
-        readFile(canonicalPath),
-        readFile(mirrorPath),
-      ]);
-    } catch {
-      errors.push(`mirrored skills: ${mirrorRelative} must exist and mirror ${canonicalRelative}`);
-      continue;
-    }
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
+      const mirrorDir = path.join(pluginSkillsDir, entry.name);
+      const canonicalDir = path.join(skillsDir, entry.name);
+      const mirrorRelative = path.relative(root, mirrorDir);
+      if (!(await pathExists(canonicalDir))) continue;
 
-    if (!canonical.equals(mirror)) {
-      errors.push(`mirrored skills: ${mirrorRelative} must match ${canonicalRelative} byte-for-byte`);
+      const [canonicalFiles, mirrorFiles] = await Promise.all([listFiles(canonicalDir), listFiles(mirrorDir)]);
+      if (!valuesMatch(canonicalFiles, mirrorFiles)) {
+        errors.push(`mirrored skills: ${mirrorRelative} file list differs from skills/${entry.name} (run bun run sync-skills)`);
+        continue;
+      }
+
+      for (const file of canonicalFiles) {
+        const [canonical, mirror] = await Promise.all([
+          readFile(path.join(canonicalDir, file)),
+          readFile(path.join(mirrorDir, file)),
+        ]);
+        if (!canonical.equals(mirror)) {
+          errors.push(`mirrored skills: ${mirrorRelative}/${file} must match skills/${entry.name}/${file} byte-for-byte (run bun run sync-skills)`);
+        }
+      }
     }
   }
 }

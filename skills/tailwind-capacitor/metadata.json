@@ -1,19 +1,25 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Complete guide to using Tailwind CSS in Capacitor mobile apps. Covers safe area handling, touch targets, dark mode, mobile-first design patterns, and performance optimization.",
+  "date": "October 2026",
+  "abstract": "Set up and use Tailwind CSS v4 in Capacitor apps: CSS-first config with @import, @theme, @utility and @custom-variant, Vite/PostCSS plugins, v3 upgrade, WebView browser floor, safe-area and platform variants, dark mode, and touch-friendly patterns.",
   "triggers": [
-    "tailwind capacitor",
-    "tailwind mobile",
-    "safe area css",
-    "mobile styling",
-    "touch targets",
-    "dark mode tailwind"
+    "tailwind",
+    "tailwind v4",
+    "tailwindcss capacitor",
+    "@tailwindcss/vite",
+    "@tailwindcss/postcss",
+    "tailwind.config.js",
+    "@theme",
+    "tailwind upgrade",
+    "tailwind safe area",
+    "tailwind dark mode"
   ],
   "references": [
-    "https://tailwindcss.com/docs",
-    "https://tailwindui.com/",
-    "https://webkit.org/blog/7929/designing-websites-for-iphone-x/"
+    "https://tailwindcss.com/docs/installation/using-vite",
+    "https://tailwindcss.com/docs/upgrade-guide",
+    "https://tailwindcss.com/docs/theme",
+    "https://tailwindcss.com/docs/compatibility",
+    "https://tailwindcss.com/docs/dark-mode"
   ]
 }

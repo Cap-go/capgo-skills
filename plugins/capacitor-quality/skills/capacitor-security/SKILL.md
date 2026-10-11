@@ -1,484 +1,114 @@
 ---
 name: capacitor-security
-description: Comprehensive security guide for Capacitor apps using Capsec scanner. Covers 63+ security rules across secrets, storage, network, authentication, cryptography, and platform-specific vulnerabilities. Use this skill when users need to secure their mobile app or run security audits.
+description: App-level security audit and hardening for Capacitor apps. Use when the user wants a security review, OWASP MASVS check, or pentest fixes; runs the Capgo scanner (`npx @capgo/capgo-sec scan`, `capsec`, rule IDs like SEC001, NET003, CAP004); finds API keys or `.env` values in the web bundle; stores tokens in `@capacitor/preferences` or `localStorage`; needs Keychain/Keystore storage, certificate pinning, CSP, or root/jailbreak detection; or sees `server.cleartext`, `allowNavigation`, `webContentsDebuggingEnabled`, `NSAllowsArbitraryLoads`, `android:usesCleartextTraffic`, `android:allowBackup`, `net::ERR_CLEARTEXT_NOT_PERMITTED`, or ATS "requires the use of a secure connection" errors. Do not use for Xcode build-setting hardening (use capacitor-ios-security-hardening), deep link setup (capacitor-deep-linking), App Store review (capacitor-apple-review-preflight), CI design (capacitor-ci-cd), or live update setup (capgo-live-updates).
 ---
 
-# Capacitor Security with Capsec
+# Capacitor Security
 
-Zero-config security scanning for Capacitor and Ionic apps.
+Audit and harden the app layer of a Capacitor app: secrets in the bundle, on-device storage, network transport, WebView and native bridge exposure, and platform manifests.
 
-## When to Use This Skill
+## When to Use
 
-- User wants to secure their app
-- User asks about security vulnerabilities
-- User needs to run security audit
-- User has hardcoded secrets
-- User needs CI/CD security scanning
-- User asks about OWASP mobile security
+TRIGGER when:
+- The user asks for a security audit, OWASP Mobile Top 10 / MASVS review, or wants to fix pentest findings.
+- The user wants to run or interpret `@capgo/capgo-sec` (`capsec`) results, rule IDs such as `SEC001`, `STO002`, `NET003`, `CAP004`, `AND004`, `IOS001`.
+- API keys, service-role keys, or `.env` values appear in `src/`, `dist/`, `www/`, or `capacitor.config.*`.
+- Auth tokens are stored with `Preferences.set`, `localStorage`, IndexedDB, or plain SQLite.
+- `capacitor.config.*` contains `server.cleartext: true`, `server.url`, broad `server.allowNavigation`, `android.allowMixedContent`, or `webContentsDebuggingEnabled: true`.
+- Native files contain `NSAllowsArbitraryLoads`, `android:usesCleartextTraffic="true"`, `android:allowBackup="true"`, `android:debuggable`, or exported components without permissions.
+- The user needs certificate pinning, a Content Security Policy, screenshot protection, or root/jailbreak detection.
 
-## Quick Start with Capsec
+Do not use:
+- Xcode build settings, Enhanced Security, pointer authentication, stack/heap hardening -> `capacitor-ios-security-hardening`.
+- Universal Links / App Links setup -> `capacitor-deep-linking` (this skill only covers validating incoming URLs).
+- Privacy manifests, App Review rejections -> `capacitor-apple-review-preflight`; store listing -> `capacitor-app-store`.
+- Pipeline structure and signing secrets in CI -> `capacitor-ci-cd`.
+- Live update installation and channels -> `capgo-live-updates` (this skill covers only bundle encryption).
+- Runtime crashes and WebView inspection -> `debugging-capacitor`.
 
-### Run Security Scan
+## Workflow
+
+1. **Inspect before editing.** Read `capacitor.config.ts|json`, `package.json` (Capacitor major, installed plugins), `android/app/src/main/AndroidManifest.xml`, `android/app/src/main/res/xml/network_security_config.xml` (if any), `ios/App/App/Info.plist`, `*.entitlements`, and `index.html`.
+2. **Scan.** Run the Capgo scanner from the project root (Node 18+):
+   ```bash
+   npx @capgo/capgo-sec@latest scan --severity medium
+   ```
+   The npm package is `@capgo/capgo-sec`; it installs a `capsec` binary. `npx capsec` does not work because no package named `capsec` exists on npm.
+3. **Grep for what scanners miss** (see Verification). Build the web app first and also grep `dist/` or `www/`: bundlers inline `import.meta.env.*` and `process.env.*` values.
+4. **Triage and report before invasive changes.** Group findings by Critical/High/Medium/Low with file and line. Ask the user before changes that alter behavior: certificate pinning (can lock out users when certs rotate), blocking rooted devices, removing `allowNavigation` hosts, a strict CSP.
+5. **Fix by area**, loading the matching reference below.
+6. **Re-run the scan and Verification checks**, then `npx cap sync` and test a release build on a device.
+
+## Capacitor-specific traps
+
+- **Nothing in the bundle is secret.** Web assets ship inside the IPA/APK and `capacitor.config.json` is copied into native assets. Values in `plugins.*` config (including `@capgo/capacitor-env`) are extractable. Move secret-bearing calls to a backend.
+- **`allowNavigation` grants bridge access.** On Android, every `allowNavigation` entry is added to the bridge's allowed origin rules, so pages from those hosts can call your native plugins. Only list hosts you control. Open third-party pages with `@capacitor/browser` or `@capgo/inappbrowser` instead.
+- **`server.url` and `server.cleartext` are dev-only.** Capacitor documents both as "not intended for use in production." A committed LAN IP ships a WebView that loads remote code over HTTP.
+- **Debuggable WebView in release.** `ios.webContentsDebuggingEnabled` / `android.webContentsDebuggingEnabled` default to on only in debug builds. A hardcoded `true` exposes the WebView to Safari / `chrome://inspect` on any release build.
+- **CapacitorHttp is not pinning.** `plugins.CapacitorHttp.enabled` only routes `fetch`/XHR through native networking. Pinning requires `@capgo/capacitor-ssl-pinning`, which hooks into CapacitorHttp.
+- **Biometric prompt is not authentication.** `verifyIdentity()` can be hooked on rooted/jailbroken devices. Keep secrets behind `accessControl` (hardware-bound Keychain/Keystore item) and validate sessions server-side.
+- **OAuth via custom schemes needs PKCE.** Any app can register `myapp://`. Use PKCE and prefer Universal/App Links for redirects.
+- **Live update bundles are public unless encrypted.** Private channels limit who receives a bundle. They do not make it confidential.
+
+## References
+
+Only load a reference when its topic is in play.
+
+| Reference | Load when |
+|-----------|-----------|
+| [references/capsec-scanner.md](references/capsec-scanner.md) | Running the scanner, reading rule IDs, CI gating, JSON/HTML reports |
+| [references/secrets-and-storage.md](references/secrets-and-storage.md) | Hardcoded keys, `.env` leakage, token storage, Keychain/Keystore, encrypted SQLite, logging |
+| [references/network.md](references/network.md) | HTTPS/ATS/cleartext, `network_security_config.xml`, certificate pinning, CORS vs CapacitorHttp |
+| [references/webview-and-bridge.md](references/webview-and-bridge.md) | CSP, `allowNavigation`, iframes, `postMessage`, `eval`, deep link/OAuth validation |
+| [references/platform-hardening.md](references/platform-hardening.md) | AndroidManifest flags, R8, iOS Info.plist/entitlements, screenshot protection, root/jailbreak detection, live update encryption |
+
+Xcode compiler/linker hardening is not covered here: use `capacitor-ios-security-hardening`.
+
+## Verification
+
+Run from the project root. Each grep should return nothing for a release build, or only intentional, documented hits.
 
 ```bash
-# Scan current directory (no installation needed)
-npx capsec scan
+# 1. Scanner gate (exit code 1 on high/critical)
+npx @capgo/capgo-sec@latest scan --ci
 
-# Scan specific path
-npx capsec scan ./my-app
+# 2. Dev-only config left in capacitor.config
+grep -nE "cleartext|server:\s*\{|\"url\"|url:|allowMixedContent|webContentsDebuggingEnabled" capacitor.config.* 
 
-# CI mode (exit code 1 on high/critical issues)
-npx capsec scan --ci
+# 3. Secrets in the built bundle (build first)
+npm run build
+grep -rnE "sk_live_|sk-ant-|sk-proj-|AKIA[0-9A-Z]{16}|service_role|-----BEGIN (RSA |EC )?PRIVATE KEY" dist/ www/ 2>/dev/null
+
+# 4. Tokens in plain storage
+grep -rnE "(Preferences\.set|localStorage\.setItem)\(.*(token|password|secret|jwt)" -i src/
+
+# 5. Android manifest flags
+grep -nE "usesCleartextTraffic|allowBackup|debuggable|exported=\"true\"" android/app/src/main/AndroidManifest.xml
+
+# 6. iOS transport and file sharing
+plutil -p ios/App/App/Info.plist | grep -E "NSAllowsArbitraryLoads|NSExceptionAllowsInsecureHTTPLoads|UIFileSharingEnabled|LSSupportsOpeningDocumentsInPlace"
+
+# 7. Native projects pick up config changes
+npx cap sync
 ```
 
-### Output Formats
-
-```bash
-# CLI output (default)
-npx capsec scan
-
-# JSON report
-npx capsec scan --output json --output-file report.json
-
-# HTML report
-npx capsec scan --output html --output-file security-report.html
-```
-
-### Filtering
-
-```bash
-# Only critical and high severity
-npx capsec scan --severity high
-
-# Specific categories
-npx capsec scan --categories secrets,network,storage
-
-# Exclude test files
-npx capsec scan --exclude "**/test/**,**/*.spec.ts"
-```
-
-## Security Rules Reference
-
-### Secrets Detection (SEC)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| SEC001 | Critical | Hardcoded API Keys & Secrets |
-| SEC002 | High | Exposed .env File |
-
-**What Capsec Detects**:
-- AWS Access Keys
-- Google API Keys
-- Firebase Keys
-- Stripe Keys
-- GitHub Tokens
-- JWT Secrets
-- Database Credentials
-- 30+ secret patterns
-
-**Fix Example**:
-```typescript
-// BAD - Hardcoded API key
-const API_KEY = 'sk_live_abc123xyz';
-
-// GOOD - Use environment variables
-import { Env } from '@capgo/capacitor-env';
-const API_KEY = await Env.get({ key: 'API_KEY' });
-```
-
-### Storage Security (STO)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| STO001 | High | Unencrypted Sensitive Data in Preferences |
-| STO002 | High | localStorage Usage for Sensitive Data |
-| STO003 | Medium | SQLite Database Without Encryption |
-| STO004 | Medium | Filesystem Storage of Sensitive Data |
-| STO005 | Low | Insecure Data Caching |
-| STO006 | High | Keychain/Keystore Not Used for Credentials |
-
-**Fix Example**:
-```typescript
-// BAD - Plain preferences for tokens
-import { Preferences } from '@capacitor/preferences';
-await Preferences.set({ key: 'auth_token', value: token });
-
-// GOOD - Use secure storage
-import { NativeBiometric } from '@capgo/capacitor-native-biometric';
-await NativeBiometric.setCredentials({
-  username: email,
-  password: token,
-  server: 'api.myapp.com',
-});
-```
-
-### Network Security (NET)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| NET001 | Critical | HTTP Cleartext Traffic |
-| NET002 | High | SSL/TLS Certificate Pinning Missing |
-| NET003 | High | Capacitor Server Cleartext Enabled |
-| NET004 | Medium | Insecure WebSocket Connection |
-| NET005 | Medium | CORS Wildcard Configuration |
-| NET006 | Medium | Insecure Deep Link Validation |
-| NET007 | Low | Capacitor HTTP Plugin Misuse |
-| NET008 | High | Sensitive Data in URL Parameters |
-
-**Fix Example**:
-```typescript
-// BAD - HTTP in production
-const config: CapacitorConfig = {
-  server: {
-    cleartext: true,  // Never in production!
-  },
-};
-
-// GOOD - HTTPS only
-const config: CapacitorConfig = {
-  server: {
-    cleartext: false,
-    // Only allow specific domains
-    allowNavigation: ['https://api.myapp.com'],
-  },
-};
-```
-
-### Capacitor-Specific (CAP)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| CAP001 | High | WebView Debug Mode Enabled |
-| CAP002 | Medium | Insecure Plugin Configuration |
-| CAP003 | Low | Verbose Logging in Production |
-| CAP004 | High | Insecure allowNavigation |
-| CAP005 | Critical | Native Bridge Exposure |
-| CAP006 | Critical | Eval Usage with User Input |
-| CAP007 | Medium | Missing Root/Jailbreak Detection |
-| CAP008 | Low | Insecure Plugin Import |
-| CAP009 | Medium | Live Update Security |
-| CAP010 | High | Insecure postMessage Handler |
-
-**Fix Example**:
-```typescript
-// BAD - Debug mode in production
-const config: CapacitorConfig = {
-  ios: {
-    webContentsDebuggingEnabled: true,  // Remove in production!
-  },
-  android: {
-    webContentsDebuggingEnabled: true,  // Remove in production!
-  },
-};
-
-// GOOD - Only in development
-const config: CapacitorConfig = {
-  ios: {
-    webContentsDebuggingEnabled: process.env.NODE_ENV === 'development',
-  },
-};
-```
-
-### Android Security (AND)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| AND001 | High | Android Cleartext Traffic Allowed |
-| AND002 | Medium | Android Debug Mode Enabled |
-| AND003 | Medium | Insecure Android Permissions |
-| AND004 | Low | Android Backup Allowed |
-| AND005 | High | Exported Components Without Permission |
-| AND006 | Medium | WebView JavaScript Enabled Without Safeguards |
-| AND007 | Critical | Insecure WebView addJavascriptInterface |
-| AND008 | Critical | Hardcoded Signing Key |
-
-**Fix AndroidManifest.xml**:
-```xml
-<!-- BAD -->
-<application android:usesCleartextTraffic="true">
-
-<!-- GOOD -->
-<application
-    android:usesCleartextTraffic="false"
-    android:allowBackup="false"
-    android:networkSecurityConfig="@xml/network_security_config">
-```
-
-**network_security_config.xml**:
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-    <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">api.myapp.com</domain>
-        <pin-set>
-            <pin digest="SHA-256">your-pin-hash</pin>
-        </pin-set>
-    </domain-config>
-</network-security-config>
-```
-
-### iOS Security (IOS)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| IOS001 | High | App Transport Security Disabled |
-| IOS002 | Medium | Insecure Keychain Access |
-| IOS003 | Medium | URL Scheme Without Validation |
-| IOS004 | Low | iOS Pasteboard Sensitive Data |
-| IOS005 | Medium | Insecure iOS Entitlements |
-| IOS006 | Low | Background App Refresh Data Exposure |
-| IOS007 | Medium | Missing iOS Jailbreak Detection |
-| IOS008 | Low | Screenshots Not Disabled for Sensitive Screens |
-
-**Fix Info.plist**:
-```xml
-<!-- BAD - Disables ATS -->
-<key>NSAppTransportSecurity</key>
-<dict>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
-</dict>
-
-<!-- GOOD - Specific exceptions only -->
-<key>NSAppTransportSecurity</key>
-<dict>
-    <key>NSExceptionDomains</key>
-    <dict>
-        <key>legacy-api.example.com</key>
-        <dict>
-            <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <true/>
-            <key>NSExceptionMinimumTLSVersion</key>
-            <string>TLSv1.2</string>
-        </dict>
-    </dict>
-</dict>
-```
-
-### Authentication (AUTH)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| AUTH001 | Critical | Weak JWT Validation |
-| AUTH002 | High | Insecure Biometric Implementation |
-| AUTH003 | High | Weak Random Number Generation |
-| AUTH004 | Medium | Missing Session Timeout |
-| AUTH005 | High | OAuth State Parameter Missing |
-| AUTH006 | Critical | Hardcoded Credentials in Auth |
-
-**Fix Example**:
-```typescript
-// BAD - No JWT validation
-const decoded = jwt.decode(token);
-
-// GOOD - Verify JWT signature
-const decoded = jwt.verify(token, publicKey, {
-  algorithms: ['RS256'],
-  issuer: 'https://auth.myapp.com',
-  audience: 'myapp',
-});
-```
-
-### WebView Security (WEB)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| WEB001 | Critical | WebView JavaScript Injection |
-| WEB002 | Medium | Unsafe iframe Configuration |
-| WEB003 | Medium | External Script Loading |
-| WEB004 | Medium | Content Security Policy Missing |
-| WEB005 | Low | Target _blank Without noopener |
-
-**Fix - Add CSP**:
-```html
-<!-- index.html -->
-<meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  script-src 'self';
-  style-src 'self' 'unsafe-inline';
-  img-src 'self' data: https:;
-  connect-src 'self' https://api.myapp.com;
-  font-src 'self';
-  frame-ancestors 'none';
-">
-```
-
-### Cryptography (CRY)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| CRY001 | Critical | Weak Cryptographic Algorithm |
-| CRY002 | Critical | Hardcoded Encryption Key |
-| CRY003 | High | Insecure Random IV Generation |
-| CRY004 | High | Weak Password Hashing |
-
-**Fix Example**:
-```typescript
-// BAD - Weak algorithm
-const encrypted = CryptoJS.DES.encrypt(data, key);
-
-// GOOD - Strong algorithm
-const encrypted = CryptoJS.AES.encrypt(data, key, {
-  mode: CryptoJS.mode.GCM,
-  padding: CryptoJS.pad.Pkcs7,
-});
-
-// BAD - Hardcoded key
-const key = 'my-secret-key-123';
-
-// GOOD - Derived key
-const key = await crypto.subtle.deriveKey(
-  { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
-  baseKey,
-  { name: 'AES-GCM', length: 256 },
-  false,
-  ['encrypt', 'decrypt']
-);
-```
-
-### Logging (LOG)
-
-| Rule | Severity | Description |
-|------|----------|-------------|
-| LOG001 | High | Sensitive Data in Console Logs |
-| LOG002 | Low | Console Logs in Production |
-
-**Fix Example**:
-```typescript
-// BAD - Logging sensitive data
-console.log('User password:', password);
-console.log('Token:', authToken);
-
-// GOOD - Redact sensitive data
-console.log('User authenticated:', userId);
-// Use conditional logging
-if (process.env.NODE_ENV === 'development') {
-  console.debug('Debug info:', data);
-}
-```
-
-## CI/CD Integration
-
-### GitHub Actions
-
-```yaml
-name: Security Scan
-
-on: [push, pull_request]
-
-jobs:
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-
-      - name: Run Capsec Security Scan
-        run: npx capsec scan --ci --output json --output-file security-report.json
-
-      - name: Upload Security Report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: security-report
-          path: security-report.json
-```
-
-### GitLab CI
-
-```yaml
-security-scan:
-  image: node:20
-  script:
-    - npx capsec scan --ci
-  artifacts:
-    reports:
-      security: security-report.json
-  only:
-    - merge_requests
-    - main
-```
-
-## Configuration
-
-### capsec.config.json
-
-```json
-{
-  "exclude": [
-    "**/node_modules/**",
-    "**/dist/**",
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ],
-  "severity": "low",
-  "categories": [],
-  "rules": {
-    "LOG002": {
-      "enabled": false
-    },
-    "SEC001": {
-      "severity": "critical"
-    }
-  }
-}
-```
-
-### Initialize Config
-
-```bash
-npx capsec init
-```
-
-## Root/Jailbreak Detection
-
-```typescript
-import { IsRoot } from '@capgo/capacitor-is-root';
-
-async function checkDeviceSecurity() {
-  const { isRooted } = await IsRoot.isRooted();
-
-  if (isRooted) {
-    // Option 1: Warn user
-    showWarning('Device security compromised');
-
-    // Option 2: Restrict features
-    disableSensitiveFeatures();
-
-    // Option 3: Block app (for high-security apps)
-    blockApp();
-  }
-}
-```
-
-## Security Checklist
-
-### Before Release
-
-- [ ] Run `npx capsec scan --severity high`
-- [ ] Remove all console.log statements
-- [ ] Disable WebView debugging
-- [ ] Remove development URLs
-- [ ] Verify no hardcoded secrets
-- [ ] Enable certificate pinning
-- [ ] Implement root/jailbreak detection
-- [ ] Add Content Security Policy
-- [ ] Use secure storage for credentials
-- [ ] Enable ProGuard (Android)
-- [ ] Verify ATS settings (iOS)
-
-### Ongoing
-
-- [ ] Run security scans in CI/CD
-- [ ] Monitor for new vulnerabilities
-- [ ] Update dependencies regularly
-- [ ] Review third-party plugins
-- [ ] Audit authentication flows
+Then install a release build on a device and confirm: login works, API calls succeed (pinning did not break them), Safari Web Inspector / `chrome://inspect` cannot attach.
+
+## Error handling
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `net::ERR_CLEARTEXT_NOT_PERMITTED` (Android) | HTTP request blocked; cleartext is off by default since API 28 | Use HTTPS. For dev live reload only, use `server.cleartext: true` in a dev-only config. Never ship `usesCleartextTraffic="true"`. |
+| `The resource could not be loaded because the App Transport Security policy requires the use of a secure connection.` (iOS, NSURLError -1022) | HTTP URL under ATS | Use HTTPS. If a legacy host is unavoidable, add a narrow `NSExceptionDomains` entry, never `NSAllowsArbitraryLoads`. |
+| `... has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present` | Backend does not allow the WebView origin | Allow `capacitor://localhost` (iOS) and `https://localhost` (Android default) on the server, or enable `CapacitorHttp`. Do not add `Access-Control-Allow-Origin: *` to authenticated endpoints. |
+| `Refused to connect to '<url>' because it violates the following Content Security Policy directive` | CSP `connect-src` missing a host | Add the exact API origin to `connect-src`. Do not fall back to `*`. |
+| Pinned requests fail after a certificate renewal | Pin matched only the old leaf cert | Pin the CA or intermediate plus a backup cert; ship the backup before rotating. |
+| `npm error 404 Not Found - GET https://registry.npmjs.org/capsec` | Wrong package name | Use `npx @capgo/capgo-sec@latest scan`. |
+| `No protected credentials found` / `No protected data found` (code `21`, `@capgo/capacitor-native-biometric`) | Nothing stored with `accessControl`, fresh install, or the item was invalidated by a biometric enrollment change | Treat as "logged out": re-authenticate against the server, then store again with `AccessControl.BIOMETRY_CURRENT_SET` or `BIOMETRY_ANY`. |
 
 ## Resources
 
-- Capsec Documentation: https://capacitor-sec.dev
-- OWASP Mobile Top 10: https://owasp.org/www-project-mobile-top-10
-- OWASP MASTG: https://mas.owasp.org/MASTG
-- Capgo Security Plugins: https://capgo.app
+- Capacitor security guide: https://capacitorjs.com/docs/guides/security
+- Capgo security scanner: https://capgo.app/security-scanner/ (source: https://github.com/Cap-go/capgo-sec)
+- OWASP Mobile Top 10: https://owasp.org/www-project-mobile-top-10/
+- OWASP MASVS / MASTG: https://mas.owasp.org/

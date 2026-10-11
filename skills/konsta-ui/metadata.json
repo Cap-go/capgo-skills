@@ -1,19 +1,23 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Guide to using Konsta UI for pixel-perfect iOS and Material Design components. Tailwind CSS native integration, works with React, Vue, and Svelte. Lightweight alternative to Ionic Framework.",
+  "date": "October 2026",
+  "abstract": "Build Capacitor app UI with Konsta UI v5 on Tailwind CSS v4: CSS-first setup, brand colors in @theme, App/KonstaProvider, iOS and Material themes, safe-area utilities, dark mode, and migration from konstaConfig.",
   "triggers": [
-    "konsta ui",
     "konsta",
-    "tailwind mobile",
+    "konsta ui",
+    "konstaConfig",
+    "konsta/react/theme.css",
+    "tailwind mobile components",
     "ios material components",
-    "lightweight ui",
-    "svelte capacitor"
+    "KonstaProvider",
+    "k-color-brand"
   ],
   "references": [
-    "https://konstaui.com/",
-    "https://konstaui.com/react",
-    "https://github.com/konstaui/konsta"
+    "https://konstaui.com",
+    "https://konstaui.com/react/installation",
+    "https://konstaui.com/react/safe-areas",
+    "https://konstaui.com/react/colors",
+    "https://github.com/konstaui/konsta/blob/master/CHANGELOG.md"
   ]
 }

@@ -1,20 +1,26 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Complete guide to handling safe areas in Capacitor apps. Covers iPhone notch, Dynamic Island, home indicator, and Android cutouts. Includes CSS, JavaScript, and native solutions.",
+  "date": "October 2026",
+  "abstract": "Fix notch, Dynamic Island, home indicator, cutout, and system bar overlap in Capacitor apps: viewport-fit=cover, env(safe-area-inset-*), Capacitor 8 SystemBars and injected CSS variables, Android 15/16 edge-to-edge enforcement, status bar plugin changes, and runtime inset changes on resizable windows.",
   "triggers": [
     "safe area",
     "notch",
+    "dynamic island",
     "home indicator",
-    "display cutout",
-    "env safe-area",
-    "viewport-fit",
-    "content under notch"
+    "edge to edge",
+    "SystemBars",
+    "safe-area-inset",
+    "viewport-fit cover",
+    "setOverlaysWebView not working",
+    "adjustMarginsForEdgeToEdge",
+    "status bar overlap"
   ],
   "references": [
-    "https://developer.apple.com/design/human-interface-guidelines/layout",
-    "https://developer.android.com/develop/ui/views/layout/display-cutout",
-    "https://capacitorjs.com/docs/apis/status-bar"
+    "https://capacitorjs.com/docs/apis/system-bars",
+    "https://capacitorjs.com/docs/apis/status-bar",
+    "https://capacitorjs.com/docs/updating/8-0",
+    "https://developer.android.com/develop/ui/views/layout/edge-to-edge",
+    "https://webkit.org/blog/7929/designing-websites-for-iphone-x/"
   ]
 }

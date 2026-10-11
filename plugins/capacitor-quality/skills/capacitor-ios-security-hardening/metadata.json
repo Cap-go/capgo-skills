@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "organization": "Capgo",
+  "date": "October 2026",
+  "abstract": "Audit and staged hardening of Xcode security build settings for Capacitor iOS apps and native plugin code: security compiler warnings, static analyzer checkers, Xcode Enhanced Security (hardened-process entitlements, pointer authentication / arm64e, hardware memory tagging), dependency compatibility for CocoaPods, SPM binary xcframeworks and Cordova plugins, and a persistent decision log.",
+  "triggers": [
+    "enhanced security",
+    "ENABLE_ENHANCED_SECURITY",
+    "hardened-process entitlement",
+    "pointer authentication",
+    "arm64e",
+    "memory tagging",
+    "xcode security settings",
+    "harden ios build",
+    "static analyzer",
+    "xcodebuild analyze",
+    "showBuildSettings",
+    "compiler warnings security"
+  ],
+  "references": [
+    "https://developer.apple.com/documentation/xcode/enabling-enhanced-security-for-your-app",
+    "https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.security.hardened-process",
+    "https://developer.apple.com/documentation/security/preparing-your-app-to-work-with-pointer-authentication",
+    "https://developer.apple.com/documentation/xcode/conforming-to-mach-ipc-security-restrictions",
+    "https://developer.apple.com/documentation/xcode/build-settings-reference",
+    "https://clang.llvm.org/docs/SafeBuffers.html",
+    "https://capacitorjs.com/docs/ios"
+  ]
+}

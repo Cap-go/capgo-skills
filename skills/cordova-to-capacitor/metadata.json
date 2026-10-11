@@ -1,19 +1,28 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "February 2026",
-  "abstract": "Complete guide for migrating from Apache Cordova to Capacitor. Covers plugin migration, configuration updates, platform differences, and step-by-step migration process to modernize your hybrid mobile app.",
+  "date": "October 2026",
+  "abstract": "Incremental migration from Apache Cordova, PhoneGap, or Ionic-Cordova to Capacitor: audit, Capacitor install with the same app ID, origin/scheme decisions that preserve localStorage and IndexedDB, config.xml mapping, plugin-by-plugin replacement with Capacitor and Capgo plugins, keeping Cordova plugins temporarily, Capacitor 9's optional Cordova runtime and its implications, Cordova removal, verification, and exact sync/runtime error fixes.",
   "triggers": [
     "cordova to capacitor",
     "migrate from cordova",
-    "convert cordova",
-    "cordova migration",
     "phonegap to capacitor",
-    "replace cordova"
+    "ionic cordova to capacitor",
+    "config.xml to capacitor config",
+    "replace cordova plugins",
+    "deviceready capacitor",
+    "lost localstorage after capacitor migration",
+    "iosScheme ionic",
+    "incompatible cordova plugin skipped install",
+    "capacitor 9 cordova optional",
+    "remove cordova"
   ],
   "references": [
     "https://capacitorjs.com/docs/cordova/migrating-from-cordova-to-capacitor",
-    "https://capacitorjs.com/docs",
+    "https://capacitorjs.com/docs/plugins/cordova",
+    "https://capacitorjs.com/docs/updating/9-0",
+    "https://capacitorjs.com/docs/config",
+    "https://capgo.app/plugins/",
     "https://cordova.apache.org/docs"
   ]
 }

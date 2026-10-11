@@ -9,6 +9,7 @@ Guidelines specifically applying to apps that use AI services (ChatGPT, Gemini, 
 - [ ] **1.1.6** — No false information or misleading AI capabilities (e.g., "AI doctor")
 - [ ] **1.4.1** — AI health advice: must include medical disclaimers; can't substitute for professional diagnosis
 - [ ] **2.3.1** — All AI features documented in review notes; no hidden AI capabilities
+- [ ] **5.1.2(i)** — Before sending personal data (prompts, photos, voice, documents, contacts) to a third-party AI provider, show a clear in-app disclosure naming what is shared and with whom, and get explicit permission. A privacy-policy line alone is not enough (guideline revised Nov 2025)
 
 ## Important (Common Rejections)
 

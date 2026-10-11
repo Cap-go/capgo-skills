@@ -1,17 +1,23 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Guide to configuring splash screens in Capacitor apps including asset generation, dark mode support, animations, and programmatic control.",
+  "date": "October 2026",
+  "abstract": "Configure and debug Capacitor launch splash screens: @capacitor/splash-screen hide timing, launchFadeOutDuration default change in Capacitor 9, Android 12+ SplashScreen API theme, iOS LaunchScreen storyboard under the 8.5 UIScene lifecycle, and asset generation.",
   "triggers": [
     "splash screen",
     "launch screen",
-    "app loading",
-    "splash image",
-    "startup screen"
+    "SplashScreen.hide",
+    "launchAutoHide",
+    "launchFadeOutDuration",
+    "capacitor-assets",
+    "android 12 splash",
+    "white flash on launch",
+    "LaunchScreen.storyboard"
   ],
   "references": [
     "https://capacitorjs.com/docs/apis/splash-screen",
-    "https://github.com/ionic-team/capacitor-assets"
+    "https://capacitorjs.com/docs/guides/splash-screens-and-icons",
+    "https://capacitorjs.com/docs/updating/9-0",
+    "https://developer.android.com/develop/ui/views/launch/splash-screen"
   ]
 }

@@ -1,15 +1,19 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
+  "date": "October 2026",
   "abstract": "Version-specific guide for upgrading a Capacitor app from v6 to v7.",
   "triggers": [
     "capacitor 6 to 7",
     "upgrade app to capacitor 7",
-    "v6 to v7 migration",
-    "capacitor app upgrade v7"
+    "npx cap migrate capacitor 7",
+    "capacitor 7 jdk 21",
+    "capacitor 7 ios 14 deployment target",
+    "bundledWebRuntime removed",
+    "AppUrlOpen removed"
   ],
   "references": [
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/updating/7-0",
+    "https://capacitorjs.com/docs/config"
   ]
 }

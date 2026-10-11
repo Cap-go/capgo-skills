@@ -1,17 +1,26 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Guide for adding Swift Package Manager support to an existing Capacitor plugin, including bridged Swift registration and package metadata updates.",
+  "date": "October 2026",
+  "abstract": "Adds Swift Package Manager support to existing Capacitor plugins: CLI-derived package/product naming, root Package.swift, CAPBridgedPlugin conversion, ObjC bridge removal, Sources/Tests layout, podspec and package.json updates, third-party, resource and binary dependencies, Capacitor 9 optional Cordova product, verification commands and real error strings.",
   "triggers": [
     "add spm support to capacitor plugin",
-    "swift package manager plugin",
     "package.swift capacitor plugin",
-    "bridged plugin",
-    "capacitor plugin spm"
+    "CAPBridgedPlugin",
+    "CAP_PLUGIN macro",
+    "capacitor-plugin-converter",
+    "does not have a Package.swift",
+    "plugin is not implemented on ios spm",
+    "capacitor-swift-pm",
+    "cocoapods trunk read-only plugin",
+    "capacitor 9 plugin spm cordova product"
   ],
   "references": [
-    "https://swift.org/package-manager",
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/ios/spm",
+    "https://capacitorjs.com/docs/plugins/ios",
+    "https://capacitorjs.com/docs/updating/plugins/8-0",
+    "https://github.com/ionic-team/capacitor-plugin-converter",
+    "https://github.com/ionic-team/capacitor-swift-pm",
+    "https://www.swift.org/documentation/package-manager/"
   ]
 }

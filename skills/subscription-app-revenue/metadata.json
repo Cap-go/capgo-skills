@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "May 2026",
+  "date": "October 2026",
   "abstract": "Revenue playbook for taking a mobile or web subscription app from idea or MVP to early MRR. Covers app-store demand research, small MVP scope, analytics, ASO, short-form video, Reddit/community acquisition, freemium vs trial monetization, paywall placement, pricing, churn learning, and Capgo-powered iteration for Capacitor apps.",
   "triggers": [
     "make revenue from app",
@@ -18,9 +18,16 @@
     "reddit app launch",
     "increase app subscribers",
     "reduce app churn",
-    "subscription pricing"
+    "subscription pricing",
+    "first app subscribers",
+    "paywall placement",
+    "validate app idea"
   ],
   "references": [
-    "From zero to $1K MRR: A guide to launching a subscription app"
+    "From zero to $1K MRR: A guide to launching a subscription app",
+    "https://capgo.app/docs/live-updates/",
+    "https://developer.apple.com/app-store/review/guidelines/",
+    "https://developer.apple.com/app-store/subscriptions/",
+    "https://support.google.com/googleplay/android-developer/answer/140504"
   ]
 }

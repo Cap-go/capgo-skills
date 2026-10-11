@@ -1,15 +1,22 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
+  "date": "October 2026",
   "abstract": "Version-specific guide for upgrading a Capacitor app from v7 to v8.",
   "triggers": [
     "capacitor 7 to 8",
     "upgrade app to capacitor 8",
-    "v7 to v8 migration",
-    "capacitor app upgrade v8"
+    "npx cap migrate capacitor 8",
+    "adjustMarginsForEdgeToEdge removed",
+    "capacitor 8 ios 15 xcode 26",
+    "capacitor 8 gradle 8.14.3 agp 8.13",
+    "bridge_layout_main capacitor_bridge_layout_main",
+    "capacitor 8 kotlin 2.2"
   ],
   "references": [
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/updating/8-0",
+    "https://capacitorjs.com/docs/updating/8-5",
+    "https://capacitorjs.com/docs/apis/system-bars",
+    "https://capacitorjs.com/docs/updating/9-0"
   ]
 }

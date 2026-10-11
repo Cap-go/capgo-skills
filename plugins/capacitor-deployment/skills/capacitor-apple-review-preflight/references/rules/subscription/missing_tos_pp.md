@@ -22,10 +22,10 @@ And the App Store metadata must include:
 Search the codebase for subscription paywall / purchase views:
 ```bash
 # Find subscription-related UI files
-grep -rn "subscribe\|paywall\|purchase\|StoreKit\|RevenueCat\|Superwall" --include="*.swift" --include="*.dart" .
+grep -rn "subscribe\|paywall\|purchase\|StoreKit\|RevenueCat\|Superwall" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
 
 # Check if terms/privacy links exist in those files
-grep -rn "terms\|privacy\|eula\|TermsOfService\|PrivacyPolicy" --include="*.swift" --include="*.dart" .
+grep -rn "terms\|privacy\|eula\|TermsOfService\|PrivacyPolicy" --include="*.swift" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=www --exclude-dir=build .
 ```
 
 ### Check metadata descriptions

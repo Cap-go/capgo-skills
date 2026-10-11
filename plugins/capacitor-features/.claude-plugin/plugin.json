@@ -1,7 +1,7 @@
 {
   "name": "capacitor-features",
-  "description": "Capacitor feature skills for deep links, keyboard handling, offline-first data, push notifications, and splash screens.",
-  "version": "1.0.0",
+  "description": "Capacitor feature skills for deep links, keyboard handling, offline-first data, push notifications, splash screens, and App Intents (Siri, Shortcuts, Spotlight).",
+  "version": "1.1.0",
   "author": {
     "name": "Capgo",
     "email": "support@capgo.app"
@@ -9,6 +9,14 @@
   "homepage": "https://github.com/Cap-go/capgo-skills",
   "repository": "https://github.com/Cap-go/capgo-skills",
   "license": "MIT",
-  "keywords": ["capacitor", "push-notifications", "deep-linking", "offline", "keyboard"],
+  "keywords": [
+    "capacitor",
+    "push-notifications",
+    "deep-linking",
+    "offline",
+    "keyboard",
+    "app-intents",
+    "siri"
+  ],
   "category": "development"
 }

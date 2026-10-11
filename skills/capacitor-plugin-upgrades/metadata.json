@@ -1,16 +1,22 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Guide for upgrading a Capacitor plugin across major versions with sequential native and TypeScript verification.",
+  "date": "October 2026",
+  "abstract": "Router for upgrading a Capacitor plugin library across major versions (4 to 9): range detection, hop planning, official plugin migrators, UIScene lifecycle audit for 8.5/9, podspec and Package.swift parity, and example-app verification.",
   "triggers": [
     "upgrade capacitor plugin",
     "plugin major version",
     "migrate capacitor plugin",
     "bump plugin version",
-    "update capacitor plugin"
+    "update capacitor plugin",
+    "capacitor 9 plugin support",
+    "plugin peerDependencies capacitor",
+    "plugin uiscene"
   ],
   "references": [
+    "https://capacitorjs.com/docs/updating/plugins/9-0",
+    "https://capacitorjs.com/docs/updating/plugins/8-0",
+    "https://capacitorjs.com/docs/updating/8-5",
     "https://capacitorjs.com/docs/plugins"
   ]
 }

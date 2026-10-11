@@ -20,7 +20,7 @@ tasks:
       - Use YAML frontmatter at the top of the file.
       - Include a non-empty `name`.
       - Include a non-empty `description`.
-      - Include a clear "When to Use This Skill" section.
+      - Include a clear "When to Use" section with trigger and negative-trigger guidance.
       - Include an "Error Handling" section.
 
     workspace:

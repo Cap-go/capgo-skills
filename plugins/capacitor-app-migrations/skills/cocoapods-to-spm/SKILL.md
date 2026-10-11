@@ -1,37 +1,45 @@
 ---
 name: cocoapods-to-spm
-description: Guide to migrating an existing Capacitor iOS app from CocoaPods to Swift Package Manager (SPM). Use this skill when users want Capacitor 8-style SPM projects, need to run or recover from spm-migration-assistant, replace Podfile/Pods/App.xcworkspace with CapApp-SPM, add debug.xcconfig, verify plugin SPM support, or remove CocoaPods from an app project.
+description: Migrates an existing Capacitor iOS app from CocoaPods to Swift Package Manager (SPM) before CocoaPods Trunk goes read-only (expected December 2, 2026). Use when the app still has ios/App/Podfile, Pods/, Podfile.lock or App.xcworkspace and the user wants CapApp-SPM, runs or recovers from `npx cap spm-migration-assistant`, needs debug.xcconfig / CAPACITOR_DEBUG wired up, sees "Some installed Capacitor plugins are not compatible with SPM" or "<plugin> does not have a Package.swift", or plans the Capacitor 9 upgrade where SPM is the default. Do not use for adding SPM support inside a plugin repository (use capacitor-plugin-spm-support), the UIScene lifecycle migration (use capacitor-uiscene-migration), full version upgrades (use capacitor-app-upgrades), or generic iOS build debugging (use debugging-capacitor).
 ---
 
 # CocoaPods to Swift Package Manager Migration
 
-Migrate a Capacitor iOS app from CocoaPods to Swift Package Manager without losing native project customizations.
+Move a Capacitor iOS app from CocoaPods to SPM without losing native project customizations.
 
-## When to Use This Skill
+## When to Use
 
-- User wants to migrate a Capacitor app from CocoaPods to SPM
-- User asks about `npx cap spm-migration-assistant`
-- User asks about `CapApp-SPM`, generated `Package.swift`, or `debug.xcconfig`
-- User has Capacitor 8 and wants the iOS app to use the default SPM template
-- User wants to remove `ios/App/Podfile`, `Pods`, `Podfile.lock`, or `App.xcworkspace`
-- User has SPM migration errors caused by plugins without SPM support
+TRIGGER when:
+- `ios/App/Podfile`, `Pods/`, `Podfile.lock`, or `App.xcworkspace` exists and the user wants SPM.
+- User asks about `npx cap spm-migration-assistant`, `CapApp-SPM`, `debug.xcconfig`, or `--packagemanager SPM`.
+- User worries about CocoaPods Trunk becoming read-only (expected December 2, 2026), or about pods that can no longer be published/updated.
+- `npx cap sync` warns `Some installed Capacitor plugins are not compatible with SPM` or `<plugin id> does not have a Package.swift`.
+- Upgrading to Capacitor 9 and wanting to drop CocoaPods at the same time.
 
-Do not use this for adding SPM support to a plugin package. Use `capacitor-plugin-spm-support` for plugin repositories.
+Do not use:
+- Adding `Package.swift` / `CAPBridgedPlugin` to a plugin you maintain -> `capacitor-plugin-spm-support`.
+- SceneDelegate / UIScene adoption (Capacitor 8.5+, required by Xcode 27) -> `capacitor-uiscene-migration`.
+- The Capacitor major upgrade itself -> `capacitor-app-upgrades`, `capacitor-app-upgrade-v8-to-v9`.
+- Build or runtime failures unrelated to dependency management -> `debugging-capacitor`.
 
-## Key Rules
+## Why Now
 
-- Capacitor 8 creates new iOS projects with SPM by default.
-- Existing CocoaPods apps are not changed automatically just because Capacitor is upgraded.
-- In an SPM-based Capacitor app, plugin dependencies are referenced through `ios/App/CapApp-SPM`.
-- Do not edit `CapApp-SPM` by hand. The Capacitor CLI rewrites it during `npx cap sync`.
-- Do not mix CocoaPods and SPM in the same Capacitor app migration. All Capacitor and Cordova plugins in `package.json` need SPM support before the app can fully move.
-- Commit or otherwise preserve the current project before deleting, regenerating, or deintegrating the iOS project.
+- CocoaPods Trunk is expected to become read-only on **December 2, 2026**. Existing pods keep resolving, but no new pod versions get published, so plugin fixes will increasingly ship SPM-only.
+- Capacitor 8+ scaffolds new iOS projects with SPM by default. Upgrading Capacitor does **not** convert an existing CocoaPods app.
+- Capacitor 9 (currently `next` / alpha) only adds the `Cordova` product / `CapacitorCordova` pod when a Cordova plugin is installed. Native code that imports `Cordova` without a Cordova plugin breaks in either setup.
+
+## How the CLI Decides
+
+- The CLI treats the project as SPM if and only if `ios/App/CapApp-SPM/` exists. Deleting or renaming it silently flips `npx cap sync` back to CocoaPods behavior.
+- `ios/App/CapApp-SPM/Package.swift` is regenerated on every `npx cap sync ios` (`// DO NOT MODIFY THIS FILE - managed by Capacitor CLI commands`). Put customizations in `capacitor.config.*`, never in that file.
+- A plugin is included only if its npm package root has a `Package.swift`. Others are skipped with a warning; their native code is silently missing at runtime (`"X" plugin is not implemented on ios`).
+- During sync, if a plugin's `Package.swift` pins `capacitor-swift-pm` to a different major, the CLI rewrites that file inside `node_modules` and warns `<id> is built for Capacitor <N>, it might cause issues`. Treat this as "upgrade the plugin", not as success.
+- Cordova plugins get a generated package under `ios/capacitor-cordova-ios-plugins/sources/<Name>`. Plain `.framework` files are not supported as SPM binary targets (warning: `custom .framework files are not supported as binaryTarget in SPM`); they need an `.xcframework`.
 
 ## Command Policy
 
-- Use the target repo's package manager for dependency installs and package scripts.
-- For Capacitor CLI commands in this skill, use `npx cap ...` so the project-local Capacitor CLI is used.
-- In Capgo repos, use Bun for local development commands when repo instructions require it, but keep Capacitor CLI examples as `npx cap ...`.
+- Use the repo's package manager for installs and scripts; keep Capacitor CLI calls as `npx cap ...` so the project-local CLI runs.
+- Run commands from the directory containing `capacitor.config.*`.
 
 ## Live Project Snapshot
 
@@ -41,97 +49,58 @@ Detected Capacitor, iOS, Cordova, and plugin dependencies:
 Relevant iOS dependency files:
 !`find ios -maxdepth 5 \( -name 'Podfile' -o -name 'Podfile.lock' -o -name 'Pods' -o -name 'App.xcworkspace' -o -name 'Package.swift' -o -name 'Package.resolved' -o -name 'CapApp-SPM' -o -name 'debug.xcconfig' -o -name 'project.pbxproj' -o -name 'Info.plist' -o -name '*.entitlements' -o -name 'GoogleService-Info.plist' \) 2>/dev/null`
 
-## Migration Procedure
+## Procedure
 
-### Step 1: Confirm Scope and Prerequisites
+### 1. Inspect (read-only)
 
-Inspect:
+1. Capacitor version in `package.json` (`@capacitor/ios`). 8.x and 9.x are supported; on 6.x/7.x, prefer upgrading first.
+2. `ios/App/Podfile` and `Podfile.lock`: list every pod, and which ones are not Capacitor plugins (Firebase, analytics SDKs, custom pods added by hand).
+3. For each Capacitor/Cordova plugin: does `node_modules/<pkg>/Package.swift` exist? Cordova plugins get a generated package, so only `NO` entries block:
+   ```bash
+   node -e "const fs=require('fs');const p=require('./package.json');for(const n of Object.keys({...p.dependencies,...p.devDependencies})){const d='node_modules/'+n;if(!fs.existsSync(d+'/ios')&&!fs.existsSync(d+'/plugin.xml'))continue;console.log((fs.existsSync(d+'/Package.swift')?'SPM     ':fs.existsSync(d+'/plugin.xml')?'CORDOVA ':'NO      ')+n)}"
+   ```
+4. `ios/App/App.xcodeproj/project.pbxproj`: signing, custom build settings, extra targets (widgets, notification service extensions), build phases, schemes.
+5. `ios/App/App/`: `AppDelegate.swift`, `SceneDelegate.swift`, `Info.plist`, entitlements, `GoogleService-Info.plist`, custom Swift/ObjC files.
 
-- `package.json` for Capacitor major version and installed plugins
-- `ios/App/Podfile` and `ios/App/Podfile.lock` for current CocoaPods dependencies
-- `ios/App/App.xcodeproj/project.pbxproj` for custom build settings, package references, entitlements, signing, and native source files
-- `ios/App/App/` for app customizations
+Report findings before editing: plugins without SPM, non-plugin pods that need an SPM replacement, and native customizations at risk.
 
-Before changing files, verify:
+### 2. Resolve blockers
 
-- The app is on a Capacitor version that supports SPM migration.
-- The working tree is clean or the user accepts that local changes are being preserved.
-- Every Capacitor/Cordova plugin has SPM support or a replacement plan.
+For every `NO` plugin or non-plugin pod:
+- Upgrade the plugin (most maintained plugins, including `@capacitor/*` and `@capgo/*`, ship `Package.swift`).
+- Replace it with a maintained SPM-capable alternative.
+- If the project owns the plugin, convert it with `capacitor-plugin-spm-support`.
+- For third-party SDK pods added directly in the Podfile, add the vendor's SPM package to the App target in Xcode after migration.
 
-If the migration is part of a Capacitor 8 upgrade, combine this skill with `capacitor-app-upgrade-v7-to-v8`.
+Ask the user before proceeding if a critical plugin has no SPM path. Do not keep a hybrid Podfile + CapApp-SPM setup.
 
-### Step 2: Preserve Native Customizations
+### 3. Choose a path
 
-Record and preserve anything under `ios/` that a fresh template would overwrite:
+| Path | Use when |
+|------|----------|
+| `npx cap spm-migration-assistant` | Most apps; keeps the existing Xcode project and its customizations. |
+| Fresh scaffold | `ios/` is close to the template (no extensions, few native edits). |
+| Manual repair | The assistant ran partially or the project is heavily customized. |
 
-- `ios/App/App/Info.plist`
-- `ios/App/App/AppDelegate.swift`
-- `ios/App/App/SceneDelegate.swift`, if present
-- `ios/App/App/Assets.xcassets/`
-- `ios/App/App/Base.lproj/`
-- `ios/App/App/*.entitlements`
-- `ios/App/App/GoogleService-Info.plist`, if Firebase is used
-- custom `.xcconfig` files
-- custom Swift or Objective-C source files
-- custom frameworks, SDK files, extension targets, build phases, schemes, and signing settings
+### 4a. Run the migration assistant
 
-Prefer preserving through git and explicit diffs. Do not rely on memory.
-
-### Step 3: Choose the Migration Path
-
-Use the safest path for the project:
-
-| Path | Use When | Tradeoff |
-|------|----------|----------|
-| CLI assistant | The iOS project has moderate customization and plugins mostly support SPM | Automates CocoaPods removal but still needs Xcode steps |
-| Fresh SPM re-scaffold | The iOS project is close to the Capacitor template | Cleanest result, but native customizations must be restored carefully |
-| Manual repair | The assistant already ran or the project is heavily customized | More control, more Xcode project editing |
-
-If unsure, start with plugin compatibility and backup work. Do not delete `ios/` until the preservation list is complete.
-
-### Step 4: Run the CLI Assistant
-
-Preferred first attempt for many existing apps:
+Commit first. Requires CocoaPods (or Bundler) still installed because it runs `pod deintegrate`.
 
 ```bash
 npx cap spm-migration-assistant
 ```
 
-Expect it to:
+It runs `pod deintegrate`, deletes `Podfile`, `Podfile.lock`, and `App.xcworkspace`, extracts `ios/App/CapApp-SPM/`, writes `ios/debug.xcconfig` (`CAPACITOR_DEBUG = true`), adds `CAPACITOR_DEBUG = $(CAPACITOR_DEBUG)` to `Info.plist` if missing, then runs an iOS update that generates `Package.swift`. It ends with `To complete migration follow the manual steps at https://capacitorjs.com/docs/ios/spm#using-our-migration-tool`.
 
-- run CocoaPods deintegration
-- remove `Podfile`, `Podfile.lock`, `Pods`, and `App.xcworkspace`
-- create `ios/App/CapApp-SPM`
-- generate a `Package.swift` from installed plugins
-- generate `debug.xcconfig`
-- warn about plugins that cannot be represented as SPM packages
+Two manual Xcode steps remain (`npx cap open ios`, which now opens `App.xcodeproj`):
+1. Project `App` -> Package Dependencies -> `+` -> Add Local... -> select `ios/App/CapApp-SPM` -> Add Package, and link the `CapApp-SPM` library to the `App` target.
+2. Project `App` -> Info -> Configurations -> Debug -> set the configuration file to `debug.xcconfig`.
 
-Then open the iOS project:
+Then `npx cap sync ios`.
 
-```bash
-npx cap open ios
-```
+### 4b. Fresh scaffold
 
-In Xcode:
-
-- Select the app project.
-- Open the Package Dependencies tab.
-- Add the local `CapApp-SPM` package.
-- Add the generated `debug.xcconfig` to the project configuration as directed by the assistant output.
-
-After Xcode changes, run:
-
-```bash
-npx cap sync ios
-```
-
-### Step 5: Fresh Re-Scaffold Alternative
-
-Use this when the iOS project has little or no custom native configuration, or the assistant path is messier than regenerating.
-
-Before deleting anything, preserve the native files listed in Step 2.
-
-Then re-create iOS with SPM:
+Back up everything listed in step 1.5 first.
 
 ```bash
 rm -rf ios
@@ -139,114 +108,50 @@ npx cap add ios --packagemanager SPM
 npx cap sync ios
 ```
 
-For Capacitor 8+, `npx cap add ios` uses SPM by default, but keep `--packagemanager SPM` when documenting the migration so the intent is explicit.
+On Capacitor 8.5+ the new template already includes `SceneDelegate.swift` and `UIApplicationSceneManifest`. Restore icons, `Info.plist` keys, entitlements, signing, Firebase plist, custom sources, and extension targets by merging, not overwriting template files.
 
-Restore custom files and settings deliberately:
+### 5. Optional SPM config in `capacitor.config.*`
 
-- copy back app icons and launch storyboards
-- reapply `Info.plist` keys without overwriting new template changes blindly
-- restore entitlements and signing
-- restore Firebase or other service configuration files
-- re-add custom native source, extensions, build phases, and schemes
+Only when needed (all under `experimental.ios.spm`, verify the installed CLI version supports them):
+- `swiftToolsVersion` (8.3+, default `'5.9'`): header of the generated `Package.swift`.
+- `packageTraits` (8.3+): `{ "<plugin id>": ["TraitName", ".defaults"] }`; requires `swiftToolsVersion` >= `'6.1'`.
+- `packageOptions` (8.4+): `{ "<plugin id>": { symlink: true, moduleAliases: { "Target": "Alias" } } }` for package name or module collisions.
 
-### Step 6: Fix Plugin Compatibility
+### 6. UIScene check
 
-If `npx cap sync` or the assistant warns about unsupported plugins:
+The assistant changes dependency management only. If `Info.plist` lacks `UIApplicationSceneManifest`, the app is not on the scene lifecycle that Capacitor 8.5+ and Xcode 27 expect; run `npx cap migrate` or follow `capacitor-uiscene-migration`.
 
-- upgrade the plugin to an SPM-capable version
-- replace the plugin with an official, Capgo, or maintained community alternative
-- migrate the plugin itself with `capacitor-plugin-spm-support` if it is owned by the project
-- postpone full SPM migration if a critical plugin cannot support SPM yet
-
-Do not keep a plugin in CocoaPods while the app is otherwise migrated to SPM.
-
-### Step 7: Validate the New iOS Project
-
-Run the repo's normal web build first, then sync and build iOS:
+## Verification
 
 ```bash
-npx cap sync ios
-npx cap open ios
+# No CocoaPods leftovers
+ls ios/App | grep -E 'Podfile|Pods|xcworkspace' && echo "LEFTOVERS" || echo "clean"
+# CLI sees SPM and every plugin is included
+npx cap sync ios 2>&1 | grep -Ei 'Package.swift|not compatible|built for Capacitor'
+grep -c '.package(name:' ios/App/CapApp-SPM/Package.swift
+# Plugin classes registered for runtime
+node -e "console.log(require('./ios/App/App/capacitor.config.json').packageClassList)"
+# Build without Xcode UI (project, not workspace)
+xcodebuild -project ios/App/App.xcodeproj -scheme App -destination 'generic/platform=iOS Simulator' build
 ```
 
-In Xcode, verify:
+Also confirm in Xcode: `CapApp-SPM` linked to the App target, Debug uses `debug.xcconfig`, signing/bundle id/capabilities unchanged. On device, exercise each native plugin once (camera, push, purchases, etc.).
 
-- `CapApp-SPM` is present as a local package dependency
-- `debug.xcconfig` is attached to the debug configuration
-- `Podfile`, `Pods`, `Podfile.lock`, and `App.xcworkspace` are gone for the migrated app
-- `Package.resolved` is generated and committed if present
-- signing team, bundle identifier, deployment target, entitlements, and capabilities survived
-- app builds and launches on simulator
-- native plugin flows still work on a real device when they need hardware or permissions
+Commit `ios/App/CapApp-SPM/` and `ios/debug.xcconfig`. Follow `CapApp-SPM/.gitignore` for `Package.resolved` (newer templates ignore it).
 
-If using command-line verification, use the workspace/project and scheme that actually exist after migration.
+## Error Handling
 
-## Common Failures
+Load `references/troubleshooting.md` for the full table. Most common:
 
-### Unsupported Plugin
-
-Cause: a Capacitor or Cordova plugin does not ship SPM metadata.
-
-Fix: upgrade, replace, or migrate the plugin. If the plugin is project-owned, use `capacitor-plugin-spm-support`.
-
-### Missing `CapApp-SPM`
-
-Cause: the assistant did not finish, files were deleted, or `npx cap sync` has not regenerated the package.
-
-Fix:
-
-```bash
-npx cap sync ios
-```
-
-Then add the local package in Xcode if it is not already linked.
-
-### Missing `debug.xcconfig`
-
-Cause: generated config was not added to the Xcode project.
-
-Fix: add `ios/App/debug.xcconfig` to the project configuration in Xcode, following the migration assistant output.
-
-### Duplicate Symbols or Duplicate SDKs
-
-Cause: the same dependency is still referenced by leftover CocoaPods artifacts and SPM.
-
-Fix: remove CocoaPods artifacts from the app, clean derived data, reset package caches in Xcode, and rebuild.
-
-### Lost Native Customization
-
-Cause: a fresh iOS scaffold overwrote customized files.
-
-Fix: recover from git or the preserved backup list, then reapply changes selectively against the new SPM template.
+| Message / symptom | Fix |
+|---|---|
+| `Capacitor project is already using SPM, exiting.` | `CapApp-SPM/` already exists. Do manual repair, not the assistant. |
+| `CocoaPods is not installed.` (assistant) | Install CocoaPods temporarily or use the fresh scaffold path. |
+| `<id> does not have a Package.swift` / `Some installed Capacitor plugins are not compatible with SPM` | Upgrade, replace, or convert that plugin (step 2). |
+| `"X" plugin is not implemented on ios` at runtime | Plugin skipped from `Package.swift`, or `packageClassList` missing it. Fix the plugin, re-sync, clean build. |
+| `No such module 'Capacitor'` / `Missing package product 'CapApp-SPM'` | Local package not added/linked; redo manual step 1, then File -> Packages -> Reset Package Caches. |
+| Debug-only features off (no WebView inspection, no debug logs) | `debug.xcconfig` not set on Debug configuration. |
 
 ## Output Format
 
-For planning tasks, return:
-
-```markdown
-## SPM Migration Plan
-
-### Current State
-- Capacitor version:
-- CocoaPods files:
-- Plugins needing SPM check:
-- Native customizations to preserve:
-
-### Recommended Path
-- CLI assistant / fresh re-scaffold / manual repair:
-- Reason:
-
-### Steps
-1. Preserve native files
-2. Verify plugin SPM support
-3. Run migration
-4. Complete Xcode package/config setup
-5. Sync and build
-
-### Risks
-- Unsupported plugins:
-- Native customizations:
-- Manual Xcode steps:
-```
-
-For implementation tasks, make the migration changes, run the relevant build or verification command available in the repo, and report any remaining Xcode-only or device-only checks.
+For planning, return: current state (Capacitor version, pods, plugins without SPM, customizations at risk), chosen path and why, ordered steps, remaining Xcode/device-only checks.

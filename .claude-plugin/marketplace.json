@@ -19,7 +19,13 @@
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["capgo", "capacitor", "live-updates", "native-builds", "release-management"],
+      "keywords": [
+        "capgo",
+        "capacitor",
+        "live-updates",
+        "native-builds",
+        "release-management"
+      ],
       "category": "development"
     },
     {
@@ -32,7 +38,13 @@
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["app-growth", "revenue", "mrr", "aso", "paywall"],
+      "keywords": [
+        "app-growth",
+        "revenue",
+        "mrr",
+        "aso",
+        "paywall"
+      ],
       "category": "development"
     },
     {
@@ -45,46 +57,75 @@
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["capacitor", "mobile", "plugins", "best-practices", "mcp"],
+      "keywords": [
+        "capacitor",
+        "mobile",
+        "plugins",
+        "best-practices",
+        "mcp"
+      ],
       "category": "development"
     },
     {
       "name": "capacitor-features",
       "source": "./plugins/capacitor-features",
-      "description": "Capacitor feature skills for deep links, keyboard handling, offline-first data, push notifications, and splash screens.",
-      "version": "1.0.0",
+      "description": "Capacitor feature skills for deep links, keyboard handling, offline-first data, push notifications, splash screens, and App Intents (Siri, Shortcuts, Spotlight).",
+      "version": "1.1.0",
       "author": {
         "name": "Capgo",
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["capacitor", "push-notifications", "deep-linking", "offline", "keyboard"],
+      "keywords": [
+        "capacitor",
+        "push-notifications",
+        "deep-linking",
+        "offline",
+        "keyboard",
+        "app-intents",
+        "siri"
+      ],
       "category": "development"
     },
     {
       "name": "capacitor-ui",
       "source": "./plugins/capacitor-ui",
-      "description": "Mobile UI skills for Ionic, Konsta UI, Tailwind, and safe-area handling in Capacitor apps.",
-      "version": "1.0.0",
+      "description": "Mobile UI skills for Ionic, Konsta UI, Tailwind, safe-area handling, and iPad/foldable resizability in Capacitor apps.",
+      "version": "1.1.0",
       "author": {
         "name": "Capgo",
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["capacitor", "ionic", "konsta", "tailwind", "safe-area"],
+      "keywords": [
+        "capacitor",
+        "ionic",
+        "konsta",
+        "tailwind",
+        "safe-area",
+        "ipad",
+        "resizability"
+      ],
       "category": "development"
     },
     {
       "name": "capacitor-quality",
       "source": "./plugins/capacitor-quality",
-      "description": "Capacitor quality skills for testing, debugging, logs, performance, accessibility, and security.",
-      "version": "1.0.0",
+      "description": "Capacitor quality skills for testing, debugging, logs, performance, accessibility, security, and Xcode build hardening.",
+      "version": "1.1.0",
       "author": {
         "name": "Capgo",
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["capacitor", "testing", "debugging", "performance", "security"],
+      "keywords": [
+        "capacitor",
+        "testing",
+        "debugging",
+        "performance",
+        "security",
+        "xcode-hardening"
+      ],
       "category": "development"
     },
     {
@@ -97,7 +138,13 @@
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["capacitor", "app-store", "play-store", "ci-cd", "apple-review"],
+      "keywords": [
+        "capacitor",
+        "app-store",
+        "play-store",
+        "ci-cd",
+        "apple-review"
+      ],
       "category": "development"
     },
     {
@@ -110,33 +157,54 @@
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["capacitor", "migration", "cordova", "spm", "webapp"],
+      "keywords": [
+        "capacitor",
+        "migration",
+        "cordova",
+        "spm",
+        "webapp"
+      ],
       "category": "development"
     },
     {
       "name": "capacitor-app-upgrades",
       "source": "./plugins/capacitor-app-upgrades",
-      "description": "Capacitor app upgrade skills for cross-version and major-version app migrations.",
-      "version": "1.0.0",
+      "description": "Capacitor app upgrade skills for cross-version and major-version app migrations, including the Capacitor 8.5 UIScene adoption and Capacitor 9.",
+      "version": "1.1.0",
       "author": {
         "name": "Capgo",
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["capacitor", "app-upgrades", "migration", "v8", "v7"],
+      "keywords": [
+        "capacitor",
+        "app-upgrades",
+        "migration",
+        "v8",
+        "v7",
+        "v9",
+        "uiscene"
+      ],
       "category": "development"
     },
     {
       "name": "capacitor-plugin-dev",
       "source": "./plugins/capacitor-plugin-dev",
       "description": "Capacitor plugin development skills for SPM support and plugin major-version upgrades.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "Capgo",
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["capacitor", "plugin", "spm", "upgrades", "swift-package-manager"],
+      "keywords": [
+        "capacitor",
+        "plugin",
+        "spm",
+        "upgrades",
+        "swift-package-manager",
+        "v9"
+      ],
       "category": "development"
     },
     {
@@ -149,7 +217,12 @@
         "email": "support@capgo.app"
       },
       "license": "MIT",
-      "keywords": ["skills", "authoring", "validation", "agents"],
+      "keywords": [
+        "skills",
+        "authoring",
+        "validation",
+        "agents"
+      ],
       "category": "development"
     }
   ]

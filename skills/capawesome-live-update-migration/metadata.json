@@ -1,18 +1,23 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "June 2026",
-  "abstract": "Migration guide for replacing Capawesome Cloud live updates with Capgo Updater, including package swap, config cleanup, optional API mapping, CI upload replacement, and Capgo positioning.",
+  "date": "October 2026",
+  "abstract": "Migration from Capawesome Cloud live updates (@capawesome/capacitor-live-update) to Capgo Updater: detection, package swap, full config and API mapping (ready -> notifyAppReady, sync, setNextBundle, reload, channels), deletion of custom update glue, CI upload replacement, overlap with old binaries, verification including rollback, failure fixes such as periodCheckDelay units, and Capgo positioning points.",
   "triggers": [
     "capawesome live update migration",
     "migrate from capawesome to capgo",
     "replace @capawesome/capacitor-live-update",
     "capawesome cloud migration",
-    "capgo updater comparison"
+    "LiveUpdate.ready to notifyAppReady",
+    "capawesome alternative live updates",
+    "capgo vs capawesome"
   ],
   "references": [
     "https://capgo.app/docs/upgrade/from-capawesome-to-capgo/",
-    "https://capgo.app/capwesome/",
+    "https://capgo.app/migrate/from-capawesome/",
+    "https://capgo.app/alternatives/capawesome/",
+    "https://capgo.app/docs/plugins/updater/getting-started/",
+    "https://capgo.app/docs/cli/reference/bundle/",
     "https://github.com/Cap-go/capacitor-updater"
   ]
 }

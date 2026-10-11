@@ -1,8 +1,8 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Complete testing guide for Capacitor apps covering unit tests with Vitest, component tests, E2E tests with Playwright and Appium, and native testing. Includes mocking strategies for Capacitor plugins.",
+  "date": "October 2026",
+  "abstract": "Testing guide for Capacitor apps and plugins: Vitest unit and component tests with mocked Capacitor plugins, Playwright for the web build, Appium E2E with WebView context switching, native plugin unit tests with Swift Testing vs XCTest (migration map, CAPPluginCall patterns, xcodebuild test) and Android JUnit, an agent-driven device verification loop with xcrun simctl, xcrun devicectl, adb and Xcode MCP device tools, live reload with cap run --url (Capacitor 9) or -l --host --port (Capacitor 8), and CI test jobs.",
   "triggers": [
     "testing",
     "unit test",
@@ -11,12 +11,26 @@
     "vitest",
     "playwright",
     "appium",
-    "test coverage"
+    "webview context",
+    "swift testing",
+    "xctest",
+    "plugin unit test",
+    "test on device",
+    "verify on simulator",
+    "simctl",
+    "live reload"
   ],
   "references": [
     "https://vitest.dev",
     "https://playwright.dev",
     "https://testing-library.com",
-    "https://appium.io"
+    "https://appium.io/docs/en/latest/",
+    "https://github.com/appium/appium-xcuitest-driver",
+    "https://developer.apple.com/documentation/testing",
+    "https://developer.apple.com/documentation/testing/migratingfromxctest",
+    "https://developer.apple.com/documentation/xctest",
+    "https://capacitorjs.com/docs/guides/live-reload",
+    "https://capacitorjs.com/docs/updating/9-0",
+    "https://developer.android.com/studio/command-line/adb"
   ]
 }

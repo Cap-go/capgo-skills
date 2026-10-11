@@ -1,22 +1,34 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "February 2026",
-  "abstract": "Complete guide for integrating web frameworks with Capacitor. Covers Next.js static export, React, Vue, Angular, Svelte, and other frameworks. Includes build configuration, static generation, and platform-specific optimizations.",
+  "date": "October 2026",
+  "abstract": "Configures web framework builds for Capacitor: Next.js 14-16 static export, Nuxt 4 SPA generate, Angular application builder output, SvelteKit 2/3 adapter-static, Vite React/Vue/Svelte/Solid, React Router framework SPA mode, Qwik and Astro. Covers webDir mapping, SSR-only feature removal, Capacitor's index.html fallback routing trap, base paths, env vars, live reload, verification, and exact error fixes. Per-framework detail lives in references/.",
   "triggers": [
     "nextjs capacitor",
-    "next.js static export",
-    "react capacitor",
+    "next.js static export capacitor",
+    "output export capacitor",
+    "nuxt capacitor",
+    "nuxt generate capacitor",
+    "react vite capacitor",
+    "react router spa mode capacitor",
     "vue capacitor",
-    "angular capacitor",
+    "angular capacitor webDir",
+    "sveltekit adapter-static capacitor",
     "svelte capacitor",
-    "framework to capacitor",
-    "convert nextjs to capacitor"
+    "astro capacitor",
+    "capacitor white screen after sync",
+    "web assets directory must contain an index.html",
+    "framework to capacitor"
   ],
   "references": [
-    "https://capacitorjs.com/docs",
-    "https://nextjs.org/docs/app/building-your-application/deploying/static-exports",
-    "https://capgo.app/blog/how-to-use-capacitor-with-nextjs",
-    "https://ionicframework.com/docs"
+    "https://capacitorjs.com/docs/getting-started",
+    "https://capacitorjs.com/docs/basics/workflow",
+    "https://nextjs.org/docs/app/guides/static-exports",
+    "https://nuxt.com/docs/getting-started/deployment#static-hosting",
+    "https://angular.dev/tools/cli/build",
+    "https://svelte.dev/docs/kit/adapter-static",
+    "https://svelte.dev/docs/kit/migrating-to-sveltekit-3",
+    "https://reactrouter.com/how-to/spa",
+    "https://vite.dev/guide/static-deploy"
   ]
 }

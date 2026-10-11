@@ -1,15 +1,21 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
+  "date": "October 2026",
   "abstract": "Version-specific guide for upgrading a Capacitor plugin from v7 to v8.",
   "triggers": [
     "capacitor plugin 7 to 8",
+    "plugin-migration-v7-to-v8",
     "upgrade plugin to capacitor 8",
-    "v7 to v8 plugin migration",
-    "capacitor plugin upgrade v8"
+    "kotlinOptions compilerOptions plugin",
+    "gradle propName = value syntax plugin",
+    "capacitor-swift-pm from 8.0.0",
+    "plugin ios 15 deployment target"
   ],
   "references": [
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/updating/plugins/8-0",
+    "https://kotlinlang.org/docs/whatsnew22.html",
+    "https://docs.gradle.org/current/userguide/upgrading_version_8.html",
+    "https://www.npmjs.com/package/@capacitor/plugin-migration-v7-to-v8"
   ]
 }

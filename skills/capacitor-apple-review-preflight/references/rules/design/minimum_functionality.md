@@ -27,26 +27,29 @@ Apple requires apps to provide "valuable utility or entertainment" and be more t
 
 ## How to Detect
 
-### Code-Level Signals
+### Code-Level Signals (Capacitor)
+
+Every Capacitor app is a WebView, so "uses WKWebView" is not the signal. Look for whether the app is the website or more than it:
 
 ```bash
-# Check if app is primarily a WebView wrapper
-grep -rn "WKWebView\|UIWebView\|WebView\|SFSafariViewController" --include="*.swift" --include="*.m" .
+# Remote website loaded as the app (strong 4.2 signal in release builds)
+grep -n "url\|cleartext" capacitor.config.* 2>/dev/null | grep -i "server\|http"
 
-# Count total view controllers / screens
-grep -rn "class.*:.*UIViewController\|class.*:.*View {" --include="*.swift" . | wc -l
+# Native capabilities actually used
+node -e "const p=require('./package.json');console.log(Object.keys({...p.dependencies}).filter(n=>n.startsWith('@capacitor/')||n.startsWith('@capgo/')).join('\n'))"
 
-# Check for meaningful model/data layer
-find . -name "*.swift" -path "*/Model*" -o -name "*.swift" -path "*/Models*" | wc -l
+# Offline / local persistence
+grep -rln "Preferences\|FastSQL\|indexedDB\|Filesystem" --include="*.ts" --include="*.tsx" --include="*.vue" --include="*.svelte" --exclude-dir=node_modules src | head
 
-# Check if app has any local data persistence
-grep -rn "CoreData\|SwiftData\|UserDefaults\|Realm\|SQLite\|KeychainSwift" --include="*.swift" .
+# Desktop-web leftovers that read as "website in a shell"
+grep -rn "cookie banner\|Download our app\|beforeinstallprompt\|App Store badge\|Google Play" --include="*.ts" --include="*.tsx" --include="*.vue" --include="*.html" --exclude-dir=node_modules src | head
 ```
 
 ### Red Flags
 
 - **< 3 unique screens** → Very likely to trigger 4.2
-- **Single WebView** loading an external URL as the primary experience
+- **`server.url` pointing at a production website** as the primary experience
+- **Web navigation chrome** (site header/footer, hamburger to desktop pages, "download our app" banners) inside the app
 - **No model layer** — no local data structures beyond what the web provides
 - **No offline functionality** — completely dependent on network
 - **Only static content** — no user interaction beyond scrolling

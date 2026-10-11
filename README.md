@@ -9,7 +9,7 @@
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
 
-A collection of **49 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
+A collection of **55 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
 
 ## Compatibility
 
@@ -83,6 +83,7 @@ claude plugin install capgo-cloud@capgo-skills
 | Skill | Description |
 |-------|-------------|
 | [capacitor-security](./skills/capacitor-security) | Security scanning with Capsec (63+ rules) |
+| [capacitor-ios-security-hardening](./skills/capacitor-ios-security-hardening) | Audit and enable Xcode security build settings and Enhanced Security |
 
 ### Testing & CI/CD
 
@@ -108,6 +109,7 @@ claude plugin install capgo-cloud@capgo-skills
 | [tailwind-capacitor](./skills/tailwind-capacitor) | Tailwind CSS for mobile |
 | [safe-area-handling](./skills/safe-area-handling) | Notch, Dynamic Island, home indicator |
 | [capacitor-splash-screen](./skills/capacitor-splash-screen) | Splash screen configuration |
+| [capacitor-ios-resizability](./skills/capacitor-ios-resizability) | iPad multitasking, Stage Manager, foldable iPhone, multiple windows |
 
 ### Features
 
@@ -117,6 +119,7 @@ claude plugin install capgo-cloud@capgo-skills
 | [capacitor-deep-linking](./skills/capacitor-deep-linking) | Universal links and app links |
 | [capacitor-offline-first](./skills/capacitor-offline-first) | Offline-first architecture |
 | [capacitor-keyboard](./skills/capacitor-keyboard) | Keyboard handling |
+| [capacitor-app-intents](./skills/capacitor-app-intents) | Siri, Shortcuts, Spotlight, and Apple Intelligence via App Intents |
 
 ### Performance & Accessibility
 
@@ -158,11 +161,14 @@ claude plugin install capgo-cloud@capgo-skills
 | [capacitor-app-upgrade-v5-to-v6](./skills/capacitor-app-upgrade-v5-to-v6) | Upgrade a Capacitor app from v5 to v6 |
 | [capacitor-app-upgrade-v6-to-v7](./skills/capacitor-app-upgrade-v6-to-v7) | Upgrade a Capacitor app from v6 to v7 |
 | [capacitor-app-upgrade-v7-to-v8](./skills/capacitor-app-upgrade-v7-to-v8) | Upgrade a Capacitor app from v7 to v8 |
+| [capacitor-uiscene-migration](./skills/capacitor-uiscene-migration) | Adopt the iOS UIScene lifecycle (Capacitor 8.5, required by Xcode 27) |
+| [capacitor-app-upgrade-v8-to-v9](./skills/capacitor-app-upgrade-v8-to-v9) | Upgrade a Capacitor app from v8 to v9 |
 | [capacitor-plugin-upgrades](./skills/capacitor-plugin-upgrades) | Upgrade a Capacitor plugin across major versions |
 | [capacitor-plugin-upgrade-v4-to-v5](./skills/capacitor-plugin-upgrade-v4-to-v5) | Upgrade a Capacitor plugin from v4 to v5 |
 | [capacitor-plugin-upgrade-v5-to-v6](./skills/capacitor-plugin-upgrade-v5-to-v6) | Upgrade a Capacitor plugin from v5 to v6 |
 | [capacitor-plugin-upgrade-v6-to-v7](./skills/capacitor-plugin-upgrade-v6-to-v7) | Upgrade a Capacitor plugin from v6 to v7 |
 | [capacitor-plugin-upgrade-v7-to-v8](./skills/capacitor-plugin-upgrade-v7-to-v8) | Upgrade a Capacitor plugin from v7 to v8 |
+| [capacitor-plugin-upgrade-v8-to-v9](./skills/capacitor-plugin-upgrade-v8-to-v9) | Upgrade a Capacitor plugin from v8 to v9 |
 
 ### Migration
 
@@ -228,10 +234,13 @@ Skills activate automatically when agents detect relevant tasks:
 - "Upgrade a Capacitor app from v5 to v6" → capacitor-app-upgrade-v5-to-v6
 - "Upgrade a Capacitor app from v6 to v7" → capacitor-app-upgrade-v6-to-v7
 - "Upgrade a Capacitor app from v7 to v8" → capacitor-app-upgrade-v7-to-v8
+- "Adopt UIScene / Xcode 27 build fails on lifecycle" → capacitor-uiscene-migration
+- "Upgrade a Capacitor app to Capacitor 9" → capacitor-app-upgrade-v8-to-v9
 - "Upgrade a Capacitor plugin from v4 to v5" → capacitor-plugin-upgrade-v4-to-v5
 - "Upgrade a Capacitor plugin from v5 to v6" → capacitor-plugin-upgrade-v5-to-v6
 - "Upgrade a Capacitor plugin from v6 to v7" → capacitor-plugin-upgrade-v6-to-v7
 - "Upgrade a Capacitor plugin from v7 to v8" → capacitor-plugin-upgrade-v7-to-v8
+- "Upgrade a Capacitor plugin to Capacitor 9" → capacitor-plugin-upgrade-v8-to-v9
 
 ### Migration
 - "Migrate from Cordova" → cordova-to-capacitor
@@ -273,13 +282,13 @@ npx @capgo/cli@latest bundle upload
 
 ```bash
 # Scan for vulnerabilities
-npx capsec scan
+npx @capgo/capgo-sec@latest scan
 
 # CI mode (fails on high/critical)
-npx capsec scan --ci
+npx @capgo/capgo-sec@latest scan --ci
 
 # Generate HTML report
-npx capsec scan --output html --output-file security.html
+npx @capgo/capgo-sec@latest scan --output html --output-file security.html
 ```
 
 Capsec detects **63+ security issues** including:
@@ -313,16 +322,19 @@ Add new skills by creating a folder in `skills/` with:
 - `SKILL.md` - Instructions for agents
 - `metadata.json` - Skill metadata
 
-Validate the pack locally with:
+Expose the skill in a Claude Code plugin by creating an empty `plugins/<plugin>/skills/<skill>/` folder, then copy the canonical files and validate:
 
 ```bash
-npm run lint-skills
+bun run sync-skills
+bun run lint-skills
 ```
+
+Plugin copies must match `skills/` byte-for-byte; lint fails on drift.
 
 Run the skillgrade-backed eval for the skill authoring workflow with an API key:
 
 ```bash
-ENABLE_SKILLGRADE=1 npm run lint-skills-skillgrade
+ENABLE_SKILLGRADE=1 bun run lint-skills-skillgrade
 ```
 
 ## License

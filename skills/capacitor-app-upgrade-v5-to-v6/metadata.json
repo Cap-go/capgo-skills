@@ -1,15 +1,20 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
+  "date": "October 2026",
   "abstract": "Version-specific guide for upgrading a Capacitor app from v5 to v6.",
   "triggers": [
     "capacitor 5 to 6",
     "upgrade app to capacitor 6",
-    "v5 to v6 migration",
-    "capacitor app upgrade v6"
+    "npx cap migrate capacitor 6",
+    "androidScheme https data loss",
+    "plugin is not implemented on ios custom plugin",
+    "addListener returns promise capacitor 6",
+    "capacitor 6 zoomEnabled"
   ],
   "references": [
-    "https://capacitorjs.com/docs"
+    "https://capacitorjs.com/docs/updating/6-0",
+    "https://capacitorjs.com/docs/ios/custom-code",
+    "https://capacitorjs.com/docs/config"
   ]
 }

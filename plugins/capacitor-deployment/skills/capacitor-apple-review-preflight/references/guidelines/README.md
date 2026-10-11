@@ -136,7 +136,7 @@ This is a structured index of every guideline section, organized for quick looku
 | 5.1.1 | Data Collection | Privacy policy required; consent required; data minimization |
 | 5.1.1(v) | Account/Sign-In | Account deletion required if creation offered; no unnecessary login |
 | 5.1.1(ix) | Regulated Fields | Banking, healthcare, gambling apps must be from legal entities |
-| 5.1.2 | Data Use & Sharing | No selling user data; ATT required for tracking |
+| 5.1.2 | Data Use & Sharing | No selling user data; ATT required for tracking; 5.1.2(i) disclose and get explicit permission before sharing personal data with third-party AI (Nov 2025) |
 | 5.1.3 | Health & Fitness | HealthKit data can't be used for ads; no false data writing |
 | 5.1.4 | Kids | COPPA/GDPR compliance; no third-party analytics in Kids apps |
 | 5.1.5 | Location Services | Only when directly relevant; consent required |

@@ -1,21 +1,30 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "January 2026",
-  "abstract": "Complete guide to viewing and filtering device logs on iOS and Android. Covers Console.app, devicectl, simctl for iOS, and adb logcat for Android. Includes filtering techniques, crash log access, and MCP integration.",
+  "date": "October 2026",
+  "abstract": "How to get, filter, and save logs and crash reports from Capacitor apps on iOS Simulator, iPhone, Android emulator, and devices. Explains that Capacitor's iOS bridge and mirrored JS console output is stdout-only (Xcode console, simctl launch --console-pty, devicectl process launch --console) while os.Logger goes to the unified log (Console.app, log stream, log collect --device-udid); Android Capacitor and Capacitor/Console logcat tags, crash buffer, Android Studio Logcat queries, tombstones, ANRs and bugreports. Includes verified Xcode 27 command syntax and error fixes.",
   "triggers": [
     "device logs",
     "view logs",
+    "console.log not showing on device",
+    "no logs in console.app",
     "adb logcat",
-    "console.app",
-    "ios logs",
-    "android logs",
-    "crash logs",
-    "debug logs"
+    "logcat filter by package",
+    "xcrun simctl log stream",
+    "devicectl console",
+    "log collect device",
+    "ios crash log",
+    "android crash log",
+    "tombstone",
+    "ANR trace",
+    "Capacitor/Console"
   ],
   "references": [
     "https://developer.apple.com/documentation/os/logging",
+    "https://developer.apple.com/documentation/xcode/acquiring-crash-reports-and-diagnostic-logs",
+    "https://developer.android.com/tools/logcat",
     "https://developer.android.com/studio/debug/logcat",
-    "https://developer.apple.com/documentation/devicemanagement"
+    "https://developer.android.com/studio/debug/bug-report",
+    "https://capacitorjs.com/docs/config"
   ]
 }

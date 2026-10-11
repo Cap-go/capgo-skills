@@ -1,17 +1,26 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "Capgo",
-  "date": "March 2026",
-  "abstract": "Migration guide for replacing Ionic Enterprise SDK plugins with Capgo and Capacitor alternatives, including auth, biometric unlock, and storage changes.",
+  "date": "October 2026",
+  "abstract": "Migration from Ionic Enterprise SDK plugins (Auth Connect, Identity Vault, Secure Storage) to @capgo/capacitor-social-login, @capgo/capacitor-native-biometric, and @capgo/capacitor-fast-sql or @capgo/capacitor-data-storage-sqlite, with a two-release data carry-over plan that keeps users logged in, OIDC mapping, biometric access control and lock policy, SQLCipher and localhost setup for encrypted storage, cleanup, verification, and failure fixes.",
   "triggers": [
     "ionic enterprise sdk migration",
     "migrate auth connect",
-    "identity vault",
-    "secure storage migration",
-    "remove ionic enterprise"
+    "replace identity vault",
+    "replace ionic secure storage",
+    "@ionic-enterprise/auth",
+    "@ionic-enterprise/identity-vault",
+    "@ionic-enterprise/secure-storage",
+    "remove ionic enterprise",
+    "identity vault alternative",
+    "auth connect alternative oidc"
   ],
   "references": [
-    "https://capacitorjs.com/docs",
-    "https://capgo.app"
+    "https://capgo.app/docs/upgrade/from-ionic-auth-connect/",
+    "https://capgo.app/docs/upgrade/from-ionic-identity-vault/",
+    "https://capgo.app/docs/upgrade/from-ionic-secure-storage/",
+    "https://capgo.app/docs/plugins/social-login/getting-started/",
+    "https://capgo.app/docs/plugins/native-biometric/getting-started/",
+    "https://capgo.app/docs/plugins/fast-sql/getting-started/"
   ]
 }

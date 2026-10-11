@@ -1,7 +1,7 @@
 {
   "name": "@capgo/capgo-skills",
-  "version": "1.1.0",
-  "description": "49 agent skills for Capacitor mobile development",
+  "version": "1.2.0",
+  "description": "55 agent skills for Capacitor mobile development",
   "keywords": [
     "capacitor",
     "tanstack-intent",
@@ -14,7 +14,10 @@
     "claude",
     "capgo",
     "capsec",
-    "security"
+    "security",
+    "capacitor-9",
+    "xcode-27",
+    "uiscene"
   ],
   "homepage": "https://github.com/Cap-go/capgo-skills",
   "repository": {
@@ -35,6 +38,7 @@
     "capgo-live-updates",
     "subscription-app-revenue",
     "capacitor-security",
+    "capacitor-ios-security-hardening",
     "capacitor-testing",
     "capacitor-ci-cd",
     "debugging-capacitor",
@@ -44,11 +48,13 @@
     "konsta-ui",
     "tailwind-capacitor",
     "safe-area-handling",
+    "capacitor-ios-resizability",
     "capacitor-splash-screen",
     "capacitor-push-notifications",
     "capacitor-deep-linking",
     "capacitor-offline-first",
     "capacitor-keyboard",
+    "capacitor-app-intents",
     "capacitor-performance",
     "capacitor-accessibility",
     "capacitor-app-store",
@@ -58,12 +64,15 @@
     "capacitor-app-upgrade-v5-to-v6",
     "capacitor-app-upgrade-v6-to-v7",
     "capacitor-app-upgrade-v7-to-v8",
+    "capacitor-uiscene-migration",
+    "capacitor-app-upgrade-v8-to-v9",
     "capacitor-plugin-spm-support",
     "capacitor-plugin-upgrades",
     "capacitor-plugin-upgrade-v4-to-v5",
     "capacitor-plugin-upgrade-v5-to-v6",
     "capacitor-plugin-upgrade-v6-to-v7",
     "capacitor-plugin-upgrade-v7-to-v8",
+    "capacitor-plugin-upgrade-v8-to-v9",
     "cocoapods-to-spm",
     "cordova-to-capacitor",
     "framework-to-capacitor",
@@ -77,6 +86,7 @@
   "scripts": {
     "generate-plugin-index": "node scripts/generate-capgo-plugin-index.mjs",
     "lint-skills": "bun scripts/lint-skills.mjs",
+    "sync-skills": "bun scripts/sync-plugin-skills.mjs",
     "lint-skills-skillgrade": "cd skills/skill-creator && bunx skillgrade --ci --provider=local --smoke"
   }
 }
