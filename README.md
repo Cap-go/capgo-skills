@@ -45,13 +45,13 @@ Available plugins:
 | `capgo-cloud` | Capgo CLI, live updates, native builds, releases, and organization workflows |
 | `app-growth` | Early subscription revenue, ASO, acquisition, paywalls, pricing, and churn learning |
 | `capacitor-core` | Capacitor best practices, plugin selection, and MCP automation |
-| `capacitor-features` | Deep links, keyboard handling, offline-first data, push notifications, and splash screens |
-| `capacitor-ui` | Ionic, Konsta UI, Tailwind, and safe-area handling |
-| `capacitor-quality` | Testing, debugging, logs, performance, accessibility, and security |
+| `capacitor-features` | Deep links, keyboard handling, offline-first data, push notifications, splash screens, and App Intents |
+| `capacitor-ui` | Ionic, Konsta UI, Tailwind, safe-area handling, and iPad/foldable resizability |
+| `capacitor-quality` | Testing, debugging, logs, performance, accessibility, security, and Xcode hardening |
 | `capacitor-deployment` | CI/CD, App Store publishing, Play Store publishing, and Apple review preflight |
 | `capacitor-app-migrations` | Web app, framework, Cordova, SPM, Appflow, Ionic Enterprise SDK, and SQLite migrations |
-| `capacitor-app-upgrades` | Capacitor app major-version upgrades |
-| `capacitor-plugin-dev` | Capacitor plugin SPM support and major-version upgrades |
+| `capacitor-app-upgrades` | Capacitor app major-version upgrades, UIScene adoption, and Capacitor 9 |
+| `capacitor-plugin-dev` | Capacitor plugin SPM support, UIScene audit, and major-version upgrades up to v9 |
 | `skill-authoring` | Skill creation and validation |
 
 Install a plugin:
@@ -59,6 +59,16 @@ Install a plugin:
 ```bash
 claude plugin install capgo-cloud@capgo-skills
 ```
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/Cap-go/capgo-skills
+```
+
+### Cursor and Codex
+
+The same plugin groups are published for Cursor (`.cursor-plugin/marketplace.json`) and Codex (`.agents/plugins/marketplace.json`). Add this repository as a plugin marketplace in either tool, then install the plugin groups you need.
 
 ## Available Skills
 

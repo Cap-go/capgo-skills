@@ -1,0 +1,68 @@
+{
+  "name": "capgo-skills",
+  "owner": {
+    "name": "Capgo",
+    "email": "support@capgo.app"
+  },
+  "metadata": {
+    "description": "Agent skills for Capgo and Capacitor mobile development.",
+    "version": "1.2.0"
+  },
+  "plugins": [
+    {
+      "name": "capgo-cloud",
+      "source": "./plugins/capgo-cloud",
+      "description": "Capgo cloud skills for CLI usage, live updates, hosted native builds, release management, and organization workflows."
+    },
+    {
+      "name": "app-growth",
+      "source": "./plugins/app-growth",
+      "description": "App growth and revenue skills for early subscription revenue, ASO, acquisition, paywalls, pricing, and churn learning."
+    },
+    {
+      "name": "capacitor-core",
+      "source": "./plugins/capacitor-core",
+      "description": "Core Capacitor skills for best practices, plugin selection, and MCP automation."
+    },
+    {
+      "name": "capacitor-features",
+      "source": "./plugins/capacitor-features",
+      "description": "Capacitor feature skills for deep links, keyboard handling, offline-first data, push notifications, splash screens, and App Intents (Siri, Shortcuts, Spotlight)."
+    },
+    {
+      "name": "capacitor-ui",
+      "source": "./plugins/capacitor-ui",
+      "description": "Mobile UI skills for Ionic, Konsta UI, Tailwind, safe-area handling, and iPad/foldable resizability in Capacitor apps."
+    },
+    {
+      "name": "capacitor-quality",
+      "source": "./plugins/capacitor-quality",
+      "description": "Capacitor quality skills for testing, debugging, logs, performance, accessibility, security, and Xcode build hardening."
+    },
+    {
+      "name": "capacitor-deployment",
+      "source": "./plugins/capacitor-deployment",
+      "description": "Capacitor deployment skills for CI/CD, App Store publishing, Play Store publishing, and Apple review preflight checks."
+    },
+    {
+      "name": "capacitor-app-migrations",
+      "source": "./plugins/capacitor-app-migrations",
+      "description": "Migration skills for web apps, frameworks, Cordova, SPM, Appflow, Ionic Enterprise SDK, and SQLite alternatives."
+    },
+    {
+      "name": "capacitor-app-upgrades",
+      "source": "./plugins/capacitor-app-upgrades",
+      "description": "Capacitor app upgrade skills for cross-version and major-version app migrations, including the Capacitor 8.5 UIScene adoption and Capacitor 9."
+    },
+    {
+      "name": "capacitor-plugin-dev",
+      "source": "./plugins/capacitor-plugin-dev",
+      "description": "Capacitor plugin development skills for SPM support and plugin major-version upgrades."
+    },
+    {
+      "name": "skill-authoring",
+      "source": "./plugins/skill-authoring",
+      "description": "Skill authoring workflow for creating and validating new agent skills."
+    }
+  ]
+}
