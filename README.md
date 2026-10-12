@@ -1,4 +1,4 @@
-# Capacitor Agent Skills
+# Capacitor Agent Skills by Capgo
 
  <a href="https://capgo.app/"><img src='https://raw.githubusercontent.com/Cap-go/capgo/main/assets/capgo_banner.png' alt='Capgo - Instant updates for capacitor'/></a>
 
@@ -9,7 +9,39 @@
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
 
-A collection of **55 skills** for AI coding agents working with Capacitor, the cross-platform native runtime. Skills are packaged instructions that extend agent capabilities for mobile development.
+Agent skills for building, shipping, and maintaining Capacitor apps with AI coding agents (Claude Code, Codex, Cursor, Copilot, Gemini CLI). Skills are packaged instructions that extend agent capabilities for mobile development.
+
+These skills are maintained by [Capgo](https://capgo.app/), the AI-ready platform to build, ship, and maintain Capacitor apps: Capacitor skills and MCP servers for AI coding agents, maintained Capacitor plugins, cloud native iOS/Android builds with App Store and Google Play publishing, live updates with channels and rollback, and release monitoring.
+
+**Build Capacitor apps with AI, ship updates instantly.** Browse the catalog at [capgo.app/skills](https://capgo.app/skills/) and the agent setup guide at [capgo.app/agents](https://capgo.app/agents/).
+
+## Lifecycle Coverage
+
+| Stage | Skills |
+| ----- | ------ |
+| Build | [capacitor-best-practices](./skills/capacitor-best-practices), [webapp-to-capacitor](./skills/webapp-to-capacitor), [framework-to-capacitor](./skills/framework-to-capacitor), [capgo-native-builds](./skills/capgo-native-builds), UI skills ([ionic-design](./skills/ionic-design), [konsta-ui](./skills/konsta-ui), [tailwind-capacitor](./skills/tailwind-capacitor)) |
+| Plugins | [capacitor-plugins](./skills/capacitor-plugins), [capacitor-plugin-spm-support](./skills/capacitor-plugin-spm-support), [capacitor-plugin-upgrades](./skills/capacitor-plugin-upgrades) |
+| Migrate | [cordova-to-capacitor](./skills/cordova-to-capacitor), [ionic-appflow-migration](./skills/ionic-appflow-migration), [ionic-enterprise-sdk-migration](./skills/ionic-enterprise-sdk-migration), [capawesome-live-update-migration](./skills/capawesome-live-update-migration), [cocoapods-to-spm](./skills/cocoapods-to-spm) |
+| Upgrade | [capacitor-app-upgrades](./skills/capacitor-app-upgrades) and version-specific upgrade skills up to Capacitor 9 |
+| Debug | [debugging-capacitor](./skills/debugging-capacitor), [ios-android-logs](./skills/ios-android-logs), [capacitor-performance](./skills/capacitor-performance) |
+| Test | [capacitor-testing](./skills/capacitor-testing), [capacitor-ci-cd](./skills/capacitor-ci-cd) |
+| Security | [capacitor-security](./skills/capacitor-security), [capacitor-ios-security-hardening](./skills/capacitor-ios-security-hardening) |
+| Publish | [capacitor-app-store](./skills/capacitor-app-store), [capacitor-apple-review-preflight](./skills/capacitor-apple-review-preflight), [capgo-native-builds](./skills/capgo-native-builds) |
+| Live updates | [capgo-live-updates](./skills/capgo-live-updates), [capgo-release-management](./skills/capgo-release-management), [capgo-release-workflows](./skills/capgo-release-workflows) |
+
+## Use with AI Coding Agents
+
+1. Install the skills (see [Installation](#installation) for Claude Code, Codex, Cursor, and Gemini CLI plugin options):
+
+   ```bash
+   npx skills add Cap-go/capgo-skills
+   ```
+
+2. Connect the Capgo MCP server so the agent can manage apps, channels, bundles, and builds:
+   - Hosted MCP: `https://api.capgo.app/mcp` ([docs](https://capgo.app/docs/ai/mcp/))
+   - Local MCP: `npx @capgo/cli@latest mcp`
+
+See [capgo.app/agents](https://capgo.app/agents/) for per-agent setup and [capgo.app/best/ai-tools-for-capacitor](https://capgo.app/best/ai-tools-for-capacitor/) for an overview of AI tooling for Capacitor.
 
 ## Compatibility
 
@@ -312,14 +344,20 @@ Learn more: **https://capacitor-sec.dev**
 
 ## About Capgo
 
-[Capgo](https://capgo.app) provides:
-- **Live Updates**: Deploy JS/HTML/CSS instantly without app store review
-- **80+ Plugins**: Native functionality for authentication, media, payments, sensors
+[Capgo](https://capgo.app) is the AI-ready platform to build, ship, and maintain Capacitor apps:
+- **AI agent tooling**: These [Capacitor skills](https://capgo.app/skills/) plus hosted and local MCP servers for AI coding agents
+- **Plugins**: [Maintained Capacitor plugins](https://capgo.app/plugins/) for authentication, media, payments, sensors, and more
+- **Native Builds**: [Cloud iOS and Android builds](https://capgo.app/native-build/) with App Store and Google Play publishing
+- **Live Updates**: Deploy JS/HTML/CSS instantly without app store review, with channels and rollback
+- **Release Monitoring**: Track update adoption and release health
 - **Capsec**: Security scanning for Capacitor apps
 
 ## Resources
 
 - Capgo: https://capgo.app
+- Capgo skills catalog: https://capgo.app/skills/
+- AI agent setup: https://capgo.app/agents/
+- Capgo MCP docs: https://capgo.app/docs/ai/mcp/
 - Capsec: https://capacitor-sec.dev
 - Capacitor: https://capacitorjs.com
 - Ionic: https://ionicframework.com
