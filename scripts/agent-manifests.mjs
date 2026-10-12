@@ -1,6 +1,28 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
+// Hosted Capgo MCP (OAuth with dynamic client registration). OpenAI's public directory only accepts
+// remote HTTPS MCP servers, so the local `@capgo/cli mcp` server stays documented in the skills instead.
+const OPENAI_MCP = {
+  'capgo-cloud': {
+    capgo: {
+      type: 'streamable-http',
+      url: 'https://api.capgo.app/mcp',
+      extensions: {
+        'com.openai': {
+          auth: {
+            type: 'oauth',
+            authorizationUrl: 'https://api.capgo.app/mcp/oauth/authorize',
+            tokenUrl: 'https://api.capgo.app/mcp/oauth/token',
+            baseScopes: ['capgo'],
+            client: { mode: 'dcr', registrationUrl: 'https://api.capgo.app/mcp/oauth/register' },
+          },
+        },
+      },
+    },
+  },
+};
+
 // Cursor, Codex, and Gemini manifests are generated from .claude-plugin/marketplace.json
 // so every agent marketplace exposes the same plugins. Run `bun run sync-skills` after editing it.
 export async function buildAgentManifests(root) {
@@ -44,7 +66,18 @@ export async function buildAgentManifests(root) {
       keywords: plugin.keywords,
     };
     files[`${pluginDir}/.cursor-plugin/plugin.json`] = json(common);
-    files[`${pluginDir}/.codex-plugin/plugin.json`] = json({ ...common, skills: './skills/' });
+    const mcpServers = OPENAI_MCP[plugin.name];
+    files[`${pluginDir}/.codex-plugin/plugin.json`] = json({
+      ...common,
+      skills: './skills/',
+      ...(mcpServers && { mcpServers: './mcp.json' }),
+    });
+    if (mcpServers) {
+      files[`${pluginDir}/mcp.json`] = json({
+        $schema: 'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json',
+        mcpServers,
+      });
+    }
   }
 
   files['gemini-extension.json'] = json({
