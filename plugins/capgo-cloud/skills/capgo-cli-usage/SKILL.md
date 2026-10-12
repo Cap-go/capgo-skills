@@ -60,7 +60,7 @@ The CLI picks the key in this order:
 3. `~/.capgo` (global)
 4. `./.capgo` (project)
 
-Trap: the global key wins over the project key. Pass `-a` or set `CAPGO_TOKEN` to force a different account. Keys are created at https://console.capgo.app/dashboard/apikeys. If the user already supplied a key, use it as-is and do not echo it.
+Trap: the global key wins over the project key. Pass `-a` or use the `CAPGO_TOKEN` environment variable to force a different account. Keys are created at https://console.capgo.app/dashboard/apikeys. If the user already supplied a key, use it as-is and do not echo it.
 
 Self-hosted backends: add `--supa-host <url> --supa-anon <key>` on supported commands.
 
@@ -107,7 +107,7 @@ Use `--package-json`, `--node-modules`, and, for dynamic root configs, `--capaci
 
 | String | Fix |
 | --- | --- |
-| `No Capgo API key found. Run \`...\` first, then retry this command.` | `npx @capgo/cli@latest login <key>`, set `CAPGO_TOKEN`, or pass `-a` |
+| `No Capgo API key found. Run \`...\` first, then retry this command.` | `npx @capgo/cli@latest login <key>`, the `CAPGO_TOKEN` environment variable, or `-a` |
 | `Missing argument, you need to provide a appId, or be in a capacitor project` | Pass the `appId` positionally or run from the folder containing `capacitor.config.*` |
 | `Insufficient permissions for <key>` | The key's role is too low for this app or org. Use a key with the needed role |
 | `🔐 Access Denied: Two-Factor Authentication Required` | The org enforces 2FA. See `capgo-organization-management` |

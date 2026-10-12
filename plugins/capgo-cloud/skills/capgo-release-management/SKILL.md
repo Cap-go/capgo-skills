@@ -95,7 +95,7 @@ npx cap sync                             # the public key must ship in the nativ
 npx @capgo/cli@latest bundle upload com.example.app --key-v2 ./.capgo_key_v2 --channel production
 ```
 
-In CI, pass `--key-data-v2 "$CAPGO_PRIVATE_KEY"`. Add `.capgo_key_v2` to `.gitignore` and never commit it. A changed key needs a new native build: devices with the old `publicKey` fail with `key_id_mismatch`.
+In CI, keep the private key in the CI secret store, write it to `./.capgo_key_v2` in the job, and pass the same `--key-v2 ./.capgo_key_v2`. The private key never leaves the runner. Add `.capgo_key_v2` to `.gitignore` and never commit it. A changed key needs a new native build: devices with the old `publicKey` fail with `key_id_mismatch`.
 
 ## Traps
 

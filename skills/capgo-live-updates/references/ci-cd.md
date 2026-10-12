@@ -4,9 +4,9 @@ Docs: https://capgo.app/docs/getting-started/cicd-integration/ · https://capgo.
 
 ## Auth in CI
 
-- Store the Capgo API key as a CI secret named `CAPGO_TOKEN`. The CLI reads `CAPGO_TOKEN` automatically. You can also pass `--apikey "$CAPGO_TOKEN"`.
+- Store the Capgo API key as a CI secret named `CAPGO_TOKEN`. The CLI reads `CAPGO_TOKEN` automatically. You can also pass the key with `--apikey`.
 - The CLI resolves the key in this order: `-a/--apikey`, then `CAPGO_TOKEN`, then `~/.capgo` (global `login`), then `./.capgo` (`login --local`).
-- For encrypted uploads, store the private key content as `CAPGO_PRIVATE_KEY` and pass `--key-data-v2 "$CAPGO_PRIVATE_KEY"`.
+- For encrypted uploads, keep the private key in the CI secret store, write it to `./.capgo_key_v2` in the job, and pass `--key-v2 ./.capgo_key_v2`. The private key encrypts the bundle on the runner and is never uploaded.
 - Interactive prompts are disabled automatically in CI.
 
 ## GitHub Actions
