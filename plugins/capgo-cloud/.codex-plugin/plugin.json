@@ -16,5 +16,6 @@
     "native-builds",
     "release-management"
   ],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "mcpServers": "./mcp.json"
 }

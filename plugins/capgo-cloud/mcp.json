@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "capgo": {
+      "type": "streamable-http",
+      "url": "https://api.capgo.app/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "authorizationUrl": "https://api.capgo.app/mcp/oauth/authorize",
+            "tokenUrl": "https://api.capgo.app/mcp/oauth/token",
+            "baseScopes": [
+              "capgo"
+            ],
+            "client": {
+              "mode": "dcr",
+              "registrationUrl": "https://api.capgo.app/mcp/oauth/register"
+            }
+          }
+        }
+      }
+    }
+  }
+}
