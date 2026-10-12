@@ -53,9 +53,9 @@ deploy_capgo:
     - npm ci
     - npm run build
     - npx @capgo/cli@latest bundle upload com.example.app --path ./dist --channel production --fail-on-incompatible
-  variables:
-    CAPGO_TOKEN: $CAPGO_TOKEN
 ```
+
+Add `CAPGO_TOKEN` as a masked variable in **Settings > CI/CD > Variables**. GitLab exposes it to the job, so the YAML does not need a `variables:` entry.
 
 ## Gate OTA vs native
 
