@@ -32,13 +32,13 @@ Do not use when one of these already fits. Switch to it as soon as the scope is 
 | Group | Commands | Skill |
 | --- | --- | --- |
 | Setup | `init [apikey] [appId]`, `login [apikey] [--local]`, `doctor`, `probe --platform ios\|android` | this skill / `capgo-live-updates` |
-| App | `app add\|list\|set\|delete\|debug\|setting\|todo` | this skill |
+| App | `app add`, `app list`, `app set`, `app delete`, `app debug`, `app setting`, `app todo` | this skill |
 | Bundles | `bundle upload\|list\|delete\|cleanup\|compatibility\|releaseType\|zip\|encrypt\|decrypt` | `capgo-release-management` |
-| Channels | `channel add\|list\|set\|promote\|currentBundle\|delete` | `capgo-release-management` |
+| Channels | `channel add`, `channel list`, `channel set`, `channel promote`, `channel currentBundle`, `channel delete` | `capgo-release-management` |
 | Keys | `key create\|save\|delete_old` | `capgo-release-management` |
 | Previews | `get-qr [appId] --bundle\|--channel` | `capgo-release-management` |
 | Native builds | `build init\|request\|prescan\|needed\|last-output\|sync-ios-version\|credentials ...` | `capgo-native-builds` |
-| Account / orgs | `account whoami`, `organization list\|add\|members\|set\|delete` | `capgo-organization-management` |
+| Account / orgs | `account whoami`, `organization list`, `organization add`, `organization members`, `organization set`, `organization delete` | `capgo-organization-management` |
 | Observe | `observe summary\|metrics\|events\|device\|versions\|routes` | this skill |
 | Push | `notifications setup [appId]` | `capacitor-push-notifications` |
 | Devices | `run device [ios\|android] [--no-launch]` | this skill |
