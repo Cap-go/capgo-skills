@@ -6,12 +6,38 @@ import { buildAgentManifests } from './agent-manifests.mjs';
 const root = process.cwd();
 const skillsDir = path.join(root, 'skills');
 
-function parseFrontmatter(text) {
+function extractFrontmatterBlock(text) {
   const match = text.match(/^---\n([\s\S]*?)\n---/);
-  if (!match) return null;
+  return match ? match[1] : null;
+}
+
+function validateYamlFrontmatter(yamlText, skillName, errors) {
+  const result = spawnSync(
+    'python3',
+    [
+      '-c',
+      `import yaml, sys
+try:
+  yaml.safe_load(sys.stdin.read())
+except yaml.YAMLError as exc:
+  print(exc)
+  sys.exit(1)`,
+    ],
+    { input: yamlText, encoding: 'utf8' },
+  );
+
+  if (result.status !== 0) {
+    const detail = (result.stdout || result.stderr || '').trim().split('\n')[0];
+    errors.push(`${skillName}: invalid YAML frontmatter${detail ? `: ${detail}` : ''}`);
+  }
+}
+
+function parseFrontmatter(text) {
+  const block = extractFrontmatterBlock(text);
+  if (!block) return null;
 
   const frontmatter = {};
-  for (const line of match[1].split('\n')) {
+  for (const line of block.split('\n')) {
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith('#')) continue;
     const colon = trimmed.indexOf(':');
@@ -248,6 +274,14 @@ async function main() {
         errors.push(`${skillName}: invalid metadata.json`);
       }
     }
+
+    const frontmatterBlock = extractFrontmatterBlock(content);
+    if (!frontmatterBlock) {
+      errors.push(`${skillName}: missing YAML frontmatter`);
+      continue;
+    }
+
+    validateYamlFrontmatter(frontmatterBlock, skillName, errors);
 
     const frontmatter = parseFrontmatter(content);
     if (!frontmatter) {

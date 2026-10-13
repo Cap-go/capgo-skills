@@ -1,6 +1,6 @@
 ---
 name: capgo-organization-management
-description: Guides Capgo account lookup and organization administration with the CLI, including `account whoami`, `organization list/add/members/set/delete`, 2FA enforcement, password policy, API-key expiration and hashed-key policy, and apps per organization. Use when listing or creating Capgo organizations, auditing members' 2FA before enforcing it, tightening org security settings, or resolving "Access Denied: Two-Factor Authentication Required" or "Insufficient permissions". Do not use for OTA bundle or channel work (capgo-release-management), native builds (capgo-native-builds), or app-side updater code (capgo-live-updates).
+description: "Guides Capgo account lookup and organization administration with the CLI, including `account whoami`, `organization list/add/members/set/delete`, 2FA enforcement, password policy, API-key expiration and hashed-key policy, and apps per organization. Use when listing or creating Capgo organizations, auditing members' 2FA before enforcing it, tightening org security settings, or resolving \"Access Denied: Two-Factor Authentication Required\" or \"Insufficient permissions\". Do not use for OTA bundle or channel work (capgo-release-management), native builds (capgo-native-builds), or app-side updater code (capgo-live-updates)."
 ---
 
 # Capgo Organization Management
