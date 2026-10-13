@@ -1,6 +1,7 @@
 ---
 name: capgo-native-builds
-description: Use for Capgo Cloud Build (Capgo Build) native iOS and Android workflows, including CLI login and API-key precedence, `build init` onboarding, signing credential save/update/export, `build request` with TestFlight, App Store, or Play upload, temporary IPA/APK/AAB download links (`--output-upload`), prescan failures, `build needed` OTA-vs-native gating, and CI secrets. Use when errors mention "No credentials found for this app and platform", "Legacy provisioning profile format detected", "Missing required argument: --platform", or prescan check ids. Do not use for OTA bundle uploads (capgo-release-management), updater plugin setup (capgo-live-updates), or local Xcode/Gradle builds and generic CI runners (capacitor-ci-cd).
+description: >-
+  Use for Capgo Cloud Build (Capgo Build) native iOS and Android workflows, including CLI login and API-key precedence, `build init` onboarding, signing credential save/update/export, `build request` with TestFlight, App Store, or Play upload, temporary IPA/APK/AAB download links (`--output-upload`), prescan failures, `build needed` OTA-vs-native gating, and CI secrets. Use when errors mention "No credentials found for this app and platform", "Legacy provisioning profile format detected", "Missing required argument: --platform", or prescan check ids. Do not use for OTA bundle uploads (capgo-release-management), updater plugin setup (capgo-live-updates), or local Xcode/Gradle builds and generic CI runners (capacitor-ci-cd).
 ---
 
 # Capgo Native Builds

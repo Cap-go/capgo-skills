@@ -1,6 +1,7 @@
 ---
 name: capacitor-plugin-upgrade-v6-to-v7
-description: Upgrades a Capacitor plugin library from v6 to v7 using `npx @capacitor/plugin-migration-v6-to-v7@latest`, then the manual checklist - dev deps `^7.0.0` and peer `@capacitor/core` `>=7.0.0`, tooling bumps (eslint, swiftlint, prettier 3 with prettier-plugin-java, rollup 4 with `rollup.config.mjs`, rimraf 6, docgen 0.3), minSdk 23 and compile/target SDK 35 defaults, AGP 8.7.2, Gradle 8.11.1, Java 21, Kotlin 1.9.25, iOS 14 in podspec and `Package.swift`, pinned `capacitor-swift-pm` `from: "7.0.0"`, plus removed APIs - `call.success()` / `call.error()` (use `resolve` / `reject`), `registerWebPlugin`, `Capacitor.platform` / `isNative`, Android `BridgeFragment`. Use when a plugin targets Capacitor 6 and must support 7. Do not use for app upgrades, other major versions, or non-Capacitor libraries.
+description: >-
+  Upgrades a Capacitor plugin library from v6 to v7 using `npx @capacitor/plugin-migration-v6-to-v7@latest`, then the manual checklist - dev deps `^7.0.0` and peer `@capacitor/core` `>=7.0.0`, tooling bumps (eslint, swiftlint, prettier 3 with prettier-plugin-java, rollup 4 with `rollup.config.mjs`, rimraf 6, docgen 0.3), minSdk 23 and compile/target SDK 35 defaults, AGP 8.7.2, Gradle 8.11.1, Java 21, Kotlin 1.9.25, iOS 14 in podspec and `Package.swift`, pinned `capacitor-swift-pm` `from: "7.0.0"`, plus removed APIs - `call.success()` / `call.error()` (use `resolve` / `reject`), `registerWebPlugin`, `Capacitor.platform` / `isNative`, Android `BridgeFragment`. Use when a plugin targets Capacitor 6 and must support 7. Do not use for app upgrades, other major versions, or non-Capacitor libraries.
 allowed-tools:
   - Bash(node -e *)
   - Bash(find *)

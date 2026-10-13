@@ -1,27 +1,31 @@
 import { lstat, readFile, readdir, realpath } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
+import { parse as parseYaml } from 'yaml';
 import { buildAgentManifests } from './agent-manifests.mjs';
 
 const root = process.cwd();
 const skillsDir = path.join(root, 'skills');
 
-function parseFrontmatter(text) {
+function extractFrontmatterBlock(text) {
   const match = text.match(/^---\n([\s\S]*?)\n---/);
-  if (!match) return null;
+  return match ? match[1] : null;
+}
 
-  const frontmatter = {};
-  for (const line of match[1].split('\n')) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith('#')) continue;
-    const colon = trimmed.indexOf(':');
-    if (colon === -1) continue;
-    const key = trimmed.slice(0, colon).trim();
-    const value = trimmed.slice(colon + 1).trim().replace(/^["']|["']$/g, '');
-    frontmatter[key] = value;
+function parseFrontmatter(text) {
+  const block = extractFrontmatterBlock(text);
+  if (!block) return null;
+
+  try {
+    const parsed = parseYaml(block);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return { __parseError: 'frontmatter must be a YAML mapping' };
+    }
+    return parsed;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return { __parseError: message };
   }
-
-  return frontmatter;
 }
 
 async function pathExists(filePath) {
@@ -255,13 +259,19 @@ async function main() {
       continue;
     }
 
+    if (frontmatter.__parseError) {
+      errors.push(`${skillName}: invalid YAML frontmatter (${frontmatter.__parseError})`);
+      continue;
+    }
+
     if (frontmatter.name !== skillName) {
       errors.push(`${skillName}: name "${frontmatter.name ?? ''}" does not match folder name`);
     }
 
-    if (!frontmatter.description) {
+    const description = frontmatter.description;
+    if (typeof description !== 'string' || !description.trim()) {
       errors.push(`${skillName}: missing description`);
-    } else if (frontmatter.description.length > 1024) {
+    } else if (description.length > 1024) {
       errors.push(`${skillName}: description exceeds 1024 characters`);
     }
 
