@@ -1,6 +1,7 @@
 ---
 name: capacitor-plugin-upgrade-v7-to-v8
-description: Upgrades a Capacitor plugin library from v7 to v8 using `npx @capacitor/plugin-migration-v7-to-v8@latest`, then the manual checklist - dev deps `^8.0.0` and peer `@capacitor/core` `>=8.0.0`, minSdk 24 and compile/target SDK 36 defaults, AndroidX dependency defaults, AGP 8.13.0, Gradle 8.14.3, Gradle `=` property assignment syntax, Java 21, Kotlin 2.2.20 (`kotlinOptions` to `compilerOptions`, no `kotlin-android-extensions`), google-services 4.4.4, iOS 15 in podspec and `Package.swift`, `capacitor-swift-pm` `from: "8.0.0"`, and the renamed `capacitor_bridge_layout_main` resource. Use when a plugin targets Capacitor 7 and must support 8, or on Kotlin 2 / Gradle space-assignment errors. Points to the v8-to-v9 next step. Do not use for app upgrades, other major versions, or non-Capacitor libraries.
+description: >-
+  Upgrades a Capacitor plugin library from v7 to v8 using `npx @capacitor/plugin-migration-v7-to-v8@latest`, then the manual checklist - dev deps `^8.0.0` and peer `@capacitor/core` `>=8.0.0`, minSdk 24 and compile/target SDK 36 defaults, AndroidX dependency defaults, AGP 8.13.0, Gradle 8.14.3, Gradle `=` property assignment syntax, Java 21, Kotlin 2.2.20 (`kotlinOptions` to `compilerOptions`, no `kotlin-android-extensions`), google-services 4.4.4, iOS 15 in podspec and `Package.swift`, `capacitor-swift-pm` `from: "8.0.0"`, and the renamed `capacitor_bridge_layout_main` resource. Use when a plugin targets Capacitor 7 and must support 8, or on Kotlin 2 / Gradle space-assignment errors. Points to the v8-to-v9 next step. Do not use for app upgrades, other major versions, or non-Capacitor libraries.
 allowed-tools:
   - Bash(node -e *)
   - Bash(find *)
