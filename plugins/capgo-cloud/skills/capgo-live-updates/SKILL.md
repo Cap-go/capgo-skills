@@ -52,6 +52,14 @@ The updater major version follows the Capacitor major version.
 
 Capacitor 9 trap: Capacitor 9 is still prerelease (`@capacitor/core@next`). As of October 2026 there is no updater line for Capacitor 9. The 8.x line declares `peerDependencies: @capacitor/core ^8.0.0`. The `@capgo/capacitor-updater@9.0.0` on npm is an old Capacitor 5 release from 2023 and is marked deprecated, so never install it for Capacitor 9. Before you advise on a Capacitor 9 project, check the current tags with `npm view @capgo/capacitor-updater dist-tags`. If no Capacitor 9 line is listed, tell the user that.
 
+## Secrets and Confirmation
+
+- Never ask the user to paste a Capgo API key, signing password, `.p8` key, keystore, or service-account JSON into the chat. Ask them to run `npx @capgo/cli@latest login` themselves (it opens the browser or asks for the key in a masked prompt), or to set `CAPGO_TOKEN` in their shell or CI secret store.
+- Do not put secrets in command arguments: they end up in shell history and process lists. Use environment variables, the saved login, or the CLI's interactive prompts.
+- If a secret appears in the conversation anyway, do not repeat it, do not write it to a file, and tell the user to revoke it and create a new one.
+- `npx @capgo/cli@latest` downloads and runs the newest CLI from npm. Run it only inside the user's project and with their go-ahead. In CI, pin an exact version.
+- Ask before any command that changes remote state: uploading a bundle, changing or promoting a channel, deleting apps, bundles, channels, or keys, requesting a build that uploads to a store, and exporting or deleting credentials. Say what will change and for which app and channel.
+
 ## Procedure
 
 ### 1. Inspect before editing
@@ -66,10 +74,10 @@ Capacitor 9 trap: Capacitor 9 is still prerelease (`@capacitor/core@next`). As o
 The guided onboarding registers the app, installs the plugin, patches the entry point, builds, uploads, and verifies on a device:
 
 ```bash
-npx @capgo/cli@latest init YOUR_API_KEY com.example.app
+npx @capgo/cli@latest init
 ```
 
-API keys live at https://console.capgo.app/dashboard/apikeys. If the user already gave you a key, use it as-is and do not echo it back. In monorepos, add `--package-json`, `--main-file`, and `--capacitor-config`.
+Ask the user to run it in their terminal: it signs in through the browser (or uses the key saved by `login`), asks for the app ID, and uploads a first bundle, so get their go-ahead first. Do not ask for the API key in the chat. In monorepos, add `--package-json`, `--main-file`, and `--capacitor-config`.
 
 ### 3. Manual install (when not using `init`)
 

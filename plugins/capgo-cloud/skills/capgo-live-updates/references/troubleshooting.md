@@ -50,7 +50,7 @@ Docs: https://capgo.app/docs/plugins/updater/commonproblems/ · https://capgo.ap
 | `❌ Version X already exists` | Bump the version, or `--auto-bump` / `--version-exists-ok` |
 | `Cannot upload the same bundle content` | The same checksum is already on the channel. Change the content or pass `--ignore-checksum-check` |
 | `Bundle NOT compatible with <channel> channel` | Native deps changed. Ship a native build, or `--accept-incompatible` if guarded |
-| `No Capgo API key found. Run ... first, then retry this command.` | `npx @capgo/cli@latest login`, set `CAPGO_TOKEN`, or pass `-a` |
+| `No Capgo API key found. Run ... first, then retry this command.` | The user runs `npx @capgo/cli@latest login`, or sets `CAPGO_TOKEN` |
 | `Insufficient permissions for <key>` | The API key role is too low for the app or org |
 | `Plan upgrade required for upload` | Billing: upgrade at console.capgo.app |
 | `Cannot upload bundle ( try again with --tus option)` | Retry with `--tus`. For large bundles, raise `--timeout` |

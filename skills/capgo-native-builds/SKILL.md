@@ -34,10 +34,18 @@ Only load a reference when its topic is in play.
 | `references/request-options.md` | Building the exact `build request` flags: store submission, tracks, release notes, versioning, cache, Xcode version, prescan flags |
 | `references/credentials-and-ci.md` | Saving, updating, exporting, or migrating credentials, and pushing them into CI secrets |
 
+## Secrets and Confirmation
+
+- Never ask the user to paste a Capgo API key, signing password, `.p8` key, keystore, or service-account JSON into the chat. Ask them to run `npx @capgo/cli@latest login` themselves (it opens the browser or asks for the key in a masked prompt), or to set `CAPGO_TOKEN` in their shell or CI secret store.
+- Do not put secrets in command arguments: they end up in shell history and process lists. Use environment variables, the saved login, or the CLI's interactive prompts.
+- If a secret appears in the conversation anyway, do not repeat it, do not write it to a file, and tell the user to revoke it and create a new one.
+- `npx @capgo/cli@latest` downloads and runs the newest CLI from npm. Run it only inside the user's project and with their go-ahead. In CI, pin an exact version.
+- Ask before any command that changes remote state: uploading a bundle, changing or promoting a channel, deleting apps, bundles, channels, or keys, requesting a build that uploads to a store, and exporting or deleting credentials. Say what will change and for which app and channel.
+
 ## Operating Rules
 
 - Use `npx @capgo/cli@latest` in user-facing commands.
-- API keys, P12 passwords, keystore passwords, `.p8` keys, and Play service-account JSON are secrets. Use placeholders only in new generic examples. Never replace values the user already supplied with placeholders unless they ask. Never echo secrets back. Do not suggest rotation unless the user asks.
+- API keys, P12 passwords, keystore passwords, `.p8` keys, and Play service-account JSON are secrets. Use placeholders in examples. Never ask for them in the chat and never echo them back. If one is pasted into the chat, tell the user to revoke it and create a new one.
 - Credentials are stored locally (`~/.capgo-credentials/credentials.json`, or `.capgo-credentials.json` with `--local`). They are uploaded only for the build job, and the temporary server copies are deleted when the build finishes. Never commit either file.
 - Confirm these before requesting: platform, app ID, project path, flavor or scheme, and destination (store upload, download link, or both).
 
@@ -47,10 +55,10 @@ The CLI resolves the key in this order:
 
 1. `-a, --apikey <key>` on the command
 2. The `CAPGO_TOKEN` environment variable
-3. `~/.capgo`, the global key saved by `npx @capgo/cli@latest login <key>`
-4. `./.capgo`, the project key saved by `login --local <key>`
+3. `~/.capgo`, the global key saved by `npx @capgo/cli@latest login`
+4. `./.capgo`, the project key saved by `login --local`
 
-Trap: a global key **wins over** a project-local key. If a repository must use a different org's key, pass `-a` or set `CAPGO_TOKEN`. Make sure `.capgo` is git-ignored.
+Trap: a global key **wins over** a project-local key. If a repository must use a different org's key, set `CAPGO_TOKEN`. Make sure `.capgo` is git-ignored.
 
 ## Procedure
 
@@ -133,7 +141,7 @@ The `--output-retention` range is `1h` to `7d`. The default TTL saved in credent
 
 | String / symptom | Fix |
 | --- | --- |
-| `No Capgo API key found. Run ... first, then retry this command.` | `npx @capgo/cli@latest login`, set `CAPGO_TOKEN`, or pass `-a` |
+| `No Capgo API key found. Run ... first, then retry this command.` | The user runs `npx @capgo/cli@latest login`, or sets `CAPGO_TOKEN` |
 | `Insufficient permissions for <key>` / prescan `shared/apikey-permission` | The key's role cannot request native builds for this app or org. Use a key with build rights |
 | `Missing required argument: --platform <ios\|android>` | Add `--platform ios` or `--platform android` |
 | `❌ No credentials found for this app and platform` | Run `build init` or `build credentials save --appId <id> --platform <p> ...`. Check `--local` versus the global store |
