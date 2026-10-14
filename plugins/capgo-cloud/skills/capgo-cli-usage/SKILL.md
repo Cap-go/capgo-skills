@@ -27,6 +27,14 @@ Do not use when one of these already fits. Switch to it as soon as the scope is 
 - Multi-product Capgo plans (builds, OTA, and store): `capgo-cloud`
 - Ionic or Capacitor's own MCP tooling, not Capgo: `capacitor-mcp`
 
+## Secrets and Confirmation
+
+- Never ask the user to paste a Capgo API key, signing password, `.p8` key, keystore, or service-account JSON into the chat. Ask them to run `npx @capgo/cli@latest login` themselves (it opens the browser or asks for the key in a masked prompt), or to set `CAPGO_TOKEN` in their shell or CI secret store.
+- Do not put secrets in command arguments: they end up in shell history and process lists. Use environment variables, the saved login, or the CLI's interactive prompts.
+- If a secret appears in the conversation anyway, do not repeat it, do not write it to a file, and tell the user to revoke it and create a new one.
+- `npx @capgo/cli@latest` downloads and runs the newest CLI from npm. Run it only inside the user's project and with their go-ahead. In CI, pin an exact version.
+- Ask before any command that changes remote state: uploading a bundle, changing or promoting a channel, deleting apps, bundles, channels, or keys, requesting a build that uploads to a store, and exporting or deleting credentials. Say what will change and for which app and channel.
+
 ## Command Surface
 
 | Group | Commands | Skill |
@@ -48,9 +56,11 @@ These commands do not exist. Do not suggest them: `capgo upload` (use `bundle up
 
 ## Authentication
 
+The user runs the login. It opens the browser to create a key, or asks for the key in a masked prompt:
+
 ```bash
-npx @capgo/cli@latest login YOUR_API_KEY          # saves to ~/.capgo
-npx @capgo/cli@latest login YOUR_API_KEY --local  # saves to ./.capgo (git-ignored)
+npx @capgo/cli@latest login          # saves to ~/.capgo
+npx @capgo/cli@latest login --local  # saves to ./.capgo (git-ignored)
 ```
 
 The CLI picks the key in this order:
@@ -60,7 +70,7 @@ The CLI picks the key in this order:
 3. `~/.capgo` (global)
 4. `./.capgo` (project)
 
-Trap: the global key wins over the project key. Pass `-a` or use the `CAPGO_TOKEN` environment variable to force a different account. Keys are created at https://console.capgo.app/dashboard/apikeys. If the user already supplied a key, use it as-is and do not echo it.
+Trap: the global key wins over the project key. Set the `CAPGO_TOKEN` environment variable to force a different account. Keys are created at https://console.capgo.app/dashboard/apikeys.
 
 Self-hosted backends: add `--supa-host <url> --supa-anon <key>` on supported commands.
 
@@ -107,12 +117,12 @@ Use `--package-json`, `--node-modules`, and, for dynamic root configs, `--capaci
 
 | String | Fix |
 | --- | --- |
-| `No Capgo API key found. Run \`...\` first, then retry this command.` | `npx @capgo/cli@latest login <key>`, the `CAPGO_TOKEN` environment variable, or `-a` |
+| `No Capgo API key found. Run \`...\` first, then retry this command.` | The user runs `npx @capgo/cli@latest login`, or sets the `CAPGO_TOKEN` environment variable |
 | `Missing argument, you need to provide a appId, or be in a capacitor project` | Pass the `appId` positionally or run from the folder containing `capacitor.config.*` |
 | `Insufficient permissions for <key>` | The key's role is too low for this app or org. Use a key with the needed role |
 | `🔐 Access Denied: Two-Factor Authentication Required` | The org enforces 2FA. See `capgo-organization-management` |
 | `App <id> not found in database` | Run `npx @capgo/cli@latest app add <id>` or check the active account |
-| Wrong account used | A global `~/.capgo` overrides a local `.capgo`. Use `-a` or `CAPGO_TOKEN` |
+| Wrong account used | A global `~/.capgo` overrides a local `.capgo`. Set `CAPGO_TOKEN` |
 
 ## Resources
 

@@ -6,11 +6,13 @@ Storage: `~/.capgo-credentials/credentials.json` (global, the default) or `.capg
 
 ## Save (when the user already has signing files)
 
+The user runs these commands in their own terminal. Passwords below are environment variables the user sets first (for example with `read -s P12_PASSWORD && export P12_PASSWORD`), so they never appear in the chat or in shell history.
+
 iOS (App Store, with an extension):
 
 ```bash
 npx @capgo/cli@latest build credentials save --appId com.example.app --platform ios \
-  --certificate ./cert.p12 --p12-password "P12_PASSWORD" \
+  --certificate ./cert.p12 --p12-password "$P12_PASSWORD" \
   --ios-provisioning-profile ./App.mobileprovision \
   --ios-provisioning-profile com.example.app.widget=./Widget.mobileprovision \
   --apple-key ./AuthKey_KEYID.p8 --apple-key-id "KEY_ID" \
@@ -30,7 +32,7 @@ Android:
 ```bash
 npx @capgo/cli@latest build credentials save --appId com.example.app --platform android \
   --keystore ./release.jks --keystore-alias "release-key" \
-  --keystore-key-password "KEY_PASSWORD" --keystore-store-password "STORE_PASSWORD" \
+  --keystore-key-password "$KEY_PASSWORD" --keystore-store-password "$STORE_PASSWORD" \
   --play-config ./service-account.json
 ```
 
@@ -55,19 +57,20 @@ npx @capgo/cli@latest build credentials clear --appId com.example.app --platform
 
 ## Export a single value
 
+Export only when the user asks, and let the user run it. Write to a file the user chose instead of printing the secret, so it never lands in the agent's output or the chat:
+
 ```bash
-npx @capgo/cli@latest build credentials export BUILD_CERTIFICATE_BASE64 --app-id com.example.app --platform ios --raw
 npx @capgo/cli@latest build credentials export APPLE_KEY_CONTENT --app-id com.example.app --platform ios --file ./AuthKey.p8 --decode-base64
 ```
 
-`--file` never overwrites an existing file. Environment variables are never exported.
+`--file` never overwrites an existing file. Environment variables are never exported. `--raw` prints the value to the terminal: do not run it yourself and do not read its output.
 
 ## Push to GitHub Actions secrets
 
 1. `gh secret set CAPGO_TOKEN` (paste the key when prompted. The API key is not in the credential store).
 2. `npx @capgo/cli@latest build credentials manage --appId com.example.app`, then choose **Export to .env**. This writes `.env.capgo.<appId>` with mode `0600`.
 3. `gh secret set -f .env.capgo.com.example.app`, then `gh secret list` to verify.
-4. Delete the local `.env.capgo.*` file afterwards, or keep it git-ignored.
+4. Delete the local `.env.capgo.*` file right after the upload. Never commit it and never read its contents into the chat.
 
 ## CI environment variable names
 
