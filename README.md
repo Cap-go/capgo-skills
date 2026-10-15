@@ -4,7 +4,6 @@
 
 <div align="center">
   <h2><a href="https://capgo.app/?ref=repo_capgo_skills"> ➡️ Get Instant updates for your App with Capgo</a></h2>
-  <h2><a href="https://capgo.app/consulting/?ref=repo_capgo_skills"> Missing a feature? We’ll build the plugin for you</a></h2>
 </div>
 
 > Formerly `@capgo/capacitor-skills` (and `Cap-go/capacitor-skills`). Links and redirects should continue to work.
