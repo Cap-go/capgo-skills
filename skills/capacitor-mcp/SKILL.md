@@ -29,7 +29,7 @@ Do not use for:
 | Upload a bundle from `dist/`, request a native build, `doctor`, `probe`, compatibility check | Capgo local CLI MCP `npx @capgo/cli@latest mcp` | stdio |
 | Build/run the iOS project, read Xcode issues, Xcode tools | Xcode MCP `xcrun mcpbridge` (Xcode 26.3+, verified on Xcode 27.1) | stdio |
 
-The Capgo hosted and local servers are complementary: hosted cannot read local files; local needs `npx @capgo/cli@latest login` first. `https://capgo.app/mcp` is a separate public docs-discovery server with no account access.
+The Capgo hosted and local servers are complementary: hosted cannot read local files; local needs `npx @capgo/cli@latest login` first. Setup guide for both: https://capgo.app/mcp
 
 ## Procedure
 
