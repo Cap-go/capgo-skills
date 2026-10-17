@@ -87,7 +87,7 @@ Claude Desktop config for the local server:
 { "mcpServers": { "capgo": { "command": "npx", "args": ["@capgo/cli@latest", "mcp"] } } }
 ```
 
-`https://capgo.app/mcp` is a different server: public docs discovery only, with no account access.
+Setup guide for both servers: https://capgo.app/mcp (a page, not an MCP endpoint).
 
 No Capgo account yet: sign up at https://console.capgo.app (14-day free trial, no credit card). Docs: https://capgo.app/docs/ai/mcp/
 

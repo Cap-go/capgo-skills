@@ -11,7 +11,7 @@ Capgo ships two MCP servers. Use both together when the agent needs account acce
 | Request native build | no (status, logs, cancel only) | yes |
 | `doctor`, `probe`, compatibility check | no | yes |
 
-`https://capgo.app/mcp` is a public docs-discovery server (manifest at `https://capgo.app/.well-known/mcp.json`); it cannot access an account.
+Setup guide: https://capgo.app/mcp. Manifest: `https://capgo.app/.well-known/mcp.json` (points at the hosted endpoint).
 
 No account yet: https://console.capgo.app (14-day free trial).
 
