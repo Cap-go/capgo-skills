@@ -10,6 +10,7 @@ import {
   extractMethodsFromSources,
   loadApiSources,
 } from './lib/parse-definitions.mjs';
+import { classifyRawHttpStatus, findCachedDiff } from './lib/fetch-results.mjs';
 
 const ORG = 'Cap-go';
 const ROOT = process.cwd();
@@ -56,15 +57,16 @@ async function rawText(repo, filePath, branch, retries = 4) {
   const url = `https://raw.githubusercontent.com/${ORG}/${repo}/${branch}/${filePath}`;
   for (let attempt = 0; attempt <= retries; attempt++) {
     const res = await fetch(url);
-    if (res.ok) return res.text();
-    if (res.status === 404) return null;
-    if ((res.status === 403 || res.status === 429 || res.status >= 500) && attempt < retries) {
+    const action = classifyRawHttpStatus(res.status, attempt < retries);
+    if (action === 'ok') return res.text();
+    if (action === 'missing') return null;
+    if (action === 'retry') {
       await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
       continue;
     }
-    return null;
+    throw new Error(`HTTP ${res.status} for ${repo}/${filePath} on ${branch}`);
   }
-  return null;
+  throw new Error(`HTTP error for ${repo}/${filePath} on ${branch}`);
 }
 
 /** Return whether a raw file exists on a repository branch. */
@@ -134,9 +136,9 @@ function titleFromPackage(name) {
 
 const DIFF_CACHE = path.join(ROOT, 'scripts/.cache/capgo-api-diffs.json');
 
-/** @param {Map<string, object>} diffByRepo */
-function formatApiChangeBlock(repo, diffByRepo) {
-  const diff = diffByRepo.get(repo);
+/** @param {object[]} diffs */
+function formatApiChangeBlock(entry, diffs) {
+  const diff = findCachedDiff(diffs, entry.pkg.name, entry.repo);
   if (!diff?.fromTag || !diff?.toTag) return '';
   const lines = [`- **Versions reviewed**: \`${diff.fromTag}\` to \`${diff.toTag}\``];
   const { methods, events, config, breakingNotes, platformNotes } = diff;
@@ -295,7 +297,7 @@ function formatCatalogRow(entry) {
 }
 
 /** Format one detailed plugin index section. */
-function formatIndexEntry(entry, diffByRepo) {
+function formatIndexEntry(entry, diffs) {
   const { title, pkg, repo, platforms, methods, events, configKeys, branch } = entry;
   const desc = sanitize(pkg.description || 'Capacitor plugin from Capgo.');
   const docs = docsUrl(pkg);
@@ -307,7 +309,7 @@ function formatIndexEntry(entry, diffByRepo) {
     ? configKeys.map((k) => `\`${k}\``).join(', ')
     : 'none in `definitions.ts`';
   const installPath = entry.pkgPath ? `${repo} (${entry.pkgPath})` : repo;
-  const changeBlock = formatApiChangeBlock(repo, diffByRepo);
+  const changeBlock = formatApiChangeBlock(entry, diffs);
 
   return `## ${title}
 
@@ -412,10 +414,10 @@ async function main() {
 
   const uniquePackages = dedupePackages(allPackages).sort((a, b) => a.pkg.name.localeCompare(b.pkg.name));
 
-  let diffByRepo = new Map();
+  let diffs = [];
   try {
-    const diffs = JSON.parse(await readFile(DIFF_CACHE, 'utf8'));
-    diffByRepo = new Map(diffs.filter((d) => d.repo).map((d) => [d.repo, d]));
+    const cached = JSON.parse(await readFile(DIFF_CACHE, 'utf8'));
+    diffs = Array.isArray(cached) ? cached : [];
   } catch {
     console.warn('No API diff cache at', DIFF_CACHE, '(run node scripts/diff-capgo-plugin-apis.mjs first).');
   }
@@ -474,7 +476,7 @@ Total packages: ${enriched.length} (generated ${generatedAt})
 
 `;
 
-  const indexBody = enriched.map((e) => formatIndexEntry(e, diffByRepo)).join('\n');
+  const indexBody = enriched.map((e) => formatIndexEntry(e, diffs)).join('\n');
   const index = `${indexHeader}${indexBody}`;
 
   await mkdir(OUT_DIR, { recursive: true });

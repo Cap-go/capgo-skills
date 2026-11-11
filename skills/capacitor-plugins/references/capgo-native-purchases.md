@@ -20,7 +20,7 @@ npx cap sync
 
 **Methods:** `configure()`, `getUnfinishedTransactions()`, `finishTransaction()`.
 
-Call `configure()` before other APIs. Set `autoFinishTransactions: false` in `capacitor.config` or in `configure()` when you validate on your backend before finishing. On Android, consumables need `consumePurchase({ purchaseToken })` after delivery; `finishTransaction()` alone does not consume.
+Call `configure()` before other APIs. Set `autoFinishTransactions: false` in `capacitor.config` or in `configure()` when you validate on your backend before finishing. On Android, consumables need `consumePurchase({ purchaseToken })` after delivery; `finishTransaction()` alone does not consume. Persist the grant under a durable idempotency key (`purchaseToken` for Android consumables, otherwise `transactionId`) before consume or finish, so a retry after a failed consume does not grant again.
 
 ```typescript
 import { Capacitor } from '@capacitor/core';
@@ -30,7 +30,10 @@ await NativePurchases.configure({ autoFinishTransactions: false });
 const { transactions } = await NativePurchases.getUnfinishedTransactions();
 const androidConsumables = new Set(['coins_100']);
 for (const tx of transactions) {
-  await grantEntitlement(tx);
+  await grantEntitlement({
+    key: tx.purchaseToken ?? tx.transactionId,
+    transaction: tx,
+  });
   const androidConsumable =
     Capacitor.getPlatform() === 'android' &&
     tx.productType === 'inapp' &&

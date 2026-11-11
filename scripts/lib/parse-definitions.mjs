@@ -214,6 +214,10 @@ function resolveTsImportCandidates(importerPath, spec) {
   }
   const base = parts.join('/');
   if (base.endsWith('.ts') || base.endsWith('.tsx')) return [base];
+  if (base.endsWith('.js')) {
+    const stem = base.slice(0, -3);
+    return [`${stem}.ts`, `${stem}.tsx`, base];
+  }
   return [`${base}.ts`, `${base}.tsx`, `${base}/index.ts`];
 }
 
@@ -234,8 +238,7 @@ export function extractMethods(definitionsText) {
   return extractMethodsFromSources([definitionsText]);
 }
 
-/** Prefer *Plugin methods across all sources before falling back to *Interface. */
-export function extractMethodsFromSources(sources) {
+function extractPluginMethodsFromSources(sources) {
   const list = (sources || []).filter(Boolean);
   const pluginMethods = [];
   for (const text of list) {
@@ -244,9 +247,15 @@ export function extractMethodsFromSources(sources) {
       pluginMethods.push(...lookupTypeMethods(parent, list));
     }
   }
-  if (pluginMethods.length) return [...new Set(pluginMethods)].sort();
+  return [...new Set(pluginMethods)].sort();
+}
+
+/** Prefer *Plugin methods across all sources before falling back to *Interface. */
+export function extractMethodsFromSources(sources) {
+  const pluginMethods = extractPluginMethodsFromSources(sources);
+  if (pluginMethods.length) return pluginMethods;
   const fallback = [];
-  for (const text of list) {
+  for (const text of (sources || []).filter(Boolean)) {
     for (const body of collectFallbackInterfaceBodies(text)) {
       fallback.push(...extractMethodsFromBlock(body));
     }
@@ -278,7 +287,7 @@ export async function loadApiSources(fetchText) {
 
   for (const file of API_SOURCE_FILES) {
     await loadFile(file);
-    if (extractMethodsFromSources(sources).length > 0) return sources;
+    if (extractPluginMethodsFromSources(sources).length > 0) return sources;
   }
   return sources;
 }

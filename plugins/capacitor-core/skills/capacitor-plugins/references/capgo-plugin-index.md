@@ -950,7 +950,7 @@ npx cap sync
 - **Plugin config keys** (`FirebaseAnalytics`): none in `definitions.ts`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getPluginVersion()`, `logTransaction()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-analytics/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/analytics`, branch `main`)
 
@@ -971,7 +971,7 @@ npx cap sync
 - **Plugin config keys** (`FirebaseApp`): none in `definitions.ts`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-app/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/app`, branch `main`)
 
@@ -992,7 +992,7 @@ npx cap sync
 - **Plugin config keys** (`FirebaseAppCheck`): none in `definitions.ts`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-app-check/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/appcheck`, branch `main`)
 
@@ -1013,7 +1013,7 @@ npx cap sync
 - **Plugin config keys** (`FirebaseAuthentication`): `authDomain`, `providers`, `skipNativeAuth`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-authentication/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/authentication`, branch `main`)
 
@@ -1034,7 +1034,7 @@ npx cap sync
 - **Plugin config keys** (`FirebaseCrashlytics`): none in `definitions.ts`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-crashlytics/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/crashlytics`, branch `main`)
 
@@ -1055,7 +1055,8 @@ npx cap sync
 - **Plugin config keys** (`FirebaseFirestore`): `databaseId`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `disablePersistence()`, `enablePersistence()`
+- **Config keys added** (`FirebaseFirestore`): `databaseId`
 - **Docs**: https://capgo.app/docs/plugins/firebase-firestore/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/firestore`, branch `main`)
 
@@ -1076,7 +1077,7 @@ npx cap sync
 - **Plugin config keys** (`FirebaseFunctions`): none in `definitions.ts`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-functions/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/functions`, branch `main`)
 
@@ -1097,7 +1098,8 @@ npx cap sync
 - **Plugin config keys** (`FirebaseMessaging`): `presentationOptions`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getPluginVersion()`
+- **Events added**: `apnsTokenReceived`
 - **Docs**: https://capgo.app/docs/plugins/firebase-messaging/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/messaging`, branch `main`)
 
@@ -1118,7 +1120,7 @@ npx cap sync
 - **Plugin config keys** (`FirebasePerformance`): none in `definitions.ts`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-performance/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/performance`, branch `main`)
 
@@ -1139,7 +1141,7 @@ npx cap sync
 - **Plugin config keys** (`FirebaseRemoteConfig`): none in `definitions.ts`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getAll()`, `getPluginVersion()`, `setDefaults()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-remote-config/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/remote-config`, branch `main`)
 
@@ -1160,7 +1162,7 @@ npx cap sync
 - **Plugin config keys** (`FirebaseStorage`): none in `definitions.ts`
 
 - **Versions reviewed**: `analytics/v8.0.2` to `firestore/v8.3.1`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `downloadFile()`, `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-storage/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/storage`, branch `main`)
 

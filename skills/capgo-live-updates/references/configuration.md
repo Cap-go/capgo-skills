@@ -91,7 +91,7 @@ When a bundle needs a newer store build, the plugin can show a native prompt bef
 | `nativeUpdatePromptUpdateButton` | unset | Primary button label |
 | `nativeUpdatePromptLaterButton` | unset | Dismiss button label |
 | `nativeUpdatePromptCountry` | unset | Restrict prompt by country code |
-| `nativeUpdatePromptOnStoreCheck` | `false` | When this and `nativeUpdatePrompt` are both true, `getAppUpdateInfo()` can show the prompt if a store update is available |
+| `nativeUpdatePromptOnStoreCheck` | `false` | When this and `nativeUpdatePrompt` are both true, `getAppUpdateInfo()` can show the prompt if a store update is available. The prompt is shown at most once per app session, in addition to the cooldown |
 | `nativeUpdatePromptCooldownHours` | `24` | Minimum hours between prompts |
 
 ## Logging and debug UI

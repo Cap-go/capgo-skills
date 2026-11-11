@@ -13,6 +13,7 @@ import {
   extractMethodsFromSources,
   loadApiSources,
 } from './lib/parse-definitions.mjs';
+import { changelogReadOutcome } from './lib/fetch-results.mjs';
 
 const CUTOFF = '2026-09-11T00:00:00Z';
 const ORG = 'Cap-go';
@@ -173,14 +174,59 @@ function addedChangelogLines(oldText, newText) {
 
 async function compareChangelog(repo, fromTag, toTag) {
   const names = ['CHANGELOG.md', 'CHANGELOG', 'changelog.md'];
+  const candidates = [];
   for (const name of names) {
     const oldC = await rawAt(repo, fromTag, name);
     const newC = await rawAt(repo, toTag, name);
+    candidates.push({
+      name,
+      oldStatus: oldC.status,
+      newStatus: newC.status,
+      oldError: oldC.error,
+      newError: newC.error,
+    });
     if (oldC.status === 'error' || newC.status === 'error') continue;
     if (oldC.status === 'missing' && newC.status === 'missing') continue;
     return [...new Set(parseChangelogBreaking(addedChangelogLines(oldC.text, newC.text)))];
   }
+  const outcome = changelogReadOutcome(candidates);
+  if (outcome.status === 'failed') throw new Error(outcome.error);
   return [];
+}
+
+async function listPublishablePackages(repo, ref) {
+  let contents;
+  try {
+    contents = ghApi(`repos/${ORG}/${repo}/contents/packages?ref=${encodeURIComponent(ref)}`);
+  } catch (error) {
+    if (/\b404\b/.test(String(error.message))) {
+      return [{ pkgPath: '', pkgName: await discoverPkgName(repo, ref) }];
+    }
+    throw error;
+  }
+  if (!Array.isArray(contents)) {
+    return [{ pkgPath: '', pkgName: await discoverPkgName(repo, ref) }];
+  }
+  const packages = [];
+  for (const entry of contents) {
+    if (entry.type !== 'dir') continue;
+    const pkgPath = `packages/${entry.name}`;
+    const fetched = await rawAt(repo, ref, 'package.json', pkgPath);
+    if (fetched.status === 'error') {
+      throw new Error(`${pkgPath}/package.json at ${ref}: ${fetched.error}`);
+    }
+    if (fetched.status !== 'ok' || !fetched.text) continue;
+    try {
+      const pkg = JSON.parse(fetched.text);
+      if (pkg?.name?.startsWith('@capgo/') && !pkg.private) {
+        packages.push({ pkgPath, pkgName: pkg.name });
+      }
+    } catch {
+      /* skip invalid package.json */
+    }
+  }
+  if (packages.length) return packages;
+  return [{ pkgPath: '', pkgName: await discoverPkgName(repo, ref) }];
 }
 
 async function discoverPkgName(repo, branch = 'main') {
@@ -219,97 +265,106 @@ async function main() {
     'name,isArchived',
   ]).filter((r) => !r.isArchived && r.name.startsWith('capacitor-') && !/-ghsa-/i.test(r.name));
 
-  const results = await mapPool(repos, 2, async (r, idx) => {
+  const nestedResults = await mapPool(repos, 2, async (r, idx) => {
     const repo = r.name;
     try {
       writeSync(2, `diff ${idx + 1}/${repos.length} ${repo}\n`);
       const tags = await resolveTags(repo);
-      if (!tags) return { repo, skipped: true, reason: 'no tags in window' };
+      if (!tags) return [{ repo, skipped: true, reason: 'no tags in window' }];
 
-      const pkgName = await discoverPkgName(repo);
-      const configKey = configKeyFromPackage(pkgName);
-
-      const loadAt = (tag) =>
-        loadApiSources(async (file) => {
-          const fetched = await rawAt(repo, tag, file);
-          if (fetched.status === 'error') {
-            throw new Error(`${file} at ${tag}: ${fetched.error}`);
-          }
-          return fetched.text;
-        });
-
-      let oldSources;
-      let newSources;
-      try {
-        oldSources = await loadAt(tags.fromTag);
-        newSources = await loadAt(tags.toTag);
-      } catch (e) {
-        return { repo, error: e.message };
-      }
-      const oldText = oldSources.join('\n');
-      const newText = newSources.join('\n');
-
-      const oldMethods = extractMethodsFromSources(oldSources);
-      const newMethods = extractMethodsFromSources(newSources);
-      const methodDiff = diffLists(oldMethods, newMethods);
-
-      const oldEvents = extractListenerEvents(oldText);
-      const newEvents = extractListenerEvents(newText);
-      const eventDiff = diffLists(oldEvents, newEvents);
-
-      const oldConfig = extractConfigKeys(oldText, configKey);
-      const newConfig = extractConfigKeys(newText, configKey);
-      const configDiff = diffLists(oldConfig, newConfig);
-
+      const packages = await listPublishablePackages(repo, tags.toTag);
       const breaking = await compareChangelog(repo, tags.fromTag, tags.toTag);
+      const packageResults = [];
+      for (const item of packages) {
+        const pkgName = item.pkgName;
+        const pkgPath = item.pkgPath;
+        const configKey = configKeyFromPackage(pkgName);
 
-      let platformNotes = [];
-      const oldPkg = await rawAt(repo, tags.fromTag, 'package.json');
-      const newPkgRaw = await rawAt(repo, tags.toTag, 'package.json');
-      const oldPkgText = oldPkg.status === 'ok' ? oldPkg.text : null;
-      const newPkgText = newPkgRaw.status === 'ok' ? newPkgRaw.text : null;
-      if (oldPkgText && newPkgText) {
+        const loadAt = (tag) =>
+          loadApiSources(async (file) => {
+            const fetched = await rawAt(repo, tag, file, pkgPath);
+            if (fetched.status === 'error') {
+              throw new Error(`${pkgPath ? `${pkgPath}/` : ''}${file} at ${tag}: ${fetched.error}`);
+            }
+            return fetched.text;
+          });
+
+        let oldSources;
+        let newSources;
         try {
-          const oldPkgJson = JSON.parse(oldPkgText);
-          const newPkgJson = JSON.parse(newPkgText);
-          if (JSON.stringify(oldPkgJson.files || []) !== JSON.stringify(newPkgJson.files || [])) {
-            platformNotes.push(
-              `package files: ${(oldPkgJson.files || []).join(',')} -> ${(newPkgJson.files || []).join(',')}`,
-            );
-          }
-          if (oldPkgJson.description !== newPkgJson.description) {
-            platformNotes.push(`description: ${newPkgJson.description}`);
-          }
-        } catch {
-          /* ignore */
+          oldSources = await loadAt(tags.fromTag);
+          newSources = await loadAt(tags.toTag);
+        } catch (e) {
+          packageResults.push({ repo, package: pkgName, pkgPath, error: e.message });
+          continue;
         }
+        const oldText = oldSources.join('\n');
+        const newText = newSources.join('\n');
+
+        const oldMethods = extractMethodsFromSources(oldSources);
+        const newMethods = extractMethodsFromSources(newSources);
+        const methodDiff = diffLists(oldMethods, newMethods);
+
+        const oldEvents = extractListenerEvents(oldText);
+        const newEvents = extractListenerEvents(newText);
+        const eventDiff = diffLists(oldEvents, newEvents);
+
+        const oldConfig = extractConfigKeys(oldText, configKey);
+        const newConfig = extractConfigKeys(newText, configKey);
+        const configDiff = diffLists(oldConfig, newConfig);
+
+        let platformNotes = [];
+        const oldPkg = await rawAt(repo, tags.fromTag, 'package.json', pkgPath);
+        const newPkgRaw = await rawAt(repo, tags.toTag, 'package.json', pkgPath);
+        const oldPkgText = oldPkg.status === 'ok' ? oldPkg.text : null;
+        const newPkgText = newPkgRaw.status === 'ok' ? newPkgRaw.text : null;
+        if (oldPkgText && newPkgText) {
+          try {
+            const oldPkgJson = JSON.parse(oldPkgText);
+            const newPkgJson = JSON.parse(newPkgText);
+            if (JSON.stringify(oldPkgJson.files || []) !== JSON.stringify(newPkgJson.files || [])) {
+              platformNotes.push(
+                `package files: ${(oldPkgJson.files || []).join(',')} -> ${(newPkgJson.files || []).join(',')}`,
+              );
+            }
+            if (oldPkgJson.description !== newPkgJson.description) {
+              platformNotes.push(`description: ${newPkgJson.description}`);
+            }
+          } catch {
+            /* ignore */
+          }
+        }
+
+        const hasApiChange =
+          methodDiff.added.length ||
+          methodDiff.removed.length ||
+          eventDiff.added.length ||
+          eventDiff.removed.length ||
+          configDiff.added.length ||
+          configDiff.removed.length;
+
+        packageResults.push({
+          repo,
+          package: pkgName,
+          pkgPath,
+          ...tags,
+          methods: { current: newMethods, ...methodDiff },
+          events: { current: newEvents, ...eventDiff },
+          config: { key: configKey, current: newConfig, ...configDiff },
+          breakingNotes: breaking,
+          platformNotes,
+          hasApiChange:
+            hasApiChange || breaking.length > 0 || platformNotes.length > 0,
+          noDefinitions: newSources.length === 0 || !newText,
+        });
       }
-
-      const hasApiChange =
-        methodDiff.added.length ||
-        methodDiff.removed.length ||
-        eventDiff.added.length ||
-        eventDiff.removed.length ||
-        configDiff.added.length ||
-        configDiff.removed.length;
-
-      return {
-        repo,
-        package: pkgName,
-        ...tags,
-        methods: { current: newMethods, ...methodDiff },
-        events: { current: newEvents, ...eventDiff },
-        config: { key: configKey, current: newConfig, ...configDiff },
-        breakingNotes: breaking,
-        platformNotes,
-        hasApiChange:
-          hasApiChange || breaking.length > 0 || platformNotes.length > 0,
-        noDefinitions: newSources.length === 0 || !newText,
-      };
+      return packageResults;
     } catch (e) {
-      return { repo, error: e.message };
+      return [{ repo, error: e.message }];
     }
   });
+
+  const results = nestedResults.flat();
 
   const failures = results.filter((r) => r.error);
   if (failures.length) {

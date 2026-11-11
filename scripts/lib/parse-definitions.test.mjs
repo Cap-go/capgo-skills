@@ -7,6 +7,11 @@ import {
   extractMethodsFromSources,
   loadApiSources,
 } from './parse-definitions.mjs';
+import {
+  changelogReadOutcome,
+  classifyRawHttpStatus,
+  findCachedDiff,
+} from './fetch-results.mjs';
 
 const adjacentSignatures = `export interface SamplePlugin {
   /** single line a */
@@ -192,6 +197,39 @@ export interface StripePlugin extends StripeDefinitions {
     const sources = await loadApiSources(async (file) => files[file] ?? null);
     assert.deepEqual(extractMethodsFromSources(sources), ['createPaymentSheet', 'initialize']);
   });
+
+  it('resolves .js import specifiers to TypeScript sources', async () => {
+    const files = {
+      'src/definitions.ts': `import type { PaymentSheetDefinitions } from './paymentsheet.js';
+type StripeDefinitions = PaymentSheetDefinitions;
+export interface StripePlugin extends StripeDefinitions {
+  initialize(opts: { key: string }): Promise<void>;
+}
+`,
+      'src/paymentsheet.ts': `export interface PaymentSheetDefinitions {
+  createPaymentSheet(options: { id: string }): Promise<void>;
+}
+`,
+    };
+    const sources = await loadApiSources(async (file) => files[file] ?? null);
+    assert.deepEqual(extractMethodsFromSources(sources), ['createPaymentSheet', 'initialize']);
+  });
+
+  it('keeps loading until a Plugin interface is found instead of stopping on fallback methods', async () => {
+    const files = {
+      'src/definitions.ts': `export interface NativeMapInterface {
+  helperOnly(): Promise<void>;
+}
+`,
+      'src/implementation.ts': `export interface NativeMapPlugin extends Plugin {
+  create(options: { id: string }): Promise<void>;
+  addMarker(args: { id: string }): Promise<{ id: string }>;
+}
+`,
+    };
+    const sources = await loadApiSources(async (file) => files[file] ?? null);
+    assert.deepEqual(extractMethodsFromSources(sources), ['addMarker', 'create']);
+  });
 });
 
 describe('configKeyFromPackage', () => {
@@ -217,5 +255,67 @@ describe('extractConfigKeys', () => {
       'dividerColor',
       'style',
     ]);
+  });
+});
+
+describe('classifyRawHttpStatus', () => {
+  it('returns missing only for 404 and fail after a final retryable error', () => {
+    assert.equal(classifyRawHttpStatus(200, false), 'ok');
+    assert.equal(classifyRawHttpStatus(404, false), 'missing');
+    assert.equal(classifyRawHttpStatus(403, true), 'retry');
+    assert.equal(classifyRawHttpStatus(429, true), 'retry');
+    assert.equal(classifyRawHttpStatus(503, true), 'retry');
+    assert.equal(classifyRawHttpStatus(403, false), 'fail');
+    assert.equal(classifyRawHttpStatus(500, false), 'fail');
+    assert.equal(classifyRawHttpStatus(401, true), 'fail');
+  });
+});
+
+describe('changelogReadOutcome', () => {
+  it('skips a failed candidate when another changelog can be compared', () => {
+    assert.deepEqual(
+      changelogReadOutcome([
+        { name: 'CHANGELOG.md', oldStatus: 'error', newStatus: 'ok', oldError: 'HTTP 503' },
+        { name: 'CHANGELOG', oldStatus: 'ok', newStatus: 'ok' },
+      ]),
+      { status: 'compared' },
+    );
+  });
+
+  it('fails when every changelog read failed', () => {
+    const outcome = changelogReadOutcome([
+      { name: 'CHANGELOG.md', oldStatus: 'error', newStatus: 'error', oldError: 'HTTP 503', newError: 'HTTP 503' },
+      { name: 'CHANGELOG', oldStatus: 'error', newStatus: 'missing', oldError: 'HTTP 429' },
+      { name: 'changelog.md', oldStatus: 'missing', newStatus: 'error', newError: 'HTTP 500' },
+    ]);
+    assert.equal(outcome.status, 'failed');
+    assert.match(outcome.error, /changelog reads failed/);
+  });
+
+  it('returns none when every changelog candidate is missing', () => {
+    assert.deepEqual(
+      changelogReadOutcome([
+        { name: 'CHANGELOG.md', oldStatus: 'missing', newStatus: 'missing' },
+        { name: 'CHANGELOG', oldStatus: 'missing', newStatus: 'missing' },
+      ]),
+      { status: 'none' },
+    );
+  });
+});
+
+describe('findCachedDiff', () => {
+  it('prefers a package-keyed diff over a repo-level fallback', () => {
+    const diffs = [
+      { repo: 'capacitor-firebase', package: '@capgo/capacitor-firebase', methods: { added: [] } },
+      { repo: 'capacitor-firebase', package: '@capgo/capacitor-firebase-analytics', pkgPath: 'packages/analytics', methods: { added: ['logEvent'] } },
+    ];
+    assert.deepEqual(
+      findCachedDiff(diffs, '@capgo/capacitor-firebase-analytics', 'capacitor-firebase').methods.added,
+      ['logEvent'],
+    );
+    assert.equal(
+      findCachedDiff(diffs, '@capgo/capacitor-admob', 'capacitor-admob'),
+      null,
+    );
   });
 });
