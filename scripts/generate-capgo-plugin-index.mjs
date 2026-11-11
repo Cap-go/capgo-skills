@@ -1,8 +1,14 @@
 /**
  * Build Capgo plugin catalog and index Markdown from Cap-go GitHub repositories.
  */
-import { writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import {
+  configKeyFromPackage,
+  extractConfigKeys,
+  extractListenerEvents,
+  extractMethods,
+} from './lib/parse-definitions.mjs';
 
 const ORG = 'Cap-go';
 const ROOT = process.cwd();
@@ -116,35 +122,50 @@ function titleFromPackage(name) {
     .join(' ');
 }
 
-/** Extract Promise-returning plugin method names from definitions.ts. */
-function extractMethods(definitionsText) {
-  if (!definitionsText) return [];
-  const methods = [];
-  const re = /^\s{2,4}([a-zA-Z]\w*)\([\s\S]*?\):\s*Promise[\s\S]*?;\n/gm;
-  let match;
-  while ((match = re.exec(definitionsText)) !== null) {
-    const name = match[1];
-    if (name === 'addListener' || name === 'removeAllListeners') continue;
-    methods.push(name);
+const DIFF_CACHE = path.join(ROOT, 'scripts/.cache/capgo-api-diffs.json');
+
+/** @param {Map<string, object>} diffByRepo */
+function formatApiChangeBlock(repo, diffByRepo) {
+  const diff = diffByRepo.get(repo);
+  if (!diff?.fromTag || !diff?.toTag) return '';
+  const lines = [`- **Versions reviewed**: \`${diff.fromTag}\` to \`${diff.toTag}\``];
+  const { methods, events, config, breakingNotes, platformNotes } = diff;
+  if (methods.added.length) {
+    lines.push(`- **Methods added**: ${methods.added.map((m) => `\`${m}()\``).join(', ')}`);
   }
-  const unique = [...new Set(methods)];
-  const priority = [
-    'connect',
-    'disconnect',
-    'notifyAppReady',
-    'download',
-    'getLatest',
-    'checkPermissions',
-    'requestPermissions',
-    'getPluginVersion',
-  ];
-  unique.sort((a, b) => {
-    const pa = priority.indexOf(a);
-    const pb = priority.indexOf(b);
-    if (pa !== -1 || pb !== -1) return (pa === -1 ? 99 : pa) - (pb === -1 ? 99 : pb);
-    return a.localeCompare(b);
-  });
-  return unique.slice(0, 12);
+  if (methods.removed.length) {
+    lines.push(`- **Methods removed**: ${methods.removed.map((m) => `\`${m}()\``).join(', ')}`);
+  }
+  if (events.added.length) {
+    lines.push(`- **Events added**: ${events.added.map((e) => `\`${e}\``).join(', ')}`);
+  }
+  if (events.removed.length) {
+    lines.push(`- **Events removed**: ${events.removed.map((e) => `\`${e}\``).join(', ')}`);
+  }
+  if (config.added.length) {
+    lines.push(`- **Config keys added** (\`${config.key}\`): ${config.added.map((k) => `\`${k}\``).join(', ')}`);
+  }
+  if (config.removed.length) {
+    lines.push(`- **Config keys removed**: ${config.removed.map((k) => `\`${k}\``).join(', ')}`);
+  }
+  if (platformNotes?.length) {
+    lines.push(`- **Platform or packaging**: ${sanitize(platformNotes.join(' '))}`);
+  }
+  if (breakingNotes?.length) {
+    lines.push(`- **Changelog notes**: ${sanitize(breakingNotes.slice(0, 6).join(' '))}`);
+  }
+  if (
+    lines.length === 1 &&
+    !methods.added.length &&
+    !methods.removed.length &&
+    !events.added.length &&
+    !events.removed.length &&
+    !config.added.length &&
+    !config.removed.length
+  ) {
+    lines.push(`- **API delta in window**: none in \`definitions.ts\` between these tags`);
+  }
+  return `\n${lines.join('\n')}\n`;
 }
 
 /** Infer supported platforms from a package description when explicit. */
@@ -254,14 +275,19 @@ function formatCatalogRow(entry) {
 }
 
 /** Format one detailed plugin index section. */
-function formatIndexEntry(entry) {
-  const { title, pkg, repo, platforms, methods, branch } = entry;
+function formatIndexEntry(entry, diffByRepo) {
+  const { title, pkg, repo, platforms, methods, events, configKeys, branch } = entry;
   const desc = sanitize(pkg.description || 'Capacitor plugin from Capgo.');
   const docs = docsUrl(pkg);
   const source = `https://github.com/${ORG}/${repo}`;
   const platformStr = platforms.length ? platforms.join(', ') : 'See repository';
   const methodStr = methods.length ? methods.map((m) => `\`${m}()\``).join(', ') : 'See `src/definitions.ts` in the repository';
+  const eventStr = events.length ? events.map((e) => `\`${e}\``).join(', ') : 'none';
+  const configStr = configKeys.length
+    ? configKeys.map((k) => `\`${k}\``).join(', ')
+    : 'none in `definitions.ts`';
   const installPath = entry.pkgPath ? `${repo} (${entry.pkgPath})` : repo;
+  const changeBlock = formatApiChangeBlock(repo, diffByRepo);
 
   return `## ${title}
 
@@ -275,8 +301,10 @@ npx cap sync
 \`\`\`
 
 - **Platforms**: ${platformStr}
-- **Key API methods**: ${methodStr}
-- **Docs**: ${docs}
+- **API methods**: ${methodStr}
+- **Events**: ${eventStr}
+- **Plugin config keys** (\`${entry.configKey}\`): ${configStr}
+${changeBlock}- **Docs**: ${docs}
 - **Repository**: ${source}${entry.pkgPath ? ` (package path: \`${entry.pkgPath}\`, branch \`${branch}\`)` : ''}
 `;
 }
@@ -327,15 +355,29 @@ async function main() {
 
   const uniquePackages = dedupePackages(allPackages).sort((a, b) => a.pkg.name.localeCompare(b.pkg.name));
 
+  let diffByRepo = new Map();
+  try {
+    const diffs = JSON.parse(await readFile(DIFF_CACHE, 'utf8'));
+    diffByRepo = new Map(diffs.filter((d) => d.repo).map((d) => [d.repo, d]));
+  } catch {
+    console.warn('No API diff cache at', DIFF_CACHE, '(run node scripts/diff-capgo-plugin-apis.mjs first).');
+  }
+
   const enriched = await mapPool(uniquePackages, 10, async (item) => {
     const relBase = item.pkgPath ? `${item.pkgPath}/` : '';
     const definitions = await rawText(item.repo, `${relBase}src/definitions.ts`, item.branch);
     const methods = extractMethods(definitions);
+    const events = extractListenerEvents(definitions);
+    const configKey = configKeyFromPackage(item.pkg.name);
+    const configKeys = extractConfigKeys(definitions, configKey);
     const platforms = await detectPlatforms(item.repo, item.pkgPath, item.branch, item.pkg);
     return {
       ...item,
       title: titleFromPackage(item.pkg.name),
       methods,
+      events,
+      configKeys,
+      configKey,
       platforms,
     };
   });
@@ -374,7 +416,7 @@ Total packages: ${enriched.length} (generated ${generatedAt})
 
 `;
 
-  const indexBody = enriched.map(formatIndexEntry).join('\n');
+  const indexBody = enriched.map((e) => formatIndexEntry(e, diffByRepo)).join('\n');
   const index = `${indexHeader}${indexBody}`;
 
   await mkdir(OUT_DIR, { recursive: true });

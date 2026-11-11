@@ -139,7 +139,21 @@ Official `@capacitor/*` packages (install, native config, usage, gotchas):
 | Toast | `references/capacitor-toast.md` |
 | Apple Watch UI (experimental) | `references/capacitor-watch.md` |
 
-Capgo plugins: `references/capgo-plugin-index.md` (150 packages: install, platforms, key APIs, docs) and `references/capgo-plugin-catalog.md` (compact table).
+Capgo plugins: `references/capgo-plugin-index.md` (150 packages: full API methods, events, config keys, and per-release deltas since 2026-09-11) and `references/capgo-plugin-catalog.md` (compact table).
+
+Capgo deep references (recent API changes):
+
+| Need | Reference |
+|------|-----------|
+| Playlist queue, playback state, audio route | `references/capgo-native-audio.md` |
+| Zebra DataWedge diagnostics and scan intents | `references/capgo-zebra-datawedge.md` |
+| iOS geofence queue | `references/capgo-background-geolocation.md` |
+| PDF `underWebView` and layout | `references/capgo-pdf-viewer.md` |
+| IAP configure and finishTransaction | `references/capgo-native-purchases.md` |
+| Live Activities upgrade notes | `references/capgo-live-activities.md` |
+| OAuth `openAuthSession` | `references/capgo-social-login.md` |
+| Apple Watch and Wear OS | `references/capgo-watch.md` |
+| Capgo in-app browser fullscreen and scripting | `references/capgo-inappbrowser.md` |
 
 ## Capgo Quick Picks
 

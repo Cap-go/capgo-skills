@@ -58,6 +58,8 @@ Also install `@capacitor/splash-screen` and upload with `--delta`. A full zip ov
 | --- | --- | --- |
 | `publicKey` | unset | Encryption v2 public key. Written by `npx @capgo/cli@latest key save` / `key create` |
 | `allowHttpsToHttpRedirect` | `false` | Keep it off unless a self-hosted CDN really redirects to HTTP |
+| `httpsOnly` | `false` | Reject non-HTTPS update URLs when enabled |
+| `builtinMinimum` | unset | Minimum native build required before OTA bundles apply |
 | `allowModifyUrl` | `false` | Required for `setUpdateUrl` / `setStatsUrl` / `setChannelUrl` |
 | `persistModifyUrl` | `false` | Persist runtime URL overrides |
 | `allowModifyAppId` | `false` | Required for `setAppId` |
@@ -76,6 +78,21 @@ There is no `privateKey` config key. Never put the private key in the app.
 | `appId` | native bundle id. Override when the Capgo app id differs |
 
 Self-hosting guide: https://capgo.app/docs/plugins/updater/self-hosted/getting-started/. For a fully self-hosted backend, the CLI takes `--supa-host` and `--supa-anon` on supported commands. Do not invent a Docker image. Point users to the documented guide.
+
+## Native store update prompts (since 8.52)
+
+When a bundle needs a newer store build, the plugin can show a native prompt before opening the store.
+
+| Key | Default | Notes |
+| --- | --- | --- |
+| `nativeUpdatePrompt` | `false` | Master switch for the native update prompt flow |
+| `nativeUpdatePromptTitle` | unset | Prompt title copy |
+| `nativeUpdatePromptMessage` | unset | Body copy |
+| `nativeUpdatePromptUpdateButton` | unset | Primary button label |
+| `nativeUpdatePromptLaterButton` | unset | Dismiss button label |
+| `nativeUpdatePromptCountry` | unset | Restrict prompt by country code |
+| `nativeUpdatePromptOnStoreCheck` | unset | When to run relative to store version check |
+| `nativeUpdatePromptCooldownHours` | unset | Minimum hours between prompts |
 
 ## Logging and debug UI
 
