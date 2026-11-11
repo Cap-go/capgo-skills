@@ -738,7 +738,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `scanDocument()`
+- **API methods**: `scanDocument()`
 - **Events**: none
 - **Plugin config keys** (`DocumentScanner`): none in `definitions.ts`
 
@@ -843,7 +843,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `convertImage()`, `getCapabilities()`, `getPluginVersion()`, `reencodeVideo()`
+- **API methods**: `convertAudio()`, `convertImage()`, `getCapabilities()`, `getPluginVersion()`, `reencodeVideo()`
 - **Events**: `progress`
 - **Plugin config keys** (`Ffmpeg`): none in `definitions.ts`
 - **Docs**: https://capgo.app/docs/plugins/ffmpeg/
@@ -1323,7 +1323,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `bringToFront()`, `clearAllBrowsingData()`, `clearAllCookies()`, `clearCache()`, `clearCookies()`, `close()`, `dispatchInputEvent()`, `executeScript()`, `getCookies()`, `getFullscreen()`, `getPluginVersion()`, `goBack()`, `handleProxyRequest()`, `hide()`, `open()`, `openSecureWindow()`, `openWebView()`, `postMessage()`, `reload()`, `sendToBack()`, `setEnabledSafeBottomMargin()`, `setEnabledSafeTopMargin()`, `setFullscreen()`, `setUrl()`, `show()`, `takeScreenshot()`, `updateDimensions()`
+- **API methods**: `bringToFront()`, `clearAllBrowsingData()`, `clearAllCookies()`, `clearCache()`, `clearCookies()`, `close()`, `dispatchInputEvent()`, `executeScript()`, `getCookies()`, `getFullscreen()`, `goBack()`, `handleProxyRequest()`, `hide()`, `open()`, `openSecureWindow()`, `openWebView()`, `postMessage()`, `reload()`, `sendToBack()`, `setEnabledSafeBottomMargin()`, `setEnabledSafeTopMargin()`, `setFullscreen()`, `setUrl()`, `show()`, `takeScreenshot()`, `updateDimensions()`
 - **Events**: `browserPageLoadProgress`, `browserPageLoadStart`, `browserPageLoaded`, `buttonNearDoneClick`, `closeEvent`, `confirmBtnClicked`, `consoleMessage`, `customSchemeIntercepted`, `downloadCompleted`, `downloadFailed`, `fullscreenChange`, `hideEvent`, `messageFromWebview`, `pageLoadError`, `popupWindowOpened`, `proxyRequest`, `screenshotTaken`, `urlChangeEvent`
 - **Plugin config keys** (`Inappbrowser`): none in `definitions.ts`
 
@@ -1493,7 +1493,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `currentPlaylist()`, `getAudioTracks()`, `getCaptions()`, `getCurrentAudioTrack()`, `getCurrentCaptions()`, `getPluginVersion()`, `getPosition()`, `getState()`, `initialize()`, `loadPlaylist()`, `loadPlaylistWithItems()`, `pause()`, `play()`, `resume()`, `seekTo()`, `setCurrentAudioTrack()`, `setCurrentCaptions()`, `setPlaylistIndex()`, `setSpeed()`, `setVolume()`, `stop()`
+- **API methods**: `currentPlaylist()`, `getAudioTracks()`, `getCaptions()`, `getCurrentAudioTrack()`, `getCurrentCaptions()`, `getPosition()`, `getState()`, `initialize()`, `loadPlaylist()`, `loadPlaylistWithItems()`, `pause()`, `play()`, `resume()`, `seekTo()`, `setCurrentAudioTrack()`, `setCurrentCaptions()`, `setPlaylistIndex()`, `setSpeed()`, `setVolume()`, `stop()`
 - **Events**: none
 - **Plugin config keys** (`JwPlayer`): none in `definitions.ts`
 
@@ -1724,7 +1724,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `dismiss()`, `getPluginVersion()`, `isActive()`, `play()`
+- **API methods**: `dismiss()`, `isActive()`, `play()`
 - **Events**: none
 - **Plugin config keys** (`MuxPlayer`): none in `definitions.ts`
 
@@ -1810,7 +1810,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `constructor()`
+- **API methods**: See `src/definitions.ts` in the repository
 - **Events**: none
 - **Plugin config keys** (`NativeMap`): none in `definitions.ts`
 
@@ -2612,7 +2612,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `acceptCall()`, `call()`, `endCall()`, `getCallInfo()`, `getCallStatus()`, `getCurrentUser()`, `getDynamicStreamVideoApikey()`, `getPluginVersion()`, `isCameraEnabled()`, `login()`, `logout()`, `rejectCall()`, `setCameraEnabled()`, `setDynamicStreamVideoApikey()`, `setMicrophoneEnabled()`, `setSpeaker()`, `switchCamera()`
+- **API methods**: `acceptCall()`, `call()`, `enableBluetooth()`, `endCall()`, `getCallInfo()`, `getCallStatus()`, `getCurrentUser()`, `getDynamicStreamVideoApikey()`, `getPluginVersion()`, `getRingingCall()`, `isCameraEnabled()`, `joinCall()`, `login()`, `logout()`, `rejectCall()`, `setCameraEnabled()`, `setDynamicStreamVideoApikey()`, `setMicrophoneEnabled()`, `setSpeaker()`, `switchCamera()`, `toggleViews()`
 - **Events**: `callEvent`, `incomingCall`
 - **Plugin config keys** (`StreamCall`): none in `definitions.ts`
 
@@ -2759,7 +2759,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `acceptCall()`, `checkMicrophonePermission()`, `endCall()`, `getCallStatus()`, `getPluginVersion()`, `isLoggedIn()`, `login()`, `logout()`, `makeCall()`, `muteCall()`, `rejectCall()`, `remove()`, `requestMicrophonePermission()`, `setSpeaker()`
+- **API methods**: `acceptCall()`, `checkMicrophonePermission()`, `endCall()`, `getCallStatus()`, `getPluginVersion()`, `isLoggedIn()`, `login()`, `logout()`, `makeCall()`, `muteCall()`, `rejectCall()`, `requestMicrophonePermission()`, `setSpeaker()`
 - **Events**: `callConnected`, `callDisconnected`, `callInviteCancelled`, `callInviteReceived`, `callQualityWarningsChanged`, `callReconnected`, `callReconnecting`, `callRinging`, `outgoingCallFailed`, `outgoingCallInitiated`, `registrationFailure`, `registrationSuccess`
 - **Plugin config keys** (`TwilioVoice`): none in `definitions.ts`
 

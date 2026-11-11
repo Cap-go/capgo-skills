@@ -31,6 +31,15 @@ export interface SampleHelper {
 }
 `;
 
+const extendsPlugin = `export interface CapacitorSamplePlugin extends Plugin {
+  alpha(): Promise<void>;
+  optional?(options?: { id: string }): Promise<void>;
+}
+export interface ScanDocumentResponse {
+  getPluginVersion(): Promise<{ version: string }>;
+}
+`;
+
 describe('extractMethods', () => {
   it('collects adjacent single-line and multi-line Promise methods without skipping', () => {
     assert.deepEqual(extractMethods(adjacentSignatures), ['alpha', 'beta', 'delta', 'gamma']);
@@ -38,6 +47,10 @@ describe('extractMethods', () => {
 
   it('ignores Promise methods on non-Plugin interfaces', () => {
     assert.deepEqual(extractMethods(helperInterface), ['pluginOnly']);
+  });
+
+  it('parses extends Plugin and optional Promise methods', () => {
+    assert.deepEqual(extractMethods(extendsPlugin), ['alpha', 'optional']);
   });
 });
 

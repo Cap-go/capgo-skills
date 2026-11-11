@@ -2,13 +2,31 @@
  * Parse Capacitor plugin src/definitions.ts for API surface.
  */
 
-const PLUGIN_IFACE_RE = /export interface (\w+Plugin)\s*\{([\s\S]*?)^\}/gm;
+const PLUGIN_IFACE_RE =
+  /export interface (\w+Plugin)(?:\s+extends\s+[\w.]+)?\s*\{([\s\S]*?)^\}/gm;
+const EXTENDS_PLUGIN_RE = /export interface (\w+)\s+extends\s+Plugin\s*\{([\s\S]*?)^\}/gm;
+const EXTRA_PLUGIN_IFACE_RES = [
+  /export interface NativeAudio\s*\{([\s\S]*?)^\}/m,
+  /export interface StripePlugin\s+extends\s+StripeDefinitions\s*\{([\s\S]*?)^\}/m,
+];
+
+function collectPluginInterfaceBodies(definitionsText) {
+  const bodies = [];
+  for (const re of [PLUGIN_IFACE_RE, EXTENDS_PLUGIN_RE, ...EXTRA_PLUGIN_IFACE_RES]) {
+    re.lastIndex = 0;
+    let match;
+    while ((match = re.exec(definitionsText))) {
+      bodies.push(match[match.length - 1]);
+    }
+  }
+  return bodies;
+}
 
 function extractMethodsFromBlock(block) {
   const methods = [];
   const lines = block.split('\n');
   for (let i = 0; i < lines.length; i++) {
-    const head = lines[i].match(/^\s{2,4}([a-zA-Z]\w*)\(/);
+    const head = lines[i].match(/^\s{2,4}([a-zA-Z]\w*)\??\(/);
     if (!head) continue;
     const name = head[1];
     const parts = [lines[i]];
@@ -16,7 +34,7 @@ function extractMethodsFromBlock(block) {
     let foundPromise = false;
     while (j < lines.length) {
       const next = lines[j];
-      if (/^\s{2,4}[a-zA-Z]\w*\(/.test(next)) break;
+      if (/^\s{2,4}[a-zA-Z]\w*\??\(/.test(next)) break;
       if (/^}\s*$/.test(next.trim()) && foundPromise) break;
       parts.push(next);
       if (next.includes('): Promise') || next.includes('): Promise<')) foundPromise = true;
@@ -36,10 +54,8 @@ function extractMethodsFromBlock(block) {
 export function extractMethods(definitionsText) {
   if (!definitionsText) return [];
   const methods = [];
-  PLUGIN_IFACE_RE.lastIndex = 0;
-  let match;
-  while ((match = PLUGIN_IFACE_RE.exec(definitionsText))) {
-    methods.push(...extractMethodsFromBlock(match[2]));
+  for (const body of collectPluginInterfaceBodies(definitionsText)) {
+    methods.push(...extractMethodsFromBlock(body));
   }
   return [...new Set(methods)].sort();
 }
