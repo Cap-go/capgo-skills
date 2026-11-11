@@ -23,9 +23,21 @@ const adjacentSignatures = `export interface SamplePlugin {
 }
 `;
 
+const helperInterface = `export interface SamplePlugin {
+  pluginOnly(): Promise<void>;
+}
+export interface SampleHelper {
+  helperOnly(): Promise<void>;
+}
+`;
+
 describe('extractMethods', () => {
   it('collects adjacent single-line and multi-line Promise methods without skipping', () => {
     assert.deepEqual(extractMethods(adjacentSignatures), ['alpha', 'beta', 'delta', 'gamma']);
+  });
+
+  it('ignores Promise methods on non-Plugin interfaces', () => {
+    assert.deepEqual(extractMethods(helperInterface), ['pluginOnly']);
   });
 });
 

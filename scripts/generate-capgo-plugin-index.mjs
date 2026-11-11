@@ -85,7 +85,7 @@ async function listMonorepoPackages(repo, branch) {
     contents = await gh(`/repos/${ORG}/${repo}/contents/packages?ref=${branch}`);
   } catch (error) {
     const msg = String(error.message);
-    if (msg.includes(': 404') || msg.includes(': 403')) return [];
+    if (msg.includes(': 404')) return [];
     throw error;
   }
   if (!Array.isArray(contents)) return [];
@@ -334,6 +334,17 @@ async function mapPool(items, concurrency, fn) {
   return results;
 }
 
+/** Default git branch for a repository when org discovery is unavailable. */
+async function resolveDefaultBranch(repo) {
+  try {
+    const data = await gh(`/repos/${ORG}/${repo}`);
+    return data.default_branch || 'main';
+  } catch {
+    if (await rawText(repo, 'package.json', 'master')) return 'master';
+    return 'main';
+  }
+}
+
 /** Repository names from an existing catalog or index when the org list API is unavailable. */
 async function reposFromExistingIndex() {
   let text;
@@ -345,10 +356,13 @@ async function reposFromExistingIndex() {
   const names = [
     ...text.matchAll(new RegExp(`github\\.com/${ORG}/(capacitor-[^)\\s|]+|cordova-updater)`, 'g')),
   ].map((m) => m[1]);
-  return [...new Set(names)]
+  const unique = [...new Set(names)]
     .filter((name) => REPO_FILTER.test(name))
-    .sort((a, b) => a.localeCompare(b))
-    .map((name) => ({ name, branch: 'main' }));
+    .sort((a, b) => a.localeCompare(b));
+  return mapPool(unique, 8, async (name) => ({
+    name,
+    branch: await resolveDefaultBranch(name),
+  }));
 }
 
 /** List Cap-go plugin repositories via the org API, or from the checked-in catalog on rate limits. */

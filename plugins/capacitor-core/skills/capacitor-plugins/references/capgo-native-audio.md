@@ -25,10 +25,10 @@ npx cap sync
 ## Queue and playback
 
 ```typescript
-import { NativeAudio, PlaybackState } from '@capgo/capacitor-native-audio';
+import { NativeAudio } from '@capgo/capacitor-native-audio';
 
 await NativeAudio.configure({ focus: true });
-await NativeAudio.setQueue({ tracks: [{ assetId: 'a', assetPath: 'public/a.mp3' }] });
+await NativeAudio.setQueue({ items: [{ assetId: 'a', assetPath: 'public/a.mp3' }] });
 await NativeAudio.play({ assetId: 'a' });
 await NativeAudio.queueNext();
 const { state } = await NativeAudio.getPlaybackState();
@@ -40,8 +40,8 @@ Subscribe:
 ```typescript
 await NativeAudio.addListener('queueChange', () => {});
 await NativeAudio.addListener('playbackState', ({ state }) => {});
-await NativeAudio.addListener('progress', ({ currentTime, duration }) => {});
-await NativeAudio.addListener('audioRouteChange', ({ outputs }) => {});
+await NativeAudio.addListener('progress', ({ position, duration }) => {});
+await NativeAudio.addListener('audioRouteChange', ({ route }) => {});
 ```
 
 ## Audio route

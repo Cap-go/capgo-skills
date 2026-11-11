@@ -36,9 +36,11 @@ async function rawAt(repo, tag, filePath, pkgPath = '') {
   const rel = pkgPath ? `${pkgPath}/${filePath}` : filePath;
   try {
     const data = ghApi(`repos/${ORG}/${repo}/contents/${rel}?ref=${encodeURIComponent(tag)}`);
-    return Buffer.from(data.content, 'base64').toString('utf8');
-  } catch {
-    return null;
+    return { status: 'ok', text: Buffer.from(data.content, 'base64').toString('utf8') };
+  } catch (e) {
+    const msg = e.message || String(e);
+    if (/\b404\b/.test(msg)) return { status: 'missing', text: null };
+    return { status: 'error', error: msg };
   }
 }
 
@@ -186,9 +188,7 @@ async function main() {
     '500',
     '--json',
     'name,isArchived,latestRelease',
-  ]).filter(
-    (r) => !r.isArchived && r.name.startsWith('capacitor-') && r.latestRelease?.publishedAt >= CUTOFF,
-  );
+  ]).filter((r) => !r.isArchived && r.name.startsWith('capacitor-'));
 
   const results = await mapPool(repos, 6, async (r) => {
     const repo = r.name;
@@ -201,33 +201,45 @@ async function main() {
 
       const oldDef = await rawAt(repo, tags.fromTag, 'src/definitions.ts');
       const newDef = await rawAt(repo, tags.toTag, 'src/definitions.ts');
+      if (oldDef.status === 'error') {
+        return { repo, error: `definitions at ${tags.fromTag}: ${oldDef.error}` };
+      }
+      if (newDef.status === 'error') {
+        return { repo, error: `definitions at ${tags.toTag}: ${newDef.error}` };
+      }
+      const oldText = oldDef.text ?? '';
+      const newText = newDef.text ?? '';
 
-      const oldMethods = extractMethods(oldDef || '');
-      const newMethods = extractMethods(newDef || '');
+      const oldMethods = extractMethods(oldText);
+      const newMethods = extractMethods(newText);
       const methodDiff = diffLists(oldMethods, newMethods);
 
-      const oldEvents = extractListenerEvents(oldDef || '');
-      const newEvents = extractListenerEvents(newDef || '');
+      const oldEvents = extractListenerEvents(oldText);
+      const newEvents = extractListenerEvents(newText);
       const eventDiff = diffLists(oldEvents, newEvents);
 
-      const oldConfig = extractConfigKeys(oldDef || '', configKey);
-      const newConfig = extractConfigKeys(newDef || '', configKey);
+      const oldConfig = extractConfigKeys(oldText, configKey);
+      const newConfig = extractConfigKeys(newText, configKey);
       const configDiff = diffLists(oldConfig, newConfig);
 
       const breaking = await compareChangelog(repo, tags.fromTag, tags.toTag);
 
       let platformNotes = [];
-      const oldPkgText = await rawAt(repo, tags.fromTag, 'package.json');
-      const newPkgText = await rawAt(repo, tags.toTag, 'package.json');
+      const oldPkg = await rawAt(repo, tags.fromTag, 'package.json');
+      const newPkgRaw = await rawAt(repo, tags.toTag, 'package.json');
+      const oldPkgText = oldPkg.status === 'ok' ? oldPkg.text : null;
+      const newPkgText = newPkgRaw.status === 'ok' ? newPkgRaw.text : null;
       if (oldPkgText && newPkgText) {
         try {
-          const oldPkg = JSON.parse(oldPkgText);
-          const newPkg = JSON.parse(newPkgText);
-          if (JSON.stringify(oldPkg.files || []) !== JSON.stringify(newPkg.files || [])) {
-            platformNotes.push(`package files: ${(oldPkg.files || []).join(',')} -> ${(newPkg.files || []).join(',')}`);
+          const oldPkgJson = JSON.parse(oldPkgText);
+          const newPkgJson = JSON.parse(newPkgText);
+          if (JSON.stringify(oldPkgJson.files || []) !== JSON.stringify(newPkgJson.files || [])) {
+            platformNotes.push(
+              `package files: ${(oldPkgJson.files || []).join(',')} -> ${(newPkgJson.files || []).join(',')}`,
+            );
           }
-          if (oldPkg.description !== newPkg.description) {
-            platformNotes.push(`description: ${newPkg.description}`);
+          if (oldPkgJson.description !== newPkgJson.description) {
+            platformNotes.push(`description: ${newPkgJson.description}`);
           }
         } catch {
           /* ignore */
@@ -253,18 +265,25 @@ async function main() {
         platformNotes,
         hasApiChange:
           hasApiChange || breaking.length > 0 || platformNotes.length > 0,
-        noDefinitions: !newDef,
+        noDefinitions: newDef.status === 'missing' || !newText,
       };
     } catch (e) {
       return { repo, error: e.message };
     }
   });
 
+  const failures = results.filter((r) => r.error);
+  if (failures.length) {
+    console.error('Diff failures:');
+    for (const f of failures) console.error(`- ${f.repo}: ${f.error}`);
+    process.exit(1);
+  }
+
   await mkdir(path.dirname(OUT), { recursive: true });
   await writeFile(OUT, JSON.stringify(results, null, 2));
   const changed = results.filter((r) => r.hasApiChange).length;
-  const errors = results.filter((r) => r.error).length;
-  console.log(`Repos: ${results.length}, API changes: ${changed}, errors: ${errors}`);
+  const skipped = results.filter((r) => r.skipped).length;
+  console.log(`Repos: ${results.length}, API changes: ${changed}, skipped: ${skipped}`);
   console.log(`Wrote ${OUT}`);
 }
 

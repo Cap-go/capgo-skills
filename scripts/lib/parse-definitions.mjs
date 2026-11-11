@@ -4,11 +4,9 @@
 
 const PLUGIN_IFACE_RE = /export interface (\w+Plugin)\s*\{([\s\S]*?)^\}/gm;
 
-/** @returns {string[]} method names on *Plugin interfaces */
-export function extractMethods(definitionsText) {
-  if (!definitionsText) return [];
+function extractMethodsFromBlock(block) {
   const methods = [];
-  const lines = definitionsText.split('\n');
+  const lines = block.split('\n');
   for (let i = 0; i < lines.length; i++) {
     const head = lines[i].match(/^\s{2,4}([a-zA-Z]\w*)\(/);
     if (!head) continue;
@@ -25,11 +23,23 @@ export function extractMethods(definitionsText) {
       if (foundPromise && /;\s*$/.test(next.trim())) break;
       j++;
     }
-    const block = parts.join('\n');
-    if (!/:\s*Promise/.test(block)) continue;
+    const body = parts.join('\n');
+    if (!/:\s*Promise/.test(body)) continue;
     if (name === 'addListener' || name === 'removeAllListeners') continue;
     methods.push(name);
     i = j - 1;
+  }
+  return methods;
+}
+
+/** @returns {string[]} method names on *Plugin interfaces */
+export function extractMethods(definitionsText) {
+  if (!definitionsText) return [];
+  const methods = [];
+  PLUGIN_IFACE_RE.lastIndex = 0;
+  let match;
+  while ((match = PLUGIN_IFACE_RE.exec(definitionsText))) {
+    methods.push(...extractMethodsFromBlock(match[2]));
   }
   return [...new Set(methods)].sort();
 }
@@ -48,12 +58,12 @@ export function extractListenerEvents(definitionsText) {
 export function extractConfigKeys(definitionsText, pluginConfigName) {
   if (!definitionsText || !pluginConfigName) return [];
   const blockRe = new RegExp(
-    `${pluginConfigName}\\??:\\s*\\{([\\s\\S]*?)^\\s{4}\\}`,
+    `${pluginConfigName}\\??:\\s*\\{([\\s\S]*?)^\\s{4}\\}`,
     'm',
   );
   const m = definitionsText.match(blockRe);
   if (!m) {
-    const alt = new RegExp(`${pluginConfigName}:\\s*\\{([\\s\\S]*?)^\\s*\\};`, 'm');
+    const alt = new RegExp(`${pluginConfigName}:\\s*\\{([\\s\S]*?)^\\s*\\};`, 'm');
     const m2 = definitionsText.match(alt);
     if (!m2) return [];
     return extractPropsFromBlock(m2[1]);
@@ -62,10 +72,19 @@ export function extractConfigKeys(definitionsText, pluginConfigName) {
 }
 
 function extractPropsFromBlock(block) {
+  const lines = block.split('\n');
+  let minIndent = Infinity;
+  for (const line of lines) {
+    const m = line.match(/^(\s+)(\w+)\??:\s/);
+    if (m) minIndent = Math.min(minIndent, m[1].length);
+  }
+  if (!Number.isFinite(minIndent)) return [];
   const keys = [];
-  const re = /^\s{6,8}(\w+)\??:\s/gm;
-  let m;
-  while ((m = re.exec(block))) keys.push(m[1]);
+  const re = new RegExp(`^\\s{${minIndent}}(\\w+)\\??:\\s`);
+  for (const line of lines) {
+    const m = line.match(re);
+    if (m) keys.push(m[1]);
+  }
   return [...new Set(keys)].sort();
 }
 

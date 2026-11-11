@@ -25,12 +25,12 @@ npx cap sync
 `notify()`, `registerForNotification()`, and `unRegisterForNotification()` complete when the command is dispatched to DataWedge, not when the scanner finishes. Do not treat the Promise as "scan done". Listen on the `scan` event for decoded data.
 
 ```typescript
-import { CapacitorZebraDatawedge } from '@capgo/capacitor-zebra-datawedge';
+import { ZebraDataWedge } from '@capgo/capacitor-zebra-datawedge';
 
-await CapacitorZebraDatawedge.configureDiagnostics({ level: 'info' });
-const diag = await CapacitorZebraDatawedge.getDiagnostics();
-await CapacitorZebraDatawedge.registerScanIntentAction({ intentAction: 'com.example.SCAN' });
-await CapacitorZebraDatawedge.addListener('scan', (result) => console.log(result));
+await ZebraDataWedge.configureDiagnostics({ enabled: true });
+const diag = await ZebraDataWedge.getDiagnostics();
+await ZebraDataWedge.registerScanIntentAction({ intentAction: 'com.example.SCAN' });
+await ZebraDataWedge.addListener('scan', (result) => console.log(result));
 ```
 
 ## Profiles and config

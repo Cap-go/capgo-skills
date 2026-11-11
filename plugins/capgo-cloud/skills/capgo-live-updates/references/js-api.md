@@ -6,6 +6,7 @@ Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.54.2, and 
 Minimum native versions for APIs in this reference (rebuild and sync after upgrading):
 
 - **8.47.0+**: `getMissingBundleFiles`, `getBundleDownloadSize`, `startPreviewSession`
+- **8.48.0+**: `startPreviewSession({ payloadUrl })` (the `payloadUrl` option alone requires 8.48.0+)
 - **8.49.0+**: `listPreviews`, `setPreview`, `resetPreview`, `deletePreview`, `checkPreviewUpdate`, `updatePreview`
 - **8.53.0+**: `updaterEvent` unified listener
 

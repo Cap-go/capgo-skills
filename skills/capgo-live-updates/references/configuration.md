@@ -58,8 +58,8 @@ Also install `@capacitor/splash-screen` and upload with `--delta`. A full zip ov
 | --- | --- | --- |
 | `publicKey` | unset | Encryption v2 public key. Written by `npx @capgo/cli@latest key save` / `key create` |
 | `allowHttpsToHttpRedirect` | `false` | Keep it off unless a self-hosted CDN really redirects to HTTP |
-| `httpsOnly` | `false` | Reject non-HTTPS update URLs when enabled |
-| `builtinMinimum` | unset | Minimum native build required before OTA bundles apply |
+| `httpsOnly` | `true` (8.54.0+) | Rejects HTTP update URLs and redirect hops. `allowHttpsToHttpRedirect` does not bypass this while `httpsOnly` is true. Set `httpsOnly: false` for HTTP endpoints or redirects |
+| `builtinMinimum` | `false` | When `true`, blocks OTA bundles below the native app version (8.54.0+). Not a version string |
 | `allowModifyUrl` | `false` | Required for `setUpdateUrl` / `setStatsUrl` / `setChannelUrl` |
 | `persistModifyUrl` | `false` | Persist runtime URL overrides |
 | `allowModifyAppId` | `false` | Required for `setAppId` |
@@ -79,7 +79,7 @@ There is no `privateKey` config key. Never put the private key in the app.
 
 Self-hosting guide: https://capgo.app/docs/plugins/updater/self-hosted/getting-started/. For a fully self-hosted backend, the CLI takes `--supa-host` and `--supa-anon` on supported commands. Do not invent a Docker image. Point users to the documented guide.
 
-## Native store update prompts (since 8.52)
+## Native store update prompts (since 8.53.0)
 
 When a bundle needs a newer store build, the plugin can show a native prompt before opening the store.
 
@@ -91,8 +91,8 @@ When a bundle needs a newer store build, the plugin can show a native prompt bef
 | `nativeUpdatePromptUpdateButton` | unset | Primary button label |
 | `nativeUpdatePromptLaterButton` | unset | Dismiss button label |
 | `nativeUpdatePromptCountry` | unset | Restrict prompt by country code |
-| `nativeUpdatePromptOnStoreCheck` | unset | When to run relative to store version check |
-| `nativeUpdatePromptCooldownHours` | unset | Minimum hours between prompts |
+| `nativeUpdatePromptOnStoreCheck` | `false` | When to run relative to store version check |
+| `nativeUpdatePromptCooldownHours` | `24` | Minimum hours between prompts |
 
 ## Logging and debug UI
 

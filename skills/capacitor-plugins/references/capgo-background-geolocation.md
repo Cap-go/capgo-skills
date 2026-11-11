@@ -20,14 +20,14 @@ npx cap sync
 
 **Methods:** `clearGeofenceQueue()`, `clearLocationLog()`, `getLocationLog()`.
 
-## iOS closed-app geofence queue
+## iOS geofence POST queue vs location log
 
-On iOS, geofence events may queue while the app is not running. Use `getLocationLog()` to inspect queued region events and `clearGeofenceQueue()` to drop stale queued geofence work after you process or abandon them.
+When `start()` sets `url`, native code can queue geofence transitions for HTTP POST while the app is suspended. `getLocationLog()` reads the on-device location history file (native tracking log), not that POST queue. Inspect transitions in your backend or app handlers. Call `clearGeofenceQueue()` only when you intentionally abandon undelivered POST work (for example sign-out).
 
 ```typescript
 import { BackgroundGeolocation } from '@capgo/background-geolocation';
 
-const log = await BackgroundGeolocation.getLocationLog();
+const { entries } = await BackgroundGeolocation.getLocationLog({ afterId: 0 });
 await BackgroundGeolocation.clearGeofenceQueue();
 ```
 

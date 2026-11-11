@@ -20,16 +20,18 @@ npx cap sync
 
 **Methods:** `configure()`, `getUnfinishedTransactions()`, `finishTransaction()`.
 
-Always call `configure()` before other APIs. Finish every purchase with `finishTransaction()` after you grant entitlement.
+Call `configure()` before other APIs. Set `autoFinishTransactions: false` in `capacitor.config` or in `configure()` when you validate on your backend before finishing. On Android, consumables need `consumePurchase({ purchaseToken })` after delivery; `finishTransaction()` alone does not consume.
 
 ```typescript
 import { NativePurchases } from '@capgo/native-purchases';
 
-await NativePurchases.configure({ appUserID: user.id });
-const pending = await NativePurchases.getUnfinishedTransactions();
-for (const tx of pending.transactions) {
+await NativePurchases.configure({ autoFinishTransactions: false });
+const { transactions } = await NativePurchases.getUnfinishedTransactions();
+for (const tx of transactions) {
   await grantEntitlement(tx);
-  await NativePurchases.finishTransaction({ transaction: tx });
+  if (tx.transactionId) {
+    await NativePurchases.finishTransaction({ transactionId: tx.transactionId });
+  }
 }
 ```
 

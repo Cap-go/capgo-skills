@@ -51,7 +51,7 @@ function summarizeSkillChange(d) {
 }
 
 const rows = diffs
-  .filter((d) => d.repo)
+  .filter((d) => d.repo && !d.error && !d.skipped && d.fromTag && d.toTag)
   .sort((a, b) => a.repo.localeCompare(b.repo))
   .map((d) => ({
     plugin: d.repo,
