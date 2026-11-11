@@ -3,6 +3,12 @@
 Import: `import { CapacitorUpdater } from '@capgo/capacitor-updater';`
 Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.54.2, and https://capgo.app/docs/plugins/updater/api/.
 
+Minimum native versions for APIs in this reference (rebuild and sync after upgrading):
+
+- **8.47.0+**: `getMissingBundleFiles`, `getBundleDownloadSize`, `startPreviewSession`
+- **8.49.0+**: `listPreviews`, `setPreview`, `resetPreview`, `deletePreview`, `checkPreviewUpdate`, `updatePreview`
+- **8.53.0+**: `updaterEvent` unified listener
+
 ## Lifecycle methods
 
 | Method | Use |
@@ -93,8 +99,7 @@ await CapacitorUpdater.unsetChannel({});     // back to defaultChannel / cloud d
 | `appReloaded` | none |
 | `channelPrivate` | `{ channel, message }` |
 | `updateCheckResult` | result of each check (`kind`, `error`, `message`) |
-| `updaterEvent` | Unified stream: `{ type, data }` where event fields live in `data` |
-| `breakingAvailable` | Native store update required (`majorAvailable` is an alias on named listeners only, not on `updaterEvent`) |
+| `updaterEvent` | Unified stream: `{ type, data }` where event fields live in `data`. On this stream use `breakingAvailable`, not `majorAvailable` |
 
 Prefer named events in app code. Use `updaterEvent` when one listener must mirror native stats or debug every event. Read `event.data`, not top-level fields.
 

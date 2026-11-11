@@ -186,6 +186,16 @@ async function hasFunctionalWeb(repo, pkgPath, branch) {
   if (/isSupported:\s*false/.test(text) && !/isSupported:\s*true/.test(text)) return false;
   const stubMarkers = text.match(/\.unavailable\(|\.unimplemented\(|not available on web/gi) || [];
   if (stubMarkers.length >= 2 && !/isSupported\(\)[\s\S]{0,120}true/.test(text)) return false;
+  const asyncNames = [...text.matchAll(/async\s+(\w+)\s*\(/g)].map((m) => m[1]);
+  if (asyncNames.length > 0) {
+    let stubMethods = 0;
+    for (const name of asyncNames) {
+      const bodyRe = new RegExp(`async\\s+${name}\\s*\\([^)]*\\)[^{]*\\{([\\s\\S]*?)\\n\\s*\\}`);
+      const body = bodyRe.exec(text)?.[1] ?? '';
+      if (/unavailable\(|unimplemented\(/.test(body)) stubMethods++;
+    }
+    if (stubMethods === asyncNames.length) return false;
+  }
   return true;
 }
 

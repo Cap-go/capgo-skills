@@ -2,7 +2,7 @@
 
 Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go GitHub organization (non-archived `capacitor-*` repositories and `cordova-updater`). The set should match the public [capgo.app/plugins](https://capgo.app/plugins/) catalog; regenerate after org changes.
 
-Facts come from each repository `package.json` and `src/definitions.ts`. Each entry lists the full method and event surface from TypeScript, plus a version delta block (`fromTag` to `toTag`) when a release landed since 2026-09-11.
+Facts come from each repository `package.json` and `src/definitions.ts`. API method names are taken from TypeScript definitions only.
 
 Total packages: 150 (generated 2026-11-11)
 
@@ -20,7 +20,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `addGeofence()`, `checkPermissions()`, `clearGeofenceQueue()`, `clearLocationLog()`, `getLocationLog()`, `getMonitoredGeofences()`, `getPluginVersion()`, `openSettings()`, `removeAllGeofences()`, `removeGeofence()`, `requestPermissions()`, `setPlannedRoute()`, `setupGeofencing()`, `start()`, `stop()`, `updateHeaders()`
+- **API methods**: `checkPermissions()`, `clearLocationLog()`, `getMonitoredGeofences()`, `getPluginVersion()`, `openSettings()`, `removeGeofence()`, `setupGeofencing()`, `start()`, `updateHeaders()`
 - **Events**: `geofenceError`, `geofenceTransition`
 - **Plugin config keys** (`BackgroundGeolocation`): none in `definitions.ts`
 
@@ -42,7 +42,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `capture()`, `captureSample()`, `checkPermissions()`, `deleteFile()`, `flip()`, `getAspectRatio()`, `getAvailableDevices()`, `getDeviceId()`, `getExposureCompensation()`, `getExposureCompensationRange()`, `getExposureMode()`, `getExposureModes()`, `getFlashMode()`, `getGridMode()`, `getHorizontalFov()`, `getOrientation()`, `getPluginVersion()`, `getPreviewSize()`, `getSafeAreaInsets()`, `getSupportedFlashModes()`, `getSupportedPictureSizes()`, `getSupportedVideoCodecs()`, `getSupportedVideoFrameRates()`, `getSupportedVideoQualities()`, `getSupportedVideoStabilizationModes()`, `getVideoCodec()`, `getVideoFrameRate()`, `getVideoQuality()`, `getVideoStabilizationMode()`, `getWhiteBalanceMode()`, `getWhiteBalanceModes()`, `getZoom()`, `getZoomButtonValues()`, `isRunning()`, `isVideoStabilizationSupported()`, `requestPermissions()`, `setAspectRatio()`, `setDeviceId()`, `setExposureCompensation()`, `setExposureMode()`, `setFlashMode()`, `setFocus()`, `setGridMode()`, `setOpacity()`, `setPreviewSize()`, `setVideoCodec()`, `setVideoFrameRate()`, `setVideoQuality()`, `setVideoStabilizationMode()`, `setWhiteBalanceMode()`, `setZoom()`, `start()`, `startBarcodeScanner()`, `startRecordVideo()`, `stop()`, `stopBarcodeScanner()`, `stopRecordVideo()`
+- **API methods**: `capture()`, `deleteFile()`, `flip()`, `getAspectRatio()`, `getExposureCompensationRange()`, `getExposureMode()`, `getGridMode()`, `getOrientation()`, `getPreviewSize()`, `getSupportedFlashModes()`, `getSupportedPictureSizes()`, `getSupportedVideoFrameRates()`, `getSupportedVideoQualities()`, `getVideoCodec()`, `getVideoStabilizationMode()`, `getWhiteBalanceMode()`, `getZoom()`, `isRunning()`, `isVideoStabilizationSupported()`, `requestPermissions()`, `setDeviceId()`, `setExposureCompensation()`, `setFocus()`, `setVideoFrameRate()`, `setVideoQuality()`, `setZoom()`, `start()`, `startBarcodeScanner()`, `stopRecordVideo()`
 - **Events**: `barcodeScanError`, `barcodeScanned`, `cameraInterrupted`, `cameraInterruptionEnded`, `orientationChange`, `recordingFinished`, `screenResize`
 - **Plugin config keys** (`CameraPreview`): none in `definitions.ts`
 
@@ -64,7 +64,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `checkPermissions()`, `getMeasurement()`, `getPluginVersion()`, `isAvailable()`, `requestPermissions()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`
+- **API methods**: `checkPermissions()`, `getMeasurement()`, `getPluginVersion()`, `startMeasurementUpdates()`
 - **Events**: `measurement`
 - **Plugin config keys** (`Accelerometer`): none in `definitions.ts`
 
@@ -85,7 +85,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `adHide()`, `adIsLoaded()`, `adLoad()`, `adShow()`, `configRequest()`, `configure()`, `feedAdCreate()`, `feedAdDestroy()`, `feedAdIsLoaded()`, `feedAdLoad()`, `feedAdSetAutoRefresh()`, `feedAdUpdateBounds()`, `getPluginVersion()`, `requestConsentInfo()`, `requestTrackingAuthorization()`, `showConsentForm()`, `showPrivacyOptionsForm()`, `start()`, `trackingAuthorizationStatus()`
+- **API methods**: `adIsLoaded()`, `adShow()`, `configRequest()`, `feedAdCreate()`, `feedAdLoad()`, `feedAdUpdateBounds()`, `getPluginVersion()`, `showConsentForm()`, `start()`, `trackingAuthorizationStatus()`
 - **Events**: none
 - **Plugin config keys** (`Admob`): none in `definitions.ts`
 
@@ -106,7 +106,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `requestAgeRange()`
+- **API methods**: `requestAgeRange()`
 - **Events**: none
 - **Plugin config keys** (`AgeRange`): none in `definitions.ts`
 
@@ -127,7 +127,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `cancelAlarm()`, `checkPermissions()`, `createAlarm()`, `getAlarms()`, `getOSInfo()`, `getPluginVersion()`, `openAlarms()`, `requestPermissions()`
+- **API methods**: `checkPermissions()`, `createAlarm()`, `getAlarms()`, `getOSInfo()`
 - **Events**: none
 - **Plugin config keys** (`Alarm`): none in `definitions.ts`
 
@@ -148,7 +148,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `checkAgeSignals()`, `getPluginVersion()`
+- **API methods**: `checkAgeSignals()`
 - **Events**: none
 - **Plugin config keys** (`AndroidAgeSignals`): none in `definitions.ts`
 
@@ -169,7 +169,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `startInlineInstall()`
+- **API methods**: `startInlineInstall()`
 - **Events**: none
 - **Plugin config keys** (`AndroidInlineInstall`): none in `definitions.ts`
 
@@ -190,7 +190,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `enterKioskMode()`, `exitKioskMode()`, `getPluginVersion()`, `isInKioskMode()`, `isSetAsLauncher()`, `setAllowedKeys()`, `setAsLauncher()`
+- **API methods**: `enterKioskMode()`, `getPluginVersion()`, `isInKioskMode()`, `setAsLauncher()`
 - **Events**: none
 - **Plugin config keys** (`AndroidKiosk`): none in `definitions.ts`
 
@@ -211,7 +211,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getHashString()`, `getPhoneNumber()`, `getPluginVersion()`, `startWatch()`, `stopWatch()`
+- **API methods**: `getHashString()`, `getPluginVersion()`, `startWatch()`
 - **Events**: `smsReceived`, `smsRetrieverError`, `smsRetrieverTimeout`
 - **Plugin config keys** (`AndroidSmsRetriever`): none in `definitions.ts`
 
@@ -232,7 +232,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `isUsageStatsPermissionGranted()`, `openUsageStatsSettings()`, `queryAllPackages()`, `queryAndAggregateUsageStats()`, `queryEvents()`, `queryUsageStats()`
+- **API methods**: `getPluginVersion()`, `openUsageStatsSettings()`, `queryAndAggregateUsageStats()`, `queryEvents()`
 - **Events**: none
 - **Plugin config keys** (`AndroidUsagestatsmanager`): none in `definitions.ts`
 
@@ -253,7 +253,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `attestKey()`, `clearStoredKeyId()`, `createAssertion()`, `createAttestation()`, `generateAssertion()`, `generateKey()`, `getCapabilities()`, `getDeviceCheckToken()`, `getStoredKeyId()`, `getWidevineFingerprint()`, `isSupported()`, `prepare()`, `storeKeyId()`
+- **API methods**: `createAssertion()`, `generateAssertion()`, `generateKey()`, `getDeviceCheckToken()`, `getStoredKeyId()`, `isSupported()`, `prepare()`
 - **Events**: none
 - **Plugin config keys** (`AppAttest`): none in `definitions.ts`
 
@@ -274,7 +274,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPendingInvocations()`, `getPluginVersion()`, `indexSpotlightEntities()`, `performAppleSchemaTemplate()`, `removePendingInvocation()`, `removeSpotlightEntities()`, `setEntityCatalog()`, `setHomeScreenShortcutItems()`
+- **API methods**: `getPendingInvocations()`, `getPluginVersion()`, `indexSpotlightEntities()`, `performAppleSchemaTemplate()`, `setEntityCatalog()`
 - **Events**: `appIntentInvoked`
 - **Plugin config keys** (`AppIntents`): none in `definitions.ts`
 
@@ -295,7 +295,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `getStatus()`, `requestPermission()`
+- **API methods**: `getPluginVersion()`, `getStatus()`
 - **Events**: none
 - **Plugin config keys** (`AppTrackingTransparency`): none in `definitions.ts`
 
@@ -316,7 +316,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `getState()`, `init()`, `setUserId()`
+- **API methods**: `getPluginVersion()`, `init()`, `setUserId()`
 - **Events**: none
 - **Plugin config keys** (`Appinsights`): none in `definitions.ts`
 
@@ -337,7 +337,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `addPushNotificationDeepLinkPath()`, `anonymizeUser()`, `appendParametersToDeepLinkingURL()`, `disableAdvertisingIdentifier()`, `disableAppSetId()`, `disableCollectASA()`, `disableSKAdNetwork()`, `enableFacebookDeferredApplinks()`, `enableTCFDataCollection()`, `generateInviteLink()`, `getAppsFlyerUID()`, `getSdkVersion()`, `isSDKStarted()`, `isSDKStopped()`, `logAdRevenue()`, `logCrossPromoteImpression()`, `logEvent()`, `logInvite()`, `logLocation()`, `sendPushNotificationData()`, `setAdditionalData()`, `setAppInviteOneLink()`, `setConsentData()`, `setConsentDataV2()`, `setCurrencyCode()`, `setCurrentDeviceLanguage()`, `setCustomerUserId()`, `setDisableNetworkData()`, `setHost()`, `setOneLinkCustomDomain()`, `setPartnerData()`, `setPhoneNumber()`, `setResolveDeepLinkURLs()`, `setSharingFilter()`, `setSharingFilterForAllPartners()`, `setSharingFilterForPartners()`, `setUserEmails()`, `startSDK()`, `stop()`, `updateServerUninstallToken()`, `validateAndLogInAppPurchaseAndroid()`, `validateAndLogInAppPurchaseIos()`, `validateAndLogInAppPurchaseV2()`
+- **API methods**: `addPushNotificationDeepLinkPath()`, `anonymizeUser()`, `appendParametersToDeepLinkingURL()`, `disableAppSetId()`, `disableCollectASA()`, `disableSKAdNetwork()`, `enableFacebookDeferredApplinks()`, `enableTCFDataCollection()`, `generateInviteLink()`, `initSDK()`, `isSDKStarted()`, `logAdRevenue()`, `logEvent()`, `logInvite()`, `setAdditionalData()`, `setAppInviteOneLink()`, `setCurrencyCode()`, `setCurrentDeviceLanguage()`, `setPhoneNumber()`, `setSharingFilterForAllPartners()`, `setUserEmails()`, `validateAndLogInAppPurchaseIos()`
 - **Events**: none
 - **Plugin config keys** (`Appsflyer`): none in `definitions.ts`
 
@@ -358,7 +358,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `bind()`, `cancel()`, `clear()`, `configure()`, `getCacheSize()`, `getPluginVersion()`, `list()`, `remove()`, `src()`
+- **API methods**: `clear()`, `get()`, `getCacheSize()`, `resolve()`
 - **Events**: none
 - **Plugin config keys** (`AssetCache`): none in `definitions.ts`
 
@@ -379,7 +379,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `cancelRecording()`, `checkPermissions()`, `getCurrentAmplitude()`, `getPluginVersion()`, `getRecordingStatus()`, `pauseRecording()`, `requestPermissions()`, `resetAudioSessionForPlayback()`, `resumeRecording()`, `startRecording()`, `stopRecording()`
+- **API methods**: `cancelRecording()`, `checkPermissions()`, `getPluginVersion()`, `getRecordingStatus()`, `resumeRecording()`, `startRecording()`
 - **Events**: `recordingError`, `recordingInterruptionBegan`, `recordingInterruptionEnded`, `recordingPaused`, `recordingStopped`
 - **Plugin config keys** (`AudioRecorder`): none in `definitions.ts`
 
@@ -402,7 +402,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `currentOutputs()`, `getPluginVersion()`, `overrideOutput()`
+- **API methods**: `currentOutputs()`, `getPluginVersion()`
 - **Events**: `interruption`, `routeChanged`
 - **Plugin config keys** (`AudioSession`): none in `definitions.ts`
 
@@ -423,7 +423,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `getState()`, `getTransientState()`, `isAvailable()`, `removeState()`, `sendMessage()`, `setRootTemplate()`, `setState()`, `setTransientState()`
+- **API methods**: `getPluginVersion()`, `getTransientState()`, `isAvailable()`, `removeState()`, `setState()`
 - **Events**: `carAction`, `connectionChanged`, `messageReceived`, `stateChanged`
 - **Plugin config keys** (`Auto`): none in `definitions.ts`
 
@@ -444,7 +444,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `promptDialog()`, `readPassword()`
+- **API methods**: `getPluginVersion()`, `promptDialog()`
 - **Events**: none
 - **Plugin config keys** (`AutofillSavePassword`): none in `definitions.ts`
 
@@ -465,7 +465,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `addExpirationListener()`, `cancel()`, `define()`, `defineTask()`, `finish()`, `getPendingTaskRuns()`, `getPendingTaskRunsAsync()`, `getRegisteredTasks()`, `getRegisteredTasksAsync()`, `getStatus()`, `getStatusAsync()`, `isTaskRegistered()`, `isTaskRegisteredAsync()`, `registerTask()`, `statusAsync()`, `triggerTaskWorkerForTesting()`, `triggerTaskWorkerForTestingAsync()`, `unregisterTask()`, `unregisterTaskAsync()`
+- **API methods**: `getPendingTaskRuns()`, `getPendingTaskRunsAsync()`, `isTaskRegistered()`, `isTaskRegisteredAsync()`, `registerTask()`, `registerTaskAsync()`, `schedule()`, `statusAsync()`, `triggerTaskWorkerForTesting()`, `triggerTaskWorkerForTestingAsync()`
 - **Events**: `backgroundTask`, `expiration`
 - **Plugin config keys** (`BackgroundTask`): none in `definitions.ts`
 
@@ -486,7 +486,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `checkPermissions()`, `getMeasurement()`, `getPluginVersion()`, `isAvailable()`, `requestPermissions()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`
+- **API methods**: `checkPermissions()`, `getMeasurement()`, `getPluginVersion()`, `startMeasurementUpdates()`
 - **Events**: `measurement`
 - **Plugin config keys** (`Barometer`): none in `definitions.ts`
 
@@ -507,7 +507,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `addGattService()`, `checkPermissions()`, `connect()`, `createBond()`, `disconnect()`, `discoverServices()`, `getConnectedDevices()`, `getPluginVersion()`, `getServices()`, `initialize()`, `isBonded()`, `isEnabled()`, `isLocationEnabled()`, `notifyGattCharacteristicChanged()`, `openAppSettings()`, `openBluetoothSettings()`, `openLocationSettings()`, `readCharacteristic()`, `readDescriptor()`, `readRssi()`, `removeGattService()`, `requestConnectionPriority()`, `requestMtu()`, `requestPermissions()`, `setGattCharacteristicValue()`, `shimWebBluetooth()`, `startAdvertising()`, `startCharacteristicNotifications()`, `startForegroundService()`, `startScan()`, `stopAdvertising()`, `stopCharacteristicNotifications()`, `stopForegroundService()`, `stopScan()`, `writeCharacteristic()`, `writeDescriptor()`
+- **API methods**: `addGattService()`, `checkPermissions()`, `connect()`, `createBond()`, `discoverServices()`, `getConnectedDevices()`, `getPluginVersion()`, `initialize()`, `isAvailable()`, `isLocationEnabled()`, `openBluetoothSettings()`, `requestMtu()`, `setGattCharacteristicValue()`, `startAdvertising()`, `startForegroundService()`, `startScan()`, `stopCharacteristicNotifications()`, `writeCharacteristic()`, `writeDescriptor()`
 - **Events**: `centralConnected`, `centralDisconnected`, `characteristicChanged`, `deviceConnected`, `deviceDisconnected`, `deviceScanned`, `gattCharacteristicReadRequest`, `gattCharacteristicWriteRequest`
 - **Plugin config keys** (`BluetoothLowEnergy`): none in `definitions.ts`
 
@@ -528,7 +528,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `checkPermissions()`, `getBrightness()`, `getPluginVersion()`, `getSystemBrightness()`, `getSystemBrightnessMode()`, `isAvailable()`, `isUsingSystemBrightness()`, `requestPermissions()`, `restoreSystemBrightness()`, `setBrightness()`, `setSystemBrightness()`, `setSystemBrightnessMode()`
+- **API methods**: `getBrightness()`, `getSystemBrightness()`, `getSystemBrightnessMode()`, `isAvailable()`, `isUsingSystemBrightness()`, `requestPermissions()`
 - **Events**: none
 - **Plugin config keys** (`Brightness`): none in `definitions.ts`
 
@@ -549,7 +549,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `checkAllPermissions()`, `checkPermission()`, `commit()`, `createCalendar()`, `createEvent()`, `createEventWithPrompt()`, `createReminder()`, `deleteCalendar()`, `deleteEvent()`, `deleteEventWithPrompt()`, `deleteEventsById()`, `deleteReminder()`, `deleteReminderWithPrompt()`, `deleteRemindersById()`, `fetchAllCalendarSources()`, `fetchAllRemindersSources()`, `getDefaultCalendar()`, `getDefaultRemindersList()`, `getReminderById()`, `getRemindersFromLists()`, `getRemindersLists()`, `listCalendars()`, `listEventsInRange()`, `modifyCalendar()`, `modifyEvent()`, `modifyEventWithPrompt()`, `modifyReminder()`, `openCalendar()`, `openReminders()`, `requestAllPermissions()`, `requestFullCalendarAccess()`, `requestFullRemindersAccess()`, `requestPermission()`, `requestReadOnlyCalendarAccess()`, `requestWriteOnlyCalendarAccess()`, `selectCalendarsWithPrompt()`
+- **API methods**: `checkPermission()`, `commit()`, `createCalendar()`, `createEvent()`, `createEventWithPrompt()`, `deleteEventWithPrompt()`, `deleteEventsById()`, `deleteRemindersById()`, `fetchAllCalendarSources()`, `getDefaultCalendar()`, `getRemindersFromLists()`, `getRemindersLists()`, `modifyCalendar()`, `modifyReminder()`, `openReminders()`, `requestFullCalendarAccess()`, `requestPermission()`, `requestWriteOnlyCalendarAccess()`
 - **Events**: none
 - **Plugin config keys** (`Calendar`): none in `definitions.ts`
 
@@ -570,7 +570,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `checkPermissions()`, `getAccuracy()`, `getCurrentHeading()`, `getPluginVersion()`, `requestPermissions()`, `startListening()`, `stopListening()`, `unwatchAccuracy()`, `watchAccuracy()`
+- **API methods**: `checkPermissions()`, `getAccuracy()`, `getCurrentHeading()`, `startListening()`, `watchAccuracy()`
 - **Events**: `accuracyChange`, `headingChange`
 - **Plugin config keys** (`Compass`): none in `definitions.ts`
 
@@ -591,7 +591,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `checkPermissions()`, `countContacts()`, `createContact()`, `createGroup()`, `deleteContactById()`, `deleteGroupById()`, `displayContactById()`, `displayCreateContact()`, `displayUpdateContactById()`, `getAccounts()`, `getContactById()`, `getContacts()`, `getGroupById()`, `getGroups()`, `getPluginVersion()`, `isAvailable()`, `isSupported()`, `openSettings()`, `pickContact()`, `pickContacts()`, `requestPermissions()`, `updateContactById()`
+- **API methods**: `countContacts()`, `createGroup()`, `deleteGroupById()`, `displayCreateContact()`, `getAccounts()`, `getContacts()`, `getGroups()`, `isSupported()`, `pickContact()`, `requestPermissions()`, `updateContactById()`
 - **Events**: none
 - **Plugin config keys** (`Contacts`): none in `definitions.ts`
 
@@ -612,7 +612,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `collect()`, `excludeURLForReplay()`, `onReady()`, `optIn()`, `optOut()`, `sendDynamicVar()`, `sendDynamicVarWithIntValue()`, `sendDynamicVarWithStringValue()`, `sendScreenName()`, `sendTransaction()`, `setCapturedElementsSelector()`, `setPIISelectors()`
+- **API methods**: `collect()`, `excludeURLForReplay()`, `onReady()`, `optIn()`, `optOut()`, `sendDynamicVarWithStringValue()`, `sendScreenName()`, `sendTransaction()`, `setCapturedElementsSelector()`, `setPIISelectors()`
 - **Events**: none
 - **Plugin config keys** (`Contentsquare`): none in `definitions.ts`
 
@@ -633,7 +633,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `configure()`, `enableNotifications()`, `getPluginVersion()`, `handlePushNotification()`, `isCrispPushNotification()`, `openChatboxFromNotification()`, `openMessenger()`, `pushEvent()`, `registerPushToken()`, `reset()`, `sendMessage()`, `setCompany()`, `setInt()`, `setSegment()`, `setShouldPromptForNotificationPermission()`, `setString()`, `setTokenID()`, `setUser()`
+- **API methods**: `configure()`, `getPluginVersion()`, `isCrispPushNotification()`, `pushEvent()`, `registerPushToken()`, `reset()`, `sendMessage()`, `setInt()`, `setShouldPromptForNotificationPermission()`, `setTokenID()`
 - **Events**: `chatClosed`, `chatOpened`, `messageReceived`, `messageSent`, `sessionLoaded`
 - **Plugin config keys** (`Crisp`): none in `definitions.ts`
 
@@ -654,7 +654,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `clear()`, `closeStore()`, `deleteStore()`, `deleteTable()`, `exportToJson()`, `filtervalues()`, `get()`, `getPluginVersion()`, `importFromJson()`, `isJsonValid()`, `isStoreExists()`, `isStoreOpen()`, `isTable()`, `iskey()`, `keys()`, `keysvalues()`, `openStore()`, `remove()`, `set()`, `setTable()`, `tables()`, `vacuum()`, `values()`
+- **API methods**: `deleteStore()`, `exportToJson()`, `getPluginVersion()`, `importFromJson()`, `isStoreOpen()`, `iskey()`, `keysvalues()`, `openStore()`, `remove()`, `set()`, `tables()`, `values()`
 - **Events**: none
 - **Plugin config keys** (`DataStorageSqlite`): none in `definitions.ts`
 
@@ -675,7 +675,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `hide()`, `present()`, `presentRange()`
+- **API methods**: `hide()`, `present()`
 - **Events**: none
 - **Plugin config keys** (`DatePicker`): none in `definitions.ts`
 
@@ -696,7 +696,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getInfo()`, `getPluginVersion()`, `isMonitoring()`, `startMonitoring()`, `stopMonitoring()`
+- **API methods**: `getInfo()`, `getPluginVersion()`, `stopMonitoring()`
 - **Events**: `deviceInfoUpdate`
 - **Plugin config keys** (`DeviceInfo`): none in `definitions.ts`
 
@@ -717,7 +717,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `createAssertion()`, `createAttestation()`, `getCapabilities()`, `getDeviceCheckToken()`, `getWidevineFingerprint()`, `prepareAttestation()`
+- **API methods**: `createAssertion()`, `getCapabilities()`, `prepareAttestation()`
 - **Events**: none
 - **Plugin config keys** (`DeviceIntegrity`): none in `definitions.ts`
 
@@ -738,7 +738,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `scanDocument()`
+- **API methods**: `scanDocument()`
 - **Events**: none
 - **Plugin config keys** (`DocumentScanner`): none in `definitions.ts`
 
@@ -759,7 +759,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `checkStatus()`, `download()`, `getFileInfo()`, `getPluginVersion()`, `pause()`, `resume()`, `stop()`
+- **API methods**: `checkStatus()`, `download()`, `getPluginVersion()`, `resume()`
 - **Events**: `downloadCompleted`, `downloadFailed`, `downloadProgress`
 - **Plugin config keys** (`Downloader`): none in `definitions.ts`
 
@@ -780,7 +780,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getKey()`, `getPluginVersion()`
+- **API methods**: `getKey()`
 - **Events**: none
 - **Plugin config keys** (`Env`): none in `definitions.ts`
 
@@ -801,7 +801,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `disableAdvertiserTracking()`, `enableAdvertiserTracking()`, `getAdvertiserTrackingStatus()`, `getPluginVersion()`, `initAppEvents()`, `logEvent()`, `logPurchase()`
+- **API methods**: `disableAdvertiserTracking()`, `getPluginVersion()`, `initAppEvents()`, `logPurchase()`
 - **Events**: none
 - **Plugin config keys** (`FacebookAnalytics`): none in `definitions.ts`
 
@@ -822,7 +822,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `beginTransaction()`, `commitTransaction()`, `configureWeb()`, `connect()`, `disconnect()`, `execute()`, `getPluginVersion()`, `getServerInfo()`, `rollbackTransaction()`
+- **API methods**: `beginTransaction()`, `configureWeb()`, `connect()`, `getServerInfo()`, `rollbackTransaction()`
 - **Events**: none
 - **Plugin config keys** (`FastSql`): none in `definitions.ts`
 
@@ -843,7 +843,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `convertImage()`, `getCapabilities()`, `getPluginVersion()`, `reencodeVideo()`
+- **API methods**: `convertImage()`, `getCapabilities()`, `getPluginVersion()`
 - **Events**: `progress`
 - **Plugin config keys** (`Ffmpeg`): none in `definitions.ts`
 - **Docs**: https://capgo.app/docs/plugins/ffmpeg/
@@ -861,7 +861,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `appendFile()`, `checkPermissions()`, `copy()`, `deleteFile()`, `exists()`, `getDirectories()`, `getDirectory()`, `getFile()`, `getFreeDiskSpace()`, `getMetadata()`, `getPluginVersion()`, `getUri()`, `mkdir()`, `move()`, `readAsDataURL()`, `readFile()`, `readdir()`, `rename()`, `requestFileSystem()`, `requestPermissions()`, `resolveLocalFileSystemURL()`, `rmdir()`, `stat()`, `truncate()`, `writeFile()`
+- **API methods**: `copy()`, `deleteFile()`, `getDirectories()`, `getFile()`, `getPluginVersion()`, `getUri()`, `readFile()`, `rename()`, `requestFileSystem()`, `requestPermissions()`, `rmdir()`, `stat()`, `writeFile()`
 - **Events**: `readProgress`, `writeProgress`
 - **Plugin config keys** (`File`): none in `definitions.ts`
 
@@ -882,7 +882,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `compressImage()`, `getPluginVersion()`
+- **API methods**: `compressImage()`
 - **Events**: none
 - **Plugin config keys** (`FileCompressor`): none in `definitions.ts`
 
@@ -903,7 +903,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `checkPermissions()`, `convertHeicToJpeg()`, `copyFile()`, `getPluginVersion()`, `pickDirectory()`, `pickFiles()`, `pickImages()`, `pickMedia()`, `pickVideos()`, `requestPermissions()`
+- **API methods**: `copyFile()`, `getPluginVersion()`, `pickDirectory()`, `pickFiles()`, `pickVideos()`, `requestPermissions()`
 - **Events**: `pickerDismissed`
 - **Plugin config keys** (`FilePicker`): none in `definitions.ts`
 
@@ -924,7 +924,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `save()`, `share()`
+- **API methods**: `getPluginVersion()`, `share()`
 - **Events**: none
 - **Plugin config keys** (`FileSharer`): none in `definitions.ts`
 
@@ -945,7 +945,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getAppInstanceId()`, `getPluginVersion()`, `getSessionId()`, `initiateOnDeviceConversionMeasurementWithEmailAddress()`, `initiateOnDeviceConversionMeasurementWithHashedEmailAddress()`, `initiateOnDeviceConversionMeasurementWithHashedPhoneNumber()`, `initiateOnDeviceConversionMeasurementWithPhoneNumber()`, `isEnabled()`, `logEvent()`, `logTransaction()`, `resetAnalyticsData()`, `setConsent()`, `setCurrentScreen()`, `setEnabled()`, `setSessionTimeoutDuration()`, `setUserId()`, `setUserProperty()`
+- **API methods**: `getAppInstanceId()`, `getPluginVersion()`, `initiateOnDeviceConversionMeasurementWithEmailAddress()`, `initiateOnDeviceConversionMeasurementWithHashedEmailAddress()`, `initiateOnDeviceConversionMeasurementWithHashedPhoneNumber()`, `initiateOnDeviceConversionMeasurementWithPhoneNumber()`, `logEvent()`, `resetAnalyticsData()`, `setConsent()`, `setEnabled()`, `setUserProperty()`
 - **Events**: none
 - **Plugin config keys** (`FirebaseAnalytics`): none in `definitions.ts`
 
@@ -966,7 +966,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getName()`, `getOptions()`, `getPluginVersion()`
+- **API methods**: `getName()`, `getPluginVersion()`
 - **Events**: none
 - **Plugin config keys** (`FirebaseApp`): none in `definitions.ts`
 
@@ -987,7 +987,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `getToken()`, `initialize()`, `setTokenAutoRefreshEnabled()`
+- **API methods**: `getPluginVersion()`, `getToken()`, `setTokenAutoRefreshEnabled()`
 - **Events**: `tokenChanged`
 - **Plugin config keys** (`FirebaseAppCheck`): none in `definitions.ts`
 
@@ -1008,7 +1008,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `applyActionCode()`, `checkAppTrackingTransparencyPermission()`, `confirmPasswordReset()`, `confirmVerificationCode()`, `createUserWithEmailAndPassword()`, `deleteUser()`, `fetchSignInMethodsForEmail()`, `getCurrentUser()`, `getIdToken()`, `getIdTokenResult()`, `getPendingAuthResult()`, `getPluginVersion()`, `getRedirectResult()`, `getTenantId()`, `isSignInWithEmailLink()`, `linkWithApple()`, `linkWithEmailAndPassword()`, `linkWithEmailLink()`, `linkWithFacebook()`, `linkWithGameCenter()`, `linkWithGithub()`, `linkWithGoogle()`, `linkWithMicrosoft()`, `linkWithOpenIdConnect()`, `linkWithPhoneNumber()`, `linkWithPlayGames()`, `linkWithTwitter()`, `linkWithYahoo()`, `reload()`, `requestAppTrackingTransparencyPermission()`, `revokeAccessToken()`, `sendEmailVerification()`, `sendPasswordResetEmail()`, `sendSignInLinkToEmail()`, `setLanguageCode()`, `setPersistence()`, `setTenantId()`, `signInAnonymously()`, `signInWithApple()`, `signInWithCustomToken()`, `signInWithEmailAndPassword()`, `signInWithEmailLink()`, `signInWithFacebook()`, `signInWithGameCenter()`, `signInWithGithub()`, `signInWithGoogle()`, `signInWithMicrosoft()`, `signInWithOpenIdConnect()`, `signInWithPhoneNumber()`, `signInWithPlayGames()`, `signInWithTwitter()`, `signInWithYahoo()`, `signOut()`, `unlink()`, `updateEmail()`, `updatePassword()`, `updateProfile()`, `useAppLanguage()`, `useEmulator()`, `verifyBeforeUpdateEmail()`
+- **API methods**: `applyActionCode()`, `checkAppTrackingTransparencyPermission()`, `confirmVerificationCode()`, `createUserWithEmailAndPassword()`, `deleteUser()`, `getCurrentUser()`, `getIdToken()`, `getPluginVersion()`, `getRedirectResult()`, `isSignInWithEmailLink()`, `linkWithApple()`, `linkWithEmailLink()`, `linkWithGameCenter()`, `linkWithGoogle()`, `linkWithOpenIdConnect()`, `linkWithPhoneNumber()`, `linkWithTwitter()`, `reload()`, `sendEmailVerification()`, `sendSignInLinkToEmail()`, `setPersistence()`, `signInAnonymously()`, `signInWithCustomToken()`, `signInWithEmailAndPassword()`, `signInWithEmailLink()`, `signInWithFacebook()`, `signInWithGameCenter()`, `signInWithGithub()`, `signInWithMicrosoft()`, `signInWithPhoneNumber()`, `signInWithTwitter()`, `signOut()`, `updateEmail()`, `updateProfile()`, `useEmulator()`
 - **Events**: `authStateChange`, `idTokenChange`, `phoneCodeSent`, `phoneVerificationCompleted`, `phoneVerificationFailed`
 - **Plugin config keys** (`FirebaseAuthentication`): `authDomain`, `providers`, `skipNativeAuth`
 
@@ -1029,7 +1029,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `crash()`, `deleteUnsentReports()`, `didCrashOnPreviousExecution()`, `getPluginVersion()`, `isEnabled()`, `log()`, `recordException()`, `sendUnsentReports()`, `setCustomKey()`, `setEnabled()`, `setUserId()`
+- **API methods**: `crash()`, `deleteUnsentReports()`, `didCrashOnPreviousExecution()`, `getPluginVersion()`, `setEnabled()`, `setUserId()`
 - **Events**: none
 - **Plugin config keys** (`FirebaseCrashlytics`): none in `definitions.ts`
 
@@ -1050,7 +1050,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `addDocument()`, `clearPersistence()`, `deleteDocument()`, `disableNetwork()`, `disablePersistence()`, `enableNetwork()`, `enablePersistence()`, `getCountFromServer()`, `removeSnapshotListener()`, `setDocument()`, `updateDocument()`, `useEmulator()`, `writeBatch()`
+- **API methods**: `addDocument()`, `clearPersistence()`, `disableNetwork()`, `enablePersistence()`, `getCountFromServer()`, `removeSnapshotListener()`, `updateDocument()`, `writeBatch()`
 - **Events**: none
 - **Plugin config keys** (`FirebaseFirestore`): `databaseId`
 
@@ -1071,7 +1071,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `useEmulator()`
+- **API methods**: `useEmulator()`
 - **Events**: none
 - **Plugin config keys** (`FirebaseFunctions`): none in `definitions.ts`
 
@@ -1092,7 +1092,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `checkPermissions()`, `createChannel()`, `deleteChannel()`, `deleteToken()`, `getDeliveredNotifications()`, `getPluginVersion()`, `getToken()`, `isSupported()`, `listChannels()`, `removeAllDeliveredNotifications()`, `removeDeliveredNotifications()`, `requestPermissions()`, `subscribeToTopic()`, `unsubscribeFromTopic()`
+- **API methods**: `checkPermissions()`, `deleteChannel()`, `deleteToken()`, `getPluginVersion()`, `isSupported()`, `removeAllDeliveredNotifications()`, `removeDeliveredNotifications()`, `unsubscribeFromTopic()`
 - **Events**: `apnsTokenReceived`, `notificationActionPerformed`, `notificationReceived`, `tokenReceived`
 - **Plugin config keys** (`FirebaseMessaging`): `presentationOptions`
 
@@ -1113,7 +1113,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getAttribute()`, `getAttributes()`, `getMetric()`, `getPluginVersion()`, `incrementMetric()`, `isEnabled()`, `putAttribute()`, `putMetric()`, `record()`, `removeAttribute()`, `setEnabled()`, `startTrace()`, `stopTrace()`
+- **API methods**: `getAttribute()`, `getMetric()`, `getPluginVersion()`, `incrementMetric()`, `isEnabled()`, `removeAttribute()`, `startTrace()`
 - **Events**: none
 - **Plugin config keys** (`FirebasePerformance`): none in `definitions.ts`
 
@@ -1134,7 +1134,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `activate()`, `addConfigUpdateListener()`, `fetchAndActivate()`, `fetchConfig()`, `getAll()`, `getBoolean()`, `getInfo()`, `getNumber()`, `getPluginVersion()`, `getString()`, `removeConfigUpdateListener()`, `setDefaults()`, `setMinimumFetchInterval()`, `setSettings()`
+- **API methods**: `activate()`, `addConfigUpdateListener()`, `fetchConfig()`, `getAll()`, `getNumber()`, `getPluginVersion()`, `removeConfigUpdateListener()`, `setDefaults()`, `setMinimumFetchInterval()`
 - **Events**: none
 - **Plugin config keys** (`FirebaseRemoteConfig`): none in `definitions.ts`
 
@@ -1155,7 +1155,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `deleteFile()`, `downloadFile()`, `getDownloadUrl()`, `getMetadata()`, `getPluginVersion()`, `listFiles()`, `updateMetadata()`, `uploadFile()`, `useEmulator()`
+- **API methods**: `deleteFile()`, `getMetadata()`, `updateMetadata()`, `uploadFile()`, `useEmulator()`
 - **Events**: none
 - **Plugin config keys** (`FirebaseStorage`): none in `definitions.ts`
 
@@ -1176,7 +1176,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `isAvailable()`, `isSwitchedOn()`, `switchOff()`, `switchOn()`, `toggle()`
+- **API methods**: `isAvailable()`, `switchOff()`, `toggle()`
 - **Events**: none
 - **Plugin config keys** (`Flash`): none in `definitions.ts`
 
@@ -1197,7 +1197,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `getValue()`, `initialize()`, `push()`, `reset()`, `setUserProperty()`
+- **API methods**: `initialize()`, `reset()`, `setUserProperty()`
 - **Events**: none
 - **Plugin config keys** (`Gtm`): none in `definitions.ts`
 
@@ -1218,7 +1218,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `checkAuthorization()`, `getPluginVersion()`, `isAvailable()`, `openHealthConnectSettings()`, `queryAggregated()`, `queryWorkouts()`, `readSamples()`, `requestAuthorization()`, `saveSample()`, `showPrivacyPolicy()`
+- **API methods**: `checkAuthorization()`, `isAvailable()`, `openHealthConnectSettings()`, `queryWorkouts()`, `saveSample()`
 - **Events**: none
 - **Plugin config keys** (`Health`): none in `definitions.ts`
 
@@ -1239,7 +1239,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getPluginVersion()`, `hide()`, `isHidden()`, `show()`
+- **API methods**: `hide()`, `isHidden()`
 - **Events**: none
 - **Plugin config keys** (`HomeIndicator`): none in `definitions.ts`
 
@@ -1260,7 +1260,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `enableARMAFilter()`, `enableBackgroundMode()`, `getAuthorizationStatus()`, `getPluginVersion()`, `isBluetoothEnabled()`, `isRangingAvailable()`, `requestAlwaysAuthorization()`, `requestWhenInUseAuthorization()`, `setBackgroundScanPeriod()`, `startAdvertising()`, `startMonitoringForRegion()`, `startRangingBeaconsInRegion()`, `stopAdvertising()`, `stopMonitoringForRegion()`, `stopRangingBeaconsInRegion()`
+- **API methods**: `getAuthorizationStatus()`, `getPluginVersion()`, `isRangingAvailable()`, `requestWhenInUseAuthorization()`, `setBackgroundScanPeriod()`, `startAdvertising()`, `startMonitoringForRegion()`, `startRangingBeaconsInRegion()`
 - **Events**: `didDetermineStateForRegion`, `didEnterRegion`, `didExitRegion`, `didRangeBeacons`, `monitoringDidFailForRegion`
 - **Plugin config keys** (`Ibeacon`): none in `definitions.ts`
 
@@ -1281,7 +1281,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `get()`, `getAll()`, `getPluginVersion()`, `isAvailable()`, `remove()`, `set()`, `synchronize()`
+- **API methods**: `get()`, `getPluginVersion()`, `remove()`, `synchronize()`
 - **Events**: `change`
 - **Plugin config keys** (`IcloudKv`): none in `definitions.ts`
 
@@ -1302,7 +1302,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `requestReview()`
+- **API methods**: `requestReview()`
 - **Events**: none
 - **Plugin config keys** (`InAppReview`): none in `definitions.ts`
 
@@ -1323,7 +1323,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `bringToFront()`, `clearAllBrowsingData()`, `clearAllCookies()`, `clearCache()`, `clearCookies()`, `close()`, `dispatchInputEvent()`, `executeScript()`, `getCookies()`, `getFullscreen()`, `getPluginVersion()`, `goBack()`, `handleProxyRequest()`, `hide()`, `open()`, `openSecureWindow()`, `openWebView()`, `postMessage()`, `reload()`, `sendToBack()`, `setEnabledSafeBottomMargin()`, `setEnabledSafeTopMargin()`, `setFullscreen()`, `setUrl()`, `show()`, `takeScreenshot()`, `updateDimensions()`
+- **API methods**: `clearCache()`, `clearCookies()`, `dispatchInputEvent()`, `executeScript()`, `getCookies()`, `goBack()`, `handleProxyRequest()`, `hide()`, `openSecureWindow()`, `reload()`, `sendToBack()`, `setEnabledSafeTopMargin()`, `setFullscreen()`, `takeScreenshot()`
 - **Events**: `browserPageLoadProgress`, `browserPageLoadStart`, `browserPageLoaded`, `buttonNearDoneClick`, `closeEvent`, `confirmBtnClicked`, `consoleMessage`, `customSchemeIntercepted`, `downloadCompleted`, `downloadFailed`, `fullscreenChange`, `hideEvent`, `messageFromWebview`, `pageLoadError`, `popupWindowOpened`, `proxyRequest`, `screenshotTaken`, `urlChangeEvent`
 - **Plugin config keys** (`Inappbrowser`): none in `definitions.ts`
 
@@ -1346,7 +1346,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `checkPermissions()`, `endAllCalls()`, `endCall()`, `getActiveCalls()`, `getPluginVersion()`, `requestFullScreenIntentPermission()`, `requestPermissions()`, `showIncomingCall()`
+- **API methods**: `checkPermissions()`, `endAllCalls()`, `requestFullScreenIntentPermission()`, `showIncomingCall()`
 - **Events**: `callAccepted`, `callDeclined`, `callEnded`, `callTimedOut`, `incomingCallDisplayed`
 - **Plugin config keys** (`IncomingCallKit`): none in `definitions.ts`
 
@@ -1367,7 +1367,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `GetReferrer()`, `getPluginVersion()`, `getReferrer()`
+- **API methods**: `getPluginVersion()`, `getReferrer()`
 - **Events**: none
 - **Plugin config keys** (`InstallReferrer`): none in `definitions.ts`
 
@@ -1388,7 +1388,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getApplicationIconAsync()`, `getPluginVersion()`, `openApplication()`, `openIOSSettings()`, `startActivityAsync()`
+- **API methods**: `getPluginVersion()`, `openApplication()`, `startActivityAsync()`
 - **Events**: none
 - **Plugin config keys** (`IntentLauncher`): none in `definitions.ts`
 
@@ -1409,7 +1409,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `displayArticle()`, `displayCarousel()`, `displayHelpCenter()`, `displayInAppMessages()`, `displayLauncher()`, `displayMessageComposer()`, `displayMessenger()`, `displaySurvey()`, `getUnreadConversationCount()`, `hideInAppMessages()`, `hideLauncher()`, `hideMessenger()`, `loadWithKeys()`, `logEvent()`, `logout()`, `receivePush()`, `registerIdentifiedUser()`, `registerUnidentifiedUser()`, `sendPushTokenToIntercom()`, `setBottomPadding()`, `setUserHash()`, `setUserJwt()`, `updateUser()`
+- **API methods**: `displayCarousel()`, `displayHelpCenter()`, `displayInAppMessages()`, `displayLauncher()`, `displayMessenger()`, `displaySurvey()`, `getUnreadConversationCount()`, `loadWithKeys()`, `logout()`, `registerUnidentifiedUser()`, `sendPushTokenToIntercom()`, `setUserJwt()`
 - **Events**: `unreadCountDidChange`, `windowDidHide`, `windowDidShow`
 - **Plugin config keys** (`Intercom`): none in `definitions.ts`
 
@@ -1430,7 +1430,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `acquireToken()`, `acquireTokenSilent()`, `appConfig()`, `deRegisterAndUnenrollAccount()`, `displayDiagnosticConsole()`, `enrolledAccount()`, `getPolicy()`, `groupName()`, `loginAndEnrollAccount()`, `logoutOfAccount()`, `registerAndEnrollAccount()`, `sdkVersion()`
+- **API methods**: `acquireToken()`, `enrolledAccount()`, `getPolicy()`, `logoutOfAccount()`, `registerAndEnrollAccount()`, `sdkVersion()`
 - **Events**: `appConfigChange`, `policyChange`
 - **Plugin config keys** (`Intune`): none in `definitions.ts`
 
@@ -1452,7 +1452,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `checkDirPermissions()`, `checkExecutingCommands()`, `checkForBusyBoxBinary()`, `checkForDangerousProps()`, `checkForRWPaths()`, `checkForRootNative()`, `checkForSuBinary()`, `checkGeneric()`, `checkGenymotion()`, `checkGoogleSDK()`, `checkInstalledPackages()`, `checkSuExists()`, `checkforOverTheAirCertificates()`, `detectPotentiallyDangerousApps()`, `detectRootCloakingApps()`, `detectRootManagementApps()`, `detectTestKeys()`, `doesSuperuserApkExist()`, `getPluginVersion()`, `isExistBuildTags()`, `isExistSUPath()`, `isRooted()`, `isRootedWithBusyBox()`, `isRootedWithBusyBoxWithEmulator()`, `isRootedWithEmulator()`, `isRunningOnEmulator()`, `isSelinuxFlagInEnabled()`, `simpleCheckBuild()`, `simpleCheckEmulator()`, `simpleCheckQRREFPH()`, `simpleCheckSDKBF86()`, `togetDeviceInfo()`
+- **API methods**: `checkDirPermissions()`, `checkForRWPaths()`, `checkForRootNative()`, `checkForSuBinary()`, `checkGeneric()`, `checkInstalledPackages()`, `detectRootManagementApps()`, `detectTestKeys()`, `doesSuperuserApkExist()`, `isRooted()`, `isRootedWithBusyBoxWithEmulator()`, `isRunningOnEmulator()`, `isSelinuxFlagInEnabled()`, `simpleCheckBuild()`, `simpleCheckSDKBF86()`, `togetDeviceInfo()`
 - **Events**: none
 - **Plugin config keys** (`IsRoot`): none in `definitions.ts`
 
@@ -1473,7 +1473,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `cast()`, `create()`, `delete()`, `getAutoQuality()`, `getBackgroundState()`, `getCastStatus()`, `getFrame()`, `getMute()`, `getPip()`, `getPlayerPosition()`, `getPluginVersion()`, `getQualities()`, `getQuality()`, `getState()`, `getUrl()`, `pause()`, `setAutoQuality()`, `setBackgroundState()`, `setFrame()`, `setMute()`, `setPip()`, `setPlayerPosition()`, `setQuality()`, `start()`
+- **API methods**: `create()`, `delete()`, `getAutoQuality()`, `getBackgroundState()`, `getCastStatus()`, `getFrame()`, `getMute()`, `getPip()`, `getPlayerPosition()`, `getPluginVersion()`, `getQuality()`, `getState()`, `start()`
 - **Events**: `closePip`, `expandPip`, `onCastStatus`, `onCues`, `onDuration`, `onError`, `onQuality`, `onRebuffering`, `onSeekCompleted`, `onState`, `onVideoSize`, `startPip`, `stopPip`
 - **Plugin config keys** (`IvsPlayer`): none in `definitions.ts`
 
@@ -1494,7 +1494,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `currentPlaylist()`, `getAudioTracks()`, `getCaptions()`, `getCurrentAudioTrack()`, `getCurrentCaptions()`, `getPluginVersion()`, `getPosition()`, `getState()`, `initialize()`, `loadPlaylist()`, `loadPlaylistWithItems()`, `pause()`, `play()`, `resume()`, `seekTo()`, `setCurrentAudioTrack()`, `setCurrentCaptions()`, `setPlaylistIndex()`, `setSpeed()`, `setVolume()`, `stop()`
+- **API methods**: `getCaptions()`, `getCurrentAudioTrack()`, `getPluginVersion()`, `getState()`, `initialize()`, `loadPlaylistWithItems()`, `pause()`, `setCurrentCaptions()`, `setPlaylistIndex()`, `setVolume()`, `stop()`
 - **Events**: none
 - **Plugin config keys** (`JwPlayer`): none in `definitions.ts`
 
@@ -1515,7 +1515,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `allowSleep()`, `getPluginVersion()`, `isKeptAwake()`, `isSupported()`, `keepAwake()`
+- **API methods**: `getPluginVersion()`, `isSupported()`, `keepAwake()`
 - **Events**: none
 - **Plugin config keys** (`KeepAwake`): none in `definitions.ts`
 
@@ -1536,7 +1536,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `clearIconCache()`, `getAppIcons()`, `getAvailableApps()`, `getDefaultApp()`, `getPluginVersion()`, `getSupportedApps()`, `isAppAvailable()`, `navigate()`, `refreshAppIcons()`
+- **API methods**: `getAvailableApps()`, `getDefaultApp()`, `getPluginVersion()`, `isAppAvailable()`, `navigate()`, `refreshAppIcons()`
 - **Events**: none
 - **Plugin config keys** (`LaunchNavigator`): none in `definitions.ts`
 
@@ -1557,7 +1557,7 @@ npx cap sync
 ```
 
 - **Platforms**: Android
-- **API methods**: `checkPermissions()`, `getPluginVersion()`, `isAvailable()`, `requestPermissions()`, `start()`, `stop()`
+- **API methods**: `checkPermissions()`, `getPluginVersion()`, `isAvailable()`, `stop()`
 - **Events**: `lightSensorChange`
 - **Plugin config keys** (`LightSensor`): none in `definitions.ts`
 
@@ -1578,7 +1578,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `areActivitiesSupported()`, `cleanupImages()`, `endActivity()`, `getAllActivities()`, `getPluginVersion()`, `getTimerState()`, `listImages()`, `pauseTimerSequence()`, `previousTimerStep()`, `removeImage()`, `resumeTimerSequence()`, `saveImage()`, `skipTimerStep()`, `startActivity()`, `startTimerSequence()`, `stopTimerSequence()`, `updateActivity()`
+- **API methods**: `areActivitiesSupported()`, `cleanupImages()`, `getAllActivities()`, `getTimerState()`, `removeImage()`, `resumeTimerSequence()`, `skipTimerStep()`, `startTimerSequence()`, `updateActivity()`
 - **Events**: `timerSequenceEvent`
 - **Plugin config keys** (`LiveActivities`): none in `definitions.ts`
 
@@ -1600,7 +1600,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `configureServer()`, `connect()`, `disconnect()`, `getPluginVersion()`, `getStatus()`, `reload()`, `reloadFile()`
+- **API methods**: `configureServer()`, `disconnect()`, `getPluginVersion()`, `reload()`
 - **Events**: `reloadEvent`, `statusChange`
 - **Plugin config keys** (`LiveReload`): none in `definitions.ts`
 
@@ -1621,7 +1621,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `createChat()`, `downloadModel()`, `getPluginVersion()`, `getReadiness()`, `sendMessage()`, `setModel()`
+- **API methods**: `createChat()`, `downloadModel()`, `getPluginVersion()`, `getReadiness()`
 - **Events**: `aiFinished`, `downloadProgress`, `generationError`, `readinessChange`, `textFromAi`
 - **Plugin config keys** (`Llm`): none in `definitions.ts`
 
@@ -1642,7 +1642,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getPluginVersion()`, `setActionHandler()`, `setMetadata()`, `setPlaybackState()`, `setPositionState()`
+- **API methods**: `getPluginVersion()`, `setActionHandler()`, `setMetadata()`
 - **Events**: none
 - **Plugin config keys** (`MediaSession`): none in `definitions.ts`
 
@@ -1663,7 +1663,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `analyze()`, `getCapabilities()`, `getPluginVersion()`, `openDeveloperSettings()`, `runCheck()`, `startMonitoring()`, `stopMonitoring()`
+- **API methods**: `getCapabilities()`, `getPluginVersion()`, `runCheck()`, `startMonitoring()`
 - **Events**: `locationIntegrityChanged`
 - **Plugin config keys** (`MockLocationDetector`): none in `definitions.ts`
 
@@ -1684,7 +1684,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `connect()`, `disconnect()`, `publish()`, `subscribe()`
+- **API methods**: `connect()`, `disconnect()`, `publish()`
 - **Events**: `onConnectComplete`, `onConnectionLost`, `onMessageArrived`
 - **Plugin config keys** (`Mqtt`): none in `definitions.ts`
 
@@ -1705,7 +1705,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `isMuted()`
+- **API methods**: `isMuted()`
 - **Events**: none
 - **Plugin config keys** (`Mute`): none in `definitions.ts`
 
@@ -1726,7 +1726,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `dismiss()`, `getPluginVersion()`, `isActive()`, `play()`
+- **API methods**: `getPluginVersion()`, `isActive()`, `play()`
 - **Events**: none
 - **Plugin config keys** (`MuxPlayer`): none in `definitions.ts`
 
@@ -1747,7 +1747,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `clearCache()`, `clearQueue()`, `configure()`, `deinitPlugin()`, `getAudioRoute()`, `getCurrentTime()`, `getDuration()`, `getPlaybackState()`, `getPluginVersion()`, `getQueueState()`, `getRate()`, `isPlaying()`, `isPreloaded()`, `loop()`, `pause()`, `play()`, `playOnce()`, `preload()`, `queueNext()`, `queuePrevious()`, `queueSelect()`, `resume()`, `setCurrentTime()`, `setDebugMode()`, `setEarpiece()`, `setQueue()`, `setRate()`, `setSpeaker()`, `setVolume()`, `stop()`, `unload()`
+- **API methods**: `clearCache()`, `clearQueue()`, `configure()`, `getDuration()`, `getPluginVersion()`, `getRate()`, `isPlaying()`, `play()`, `playOnce()`, `queueNext()`, `queueSelect()`, `resume()`, `setCurrentTime()`, `setEarpiece()`, `setVolume()`, `stop()`
 - **Events**: `audioRouteChange`, `complete`, `currentTime`, `playbackState`, `progress`, `queueChange`
 - **Plugin config keys** (`NativeAudio`): none in `definitions.ts`
 
@@ -1770,7 +1770,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `deleteCredentials()`, `deleteData()`, `getCredentials()`, `getData()`, `getPluginVersion()`, `getSecureCredentials()`, `getSecureData()`, `isAvailable()`, `isCredentialsSaved()`, `isDataSaved()`, `setCredentials()`, `setData()`, `verifyIdentity()`
+- **API methods**: `getSecureCredentials()`, `getSecureData()`, `isAvailable()`, `isDataSaved()`, `setCredentials()`, `setData()`, `verifyIdentity()`
 - **Events**: `biometryChange`
 - **Plugin config keys** (`NativeBiometric`): none in `definitions.ts`
 
@@ -1791,7 +1791,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `configure()`, `getPluginVersion()`, `getState()`, `hide()`, `hideAll()`, `resetWebViewLayout()`, `setProgress()`, `setWebViewLayout()`, `show()`, `update()`
+- **API methods**: `configure()`, `getState()`, `hide()`, `setWebViewLayout()`, `update()`
 - **Events**: none
 - **Plugin config keys** (`NativeLoader`): none in `definitions.ts`
 
@@ -1833,7 +1833,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `openCollection()`, `openDevPage()`, `openEditorChoicePage()`, `openStoreListing()`, `search()`
+- **API methods**: `openCollection()`, `openStoreListing()`, `search()`
 - **Events**: none
 - **Plugin config keys** (`NativeMarket`): none in `definitions.ts`
 
@@ -1854,7 +1854,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `beginTransition()`, `configure()`, `endPullToRefresh()`, `finishTransition()`, `getPluginVersion()`, `reportNavbarScroll()`, `setNavbar()`, `setPullToRefresh()`, `setTabbar()`
+- **API methods**: `beginTransition()`, `configure()`, `endPullToRefresh()`, `getPluginVersion()`, `reportNavbarScroll()`
 - **Events**: `hingeChanged`, `navbarBack`, `navbarItemTap`, `navbarSearch`, `navbarSegmentSelect`, `pullToRefresh`, `safeAreaChanged`, `tabSelect`, `transitionEnd`, `transitionStart`, `verticalBarChanged`
 - **Plugin config keys** (`NativeNavigation`): none in `definitions.ts`
 
@@ -1876,7 +1876,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `forwardGeocode()`, `getPluginVersion()`, `reverseGeocode()`
+- **API methods**: `getPluginVersion()`, `reverseGeocode()`
 - **Events**: none
 - **Plugin config keys** (`Nativegeocoder`): none in `definitions.ts`
 
@@ -1897,7 +1897,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getNavigationBarColor()`, `getPluginVersion()`, `hide()`, `setNavigationBarColor()`, `show()`
+- **API methods**: `getNavigationBarColor()`, `hide()`, `setNavigationBarColor()`
 - **Events**: none
 - **Plugin config keys** (`NavigationBar`): `color`, `dividerColor`, `style`
 
@@ -1918,7 +1918,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getAnonymousToken()`, `getPluginVersion()`, `getSession()`, `getUser()`, `initialize()`, `refreshSession()`, `setSession()`, `signInWithOAuth()`, `signInWithOtp()`, `signInWithPassword()`, `signOut()`, `signUp()`, `verifyOtp()`
+- **API methods**: `getPluginVersion()`, `getSession()`, `getUser()`, `initialize()`, `signInWithOAuth()`, `signUp()`, `verifyOtp()`
 - **Events**: `authStateChange`
 - **Plugin config keys** (`Neon`): none in `definitions.ts`
 
@@ -1939,7 +1939,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getNetworkStatus()`, `getPluginVersion()`, `runDiagnostics()`, `testDownloadSpeed()`, `testPacketLoss()`, `testPort()`, `testUrl()`, `testWebSocket()`
+- **API methods**: `getNetworkStatus()`, `runDiagnostics()`, `testDownloadSpeed()`, `testPort()`
 - **Events**: none
 - **Plugin config keys** (`NetworkDiagnostics`): none in `definitions.ts`
 
@@ -1960,7 +1960,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `erase()`, `getPluginVersion()`, `getStatus()`, `isSupported()`, `makeReadOnly()`, `share()`, `showSettings()`, `startScanning()`, `stopScanning()`, `transceive()`, `unshare()`, `write()`
+- **API methods**: `getPluginVersion()`, `getStatus()`, `makeReadOnly()`, `share()`, `startScanning()`, `write()`
 - **Events**: `nfcEvent`, `nfcSessionEnd`, `nfcStateChange`, `tagDiscovered`
 - **Plugin config keys** (`Nfc`): none in `definitions.ts`
 
@@ -1981,7 +1981,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `autoShimWebAuthn()`, `createCredential()`, `getCredential()`, `getPluginVersion()`, `isSupported()`, `shimWebAuthn()`
+- **API methods**: `createCredential()`, `getConfiguration()`, `isSupported()`
 - **Events**: none
 - **Plugin config keys** (`Passkey`): none in `definitions.ts`
 
@@ -2023,7 +2023,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getPluginVersion()`, `isPayAvailable()`, `requestPayment()`, `updateApplePayShipping()`
+- **API methods**: `getPluginVersion()`, `isPayAvailable()`, `updateApplePayShipping()`
 - **Events**: `applePayShippingContactSelected`, `applePayShippingMethodSelected`
 - **Plugin config keys** (`Pay`): none in `definitions.ts`
 
@@ -2045,7 +2045,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `fromData()`, `fromURL()`, `getPluginVersion()`
+- **API methods**: `fromURL()`, `getPluginVersion()`
 - **Events**: none
 - **Plugin config keys** (`PdfGenerator`): none in `definitions.ts`
 
@@ -2066,7 +2066,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `close()`, `getCurrentPage()`, `getPageCount()`, `getPluginVersion()`, `goToPage()`, `hide()`, `nextPage()`, `open()`, `previousPage()`, `setZoom()`, `show()`, `updateLayout()`
+- **API methods**: `getPageCount()`, `goToPage()`, `hide()`, `open()`, `previousPage()`, `updateLayout()`
 - **Events**: `close`, `error`, `linkTap`, `load`, `pageChange`, `zoomChange`
 - **Plugin config keys** (`PdfViewer`): none in `definitions.ts`
 
@@ -2088,7 +2088,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `checkPermissions()`, `getMeasurement()`, `getPluginVersion()`, `isAvailable()`, `requestPermissions()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`
+- **API methods**: `checkPermissions()`, `getMeasurement()`, `getPluginVersion()`, `startMeasurementUpdates()`
 - **Events**: `measurement`
 - **Plugin config keys** (`Pedometer`): none in `definitions.ts`
 
@@ -2109,7 +2109,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `check()`, `checkMultiple()`, `getPluginVersion()`, `openSettings()`, `request()`, `requestMultiple()`, `requestPreciseLocation()`, `shouldShowRationale()`
+- **API methods**: `check()`, `checkMultiple()`, `requestPreciseLocation()`, `shouldShowRationale()`
 - **Events**: none
 - **Plugin config keys** (`Permissions`): none in `definitions.ts`
 
@@ -2130,7 +2130,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `readAccount()`, `saveAccount()`
+- **API methods**: `getPluginVersion()`, `readAccount()`
 - **Events**: none
 - **Plugin config keys** (`PersistentAccount`): none in `definitions.ts`
 
@@ -2151,7 +2151,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getId()`, `getPluginVersion()`, `resetId()`
+- **API methods**: `getId()`, `getPluginVersion()`
 - **Events**: none
 - **Plugin config keys** (`PersistentUuid`): none in `definitions.ts`
 
@@ -2171,7 +2171,7 @@ npm install @capgo/capacitor-persona
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
+- **Platforms**: iOS, Android
 - **API methods**: `startInquiry()`
 - **Events**: `inquiryCanceled`, `inquiryComplete`, `inquiryError`
 - **Plugin config keys** (`Persona`): none in `definitions.ts`
@@ -2193,7 +2193,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `checkAuthorization()`, `getAlbums()`, `getLibrary()`, `getPhotoUrl()`, `getPluginVersion()`, `getThumbnailUrl()`, `pickMedia()`, `requestAuthorization()`
+- **API methods**: `checkAuthorization()`, `getAlbums()`, `getPhotoUrl()`, `pickMedia()`
 - **Events**: none
 - **Plugin config keys** (`PhotoLibrary`): none in `definitions.ts`
 
@@ -2214,7 +2214,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `show()`
+- **API methods**: `update()`
 - **Events**: none
 - **Plugin config keys** (`PrettyToast`): none in `definitions.ts`
 
@@ -2235,7 +2235,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `printBase64()`, `printFile()`, `printHtml()`, `printIframe()`, `printPdf()`, `printWebView()`
+- **API methods**: `getPluginVersion()`, `printBase64()`, `printHtml()`, `printIframe()`
 - **Events**: none
 - **Plugin config keys** (`Printer`): none in `definitions.ts`
 
@@ -2256,7 +2256,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `disable()`, `enable()`, `getPluginVersion()`, `isEnabled()`
+- **API methods**: `enable()`, `isEnabled()`
 - **Events**: none
 - **Plugin config keys** (`PrivacyScreen`): none in `definitions.ts`
 
@@ -2277,7 +2277,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `disable()`, `enable()`, `getPluginVersion()`, `getStatus()`
+- **API methods**: `enable()`, `getStatus()`
 - **Events**: none
 - **Plugin config keys** (`Proximity`): none in `definitions.ts`
 
@@ -2298,7 +2298,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `initialize()`, `startMeeting()`
+- **API methods**: `getPluginVersion()`, `initialize()`
 - **Events**: none
 - **Plugin config keys** (`Realtimekit`): none in `definitions.ts`
 
@@ -2319,7 +2319,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `execute()`, `getPluginVersion()`, `load()`
+- **API methods**: `getPluginVersion()`, `load()`
 - **Events**: none
 - **Plugin config keys** (`Recaptcha`): none in `definitions.ts`
 
@@ -2340,7 +2340,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `cancel()`, `cancelAll()`, `checkPermission()`, `createChannel()`, `createChannelGroup()`, `deleteChannel()`, `display()`, `getDisplayed()`, `getInitialNotification()`, `getPending()`, `getPluginVersion()`, `registerActions()`, `requestPermission()`, `schedule()`, `setBadge()`
+- **API methods**: `cancelAll()`, `checkPermission()`, `createChannel()`, `deleteChannel()`, `getPending()`, `getPluginVersion()`, `schedule()`, `setBadge()`
 - **Events**: `dismiss`, `press`
 - **Plugin config keys** (`RichNotifications`): none in `definitions.ts`
 
@@ -2361,7 +2361,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `capturePicture()`, `captureVideo()`, `getCameraAsset()`, `getPluginVersion()`, `initialize()`, `listFiles()`, `livePreview()`, `readSettings()`, `sendCommand()`, `setSettings()`, `stopLivePreview()`
+- **API methods**: `captureVideo()`, `getPluginVersion()`, `initialize()`, `listFiles()`, `setSettings()`, `stopLivePreview()`
 - **Events**: none
 - **Plugin config keys** (`Ricoh360`): none in `definitions.ts`
 
@@ -2382,7 +2382,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `alias()`, `flush()`, `getPluginVersion()`, `group()`, `identify()`, `initialize()`, `optOut()`, `putAdvertisingId()`, `putAnonymousId()`, `putDeviceToken()`, `reset()`, `screen()`, `setAdvertisingId()`, `setAnonymousId()`, `track()`
+- **API methods**: `getPluginVersion()`, `group()`, `initialize()`, `putAdvertisingId()`, `putAnonymousId()`, `putDeviceToken()`, `reset()`, `screen()`
 - **Events**: none
 - **Plugin config keys** (`Rudderstack`): none in `definitions.ts`
 
@@ -2403,7 +2403,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getBarPlacement()`, `getFoldState()`, `getHingeAngle()`, `getPluginVersion()`, `getReservedRegions()`, `getSizeClass()`, `isDeviceFoldable()`, `isOrientationLocked()`, `lock()`, `orientation()`, `setVerticalBarBehavior()`, `startOrientationTracking()`, `stopOrientationTracking()`, `unlock()`
+- **API methods**: `getBarPlacement()`, `getHingeAngle()`, `getPluginVersion()`, `getSizeClass()`, `isDeviceFoldable()`, `orientation()`, `stopOrientationTracking()`, `unlock()`
 - **Events**: `foldStateChange`, `hingeAngleChange`, `screenOrientationChange`, `sizeClassChange`
 - **Plugin config keys** (`ScreenOrientation`): none in `definitions.ts`
 
@@ -2425,7 +2425,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `start()`, `stop()`
+- **API methods**: `getPluginVersion()`, `start()`
 - **Events**: `onStopped`
 - **Plugin config keys** (`ScreenRecorder`): none in `definitions.ts`
 
@@ -2509,7 +2509,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `checkPermissions()`, `getPluginVersion()`, `getSimCards()`, `requestPermissions()`
+- **API methods**: `getSimCards()`, `requestPermissions()`
 - **Events**: none
 - **Plugin config keys** (`Sim`): none in `definitions.ts`
 
@@ -2530,7 +2530,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `decodeIdToken()`, `getAccessTokenExpirationDate()`, `getAuthorizationCode()`, `getPluginVersion()`, `handleRedirectCallback()`, `initialize()`, `isAccessTokenAvailable()`, `isAccessTokenExpired()`, `isLoggedIn()`, `isRefreshTokenAvailable()`, `logout()`, `openAuthSession()`, `openSecureWindow()`, `refresh()`, `refreshToken()`
+- **API methods**: `getAccessTokenExpirationDate()`, `getPluginVersion()`, `handleRedirectCallback()`, `initialize()`, `isAccessTokenAvailable()`, `isLoggedIn()`, `isRefreshTokenAvailable()`, `logout()`, `openAuthSession()`, `refresh()`
 - **Events**: none
 - **Plugin config keys** (`SocialLogin`): none in `definitions.ts`
 
@@ -2551,7 +2551,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `available()`, `checkPermissions()`, `forceStop()`, `getLastPartialResult()`, `getPluginVersion()`, `getSupportedLanguages()`, `isListening()`, `isOnDeviceRecognitionAvailable()`, `requestPermissions()`, `setPTTState()`, `start()`, `stop()`
+- **API methods**: `available()`, `forceStop()`, `isListening()`, `requestPermissions()`, `setPTTState()`, `start()`
 - **Events**: `audioLevel`, `endOfSegmentedSession`, `error`, `listeningState`, `partialResults`, `readyForNextSession`, `segmentResults`
 - **Plugin config keys** (`SpeechRecognition`): none in `definitions.ts`
 
@@ -2572,7 +2572,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `activateAudioSession()`, `cancel()`, `deactivateAudioSession()`, `getLanguages()`, `getPluginVersion()`, `getVoices()`, `initialize()`, `isAvailable()`, `isLanguageAvailable()`, `isSpeaking()`, `isVoiceAvailable()`, `pause()`, `resume()`, `speak()`, `synthesizeToFile()`
+- **API methods**: `activateAudioSession()`, `cancel()`, `getLanguages()`, `getPluginVersion()`, `isAvailable()`, `isVoiceAvailable()`, `resume()`, `speak()`
 - **Events**: `boundary`, `end`, `error`, `start`
 - **Plugin config keys** (`SpeechSynthesis`): none in `definitions.ts`
 
@@ -2593,7 +2593,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getConfiguration()`, `getPluginVersion()`
+- **API methods**: `getConfiguration()`
 - **Events**: none
 - **Plugin config keys** (`SslPinning`): none in `definitions.ts`
 
@@ -2614,7 +2614,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `acceptCall()`, `call()`, `endCall()`, `getCallInfo()`, `getCallStatus()`, `getCurrentUser()`, `getDynamicStreamVideoApikey()`, `getPluginVersion()`, `isCameraEnabled()`, `login()`, `logout()`, `rejectCall()`, `setCameraEnabled()`, `setDynamicStreamVideoApikey()`, `setMicrophoneEnabled()`, `setSpeaker()`, `switchCamera()`
+- **API methods**: `acceptCall()`, `call()`, `getCallInfo()`, `getDynamicStreamVideoApikey()`, `getPluginVersion()`, `isCameraEnabled()`, `login()`, `setMicrophoneEnabled()`, `setSpeaker()`
 - **Events**: `callEvent`, `incomingCall`
 - **Plugin config keys** (`StreamCall`): none in `definitions.ts`
 
@@ -2635,7 +2635,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `create()`, `initialize()`, `present()`
+- **API methods**: `initialize()`, `present()`
 - **Events**: none
 - **Plugin config keys** (`StripeIdentity`): none in `definitions.ts`
 
@@ -2677,7 +2677,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `cancelCollectPaymentMethod()`, `cancelDiscoverReaders()`, `cancelInstallUpdate()`, `cancelReaderReconnection()`, `clearReaderDisplay()`, `collectPaymentMethod()`, `confirmPaymentIntent()`, `connectReader()`, `disconnectReader()`, `discoverReaders()`, `getConnectedReader()`, `initialize()`, `installAvailableUpdate()`, `rebootReader()`, `setConnectionToken()`, `setReaderDisplay()`, `setSimulatorConfiguration()`, `setTapToPayUxConfiguration()`
+- **API methods**: `cancelCollectPaymentMethod()`, `cancelDiscoverReaders()`, `connectReader()`, `getConnectedReader()`, `initialize()`, `installAvailableUpdate()`, `rebootReader()`, `setConnectionToken()`, `setReaderDisplay()`, `setTapToPayUxConfiguration()`
 - **Events**: none
 - **Plugin config keys** (`StripeTerminal`): none in `definitions.ts`
 
@@ -2698,7 +2698,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `getSession()`, `getUser()`, `initialize()`, `refreshSession()`, `setSession()`, `signInAnonymously()`, `signInWithOAuth()`, `signInWithOtp()`, `signInWithPassword()`, `signOut()`, `signUp()`, `verifyOtp()`
+- **API methods**: `getPluginVersion()`, `getSession()`, `getUser()`, `initialize()`, `signInWithOAuth()`, `signUp()`, `verifyOtp()`
 - **Events**: `authStateChange`
 - **Plugin config keys** (`Supabase`): none in `definitions.ts`
 
@@ -2719,7 +2719,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getPluginVersion()`, `isEnabled()`, `toggle()`
+- **API methods**: `getPluginVersion()`, `toggle()`
 - **Events**: none
 - **Plugin config keys** (`Textinteraction`): none in `definitions.ts`
 
@@ -2761,7 +2761,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `acceptCall()`, `checkMicrophonePermission()`, `endCall()`, `getCallStatus()`, `getPluginVersion()`, `isLoggedIn()`, `login()`, `logout()`, `makeCall()`, `muteCall()`, `rejectCall()`, `remove()`, `requestMicrophonePermission()`, `setSpeaker()`
+- **API methods**: `acceptCall()`, `checkMicrophonePermission()`, `endCall()`, `getPluginVersion()`, `isLoggedIn()`, `login()`, `setSpeaker()`
 - **Events**: `callConnected`, `callDisconnected`, `callInviteCancelled`, `callInviteReceived`, `callQualityWarningsChanged`, `callReconnected`, `callReconnecting`, `callRinging`, `outgoingCallFailed`, `outgoingCallInitiated`, `registrationFailure`, `registrationSuccess`
 - **Plugin config keys** (`TwilioVoice`): none in `definitions.ts`
 
@@ -2783,7 +2783,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `cancelDelay()`, `checkPreviewUpdate()`, `completeFlexibleUpdate()`, `current()`, `delete()`, `deletePreview()`, `download()`, `getAppId()`, `getAppUpdateInfo()`, `getBuiltinVersion()`, `getBundleDownloadSize()`, `getChannel()`, `getDeviceId()`, `getFailedUpdate()`, `getLatest()`, `getMissingBundleFiles()`, `getNextBundle()`, `getPluginVersion()`, `isAutoUpdateAvailable()`, `isAutoUpdateEnabled()`, `isShakeChannelSelectorEnabled()`, `isShakeMenuEnabled()`, `list()`, `listChannels()`, `listPreviews()`, `next()`, `notifyAppReady()`, `openAppStore()`, `performImmediateUpdate()`, `reload()`, `reset()`, `resetPreview()`, `set()`, `setAppId()`, `setBundleError()`, `setChannel()`, `setChannelUrl()`, `setCustomId()`, `setMultiDelay()`, `setPreview()`, `setShakeChannelSelector()`, `setShakeMenu()`, `setStatsUrl()`, `setUpdateUrl()`, `startFlexibleUpdate()`, `startPreviewSession()`, `triggerUpdateCheck()`, `unsetChannel()`, `updatePreview()`
+- **API methods**: `checkPreviewUpdate()`, `current()`, `delete()`, `download()`, `getChannel()`, `getDeviceId()`, `getFailedUpdate()`, `getMissingBundleFiles()`, `isAutoUpdateAvailable()`, `isAutoUpdateEnabled()`, `isShakeChannelSelectorEnabled()`, `isShakeMenuEnabled()`, `list()`, `listPreviews()`, `notifyAppReady()`, `openAppStore()`, `resetPreview()`, `set()`, `setAppId()`, `setChannel()`, `setCustomId()`, `setMultiDelay()`, `setStatsUrl()`, `startFlexibleUpdate()`, `triggerUpdateCheck()`
 - **Events**: `appReady`, `appReloaded`, `breakingAvailable`, `channelPrivate`, `download`, `downloadComplete`, `downloadFailed`, `majorAvailable`, `noNeedUpdate`, `onFlexibleUpdateStateChange`, `set`, `setNext`, `updateAvailable`, `updateCheckResult`, `updateFailed`, `updaterEvent`
 - **Plugin config keys** (`Updater`): `allowHttpsToHttpRedirect`, `allowManualBundleError`, `allowModifyAppId`, `allowModifyUrl`, `allowPreview`, `allowSetDefaultChannel`, `allowShakeChannelSelector`, `appId`, `appReadyTimeout`, `autoDeleteFailed`, `autoDeletePrevious`, `autoSplashscreen`, `autoSplashscreenLoader`, `autoSplashscreenTimeout`, `autoUpdate`, `builtinMinimum`, `channelUrl`, `defaultChannel`, `directUpdate`, `disableJSLogging`, `httpsOnly`, `keepUrlPathAfterReload`, `localApi`, `localApiFiles`, `localHost`, `localS3`, `localSupa`, `localSupaAnon`, `localWebHost`, `nativeUpdatePrompt`, `nativeUpdatePromptCooldownHours`, `nativeUpdatePromptCountry`, `nativeUpdatePromptLaterButton`, `nativeUpdatePromptMessage`, `nativeUpdatePromptOnStoreCheck`, `nativeUpdatePromptTitle`, `nativeUpdatePromptUpdateButton`, `osLogging`, `periodCheckDelay`, `persistCustomId`, `persistDefaultChannelOnReinstall`, `persistModifyUrl`, `publicKey`, `resetWhenUpdate`, `responseTimeout`, `shakeMenu`, `shakeMenuGesture`, `statsUrl`, `updateUrl`, `version`
 
@@ -2806,7 +2806,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `acknowledgeEvent()`, `getPluginVersion()`, `removeUpload()`, `startUpload()`, `uploadMultipart()`
+- **API methods**: `acknowledgeEvent()`, `removeUpload()`, `startUpload()`
 - **Events**: `events`
 - **Plugin config keys** (`Uploader`): none in `definitions.ts`
 
@@ -2827,7 +2827,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getDiscoveryToken()`, `getPluginVersion()`, `isAvailable()`, `startControleeSession()`, `startControllerSession()`, `startPeerSession()`, `stopSession()`
+- **API methods**: `getPluginVersion()`, `isAvailable()`, `startControleeSession()`, `startPeerSession()`
 - **Events**: `rangingUpdate`, `sessionStateChanged`
 - **Plugin config keys** (`Uwb`): none in `definitions.ts`
 
@@ -2848,7 +2848,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `configure()`, `getSessionId()`, `recordTouchEvent()`, `reinitialize()`
+- **API methods**: `configure()`, `reinitialize()`
 - **Events**: none
 - **Plugin config keys** (`Verisoul`): none in `definitions.ts`
 
@@ -2869,7 +2869,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `exitPlayer()`, `getCurrentTime()`, `getDuration()`, `getMuted()`, `getPluginVersion()`, `getRate()`, `getVolume()`, `hidePlayer()`, `initPlayer()`, `isControllerIsFullyVisible()`, `isPlaying()`, `pause()`, `play()`, `setCurrentTime()`, `setMuted()`, `setRate()`, `setVolume()`, `showController()`, `showPlayer()`, `stopAllPlayers()`
+- **API methods**: `exitPlayer()`, `getDuration()`, `getRate()`, `initPlayer()`, `play()`, `setCurrentTime()`, `setMuted()`, `setVolume()`, `showController()`, `showPlayer()`
 - **Events**: none
 - **Plugin config keys** (`VideoPlayer`): none in `definitions.ts`
 
@@ -2890,7 +2890,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `getThumbnail()`
+- **API methods**: `getThumbnail()`
 - **Events**: none
 - **Plugin config keys** (`VideoThumbnails`): none in `definitions.ts`
 
@@ -2932,7 +2932,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `getInfo()`, `getPluginVersion()`, `replyToMessage()`, `sendMessage()`, `transferUserInfo()`, `updateApplicationContext()`
+- **API methods**: `getInfo()`, `sendMessage()`, `transferUserInfo()`
 - **Events**: `activationStateChanged`, `applicationContextReceived`, `messageReceived`, `messageReceivedWithReply`, `reachabilityChanged`, `userInfoReceived`
 - **Plugin config keys** (`Watch`): none in `definitions.ts`
 
@@ -2953,7 +2953,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `clearPendingCrashInfo()`, `getPendingCrashInfo()`, `restartWebView()`, `simulateCrashRecovery()`
+- **API methods**: `getPendingCrashInfo()`, `simulateCrashRecovery()`
 - **Events**: `webViewRestoredAfterCrash`
 - **Plugin config keys** (`WebviewCrash`): none in `definitions.ts`
 
@@ -2974,7 +2974,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `checkNow()`, `getState()`, `startMonitoring()`, `stopMonitoring()`
+- **API methods**: `getState()`, `startMonitoring()`
 - **Events**: `foreground`
 - **Plugin config keys** (`WebviewGuardian`): none in `definitions.ts`
 
@@ -2995,7 +2995,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `check()`, `getLastStatus()`, `openUpdatePage()`, `showUpdatePrompt()`, `startMonitoring()`, `stopMonitoring()`
+- **API methods**: `check()`, `showUpdatePrompt()`, `stopMonitoring()`
 - **Events**: `statusChanged`, `webViewLatest`, `webViewOutdated`
 - **Plugin config keys** (`WebviewVersionChecker`): none in `definitions.ts`
 
@@ -3016,7 +3016,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `auth()`, `chooseInvoice()`, `getPluginVersion()`, `initialize()`, `isInstalled()`, `openMiniProgram()`, `sendPaymentRequest()`, `share()`
+- **API methods**: `auth()`, `chooseInvoice()`, `initialize()`, `sendPaymentRequest()`
 - **Events**: none
 - **Plugin config keys** (`Wechat`): none in `definitions.ts`
 
@@ -3037,7 +3037,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `acknowledgeTemplateEvents()`, `acknowledgeWidgetMessages()`, `areActivitiesSupported()`, `completeWidgetMessage()`, `endTemplateActivity()`, `getPluginVersion()`, `getTemplateActivity()`, `getWidgetSession()`, `listTemplateActivities()`, `listTemplateEvents()`, `listWidgetMessages()`, `listWidgetSessions()`, `performTemplateAction()`, `reloadWidgets()`, `sendWidgetMessage()`, `startTemplateActivity()`, `startTemplateWidget()`, `startWidgetSession()`, `stopWidgetSession()`, `updateTemplateActivity()`, `updateWidgetSession()`
+- **API methods**: `areActivitiesSupported()`, `completeWidgetMessage()`, `endTemplateActivity()`, `getPluginVersion()`, `getTemplateActivity()`, `listTemplateEvents()`, `listWidgetMessages()`, `listWidgetSessions()`, `startTemplateWidget()`, `startWidgetSession()`, `stopWidgetSession()`
 - **Events**: none
 - **Plugin config keys** (`WidgetKit`): none in `definitions.ts`
 
@@ -3058,7 +3058,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `addNetwork()`, `checkPermissions()`, `connect()`, `disconnect()`, `getAvailableNetworks()`, `getIpAddress()`, `getPluginVersion()`, `getRssi()`, `getSsid()`, `getWifiInfo()`, `isEnabled()`, `isNetworkSaved()`, `requestPermissions()`, `shareNetwork()`, `startScan()`
+- **API methods**: `addNetwork()`, `checkPermissions()`, `disconnect()`, `getIpAddress()`, `getPluginVersion()`, `getSsid()`, `isEnabled()`, `isNetworkSaved()`
 - **Events**: `networksScanned`
 - **Plugin config keys** (`Wifi`): none in `definitions.ts`
 
@@ -3079,7 +3079,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `createPlayer()`, `cuePlaylist()`, `cueVideoById()`, `cueVideoByUrl()`, `destroy()`, `getAllPlayersEventsState()`, `getAvailablePlaybackRates()`, `getAvailableQualityLevels()`, `getCurrentTime()`, `getDuration()`, `getIframe()`, `getPlaybackQuality()`, `getPlaybackRate()`, `getPlayerState()`, `getPlaylist()`, `getPlaylistIndex()`, `getPluginVersion()`, `getVideoEmbedCode()`, `getVideoLoadedFraction()`, `getVideoUrl()`, `getVolume()`, `initialize()`, `isMuted()`, `loadPlaylist()`, `loadVideoById()`, `loadVideoByUrl()`, `mute()`, `nextVideo()`, `pauseVideo()`, `playVideo()`, `playVideoAt()`, `previousVideo()`, `seekTo()`, `setLoop()`, `setPlaybackQuality()`, `setPlaybackRate()`, `setPlayerFrame()`, `setShuffle()`, `setSize()`, `setVolume()`, `stopVideo()`, `toggleFullScreen()`, `unMute()`
+- **API methods**: `cuePlaylist()`, `cueVideoById()`, `cueVideoByUrl()`, `getAllPlayersEventsState()`, `getAvailableQualityLevels()`, `getDuration()`, `getPlaybackQuality()`, `getPlaylistIndex()`, `getPluginVersion()`, `getVideoEmbedCode()`, `getVideoLoadedFraction()`, `initialize()`, `loadVideoById()`, `loadVideoByUrl()`, `nextVideo()`, `pauseVideo()`, `playVideoAt()`, `setLoop()`, `setPlaybackRate()`, `setPlayerFrame()`, `setSize()`, `setVolume()`, `stopVideo()`, `toggleFullScreen()`, `unMute()`
 - **Events**: none
 - **Plugin config keys** (`YoutubePlayer`): none in `definitions.ts`
 
@@ -3101,7 +3101,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `cloneProfile()`, `configureDiagnostics()`, `createProfile()`, `deleteProfile()`, `disableDatawedge()`, `disableScannerInput()`, `enableDatawedge()`, `enableScannerInput()`, `enumerateScanners()`, `enumerateTriggers()`, `getActiveProfile()`, `getAssociatedApps()`, `getConfig()`, `getDatawedgeStatus()`, `getDiagnostics()`, `getDisabledAppList()`, `getIgnoreDisabledProfiles()`, `getPluginVersion()`, `getProfilesList()`, `getScannerStatus()`, `getVersionInfo()`, `importConfig()`, `notify()`, `registerForNotification()`, `registerScanIntentAction()`, `renameProfile()`, `resetDefaultProfile()`, `restoreConfig()`, `setConfig()`, `setDefaultProfile()`, `setDisabledAppList()`, `setIgnoreDisabledProfiles()`, `setReportingOptions()`, `softRfidTrigger()`, `softScanTrigger()`, `switchScanner()`, `switchScannerParams()`, `switchToProfile()`, `unRegisterForNotification()`
+- **API methods**: `cloneProfile()`, `configureDiagnostics()`, `deleteProfile()`, `disableDatawedge()`, `enableDatawedge()`, `enumerateScanners()`, `enumerateTriggers()`, `getAssociatedApps()`, `getDatawedgeStatus()`, `getIgnoreDisabledProfiles()`, `getPluginVersion()`, `getScannerStatus()`, `registerScanIntentAction()`, `renameProfile()`, `resetDefaultProfile()`, `setConfig()`, `setIgnoreDisabledProfiles()`, `setReportingOptions()`, `softScanTrigger()`, `switchScannerParams()`
 - **Events**: `notification`, `scan`
 - **Plugin config keys** (`ZebraDatawedge`): none in `definitions.ts`
 
@@ -3122,7 +3122,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `unzip()`, `zip()`
+- **API methods**: `getPluginVersion()`, `zip()`
 - **Events**: `progress`
 - **Plugin config keys** (`Zip`): none in `definitions.ts`
 
@@ -3144,7 +3144,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **API methods**: `cancelDelay()`, `checkPreviewUpdate()`, `completeFlexibleUpdate()`, `current()`, `delete()`, `deletePreview()`, `download()`, `getAppId()`, `getAppUpdateInfo()`, `getBuiltinVersion()`, `getBundleDownloadSize()`, `getChannel()`, `getDeviceId()`, `getFailedUpdate()`, `getLatest()`, `getMissingBundleFiles()`, `getNextBundle()`, `getPluginVersion()`, `isAutoUpdateAvailable()`, `isAutoUpdateEnabled()`, `isShakeChannelSelectorEnabled()`, `isShakeMenuEnabled()`, `list()`, `listChannels()`, `listPreviews()`, `next()`, `notifyAppReady()`, `openAppStore()`, `performImmediateUpdate()`, `reload()`, `reset()`, `resetPreview()`, `set()`, `setAppId()`, `setBundleError()`, `setChannel()`, `setChannelUrl()`, `setCustomId()`, `setMultiDelay()`, `setPreview()`, `setShakeChannelSelector()`, `setShakeMenu()`, `setStatsUrl()`, `setUpdateUrl()`, `startFlexibleUpdate()`, `startPreviewSession()`, `triggerUpdateCheck()`, `unsetChannel()`, `updatePreview()`
+- **API methods**: `checkPreviewUpdate()`, `current()`, `delete()`, `download()`, `getChannel()`, `getDeviceId()`, `getFailedUpdate()`, `getMissingBundleFiles()`, `isAutoUpdateAvailable()`, `isAutoUpdateEnabled()`, `isShakeChannelSelectorEnabled()`, `isShakeMenuEnabled()`, `list()`, `listPreviews()`, `notifyAppReady()`, `openAppStore()`, `resetPreview()`, `set()`, `setAppId()`, `setChannel()`, `setCustomId()`, `setMultiDelay()`, `setStatsUrl()`, `startFlexibleUpdate()`, `triggerUpdateCheck()`
 - **Events**: `appReady`, `appReloaded`, `breakingAvailable`, `channelPrivate`, `download`, `downloadComplete`, `downloadFailed`, `majorAvailable`, `noNeedUpdate`, `onFlexibleUpdateStateChange`, `set`, `setNext`, `updateAvailable`, `updateCheckResult`, `updateFailed`
 - **Plugin config keys** (`Updater`): none in `definitions.ts`
 - **Docs**: https://capgo.app/docs/plugins/updater/
@@ -3162,7 +3162,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `acknowledgePurchase()`, `configure()`, `consumePurchase()`, `finishTransaction()`, `getAppTransaction()`, `getPluginVersion()`, `getProduct()`, `getProducts()`, `getPurchases()`, `getStorefront()`, `getUnfinishedTransactions()`, `isBillingSupported()`, `isEntitledToOldBusinessModel()`, `manageSubscriptions()`, `presentOfferCodeRedeemSheet()`, `purchaseProduct()`, `restorePurchases()`
+- **API methods**: `acknowledgePurchase()`, `configure()`, `getAppTransaction()`, `getProducts()`, `getPurchases()`, `getStorefront()`, `getUnfinishedTransactions()`, `isBillingSupported()`, `manageSubscriptions()`, `purchaseProduct()`
 - **Events**: `transactionUpdated`, `transactionVerificationFailed`
 - **Plugin config keys** (`NativePurchases`): none in `definitions.ts`
 
