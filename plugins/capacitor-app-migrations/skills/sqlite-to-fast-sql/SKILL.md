@@ -109,7 +109,7 @@ Encryption (only if `encrypted: true`):
 
 Web (only if the app ships on web): serve `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp`, and in Vite add `optimizeDeps.exclude: ['@sqlite.org/sqlite-wasm']`. `CapgoCapacitorFastSql.configureWeb({ ... })` before the first `connect()` is optional and a no-op on native.
 
-Optional native transport (8.3.0+): `FastSQL.connect({ database: 'app', transport: 'http-binary' })` opts into the experimental binary HTTP protocol on iOS and Android for smaller BLOB payloads. Default is `http-json`. Native must advertise binary protocol v1 or the client keeps JSON.
+Optional native transport (8.3.0+): `FastSQL.connect({ database: 'app', transport: 'http-binary' })` opts into the experimental binary HTTP protocol on iOS and Android for smaller BLOB payloads. Default is `http-json`. If native does not advertise binary protocol v1, `connect()` rejects. Catch and reconnect with `transport: 'http-json'`.
 
 ### Step 4: Preserve existing data
 
