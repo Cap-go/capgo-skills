@@ -4,7 +4,7 @@ Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go 
 
 Facts come from each repository `package.json` and `src/definitions.ts`. API method names are taken from TypeScript definitions only.
 
-Total packages: 145 (generated 2026-10-08)
+Total packages: 150 (generated 2026-11-11)
 
 ## Plugins
 
@@ -20,7 +20,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `start()`, `stop()`, `updateHeaders()`, `openSettings()`, `setPlannedRoute()`, `setupGeofencing()`, `addGeofence()`, `removeGeofence()`, `removeAllGeofences()`, `getMonitoredGeofences()`, `checkPermissions()`, `requestPermissions()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `addGeofence()`, `clearGeofenceQueue()`, `clearLocationLog()`, `getLocationLog()`, `getMonitoredGeofences()`, `openSettings()`, `removeAllGeofences()`, `removeGeofence()`, `setPlannedRoute()`
 - **Docs**: https://capgo.app/docs/plugins/background-geolocation/
 - **Repository**: https://github.com/Cap-go/capacitor-background-geolocation
 
@@ -36,7 +36,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `stop()`, `captureSample()`, `startBarcodeScanner()`, `stopBarcodeScanner()`, `getAspectRatio()`, `setGridMode()`, `getGridMode()`, `checkPermissions()`, `requestPermissions()`, `setFlashMode()`, `flip()`, `setOpacity()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `capture()`, `captureSample()`, `deleteFile()`, `flip()`, `getAspectRatio()`, `getAvailableDevices()`, `getDeviceId()`, `getExposureCompensation()`, `getExposureCompensationRange()`
 - **Docs**: https://capgo.app/docs/plugins/camera-preview/
 - **Repository**: https://github.com/Cap-go/capacitor-camera-preview
 
@@ -52,7 +52,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getMeasurement()`, `isAvailable()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `getMeasurement()`, `isAvailable()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`
 - **Docs**: https://capgo.app/docs/plugins/accelerometer/
 - **Repository**: https://github.com/Cap-go/capacitor-accelerometer
 
@@ -68,7 +68,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `start()`, `configure()`, `configRequest()`, `requestConsentInfo()`, `showConsentForm()`, `showPrivacyOptionsForm()`, `adIsLoaded()`, `adLoad()`, `adShow()`, `adHide()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `adHide()`, `adIsLoaded()`, `adLoad()`, `adShow()`, `configRequest()`, `configure()`, `feedAdCreate()`, `feedAdDestroy()`, `feedAdIsLoaded()`, `feedAdLoad()`, `feedAdSetAutoRefresh()`
 - **Docs**: https://capgo.app/docs/plugins/admob/
 - **Repository**: https://github.com/Cap-go/capacitor-admob
 
@@ -84,7 +84,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `requestAgeRange()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `requestAgeRange()`
 - **Docs**: https://capgo.app/docs/plugins/age-range/
 - **Repository**: https://github.com/Cap-go/capacitor-age-range
 
@@ -100,7 +100,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `createAlarm()`, `openAlarms()`, `getOSInfo()`, `requestPermissions()`, `checkPermissions()`, `getPluginVersion()`, `cancelAlarm()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `cancelAlarm()`, `createAlarm()`, `getAlarms()`, `getOSInfo()`, `openAlarms()`
 - **Docs**: https://capgo.app/docs/plugins/alarm/
 - **Repository**: https://github.com/Cap-go/capacitor-alarm
 
@@ -116,7 +116,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `checkAgeSignals()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `checkAgeSignals()`
 - **Docs**: https://capgo.app/docs/plugins/age-signals/
 - **Repository**: https://github.com/Cap-go/capacitor-android-age-signals
 
@@ -132,7 +132,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `startInlineInstall()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `startInlineInstall()`
 - **Docs**: https://capgo.app/docs/plugins/android-inline-install/
 - **Repository**: https://github.com/Cap-go/capacitor-android-inline-install
 
@@ -148,7 +148,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `isInKioskMode()`, `isSetAsLauncher()`, `enterKioskMode()`, `exitKioskMode()`, `setAsLauncher()`, `setAllowedKeys()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `enterKioskMode()`, `exitKioskMode()`, `isInKioskMode()`, `isSetAsLauncher()`, `setAllowedKeys()`, `setAsLauncher()`
 - **Docs**: https://capgo.app/docs/plugins/android-kiosk/
 - **Repository**: https://github.com/Cap-go/capacitor-android-kiosk
 
@@ -164,7 +164,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `startWatch()`, `stopWatch()`, `getHashString()`, `getPhoneNumber()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getHashString()`, `getPhoneNumber()`, `startWatch()`, `stopWatch()`
 - **Docs**: https://capgo.app/docs/plugins/android-sms-retriever/
 - **Repository**: https://github.com/Cap-go/capacitor-android-sms-retriever
 
@@ -180,7 +180,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `queryAndAggregateUsageStats()`, `queryUsageStats()`, `queryEvents()`, `isUsageStatsPermissionGranted()`, `openUsageStatsSettings()`, `queryAllPackages()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `isUsageStatsPermissionGranted()`, `openUsageStatsSettings()`, `queryAllPackages()`, `queryAndAggregateUsageStats()`, `queryEvents()`, `queryUsageStats()`
 - **Docs**: https://capgo.app/docs/plugins/android-usagestatsmanager/
 - **Repository**: https://github.com/Cap-go/capacitor-android-usagestatsmanager
 
@@ -196,9 +196,25 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `isSupported()`, `getCapabilities()`, `prepare()`, `createAttestation()`, `createAssertion()`, `getWidevineFingerprint()`, `getDeviceCheckToken()`, `storeKeyId()`, `getStoredKeyId()`, `clearStoredKeyId()`, `generateKey()`, `attestKey()`
+- **Key API methods**: `attestKey()`, `clearStoredKeyId()`, `createAssertion()`, `createAttestation()`, `generateAssertion()`, `generateKey()`, `getCapabilities()`, `getDeviceCheckToken()`, `getStoredKeyId()`, `getWidevineFingerprint()`, `isSupported()`, `prepare()`
 - **Docs**: https://capgo.app/docs/plugins/app-attest/
 - **Repository**: https://github.com/Cap-go/capacitor-app-attest
+
+## App Intents
+
+- **Package**: `@capgo/capacitor-app-intents`
+- **Purpose**: Siri, Shortcuts, Spotlight, Home Screen quick actions, and Apple App Intents for Capacitor apps with a JavaScript dispatch bridge.
+- **Install**:
+
+```bash
+npm install @capgo/capacitor-app-intents
+npx cap sync
+```
+
+- **Platforms**: iOS, Android, Web
+- **Key API methods**: `getPluginVersion()`, `getPendingInvocations()`, `indexSpotlightEntities()`, `performAppleSchemaTemplate()`, `removePendingInvocation()`, `removeSpotlightEntities()`, `setEntityCatalog()`, `setHomeScreenShortcutItems()`
+- **Docs**: https://capgo.app/docs/plugins/app-intents/
+- **Repository**: https://github.com/Cap-go/capacitor-app-intents
 
 ## App Tracking Transparency
 
@@ -212,7 +228,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getStatus()`, `requestPermission()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getStatus()`, `requestPermission()`
 - **Docs**: https://capgo.app/docs/plugins/app-tracking-transparency/
 - **Repository**: https://github.com/Cap-go/capacitor-app-tracking-transparency
 
@@ -228,7 +244,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `setUserId()`, `getState()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getState()`, `init()`, `setUserId()`
 - **Docs**: https://capgo.app/docs/plugins/appinsights/
 - **Repository**: https://github.com/Cap-go/capacitor-appinsights
 
@@ -244,7 +260,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `initSDK()`, `startSDK()`, `logEvent()`, `setCustomerUserId()`, `setCurrencyCode()`, `updateServerUninstallToken()`, `setAppInviteOneLink()`, `setOneLinkCustomDomain()`, `appendParametersToDeepLinkingURL()`, `setResolveDeepLinkURLs()`, `addPushNotificationDeepLinkPath()`, `setSharingFilter()`
+- **Key API methods**: `addPushNotificationDeepLinkPath()`, `anonymizeUser()`, `appendParametersToDeepLinkingURL()`, `disableAdvertisingIdentifier()`, `disableAppSetId()`, `disableCollectASA()`, `disableSKAdNetwork()`, `enableFacebookDeferredApplinks()`, `enableTCFDataCollection()`, `generateInviteLink()`, `getAppsFlyerUID()`, `getSdkVersion()`
 - **Docs**: https://capgo.app/docs/plugins/appsflyer/
 - **Repository**: https://github.com/Cap-go/capacitor-appsflyer
 
@@ -260,7 +276,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `get()`, `remove()`, `clear()`, `list()`, `getCacheSize()`, `getPluginVersion()`, `resolve()`, `src()`
+- **Key API methods**: `getPluginVersion()`, `bind()`, `cancel()`, `clear()`, `configure()`, `getCacheSize()`, `list()`, `remove()`, `src()`
 - **Docs**: https://capgo.app/docs/plugins/asset-cache/
 - **Repository**: https://github.com/Cap-go/capacitor-asset-cache
 
@@ -276,7 +292,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `startRecording()`, `pauseRecording()`, `resumeRecording()`, `stopRecording()`, `cancelRecording()`, `resetAudioSessionForPlayback()`, `getRecordingStatus()`, `getCurrentAmplitude()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `cancelRecording()`, `getCurrentAmplitude()`, `getRecordingStatus()`, `pauseRecording()`, `resetAudioSessionForPlayback()`, `resumeRecording()`, `startRecording()`, `stopRecording()`
 - **Docs**: https://capgo.app/docs/plugins/audio-recorder/
 - **Repository**: https://github.com/Cap-go/capacitor-audio-recorder
 
@@ -292,7 +308,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `currentOutputs()`, `overrideOutput()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `currentOutputs()`, `overrideOutput()`
 - **Docs**: https://capgo.app/docs/plugins/audiosession/
 - **Repository**: https://github.com/Cap-go/capacitor-audiosession
 
@@ -308,7 +324,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `isAvailable()`, `setRootTemplate()`, `setState()`, `getState()`, `removeState()`, `setTransientState()`, `getTransientState()`, `sendMessage()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getState()`, `getTransientState()`, `isAvailable()`, `removeState()`, `sendMessage()`, `setRootTemplate()`, `setState()`, `setTransientState()`
 - **Docs**: https://capgo.app/docs/plugins/auto/
 - **Repository**: https://github.com/Cap-go/capacitor-auto
 
@@ -324,7 +340,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `promptDialog()`, `readPassword()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `promptDialog()`, `readPassword()`
 - **Docs**: https://capgo.app/docs/plugins/autofill-save-password/
 - **Repository**: https://github.com/Cap-go/capacitor-autofill-save-password
 
@@ -340,7 +356,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `registerTask()`, `unregisterTask()`, `isTaskRegistered()`, `getRegisteredTasks()`, `getPendingTaskRuns()`, `getStatus()`, `triggerTaskWorkerForTesting()`, `finish()`, `registerTaskAsync()`, `unregisterTaskAsync()`, `isTaskRegisteredAsync()`, `getRegisteredTasksAsync()`
+- **Key API methods**: `addExpirationListener()`, `cancel()`, `define()`, `defineTask()`, `finish()`, `getPendingTaskRuns()`, `getPendingTaskRunsAsync()`, `getRegisteredTasks()`, `getRegisteredTasksAsync()`, `getStatus()`, `getStatusAsync()`, `isTaskRegistered()`
 - **Docs**: https://capgo.app/docs/plugins/background-task/
 - **Repository**: https://github.com/Cap-go/capacitor-background-task
 
@@ -356,7 +372,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `getMeasurement()`, `isAvailable()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `getMeasurement()`, `isAvailable()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`
 - **Docs**: https://capgo.app/docs/plugins/barometer/
 - **Repository**: https://github.com/Cap-go/capacitor-barometer
 
@@ -372,7 +388,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `initialize()`, `isAvailable()`, `isEnabled()`, `isLocationEnabled()`, `openAppSettings()`, `openBluetoothSettings()`, `openLocationSettings()`, `checkPermissions()`, `requestPermissions()`, `startScan()`, `stopScan()`, `connect()`
+- **Key API methods**: `connect()`, `disconnect()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `addGattService()`, `createBond()`, `discoverServices()`, `getConnectedDevices()`, `getServices()`, `initialize()`, `isBonded()`
 - **Docs**: https://capgo.app/docs/plugins/bluetooth-low-energy/
 - **Repository**: https://github.com/Cap-go/capacitor-bluetooth-low-energy
 
@@ -388,7 +404,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `getBrightness()`, `setBrightness()`, `getSystemBrightness()`, `setSystemBrightness()`, `getSystemBrightnessMode()`, `setSystemBrightnessMode()`, `isUsingSystemBrightness()`, `restoreSystemBrightness()`, `isAvailable()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `getBrightness()`, `getSystemBrightness()`, `getSystemBrightnessMode()`, `isAvailable()`, `isUsingSystemBrightness()`, `restoreSystemBrightness()`, `setBrightness()`, `setSystemBrightness()`, `setSystemBrightnessMode()`
 - **Docs**: https://capgo.app/docs/plugins/brightness/
 - **Repository**: https://github.com/Cap-go/capacitor-brightness
 
@@ -404,7 +420,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `checkPermission()`, `checkAllPermissions()`, `requestPermission()`, `requestAllPermissions()`, `requestWriteOnlyCalendarAccess()`, `requestReadOnlyCalendarAccess()`, `requestFullCalendarAccess()`, `requestFullRemindersAccess()`, `createEventWithPrompt()`, `modifyEventWithPrompt()`, `createEvent()`, `modifyEvent()`
+- **Key API methods**: `checkAllPermissions()`, `checkPermission()`, `commit()`, `createCalendar()`, `createEvent()`, `createEventWithPrompt()`, `createReminder()`, `deleteCalendar()`, `deleteEvent()`, `deleteEventsById()`, `deleteEventWithPrompt()`, `deleteReminder()`
 - **Docs**: https://capgo.app/docs/plugins/calendar/
 - **Repository**: https://github.com/Cap-go/capacitor-calendar
 
@@ -420,7 +436,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `getCurrentHeading()`, `getPluginVersion()`, `startListening()`, `stopListening()`, `checkPermissions()`, `requestPermissions()`, `watchAccuracy()`, `unwatchAccuracy()`, `getAccuracy()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `getAccuracy()`, `getCurrentHeading()`, `startListening()`, `stopListening()`, `unwatchAccuracy()`, `watchAccuracy()`
 - **Docs**: https://capgo.app/docs/plugins/compass/
 - **Repository**: https://github.com/Cap-go/capacitor-compass
 
@@ -436,7 +452,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `countContacts()`, `createContact()`, `createGroup()`, `deleteContactById()`, `deleteGroupById()`, `displayContactById()`, `displayCreateContact()`, `displayUpdateContactById()`, `getAccounts()`, `getContactById()`, `getContacts()`, `getGroupById()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `countContacts()`, `createContact()`, `createGroup()`, `deleteContactById()`, `deleteGroupById()`, `displayContactById()`, `displayCreateContact()`, `displayUpdateContactById()`, `getAccounts()`
 - **Docs**: https://capgo.app/docs/plugins/contacts/
 - **Repository**: https://github.com/Cap-go/capacitor-contacts
 
@@ -452,7 +468,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `optIn()`, `optOut()`, `sendScreenName()`, `sendTransaction()`, `sendDynamicVarWithStringValue()`, `sendDynamicVarWithIntValue()`, `onReady()`, `excludeURLForReplay()`, `setPIISelectors()`, `setCapturedElementsSelector()`, `collect()`, `sendDynamicVar()`
+- **Key API methods**: `collect()`, `excludeURLForReplay()`, `onReady()`, `optIn()`, `optOut()`, `sendDynamicVar()`, `sendDynamicVarWithIntValue()`, `sendDynamicVarWithStringValue()`, `sendScreenName()`, `sendTransaction()`, `setCapturedElementsSelector()`, `setPIISelectors()`
 - **Docs**: https://capgo.app/docs/plugins/contentsquare/
 - **Repository**: https://github.com/Cap-go/capacitor-contentsquare
 
@@ -468,7 +484,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `configure()`, `openMessenger()`, `setTokenID()`, `sendMessage()`, `setSegment()`, `reset()`, `registerPushToken()`, `enableNotifications()`, `isCrispPushNotification()`, `setShouldPromptForNotificationPermission()`, `openChatboxFromNotification()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `configure()`, `enableNotifications()`, `handlePushNotification()`, `isCrispPushNotification()`, `openChatboxFromNotification()`, `openMessenger()`, `pushEvent()`, `registerPushToken()`, `reset()`, `sendMessage()`, `setCompany()`
 - **Docs**: https://capgo.app/docs/plugins/crisp/
 - **Repository**: https://github.com/Cap-go/capacitor-crisp
 
@@ -484,7 +500,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `openStore()`, `closeStore()`, `isStoreOpen()`, `isStoreExists()`, `deleteStore()`, `setTable()`, `set()`, `get()`, `remove()`, `clear()`, `iskey()`, `keys()`
+- **Key API methods**: `getPluginVersion()`, `clear()`, `closeStore()`, `deleteStore()`, `deleteTable()`, `exportToJson()`, `filtervalues()`, `get()`, `importFromJson()`, `isJsonValid()`, `iskey()`, `isStoreExists()`
 - **Docs**: https://capgo.app/docs/plugins/data-storage-sqlite/
 - **Repository**: https://github.com/Cap-go/capacitor-data-storage-sqlite
 
@@ -500,7 +516,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `present()`, `presentRange()`, `hide()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `hide()`, `present()`, `presentRange()`
 - **Docs**: https://capgo.app/docs/plugins/date-picker/
 - **Repository**: https://github.com/Cap-go/capacitor-date-picker
 
@@ -516,7 +532,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getInfo()`, `startMonitoring()`, `stopMonitoring()`, `isMonitoring()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getInfo()`, `isMonitoring()`, `startMonitoring()`, `stopMonitoring()`
 - **Docs**: https://capgo.app/docs/plugins/device-info/
 - **Repository**: https://github.com/Cap-go/capacitor-device-info
 
@@ -532,7 +548,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getCapabilities()`, `getWidevineFingerprint()`, `prepareAttestation()`, `createAttestation()`, `createAssertion()`, `getDeviceCheckToken()`
+- **Key API methods**: `createAssertion()`, `createAttestation()`, `getCapabilities()`, `getDeviceCheckToken()`, `getWidevineFingerprint()`, `prepareAttestation()`
 - **Docs**: https://capgo.app/docs/plugins/device-integrity/
 - **Repository**: https://github.com/Cap-go/capacitor-device-integrity
 
@@ -548,7 +564,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `scanDocument()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `scanDocument()`
 - **Docs**: https://capgo.app/docs/plugins/document-scanner/
 - **Repository**: https://github.com/Cap-go/capacitor-document-scanner
 
@@ -564,7 +580,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `download()`, `pause()`, `resume()`, `stop()`, `checkStatus()`, `getPluginVersion()`
+- **Key API methods**: `download()`, `getPluginVersion()`, `checkStatus()`, `getFileInfo()`, `pause()`, `resume()`, `stop()`
 - **Docs**: https://capgo.app/docs/plugins/downloader/
 - **Repository**: https://github.com/Cap-go/capacitor-downloader
 
@@ -580,7 +596,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getKey()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getKey()`
 - **Docs**: https://capgo.app/docs/plugins/env/
 - **Repository**: https://github.com/Cap-go/capacitor-env
 
@@ -596,7 +612,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `initAppEvents()`, `logEvent()`, `logPurchase()`, `enableAdvertiserTracking()`, `disableAdvertiserTracking()`, `getAdvertiserTrackingStatus()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `disableAdvertiserTracking()`, `enableAdvertiserTracking()`, `getAdvertiserTrackingStatus()`, `initAppEvents()`, `logEvent()`, `logPurchase()`
 - **Docs**: https://capgo.app/docs/plugins/facebook-analytics/
 - **Repository**: https://github.com/Cap-go/capacitor-facebook-analytics
 
@@ -612,7 +628,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `disconnect()`, `commitTransaction()`, `rollbackTransaction()`, `getPluginVersion()`, `configureWeb()`
+- **Key API methods**: `connect()`, `disconnect()`, `getPluginVersion()`, `beginTransaction()`, `commitTransaction()`, `configureWeb()`, `execute()`, `getServerInfo()`, `rollbackTransaction()`
 - **Docs**: https://capgo.app/docs/plugins/fast-sql/
 - **Repository**: https://github.com/Cap-go/capacitor-fast-sql
 
@@ -628,7 +644,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `getCapabilities()`, `reencodeVideo()`, `convertImage()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `convertImage()`, `getCapabilities()`, `reencodeVideo()`
 - **Docs**: https://capgo.app/docs/plugins/ffmpeg/
 - **Repository**: https://github.com/Cap-go/capacitor-ffmpeg
 
@@ -644,7 +660,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `requestFileSystem()`, `resolveLocalFileSystemURL()`, `getFile()`, `getDirectory()`, `readFile()`, `readAsDataURL()`, `writeFile()`, `appendFile()`, `deleteFile()`, `mkdir()`, `rmdir()`, `readdir()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `appendFile()`, `copy()`, `deleteFile()`, `exists()`, `getDirectories()`, `getDirectory()`, `getFile()`, `getFreeDiskSpace()`, `getMetadata()`
 - **Docs**: https://capgo.app/docs/plugins/file/
 - **Repository**: https://github.com/Cap-go/capacitor-file
 
@@ -660,7 +676,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `compressImage()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `compressImage()`
 - **Docs**: https://capgo.app/docs/plugins/file-compressor/
 - **Repository**: https://github.com/Cap-go/capacitor-file-compressor
 
@@ -676,7 +692,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `pickFiles()`, `pickImages()`, `pickVideos()`, `pickMedia()`, `pickDirectory()`, `convertHeicToJpeg()`, `copyFile()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `convertHeicToJpeg()`, `copyFile()`, `pickDirectory()`, `pickFiles()`, `pickImages()`, `pickMedia()`, `pickVideos()`
 - **Docs**: https://capgo.app/docs/plugins/file-picker/
 - **Repository**: https://github.com/Cap-go/capacitor-file-picker
 
@@ -692,7 +708,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `share()`, `save()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `save()`, `share()`
 - **Docs**: https://capgo.app/docs/plugins/file-sharer/
 - **Repository**: https://github.com/Cap-go/capacitor-file-sharer
 
@@ -708,7 +724,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `getAppInstanceId()`, `getSessionId()`, `setConsent()`, `setUserId()`, `setUserProperty()`, `setCurrentScreen()`, `logEvent()`, `setSessionTimeoutDuration()`, `setEnabled()`, `isEnabled()`, `resetAnalyticsData()`, `logTransaction()`
+- **Key API methods**: `getPluginVersion()`, `getAppInstanceId()`, `getSessionId()`, `initiateOnDeviceConversionMeasurementWithEmailAddress()`, `initiateOnDeviceConversionMeasurementWithHashedEmailAddress()`, `initiateOnDeviceConversionMeasurementWithHashedPhoneNumber()`, `initiateOnDeviceConversionMeasurementWithPhoneNumber()`, `isEnabled()`, `logEvent()`, `logTransaction()`, `resetAnalyticsData()`, `setConsent()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-analytics/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/analytics`, branch `main`)
 
@@ -724,7 +740,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getName()`, `getOptions()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getName()`, `getOptions()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-app/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/app`, branch `main`)
 
@@ -740,7 +756,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getToken()`, `initialize()`, `setTokenAutoRefreshEnabled()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getToken()`, `initialize()`, `setTokenAutoRefreshEnabled()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-app-check/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/appcheck`, branch `main`)
 
@@ -756,7 +772,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `applyActionCode()`, `confirmPasswordReset()`, `confirmVerificationCode()`, `createUserWithEmailAndPassword()`, `deleteUser()`, `fetchSignInMethodsForEmail()`, `getCurrentUser()`, `getPendingAuthResult()`, `getIdToken()`, `getIdTokenResult()`, `getRedirectResult()`, `getTenantId()`
+- **Key API methods**: `getPluginVersion()`, `applyActionCode()`, `checkAppTrackingTransparencyPermission()`, `confirmPasswordReset()`, `confirmVerificationCode()`, `createUserWithEmailAndPassword()`, `deleteUser()`, `fetchSignInMethodsForEmail()`, `getCurrentUser()`, `getIdToken()`, `getIdTokenResult()`, `getPendingAuthResult()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-authentication/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/authentication`, branch `main`)
 
@@ -772,7 +788,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `crash()`, `setCustomKey()`, `setUserId()`, `log()`, `setEnabled()`, `isEnabled()`, `didCrashOnPreviousExecution()`, `sendUnsentReports()`, `deleteUnsentReports()`, `recordException()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `crash()`, `deleteUnsentReports()`, `didCrashOnPreviousExecution()`, `isEnabled()`, `log()`, `recordException()`, `sendUnsentReports()`, `setCustomKey()`, `setEnabled()`, `setUserId()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-crashlytics/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/crashlytics`, branch `main`)
 
@@ -788,7 +804,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `addDocument()`, `clearPersistence()`, `deleteDocument()`, `disableNetwork()`, `disablePersistence()`, `enablePersistence()`, `enableNetwork()`, `getCountFromServer()`, `removeSnapshotListener()`, `setDocument()`, `updateDocument()`, `useEmulator()`
+- **Key API methods**: `addDocument()`, `clearPersistence()`, `deleteDocument()`, `disableNetwork()`, `disablePersistence()`, `enableNetwork()`, `enablePersistence()`, `getCountFromServer()`, `removeSnapshotListener()`, `setDocument()`, `updateDocument()`, `useEmulator()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-firestore/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/firestore`, branch `main`)
 
@@ -804,7 +820,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `useEmulator()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `useEmulator()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-functions/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/functions`, branch `main`)
 
@@ -820,7 +836,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `isSupported()`, `getToken()`, `deleteToken()`, `getDeliveredNotifications()`, `removeDeliveredNotifications()`, `removeAllDeliveredNotifications()`, `subscribeToTopic()`, `unsubscribeFromTopic()`, `createChannel()`, `deleteChannel()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `createChannel()`, `deleteChannel()`, `deleteToken()`, `getDeliveredNotifications()`, `getToken()`, `isSupported()`, `listChannels()`, `removeAllDeliveredNotifications()`, `removeDeliveredNotifications()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-messaging/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/messaging`, branch `main`)
 
@@ -836,7 +852,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `startTrace()`, `stopTrace()`, `incrementMetric()`, `setEnabled()`, `isEnabled()`, `putAttribute()`, `getAttribute()`, `getAttributes()`, `removeAttribute()`, `putMetric()`, `getMetric()`, `record()`
+- **Key API methods**: `getPluginVersion()`, `getAttribute()`, `getAttributes()`, `getMetric()`, `incrementMetric()`, `isEnabled()`, `putAttribute()`, `putMetric()`, `record()`, `removeAttribute()`, `setEnabled()`, `startTrace()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-performance/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/performance`, branch `main`)
 
@@ -852,7 +868,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `activate()`, `fetchAndActivate()`, `fetchConfig()`, `getBoolean()`, `getNumber()`, `getString()`, `getAll()`, `getInfo()`, `setMinimumFetchInterval()`, `setDefaults()`, `setSettings()`, `addConfigUpdateListener()`
+- **Key API methods**: `getPluginVersion()`, `activate()`, `addConfigUpdateListener()`, `fetchAndActivate()`, `fetchConfig()`, `getAll()`, `getBoolean()`, `getInfo()`, `getNumber()`, `getString()`, `removeConfigUpdateListener()`, `setDefaults()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-remote-config/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/remote-config`, branch `main`)
 
@@ -868,7 +884,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `deleteFile()`, `getDownloadUrl()`, `getMetadata()`, `listFiles()`, `updateMetadata()`, `downloadFile()`, `uploadFile()`, `useEmulator()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `deleteFile()`, `downloadFile()`, `getDownloadUrl()`, `getMetadata()`, `listFiles()`, `updateMetadata()`, `uploadFile()`, `useEmulator()`
 - **Docs**: https://capgo.app/docs/plugins/firebase-storage/
 - **Repository**: https://github.com/Cap-go/capacitor-firebase (package path: `packages/storage`, branch `main`)
 
@@ -884,7 +900,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `isAvailable()`, `switchOn()`, `switchOff()`, `isSwitchedOn()`, `toggle()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `isAvailable()`, `isSwitchedOn()`, `switchOff()`, `switchOn()`, `toggle()`
 - **Docs**: https://capgo.app/docs/plugins/flash/
 - **Repository**: https://github.com/Cap-go/capacitor-flash
 
@@ -900,7 +916,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getValue()`, `reset()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getValue()`, `initialize()`, `push()`, `reset()`, `setUserProperty()`
 - **Docs**: https://capgo.app/docs/plugins/gtm/
 - **Repository**: https://github.com/Cap-go/capacitor-gtm
 
@@ -916,7 +932,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `isAvailable()`, `requestAuthorization()`, `checkAuthorization()`, `readSamples()`, `saveSample()`, `getPluginVersion()`, `openHealthConnectSettings()`, `showPrivacyPolicy()`, `queryWorkouts()`, `queryAggregated()`
+- **Key API methods**: `getPluginVersion()`, `checkAuthorization()`, `isAvailable()`, `openHealthConnectSettings()`, `queryAggregated()`, `queryWorkouts()`, `readSamples()`, `requestAuthorization()`, `saveSample()`, `showPrivacyPolicy()`
 - **Docs**: https://capgo.app/docs/plugins/health/
 - **Repository**: https://github.com/Cap-go/capacitor-health
 
@@ -932,7 +948,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `hide()`, `show()`, `isHidden()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `hide()`, `isHidden()`, `show()`
 - **Docs**: https://capgo.app/docs/plugins/home-indicator/
 - **Repository**: https://github.com/Cap-go/capacitor-home-indicator
 
@@ -948,9 +964,25 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `startMonitoringForRegion()`, `stopMonitoringForRegion()`, `startRangingBeaconsInRegion()`, `stopRangingBeaconsInRegion()`, `startAdvertising()`, `stopAdvertising()`, `requestWhenInUseAuthorization()`, `requestAlwaysAuthorization()`, `getAuthorizationStatus()`, `isBluetoothEnabled()`, `isRangingAvailable()`, `enableARMAFilter()`
+- **Key API methods**: `getPluginVersion()`, `enableARMAFilter()`, `enableBackgroundMode()`, `getAuthorizationStatus()`, `isBluetoothEnabled()`, `isRangingAvailable()`, `requestAlwaysAuthorization()`, `requestWhenInUseAuthorization()`, `setBackgroundScanPeriod()`, `startAdvertising()`, `startMonitoringForRegion()`, `startRangingBeaconsInRegion()`
 - **Docs**: https://capgo.app/docs/plugins/ibeacon/
 - **Repository**: https://github.com/Cap-go/capacitor-ibeacon
+
+## Icloud Kv
+
+- **Package**: `@capgo/capacitor-icloud-kv`
+- **Purpose**: Capacitor plugin to keep small app state in iCloud key-value storage on iOS and Android Backup on Android, so it survives a new phone.
+- **Install**:
+
+```bash
+npm install @capgo/capacitor-icloud-kv
+npx cap sync
+```
+
+- **Platforms**: iOS, Android, Web
+- **Key API methods**: `getPluginVersion()`, `get()`, `getAll()`, `isAvailable()`, `remove()`, `set()`, `synchronize()`
+- **Docs**: https://capgo.app/docs/plugins/icloud-kv/
+- **Repository**: https://github.com/Cap-go/capacitor-icloud-kv
 
 ## In App Review
 
@@ -964,7 +996,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `requestReview()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `requestReview()`
 - **Docs**: https://capgo.app/docs/plugins/in-app-review/
 - **Repository**: https://github.com/Cap-go/capacitor-in-app-review
 
@@ -980,7 +1012,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `goBack()`, `open()`, `clearCookies()`, `clearAllCookies()`, `clearCache()`, `clearAllBrowsingData()`, `getCookies()`, `close()`, `hide()`, `show()`, `sendToBack()`, `bringToFront()`
+- **Key API methods**: `getPluginVersion()`, `bringToFront()`, `clearAllBrowsingData()`, `clearAllCookies()`, `clearCache()`, `clearCookies()`, `close()`, `dispatchInputEvent()`, `executeScript()`, `getCookies()`, `getFullscreen()`, `goBack()`
 - **Docs**: https://capgo.app/docs/plugins/inappbrowser/
 - **Repository**: https://github.com/Cap-go/capacitor-inappbrowser
 
@@ -996,7 +1028,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `showIncomingCall()`, `endCall()`, `endAllCalls()`, `getActiveCalls()`, `checkPermissions()`, `requestPermissions()`, `requestFullScreenIntentPermission()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `endAllCalls()`, `endCall()`, `getActiveCalls()`, `requestFullScreenIntentPermission()`, `showIncomingCall()`
 - **Docs**: https://capgo.app/docs/plugins/incoming-call-kit/
 - **Repository**: https://github.com/Cap-go/capacitor-incoming-call-kit
 
@@ -1012,7 +1044,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getReferrer()`, `GetReferrer()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getReferrer()`, `GetReferrer()`
 - **Docs**: https://capgo.app/docs/plugins/install-referrer/
 - **Repository**: https://github.com/Cap-go/capacitor-install-referrer
 
@@ -1028,7 +1060,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `startActivityAsync()`, `openIOSSettings()`, `openApplication()`, `getApplicationIconAsync()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getApplicationIconAsync()`, `openApplication()`, `openIOSSettings()`, `startActivityAsync()`
 - **Docs**: https://capgo.app/docs/plugins/intent-launcher/
 - **Repository**: https://github.com/Cap-go/capacitor-intent-launcher
 
@@ -1044,7 +1076,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `loadWithKeys()`, `registerIdentifiedUser()`, `registerUnidentifiedUser()`, `updateUser()`, `logout()`, `logEvent()`, `displayMessenger()`, `displayMessageComposer()`, `displayHelpCenter()`, `hideMessenger()`, `displayLauncher()`, `hideLauncher()`
+- **Key API methods**: `displayArticle()`, `displayCarousel()`, `displayHelpCenter()`, `displayInAppMessages()`, `displayLauncher()`, `displayMessageComposer()`, `displayMessenger()`, `displaySurvey()`, `getUnreadConversationCount()`, `hideInAppMessages()`, `hideLauncher()`, `hideMessenger()`
 - **Docs**: https://capgo.app/docs/plugins/intercom/
 - **Repository**: https://github.com/Cap-go/capacitor-intercom
 
@@ -1060,14 +1092,14 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `acquireToken()`, `acquireTokenSilent()`, `registerAndEnrollAccount()`, `loginAndEnrollAccount()`, `enrolledAccount()`, `deRegisterAndUnenrollAccount()`, `logoutOfAccount()`, `appConfig()`, `getPolicy()`, `groupName()`, `sdkVersion()`, `displayDiagnosticConsole()`
+- **Key API methods**: `acquireToken()`, `acquireTokenSilent()`, `appConfig()`, `deRegisterAndUnenrollAccount()`, `displayDiagnosticConsole()`, `enrolledAccount()`, `getPolicy()`, `groupName()`, `loginAndEnrollAccount()`, `logoutOfAccount()`, `registerAndEnrollAccount()`, `sdkVersion()`
 - **Docs**: https://capgo.app/docs/plugins/intune/
 - **Repository**: https://github.com/Cap-go/capacitor-intune
 
 ## Is Root
 
 - **Package**: `@capgo/capacitor-is-root`
-- **Purpose**: Jailbreak/Root Detection Plugin for Capacitor
+- **Purpose**: Jailbreak/Root Detection Plugin for Capacitor. Detect Android root, iOS jailbreak, and emulator (when requested).
 - **Install**:
 
 ```bash
@@ -1076,7 +1108,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `isRooted()`, `isRootedWithBusyBox()`, `detectRootManagementApps()`, `detectPotentiallyDangerousApps()`, `detectTestKeys()`, `checkForBusyBoxBinary()`, `checkForSuBinary()`, `checkSuExists()`, `checkForRWPaths()`, `checkForDangerousProps()`, `checkForRootNative()`, `detectRootCloakingApps()`
+- **Key API methods**: `getPluginVersion()`, `checkDirPermissions()`, `checkExecutingCommands()`, `checkForBusyBoxBinary()`, `checkForDangerousProps()`, `checkforOverTheAirCertificates()`, `checkForRootNative()`, `checkForRWPaths()`, `checkForSuBinary()`, `checkGeneric()`, `checkGenymotion()`, `checkGoogleSDK()`
 - **Docs**: https://capgo.app/docs/plugins/is-root/
 - **Repository**: https://github.com/Cap-go/capacitor-is-root
 
@@ -1092,7 +1124,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `start()`, `cast()`, `getCastStatus()`, `pause()`, `delete()`, `getUrl()`, `getState()`, `setPlayerPosition()`, `getPlayerPosition()`, `setAutoQuality()`, `getAutoQuality()`, `setPip()`
+- **Key API methods**: `getPluginVersion()`, `cast()`, `create()`, `delete()`, `getAutoQuality()`, `getBackgroundState()`, `getCastStatus()`, `getFrame()`, `getMute()`, `getPip()`, `getPlayerPosition()`, `getQualities()`
 - **Docs**: https://capgo.app/docs/plugins/ivs-player/
 - **Repository**: https://github.com/Cap-go/capacitor-ivs-player
 
@@ -1108,7 +1140,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `pause()`, `resume()`, `stop()`, `seekTo()`, `setVolume()`, `getPosition()`, `getState()`, `setSpeed()`, `setPlaylistIndex()`, `loadPlaylist()`, `loadPlaylistWithItems()`, `getAudioTracks()`
+- **Key API methods**: `getPluginVersion()`, `currentPlaylist()`, `getAudioTracks()`, `getCaptions()`, `getCurrentAudioTrack()`, `getCurrentCaptions()`, `getPosition()`, `getState()`, `initialize()`, `loadPlaylist()`, `loadPlaylistWithItems()`, `pause()`
 - **Docs**: https://capgo.app/docs/plugins/jw-player/
 - **Repository**: https://github.com/Cap-go/capacitor-jw-player
 
@@ -1124,7 +1156,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `keepAwake()`, `allowSleep()`, `isSupported()`, `isKeptAwake()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `allowSleep()`, `isKeptAwake()`, `isSupported()`, `keepAwake()`
 - **Docs**: https://capgo.app/docs/plugins/keep-awake/
 - **Repository**: https://github.com/Cap-go/capacitor-keep-awake
 
@@ -1140,7 +1172,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getPluginVersion()`, `getAppIcons()`, `refreshAppIcons()`
+- **Key API methods**: `getPluginVersion()`, `clearIconCache()`, `getAppIcons()`, `getAvailableApps()`, `getDefaultApp()`, `getSupportedApps()`, `isAppAvailable()`, `navigate()`, `refreshAppIcons()`
 - **Docs**: https://capgo.app/docs/plugins/launch-navigator/
 - **Repository**: https://github.com/Cap-go/capacitor-launch-navigator
 
@@ -1156,7 +1188,7 @@ npx cap sync
 ```
 
 - **Platforms**: Android
-- **Key API methods**: `isAvailable()`, `start()`, `stop()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `isAvailable()`, `start()`, `stop()`
 - **Docs**: https://capgo.app/docs/plugins/light-sensor/
 - **Repository**: https://github.com/Cap-go/capacitor-light-sensor
 
@@ -1172,7 +1204,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `areActivitiesSupported()`, `startActivity()`, `updateActivity()`, `endActivity()`, `getAllActivities()`, `saveImage()`, `removeImage()`, `listImages()`, `cleanupImages()`, `getPluginVersion()`, `startTimerSequence()`, `pauseTimerSequence()`
+- **Key API methods**: `getPluginVersion()`, `areActivitiesSupported()`, `cleanupImages()`, `endActivity()`, `getAllActivities()`, `getTimerState()`, `listImages()`, `pauseTimerSequence()`, `previousTimerStep()`, `removeImage()`, `resumeTimerSequence()`, `saveImage()`
 - **Docs**: https://capgo.app/docs/plugins/live-activities/
 - **Repository**: https://github.com/Cap-go/capacitor-live-activities
 
@@ -1188,7 +1220,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `configureServer()`, `connect()`, `disconnect()`, `getStatus()`, `reload()`, `reloadFile()`, `getPluginVersion()`
+- **Key API methods**: `connect()`, `disconnect()`, `getPluginVersion()`, `configureServer()`, `getStatus()`, `reload()`, `reloadFile()`
 - **Docs**: https://capgo.app/docs/plugins/live-reload/
 - **Repository**: https://github.com/Cap-go/capacitor-live-reload
 
@@ -1204,7 +1236,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getReadiness()`, `setModel()`, `downloadModel()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `createChat()`, `downloadModel()`, `getReadiness()`, `sendMessage()`, `setModel()`
 - **Docs**: https://capgo.app/docs/plugins/llm/
 - **Repository**: https://github.com/Cap-go/capacitor-llm
 
@@ -1220,7 +1252,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `setMetadata()`, `setPlaybackState()`, `setActionHandler()`, `setPositionState()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `setActionHandler()`, `setMetadata()`, `setPlaybackState()`, `setPositionState()`
 - **Docs**: https://capgo.app/docs/plugins/media-session/
 - **Repository**: https://github.com/Cap-go/capacitor-media-session
 
@@ -1236,7 +1268,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `getCapabilities()`, `analyze()`, `runCheck()`, `openDeveloperSettings()`, `startMonitoring()`, `stopMonitoring()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `analyze()`, `getCapabilities()`, `openDeveloperSettings()`, `runCheck()`, `startMonitoring()`, `stopMonitoring()`
 - **Docs**: https://capgo.app/docs/plugins/mock-location-detector/
 - **Repository**: https://github.com/Cap-go/capacitor-mock-location-detector
 
@@ -1252,7 +1284,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `disconnect()`
+- **Key API methods**: `connect()`, `disconnect()`, `publish()`, `subscribe()`
 - **Docs**: https://capgo.app/docs/plugins/capacitor-mqtt/
 - **Repository**: https://github.com/Cap-go/capacitor-mqtt
 
@@ -1268,7 +1300,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `isMuted()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `isMuted()`
 - **Docs**: https://capgo.app/docs/plugins/mute/
 - **Repository**: https://github.com/Cap-go/capacitor-mute
 
@@ -1284,7 +1316,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `play()`, `dismiss()`, `isActive()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `dismiss()`, `isActive()`, `play()`
 - **Docs**: https://capgo.app/docs/plugins/mux-player/
 - **Repository**: https://github.com/Cap-go/capacitor-mux-player
 
@@ -1300,7 +1332,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `configure()`, `preload()`, `playOnce()`, `isPreloaded()`, `play()`, `pause()`, `resume()`, `loop()`, `stop()`, `unload()`, `setVolume()`, `setRate()`
+- **Key API methods**: `getPluginVersion()`, `clearCache()`, `clearQueue()`, `configure()`, `deinitPlugin()`, `getAudioRoute()`, `getCurrentTime()`, `getDuration()`, `getPlaybackState()`, `getQueueState()`, `getRate()`, `isPlaying()`
 - **Docs**: https://capgo.app/docs/plugins/native-audio/
 - **Repository**: https://github.com/Cap-go/capacitor-native-audio
 
@@ -1316,7 +1348,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `isAvailable()`, `verifyIdentity()`, `getCredentials()`, `setCredentials()`, `deleteCredentials()`, `getSecureCredentials()`, `isCredentialsSaved()`, `setData()`, `getData()`, `getSecureData()`, `deleteData()`, `isDataSaved()`
+- **Key API methods**: `getPluginVersion()`, `deleteCredentials()`, `deleteData()`, `getCredentials()`, `getData()`, `getSecureCredentials()`, `getSecureData()`, `isAvailable()`, `isCredentialsSaved()`, `isDataSaved()`, `setCredentials()`, `setData()`
 - **Docs**: https://capgo.app/docs/plugins/native-biometric/
 - **Repository**: https://github.com/Cap-go/capacitor-native-biometric
 
@@ -1332,9 +1364,25 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `configure()`, `show()`, `update()`, `setProgress()`, `hide()`, `hideAll()`, `setWebViewLayout()`, `resetWebViewLayout()`, `getState()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `configure()`, `getState()`, `hide()`, `hideAll()`, `resetWebViewLayout()`, `setProgress()`, `setWebViewLayout()`, `show()`, `update()`
 - **Docs**: https://capgo.app/docs/plugins/native-loader/
 - **Repository**: https://github.com/Cap-go/capacitor-native-loader
+
+## Native Map
+
+- **Package**: `@capgo/capacitor-native-map`
+- **Purpose**: Native maps for Capacitor: Google Maps on Android, Apple MapKit on iOS, Google Maps JS on web
+- **Install**:
+
+```bash
+npm install @capgo/capacitor-native-map
+npx cap sync
+```
+
+- **Platforms**: iOS, Android, Web
+- **Key API methods**: `constructor()`
+- **Docs**: https://capgo.app/docs/plugins/native-map/
+- **Repository**: https://github.com/Cap-go/capacitor-native-map
 
 ## Native Market
 
@@ -1348,7 +1396,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `openDevPage()`, `openCollection()`, `openEditorChoicePage()`, `search()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `openCollection()`, `openDevPage()`, `openEditorChoicePage()`, `openStoreListing()`, `search()`
 - **Docs**: https://capgo.app/docs/plugins/native-market/
 - **Repository**: https://github.com/Cap-go/capacitor-native-market
 
@@ -1364,7 +1412,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `configure()`, `setNavbar()`, `setTabbar()`, `beginTransition()`, `finishTransition()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `beginTransition()`, `configure()`, `endPullToRefresh()`, `finishTransition()`, `reportNavbarScroll()`, `setNavbar()`, `setPullToRefresh()`, `setTabbar()`
 - **Docs**: https://capgo.app/docs/plugins/native-navigation/
 - **Repository**: https://github.com/Cap-go/capacitor-native-navigation
 
@@ -1380,7 +1428,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `reverseGeocode()`, `forwardGeocode()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `forwardGeocode()`, `reverseGeocode()`
 - **Docs**: https://capgo.app/docs/plugins/nativegeocoder/
 - **Repository**: https://github.com/Cap-go/capacitor-nativegeocoder
 
@@ -1396,9 +1444,25 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `hide()`, `show()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getNavigationBarColor()`, `hide()`, `setNavigationBarColor()`, `show()`
 - **Docs**: https://capgo.app/docs/plugins/navigation-bar/
 - **Repository**: https://github.com/Cap-go/capacitor-navigation-bar
+
+## Neon
+
+- **Package**: `@capgo/capacitor-neon`
+- **Purpose**: Native Neon Auth and Data API integration for Capacitor: Auth, Database, and JWT access
+- **Install**:
+
+```bash
+npm install @capgo/capacitor-neon
+npx cap sync
+```
+
+- **Platforms**: iOS, Android, Web
+- **Key API methods**: `getPluginVersion()`, `getAnonymousToken()`, `getSession()`, `getUser()`, `initialize()`, `refreshSession()`, `setSession()`, `signInWithOAuth()`, `signInWithOtp()`, `signInWithPassword()`, `signOut()`, `signUp()`
+- **Docs**: https://capgo.app/docs/plugins/neon/
+- **Repository**: https://github.com/Cap-go/capacitor-neon
 
 ## Network Diagnostics
 
@@ -1412,7 +1476,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getNetworkStatus()`, `testUrl()`, `testPort()`, `testWebSocket()`, `testDownloadSpeed()`, `testPacketLoss()`, `runDiagnostics()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getNetworkStatus()`, `runDiagnostics()`, `testDownloadSpeed()`, `testPacketLoss()`, `testPort()`, `testUrl()`, `testWebSocket()`
 - **Docs**: https://capgo.app/docs/plugins/network-diagnostics/
 - **Repository**: https://github.com/Cap-go/capacitor-network-diagnostics
 
@@ -1428,7 +1492,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `startScanning()`, `stopScanning()`, `write()`, `erase()`, `makeReadOnly()`, `transceive()`, `share()`, `unshare()`, `getStatus()`, `showSettings()`, `getPluginVersion()`, `isSupported()`
+- **Key API methods**: `getPluginVersion()`, `erase()`, `getStatus()`, `isSupported()`, `makeReadOnly()`, `share()`, `showSettings()`, `startScanning()`, `stopScanning()`, `transceive()`, `unshare()`, `write()`
 - **Docs**: https://capgo.app/docs/plugins/nfc/
 - **Repository**: https://github.com/Cap-go/capacitor-nfc
 
@@ -1444,7 +1508,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getConfiguration()`, `autoShimWebAuthn()`, `createCredential()`, `getCredential()`, `isSupported()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `autoShimWebAuthn()`, `createCredential()`, `getCredential()`, `isSupported()`, `shimWebAuthn()`
 - **Docs**: https://capgo.app/docs/plugins/passkey/
 - **Repository**: https://github.com/Cap-go/capacitor-passkey
 
@@ -1475,8 +1539,8 @@ npm install @capgo/capacitor-pay
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
-- **Key API methods**: `isPayAvailable()`, `requestPayment()`, `getPluginVersion()`
+- **Platforms**: iOS, Android
+- **Key API methods**: `getPluginVersion()`, `isPayAvailable()`, `requestPayment()`, `updateApplePayShipping()`
 - **Docs**: https://capgo.app/docs/plugins/pay/
 - **Repository**: https://github.com/Cap-go/capacitor-pay
 
@@ -1492,7 +1556,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `fromURL()`, `fromData()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `fromData()`, `fromURL()`
 - **Docs**: https://capgo.app/docs/plugins/pdf-generator/
 - **Repository**: https://github.com/Cap-go/capacitor-pdf-generator
 
@@ -1507,8 +1571,8 @@ npm install @capgo/capacitor-pdf-viewer
 npx cap sync
 ```
 
-- **Platforms**: iOS, Android, Web
-- **Key API methods**: `open()`, `close()`, `goToPage()`, `setZoom()`, `getPluginVersion()`
+- **Platforms**: iOS, Android
+- **Key API methods**: `getPluginVersion()`, `close()`, `getCurrentPage()`, `getPageCount()`, `goToPage()`, `hide()`, `nextPage()`, `open()`, `previousPage()`, `setZoom()`, `show()`, `updateLayout()`
 - **Docs**: https://capgo.app/docs/plugins/pdf-viewer/
 - **Repository**: https://github.com/Cap-go/capacitor-pdf-viewer
 
@@ -1524,7 +1588,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `getMeasurement()`, `isAvailable()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `getMeasurement()`, `isAvailable()`, `startMeasurementUpdates()`, `stopMeasurementUpdates()`
 - **Docs**: https://capgo.app/docs/plugins/pedometer/
 - **Repository**: https://github.com/Cap-go/capacitor-pedometer
 
@@ -1540,7 +1604,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `check()`, `request()`, `checkMultiple()`, `requestMultiple()`, `shouldShowRationale()`, `openSettings()`, `requestPreciseLocation()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `check()`, `checkMultiple()`, `openSettings()`, `request()`, `requestMultiple()`, `requestPreciseLocation()`, `shouldShowRationale()`
 - **Docs**: https://capgo.app/docs/plugins/permissions/
 - **Repository**: https://github.com/Cap-go/capacitor-permissions
 
@@ -1556,7 +1620,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `readAccount()`, `saveAccount()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `readAccount()`, `saveAccount()`
 - **Docs**: https://capgo.app/docs/plugins/persistent-account/
 - **Repository**: https://github.com/Cap-go/capacitor-persistent-account
 
@@ -1572,9 +1636,25 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getId()`, `resetId()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getId()`, `resetId()`
 - **Docs**: https://capgo.app/docs/plugins/persistent-uuid/
 - **Repository**: https://github.com/Cap-go/capacitor-persistent-uuid
+
+## Persona
+
+- **Package**: `@capgo/capacitor-persona`
+- **Purpose**: Capacitor plugin for launching Persona Inquiry flows on iOS and Android.
+- **Install**:
+
+```bash
+npm install @capgo/capacitor-persona
+npx cap sync
+```
+
+- **Platforms**: iOS, Android, Web
+- **Key API methods**: `startInquiry()`
+- **Docs**: https://capgo.app/docs/plugins/persona/
+- **Repository**: https://github.com/Cap-go/capacitor-persona
 
 ## Photo Library
 
@@ -1588,7 +1668,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `checkAuthorization()`, `requestAuthorization()`, `getAlbums()`, `getLibrary()`, `getPhotoUrl()`, `pickMedia()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `checkAuthorization()`, `getAlbums()`, `getLibrary()`, `getPhotoUrl()`, `getThumbnailUrl()`, `pickMedia()`, `requestAuthorization()`
 - **Docs**: https://capgo.app/docs/plugins/photo-library/
 - **Repository**: https://github.com/Cap-go/capacitor-photo-library
 
@@ -1604,7 +1684,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: See `src/definitions.ts` in the repository
+- **Key API methods**: `show()`
 - **Docs**: https://capgo.app/docs/plugins/pretty-toast/
 - **Repository**: https://github.com/Cap-go/capacitor-pretty-toast
 
@@ -1620,7 +1700,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `printBase64()`, `printFile()`, `printHtml()`, `printPdf()`, `printIframe()`, `printWebView()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `printBase64()`, `printFile()`, `printHtml()`, `printIframe()`, `printPdf()`, `printWebView()`
 - **Docs**: https://capgo.app/docs/plugins/printer/
 - **Repository**: https://github.com/Cap-go/capacitor-printer
 
@@ -1636,7 +1716,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `enable()`, `disable()`, `isEnabled()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `disable()`, `enable()`, `isEnabled()`
 - **Docs**: https://capgo.app/docs/plugins/privacy-screen/
 - **Repository**: https://github.com/Cap-go/capacitor-privacy-screen
 
@@ -1652,7 +1732,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `enable()`, `disable()`, `getStatus()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `disable()`, `enable()`, `getStatus()`
 - **Docs**: https://capgo.app/docs/plugins/proximity/
 - **Repository**: https://github.com/Cap-go/capacitor-proximity
 
@@ -1668,7 +1748,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `initialize()`, `startMeeting()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `initialize()`, `startMeeting()`
 - **Docs**: https://capgo.app/docs/plugins/realtimekit/
 - **Repository**: https://github.com/Cap-go/capacitor-realtimekit
 
@@ -1684,7 +1764,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `load()`, `execute()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `execute()`, `load()`
 - **Docs**: https://capgo.app/docs/plugins/recaptcha/
 - **Repository**: https://github.com/Cap-go/capacitor-recaptcha
 
@@ -1700,7 +1780,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `checkPermission()`, `requestPermission()`, `createChannel()`, `createChannelGroup()`, `deleteChannel()`, `display()`, `schedule()`, `cancel()`, `cancelAll()`, `getDisplayed()`, `getPending()`, `getInitialNotification()`
+- **Key API methods**: `getPluginVersion()`, `cancel()`, `cancelAll()`, `checkPermission()`, `createChannel()`, `createChannelGroup()`, `deleteChannel()`, `display()`, `getDisplayed()`, `getInitialNotification()`, `getPending()`, `registerActions()`
 - **Docs**: https://capgo.app/docs/plugins/rich-notifications/
 - **Repository**: https://github.com/Cap-go/capacitor-rich-notifications
 
@@ -1716,7 +1796,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `initialize()`, `getCameraAsset()`, `listFiles()`, `capturePicture()`, `captureVideo()`, `livePreview()`, `stopLivePreview()`, `readSettings()`, `setSettings()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `capturePicture()`, `captureVideo()`, `getCameraAsset()`, `initialize()`, `listFiles()`, `livePreview()`, `readSettings()`, `sendCommand()`, `setSettings()`, `stopLivePreview()`
 - **Docs**: https://capgo.app/docs/plugins/ricoh360-camera/
 - **Repository**: https://github.com/Cap-go/capacitor-ricoh360-camera-plugin
 
@@ -1732,7 +1812,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `initialize()`, `identify()`, `group()`, `track()`, `screen()`, `alias()`, `reset()`, `flush()`, `putDeviceToken()`, `setAdvertisingId()`, `putAdvertisingId()`, `setAnonymousId()`
+- **Key API methods**: `getPluginVersion()`, `alias()`, `flush()`, `group()`, `identify()`, `initialize()`, `optOut()`, `putAdvertisingId()`, `putAnonymousId()`, `putDeviceToken()`, `reset()`, `screen()`
 - **Docs**: https://capgo.app/docs/plugins/rudderstack/
 - **Repository**: https://github.com/Cap-go/capacitor-rudderstack
 
@@ -1748,7 +1828,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `orientation()`, `lock()`, `unlock()`, `startOrientationTracking()`, `stopOrientationTracking()`, `isOrientationLocked()`, `isDeviceFoldable()`, `getFoldState()`, `getHingeAngle()`, `getReservedRegions()`, `getBarPlacement()`, `setVerticalBarBehavior()`
+- **Key API methods**: `getPluginVersion()`, `getBarPlacement()`, `getFoldState()`, `getHingeAngle()`, `getReservedRegions()`, `getSizeClass()`, `isDeviceFoldable()`, `isOrientationLocked()`, `lock()`, `orientation()`, `setVerticalBarBehavior()`, `startOrientationTracking()`
 - **Docs**: https://capgo.app/docs/plugins/screen-orientation/
 - **Repository**: https://github.com/Cap-go/capacitor-screen-orientation
 
@@ -1764,7 +1844,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `start()`, `stop()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `start()`, `stop()`
 - **Docs**: https://capgo.app/docs/plugins/screen-recorder/
 - **Repository**: https://github.com/Cap-go/capacitor-screen-recorder
 
@@ -1828,7 +1908,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getSimCards()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `getSimCards()`
 - **Docs**: https://capgo.app/docs/plugins/sim/
 - **Repository**: https://github.com/Cap-go/capacitor-sim
 
@@ -1844,7 +1924,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `initialize()`, `isLoggedIn()`, `getAuthorizationCode()`, `refresh()`, `refreshToken()`, `handleRedirectCallback()`, `isAccessTokenAvailable()`, `isAccessTokenExpired()`, `isRefreshTokenAvailable()`, `getPluginVersion()`, `openSecureWindow()`
+- **Key API methods**: `getPluginVersion()`, `decodeIdToken()`, `getAccessTokenExpirationDate()`, `getAuthorizationCode()`, `handleRedirectCallback()`, `initialize()`, `isAccessTokenAvailable()`, `isAccessTokenExpired()`, `isLoggedIn()`, `isRefreshTokenAvailable()`, `logout()`, `openAuthSession()`
 - **Docs**: https://capgo.app/docs/plugins/social-login/
 - **Repository**: https://github.com/Cap-go/capacitor-social-login
 
@@ -1860,7 +1940,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `available()`, `isOnDeviceRecognitionAvailable()`, `start()`, `stop()`, `forceStop()`, `getLastPartialResult()`, `setPTTState()`, `getSupportedLanguages()`, `isListening()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`
+- **Key API methods**: `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `available()`, `forceStop()`, `getLastPartialResult()`, `getSupportedLanguages()`, `isListening()`, `isOnDeviceRecognitionAvailable()`, `setPTTState()`, `start()`, `stop()`
 - **Docs**: https://capgo.app/docs/plugins/speech-recognition/
 - **Repository**: https://github.com/Cap-go/capacitor-speech-recognition
 
@@ -1876,7 +1956,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `speak()`, `synthesizeToFile()`, `cancel()`, `pause()`, `resume()`, `isSpeaking()`, `isAvailable()`, `getVoices()`, `getLanguages()`, `isLanguageAvailable()`, `isVoiceAvailable()`, `initialize()`
+- **Key API methods**: `getPluginVersion()`, `activateAudioSession()`, `cancel()`, `deactivateAudioSession()`, `getLanguages()`, `getVoices()`, `initialize()`, `isAvailable()`, `isLanguageAvailable()`, `isSpeaking()`, `isVoiceAvailable()`, `pause()`
 - **Docs**: https://capgo.app/docs/plugins/speech-synthesis/
 - **Repository**: https://github.com/Cap-go/capacitor-speech-synthesis
 
@@ -1892,7 +1972,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getConfiguration()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getConfiguration()`
 - **Docs**: https://capgo.app/docs/plugins/ssl-pinning/
 - **Repository**: https://github.com/Cap-go/capacitor-ssl-pinning
 
@@ -1908,7 +1988,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `login()`, `logout()`, `call()`, `endCall()`, `setMicrophoneEnabled()`, `setCameraEnabled()`, `acceptCall()`, `rejectCall()`, `isCameraEnabled()`, `getCallStatus()`, `setSpeaker()`, `switchCamera()`
+- **Key API methods**: `getPluginVersion()`, `acceptCall()`, `call()`, `endCall()`, `getCallInfo()`, `getCallStatus()`, `getCurrentUser()`, `getDynamicStreamVideoApikey()`, `isCameraEnabled()`, `login()`, `logout()`, `rejectCall()`
 - **Docs**: https://capgo.app/docs/plugins/streamcall/
 - **Repository**: https://github.com/Cap-go/capacitor-streamcall
 
@@ -1924,7 +2004,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `initialize()`, `create()`, `present()`
+- **Key API methods**: `create()`, `initialize()`, `present()`
 - **Docs**: https://capgo.app/docs/plugins/stripe-identity/
 - **Repository**: https://github.com/Cap-go/capacitor-stripe-identity
 
@@ -1956,7 +2036,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `setConnectionToken()`, `getConnectedReader()`, `disconnectReader()`, `cancelDiscoverReaders()`, `collectPaymentMethod()`, `cancelCollectPaymentMethod()`, `confirmPaymentIntent()`, `installAvailableUpdate()`, `cancelInstallUpdate()`, `setReaderDisplay()`, `clearReaderDisplay()`, `rebootReader()`
+- **Key API methods**: `cancelCollectPaymentMethod()`, `cancelDiscoverReaders()`, `cancelInstallUpdate()`, `cancelReaderReconnection()`, `clearReaderDisplay()`, `collectPaymentMethod()`, `confirmPaymentIntent()`, `connectReader()`, `disconnectReader()`, `discoverReaders()`, `getConnectedReader()`, `initialize()`
 - **Docs**: https://capgo.app/docs/plugins/stripe-terminal/
 - **Repository**: https://github.com/Cap-go/capacitor-stripe-terminal
 
@@ -1972,7 +2052,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `initialize()`, `signInWithPassword()`, `signUp()`, `signInAnonymously()`, `signInWithOAuth()`, `signInWithOtp()`, `verifyOtp()`, `signOut()`, `getSession()`, `refreshSession()`, `getUser()`, `setSession()`
+- **Key API methods**: `getPluginVersion()`, `getSession()`, `getUser()`, `initialize()`, `refreshSession()`, `setSession()`, `signInAnonymously()`, `signInWithOAuth()`, `signInWithOtp()`, `signInWithPassword()`, `signOut()`, `signUp()`
 - **Docs**: https://capgo.app/docs/plugins/supabase/
 - **Repository**: https://github.com/Cap-go/capacitor-supabase
 
@@ -1988,7 +2068,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `toggle()`, `isEnabled()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `isEnabled()`, `toggle()`
 - **Docs**: https://capgo.app/docs/plugins/textinteraction/
 - **Repository**: https://github.com/Cap-go/capacitor-textinteraction
 
@@ -2020,7 +2100,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `login()`, `logout()`, `acceptCall()`, `rejectCall()`, `endCall()`, `setSpeaker()`, `checkMicrophonePermission()`, `requestMicrophonePermission()`, `getPluginVersion()`, `remove()`
+- **Key API methods**: `getPluginVersion()`, `acceptCall()`, `checkMicrophonePermission()`, `endCall()`, `getCallStatus()`, `isLoggedIn()`, `login()`, `logout()`, `makeCall()`, `muteCall()`, `rejectCall()`, `remove()`
 - **Docs**: https://capgo.app/docs/plugins/twilio-voice/
 - **Repository**: https://github.com/Cap-go/capacitor-twilio-voice
 
@@ -2036,7 +2116,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `notifyAppReady()`, `setUpdateUrl()`, `setStatsUrl()`, `setChannelUrl()`, `download()`, `next()`, `set()`, `startPreviewSession()`, `listPreviews()`, `setPreview()`, `resetPreview()`, `deletePreview()`
+- **Key API methods**: `notifyAppReady()`, `download()`, `getLatest()`, `getPluginVersion()`, `cancelDelay()`, `checkPreviewUpdate()`, `completeFlexibleUpdate()`, `current()`, `delete()`, `deletePreview()`, `getAppId()`, `getAppUpdateInfo()`
 - **Docs**: https://capgo.app/docs/plugins/updater/
 - **Repository**: https://github.com/Cap-go/capacitor-updater
 
@@ -2052,7 +2132,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `startUpload()`, `uploadMultipart()`, `removeUpload()`, `acknowledgeEvent()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `acknowledgeEvent()`, `removeUpload()`, `startUpload()`, `uploadMultipart()`
 - **Docs**: https://capgo.app/docs/plugins/uploader/
 - **Repository**: https://github.com/Cap-go/capacitor-uploader
 
@@ -2068,7 +2148,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `isAvailable()`, `getDiscoveryToken()`, `startPeerSession()`, `startControllerSession()`, `startControleeSession()`, `stopSession()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getDiscoveryToken()`, `isAvailable()`, `startControleeSession()`, `startControllerSession()`, `startPeerSession()`, `stopSession()`
 - **Docs**: https://capgo.app/docs/plugins/uwb/
 - **Repository**: https://github.com/Cap-go/capacitor-uwb
 
@@ -2084,7 +2164,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `configure()`, `getSessionId()`, `reinitialize()`, `recordTouchEvent()`
+- **Key API methods**: `configure()`, `getSessionId()`, `recordTouchEvent()`, `reinitialize()`
 - **Docs**: https://capgo.app/docs/plugins/verisoul/
 - **Repository**: https://github.com/Cap-go/capacitor-verisoul
 
@@ -2100,7 +2180,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `initPlayer()`, `isPlaying()`, `play()`, `pause()`, `getDuration()`, `getCurrentTime()`, `setCurrentTime()`, `getVolume()`, `setVolume()`, `getMuted()`, `setMuted()`, `setRate()`
+- **Key API methods**: `getPluginVersion()`, `exitPlayer()`, `getCurrentTime()`, `getDuration()`, `getMuted()`, `getRate()`, `getVolume()`, `hidePlayer()`, `initPlayer()`, `isControllerIsFullyVisible()`, `isPlaying()`, `pause()`
 - **Docs**: https://capgo.app/docs/plugins/video-player/
 - **Repository**: https://github.com/Cap-go/capacitor-video-player
 
@@ -2116,7 +2196,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getThumbnail()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getThumbnail()`
 - **Docs**: https://capgo.app/docs/plugins/video-thumbnails/
 - **Repository**: https://github.com/Cap-go/capacitor-video-thumbnails
 
@@ -2148,7 +2228,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `sendMessage()`, `updateApplicationContext()`, `transferUserInfo()`, `replyToMessage()`, `getInfo()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `getInfo()`, `replyToMessage()`, `sendMessage()`, `transferUserInfo()`, `updateApplicationContext()`
 - **Docs**: https://capgo.app/docs/plugins/watch/
 - **Repository**: https://github.com/Cap-go/capacitor-watch
 
@@ -2164,7 +2244,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getPendingCrashInfo()`, `clearPendingCrashInfo()`, `simulateCrashRecovery()`, `restartWebView()`
+- **Key API methods**: `clearPendingCrashInfo()`, `getPendingCrashInfo()`, `restartWebView()`, `simulateCrashRecovery()`
 - **Docs**: https://capgo.app/docs/plugins/webview-crash/
 - **Repository**: https://github.com/Cap-go/capacitor-webview-crash
 
@@ -2180,7 +2260,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `startMonitoring()`, `stopMonitoring()`, `getState()`, `checkNow()`
+- **Key API methods**: `checkNow()`, `getState()`, `startMonitoring()`, `stopMonitoring()`
 - **Docs**: https://capgo.app/docs/plugins/webview-guardian/
 - **Repository**: https://github.com/Cap-go/capacitor-webview-guardian
 
@@ -2196,7 +2276,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `check()`, `startMonitoring()`, `stopMonitoring()`, `getLastStatus()`, `showUpdatePrompt()`, `openUpdatePage()`
+- **Key API methods**: `check()`, `getLastStatus()`, `openUpdatePage()`, `showUpdatePrompt()`, `startMonitoring()`, `stopMonitoring()`
 - **Docs**: https://capgo.app/docs/plugins/webview-version-checker/
 - **Repository**: https://github.com/Cap-go/capacitor-webview-version-checker
 
@@ -2212,7 +2292,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `initialize()`, `isInstalled()`, `auth()`, `share()`, `sendPaymentRequest()`, `openMiniProgram()`, `chooseInvoice()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `auth()`, `chooseInvoice()`, `initialize()`, `isInstalled()`, `openMiniProgram()`, `sendPaymentRequest()`, `share()`
 - **Docs**: https://capgo.app/docs/plugins/wechat/
 - **Repository**: https://github.com/Cap-go/capacitor-wechat
 
@@ -2228,7 +2308,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `areActivitiesSupported()`, `startTemplateActivity()`, `startTemplateWidget()`, `updateTemplateActivity()`, `endTemplateActivity()`, `performTemplateAction()`, `getTemplateActivity()`, `listTemplateActivities()`, `listTemplateEvents()`, `acknowledgeTemplateEvents()`, `startWidgetSession()`, `updateWidgetSession()`
+- **Key API methods**: `getPluginVersion()`, `acknowledgeTemplateEvents()`, `acknowledgeWidgetMessages()`, `areActivitiesSupported()`, `completeWidgetMessage()`, `endTemplateActivity()`, `getTemplateActivity()`, `getWidgetSession()`, `listTemplateActivities()`, `listTemplateEvents()`, `listWidgetMessages()`, `listWidgetSessions()`
 - **Docs**: https://capgo.app/docs/plugins/widget-kit/
 - **Repository**: https://github.com/Cap-go/capacitor-widget-kit
 
@@ -2244,7 +2324,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `addNetwork()`, `connect()`, `disconnect()`, `getAvailableNetworks()`, `getIpAddress()`, `getRssi()`, `getSsid()`, `getWifiInfo()`, `isEnabled()`, `startScan()`, `checkPermissions()`, `requestPermissions()`
+- **Key API methods**: `connect()`, `disconnect()`, `checkPermissions()`, `requestPermissions()`, `getPluginVersion()`, `addNetwork()`, `getAvailableNetworks()`, `getIpAddress()`, `getRssi()`, `getSsid()`, `getWifiInfo()`, `isEnabled()`
 - **Docs**: https://capgo.app/docs/plugins/wifi/
 - **Repository**: https://github.com/Cap-go/capacitor-wifi
 
@@ -2260,7 +2340,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `createPlayer()`, `cuePlaylist()`, `cueVideoById()`, `cueVideoByUrl()`, `destroy()`, `getAllPlayersEventsState()`, `getAvailablePlaybackRates()`, `getAvailableQualityLevels()`, `getCurrentTime()`, `getDuration()`, `getIframe()`
 - **Docs**: https://capgo.app/docs/plugins/youtube-player/
 - **Repository**: https://github.com/Cap-go/capacitor-youtube-player
 
@@ -2276,7 +2356,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `cloneProfile()`, `createProfile()`, `deleteProfile()`, `importConfig()`, `renameProfile()`, `restoreConfig()`, `setConfig()`, `setDisabledAppList()`, `setIgnoreDisabledProfiles()`, `registerForNotification()`, `unRegisterForNotification()`, `enumerateScanners()`
+- **Key API methods**: `getPluginVersion()`, `cloneProfile()`, `configureDiagnostics()`, `createProfile()`, `deleteProfile()`, `disableDatawedge()`, `disableScannerInput()`, `enableDatawedge()`, `enableScannerInput()`, `enumerateScanners()`, `enumerateTriggers()`, `getActiveProfile()`
 - **Docs**: https://capgo.app/docs/plugins/zebra-datawedge/
 - **Repository**: https://github.com/Cap-go/capacitor-zebra-datawedge
 
@@ -2292,7 +2372,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `zip()`, `unzip()`, `getPluginVersion()`
+- **Key API methods**: `getPluginVersion()`, `unzip()`, `zip()`
 - **Docs**: https://capgo.app/docs/plugins/zip/
 - **Repository**: https://github.com/Cap-go/capacitor-zip
 
@@ -2308,7 +2388,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android
-- **Key API methods**: `notifyAppReady()`, `setUpdateUrl()`, `setStatsUrl()`, `setChannelUrl()`, `download()`, `next()`, `set()`, `startPreviewSession()`, `listPreviews()`, `setPreview()`, `resetPreview()`, `deletePreview()`
+- **Key API methods**: `notifyAppReady()`, `download()`, `getLatest()`, `getPluginVersion()`, `cancelDelay()`, `checkPreviewUpdate()`, `completeFlexibleUpdate()`, `current()`, `delete()`, `deletePreview()`, `getAppId()`, `getAppUpdateInfo()`
 - **Docs**: https://capgo.app/docs/plugins/updater/
 - **Repository**: https://github.com/Cap-go/cordova-updater
 
@@ -2324,6 +2404,6 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **Key API methods**: `configure()`, `restorePurchases()`, `getAppTransaction()`, `isBillingSupported()`, `getPluginVersion()`, `manageSubscriptions()`, `presentOfferCodeRedeemSheet()`, `acknowledgePurchase()`, `finishTransaction()`, `getUnfinishedTransactions()`, `consumePurchase()`
+- **Key API methods**: `getPluginVersion()`, `acknowledgePurchase()`, `configure()`, `consumePurchase()`, `finishTransaction()`, `getAppTransaction()`, `getProduct()`, `getProducts()`, `getPurchases()`, `getStorefront()`, `getUnfinishedTransactions()`, `isBillingSupported()`
 - **Docs**: https://capgo.app/docs/plugins/native-purchases/
 - **Repository**: https://github.com/Cap-go/capacitor-native-purchases

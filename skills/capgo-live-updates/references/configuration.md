@@ -1,6 +1,6 @@
 # `plugins.CapacitorUpdater` Configuration
 
-Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.52. Most keys only affect Android and iOS. Run `npx cap sync` after changing config, then rebuild the native app, because config is read at native launch.
+Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.54.2. Most keys only affect Android and iOS. Run `npx cap sync` after changing config, then rebuild the native app, because config is read at native launch.
 
 ## Update behavior
 

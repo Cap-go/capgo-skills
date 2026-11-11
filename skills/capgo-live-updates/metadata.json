@@ -1,7 +1,7 @@
 {
   "version": "1.1.0",
   "organization": "Capgo",
-  "date": "October 2026",
+  "date": "November 2026",
   "abstract": "Sets up and debugs Capgo live updates with @capgo/capacitor-updater: version-matched install (no Capacitor 9 line yet), notifyAppReady, autoUpdate modes, manual download/next/set flows, channels and progressive rollouts, CI uploads, and backend error codes.",
   "triggers": [
     "live updates",

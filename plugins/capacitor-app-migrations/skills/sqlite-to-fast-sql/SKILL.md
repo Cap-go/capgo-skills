@@ -47,7 +47,7 @@ Read `package.json` and grep the data layer. Record: plugin and version, databas
 ```ts
 import { FastSQL, KeyValueStore } from '@capgo/capacitor-fast-sql';
 
-const db = await FastSQL.connect({ database: 'app' });            // { encrypted, encryptionKey, readOnly }
+const db = await FastSQL.connect({ database: 'app' });            // { encrypted, encryptionKey, readOnly, transport }
 const rows = await db.query('SELECT * FROM todo WHERE done = ?', [0]);
 const { rowsAffected, insertId } = await db.run('INSERT INTO todo (title) VALUES (?)', ['A']);
 await db.execute('CREATE TABLE IF NOT EXISTS todo (id INTEGER PRIMARY KEY, title TEXT, done INTEGER DEFAULT 0)');
@@ -108,6 +108,8 @@ Encryption (only if `encrypted: true`):
 - Keep the key out of JS source: store it with `@capgo/capacitor-native-biometric` or fetch it from your backend.
 
 Web (only if the app ships on web): serve `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp`, and in Vite add `optimizeDeps.exclude: ['@sqlite.org/sqlite-wasm']`. `CapgoCapacitorFastSql.configureWeb({ ... })` before the first `connect()` is optional and a no-op on native.
+
+Optional native transport (8.3.0+): `FastSQL.connect({ database: 'app', transport: 'http-binary' })` opts into the experimental binary HTTP protocol on iOS and Android for smaller BLOB payloads. Default is `http-json`. Native must advertise binary protocol v1 or the client keeps JSON.
 
 ### Step 4: Preserve existing data
 

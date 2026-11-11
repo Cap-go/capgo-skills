@@ -120,7 +120,7 @@ function titleFromPackage(name) {
 function extractMethods(definitionsText) {
   if (!definitionsText) return [];
   const methods = [];
-  const re = /^\s{2,4}([a-zA-Z]\w*)\([^;]*\):\s*Promise<[^;]+>;/gm;
+  const re = /^\s{2,4}([a-zA-Z]\w*)\([\s\S]*?\):\s*Promise[\s\S]*?;\n/gm;
   let match;
   while ((match = re.exec(definitionsText)) !== null) {
     const name = match[1];
@@ -128,6 +128,22 @@ function extractMethods(definitionsText) {
     methods.push(name);
   }
   const unique = [...new Set(methods)];
+  const priority = [
+    'connect',
+    'disconnect',
+    'notifyAppReady',
+    'download',
+    'getLatest',
+    'checkPermissions',
+    'requestPermissions',
+    'getPluginVersion',
+  ];
+  unique.sort((a, b) => {
+    const pa = priority.indexOf(a);
+    const pb = priority.indexOf(b);
+    if (pa !== -1 || pb !== -1) return (pa === -1 ? 99 : pa) - (pb === -1 ? 99 : pb);
+    return a.localeCompare(b);
+  });
   return unique.slice(0, 12);
 }
 

@@ -1,7 +1,7 @@
 # Updater JavaScript API
 
 Import: `import { CapacitorUpdater } from '@capgo/capacitor-updater';`
-Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.52, and https://capgo.app/docs/plugins/updater/api/.
+Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.54.2, and https://capgo.app/docs/plugins/updater/api/.
 
 ## Lifecycle methods
 
@@ -20,6 +20,14 @@ Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.52, and ht
 | `setMultiDelay({ delayConditions })` / `cancelDelay()` | Hold a `next` bundle until `background`, `kill`, `nativeVersion`, or `date` |
 | `triggerUpdateCheck()` | Queue an immediate auto-update check |
 | `setBundleError({ id })` | Manual mode only. Needs `allowManualBundleError: true` |
+| `getMissingBundleFiles({ version, manifest })` | Delta bundles. Lists manifest entries missing locally |
+| `getBundleDownloadSize({ version, manifest, files })` | Delta bundles. Size estimate after `getMissingBundleFiles` |
+| `startPreviewSession({ appId?, message? })` | Expo Go style preview. Needs `allowPreview: true` in config |
+| `listPreviews()` | Locally saved preview bundles still on disk |
+| `setPreview({ id })` | Switch to a preview bundle and reload |
+| `resetPreview()` | Leave preview mode |
+| `deletePreview({ id })` | Remove a stored preview bundle |
+| `checkPreviewUpdate({ id })` / `updatePreview({ id })` | Refresh a preview bundle from the server |
 
 ## Manual flow (`autoUpdate: false` or `"onlyDownload"`)
 
@@ -85,6 +93,9 @@ await CapacitorUpdater.unsetChannel({});     // back to defaultChannel / cloud d
 | `appReloaded` | none |
 | `channelPrivate` | `{ channel, message }` |
 | `updateCheckResult` | result of each check (`kind`, `error`, `message`) |
+| `updaterEvent` | Unified stream (`{ type, ... }`) for every plugin event, including retained replays |
+
+Prefer named events in app code. Use `updaterEvent` when one listener must mirror native stats or forwarding, or when debugging every event in one place.
 
 There is no `downloadProgress` event. Use `download`.
 
