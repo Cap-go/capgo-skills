@@ -35,15 +35,33 @@ export function changelogReadOutcome(candidates) {
   return { status: 'none' };
 }
 
-/** Prefer a package-keyed diff; fall back to a repo-level entry without pkgPath. */
-export function findCachedDiff(diffs, pkgName, repo) {
+/**
+ * Return file text from a raw read. Null means the file is missing;
+ * status 'error' must not be treated as absent.
+ */
+export function textFromRawRead(result, label = 'file') {
+  if (!result || result.status === 'missing') return null;
+  if (result.status === 'ok') return result.text ?? null;
+  throw new Error(result.error || `${label} read failed`);
+}
+
+/**
+ * Prefer a package-keyed diff. Repo-level fallback cannot attribute a
+ * root-package record to another package, and legacy records without a
+ * package name are only valid for root-package lookups.
+ */
+export function findCachedDiff(diffs, pkgName, repo, pkgPath = '') {
   const list = Array.isArray(diffs) ? diffs : [];
   if (pkgName) {
     const byPackage = list.find((diff) => diff.package === pkgName);
     if (byPackage) return byPackage;
   }
-  if (repo) {
-    return list.find((diff) => diff.repo === repo && !diff.pkgPath) || null;
-  }
-  return null;
+  if (!repo) return null;
+  return (
+    list.find((diff) => {
+      if (diff.repo !== repo || diff.pkgPath) return false;
+      if (diff.package) return diff.package === pkgName;
+      return !pkgPath;
+    }) || null
+  );
 }

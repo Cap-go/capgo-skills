@@ -13,7 +13,7 @@ import {
   extractMethodsFromSources,
   loadApiSources,
 } from './lib/parse-definitions.mjs';
-import { changelogReadOutcome } from './lib/fetch-results.mjs';
+import { changelogReadOutcome, textFromRawRead } from './lib/fetch-results.mjs';
 
 const CUTOFF = '2026-09-11T00:00:00Z';
 const ORG = 'Cap-go';
@@ -316,8 +316,16 @@ async function main() {
         let platformNotes = [];
         const oldPkg = await rawAt(repo, tags.fromTag, 'package.json', pkgPath);
         const newPkgRaw = await rawAt(repo, tags.toTag, 'package.json', pkgPath);
-        const oldPkgText = oldPkg.status === 'ok' ? oldPkg.text : null;
-        const newPkgText = newPkgRaw.status === 'ok' ? newPkgRaw.text : null;
+        const pkgLabel = `${pkgPath ? `${pkgPath}/` : ''}package.json`;
+        let oldPkgText;
+        let newPkgText;
+        try {
+          oldPkgText = textFromRawRead(oldPkg, `${pkgLabel} at ${tags.fromTag}`);
+          newPkgText = textFromRawRead(newPkgRaw, `${pkgLabel} at ${tags.toTag}`);
+        } catch (e) {
+          packageResults.push({ repo, package: pkgName, pkgPath, error: e.message });
+          continue;
+        }
         if (oldPkgText && newPkgText) {
           try {
             const oldPkgJson = JSON.parse(oldPkgText);

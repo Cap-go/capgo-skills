@@ -11,6 +11,7 @@ import {
   changelogReadOutcome,
   classifyRawHttpStatus,
   findCachedDiff,
+  textFromRawRead,
 } from './fetch-results.mjs';
 
 const adjacentSignatures = `export interface SamplePlugin {
@@ -316,6 +317,41 @@ describe('findCachedDiff', () => {
     assert.equal(
       findCachedDiff(diffs, '@capgo/capacitor-admob', 'capacitor-admob'),
       null,
+    );
+  });
+
+  it('does not assign a root package diff to another package', () => {
+    const diffs = [
+      { repo: 'capacitor-firebase', package: '@capgo/capacitor-firebase', methods: { added: ['rootOnly'] } },
+    ];
+    assert.equal(
+      findCachedDiff(diffs, '@capgo/capacitor-firebase-analytics', 'capacitor-firebase', 'packages/analytics'),
+      null,
+    );
+  });
+
+  it('allows a legacy repo-level record without a package name only for root entries', () => {
+    const diffs = [
+      { repo: 'capacitor-firebase', fromTag: '8.0.0', toTag: '8.3.1' },
+    ];
+    assert.equal(
+      findCachedDiff(diffs, '@capgo/capacitor-firebase', 'capacitor-firebase', '').fromTag,
+      '8.0.0',
+    );
+    assert.equal(
+      findCachedDiff(diffs, '@capgo/capacitor-firebase-analytics', 'capacitor-firebase', 'packages/analytics'),
+      null,
+    );
+  });
+});
+
+describe('textFromRawRead', () => {
+  it('returns text for ok, null for missing, and throws on error', () => {
+    assert.equal(textFromRawRead({ status: 'ok', text: '{ "name": "pkg" }' }), '{ "name": "pkg" }');
+    assert.equal(textFromRawRead({ status: 'missing', text: null }), null);
+    assert.throws(
+      () => textFromRawRead({ status: 'error', error: 'HTTP 503 for package.json at 8.2.0' }, 'package.json'),
+      /HTTP 503 for package.json at 8.2.0/,
     );
   });
 });

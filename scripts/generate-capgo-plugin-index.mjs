@@ -138,7 +138,7 @@ const DIFF_CACHE = path.join(ROOT, 'scripts/.cache/capgo-api-diffs.json');
 
 /** @param {object[]} diffs */
 function formatApiChangeBlock(entry, diffs) {
-  const diff = findCachedDiff(diffs, entry.pkg.name, entry.repo);
+  const diff = findCachedDiff(diffs, entry.pkg.name, entry.repo, entry.pkgPath);
   if (!diff?.fromTag || !diff?.toTag) return '';
   const lines = [`- **Versions reviewed**: \`${diff.fromTag}\` to \`${diff.toTag}\``];
   const { methods, events, config, breakingNotes, platformNotes } = diff;
