@@ -20,7 +20,7 @@ npx cap sync
 
 **Methods:** `openAuthSession()`.
 
-Use `openAuthSession()` for an in-app auth session (ASWebAuthenticationSession style) when a full browser handoff is too heavy. Pair with existing `login()` / `logout()` / `refresh()` flows.
+Use `openAuthSession()` for an in-app auth session (ASWebAuthenticationSession style) when a full browser handoff is too heavy. Pair with `initialize()`, `logout()`, and `refresh()`.
 
 ```typescript
 import { SocialLogin } from '@capgo/capacitor-social-login';

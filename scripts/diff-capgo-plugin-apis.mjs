@@ -96,14 +96,40 @@ async function resolveTags(repo) {
   };
 }
 
+function isChangelogBoilerplate(line) {
+  const t = line.replace(/^[\+\-@]\s*/, '').trim();
+  if (!t) return true;
+  if (/^#+\s*\[/.test(t)) return true;
+  if (/^#+\s*(Added|Changed|Deprecated|Removed|Fixed|Security)\s*$/i.test(t)) return true;
+  if (/keep a changelog/i.test(t)) return true;
+  if (/notable changes to this project/i.test(t)) return true;
+  if (/any breaking changes or migration notes/i.test(t)) return true;
+  if (/soon-to-be removed features/i.test(t)) return true;
+  if (/removed features.*breaking changes or migration/i.test(t)) return true;
+  if (/^#{1,6}\s*$/.test(t)) return true;
+  if (/^@@\s/.test(t)) return true;
+  return false;
+}
+
+function isChangelogSignalLine(line) {
+  const t = line.replace(/^[\+\-]\s*/, '').trim();
+  if (isChangelogBoilerplate(t)) return false;
+  if (/BREAKING/i.test(t)) return true;
+  if (/\bbreaking\b/i.test(t)) return true;
+  if (/\bdeprecated\b/i.test(t) && !/^#+\s*Deprecated\s*$/i.test(t)) return true;
+  if (/\bmigration\b/i.test(t)) return true;
+  if (/\bremoved\b/i.test(t) && !/^#+\s*Removed\s*$/i.test(t)) return true;
+  return false;
+}
+
 function parseChangelogBreaking(text) {
   if (!text) return [];
+  if (!/breaking|removed|deprecated|migration/i.test(text)) return [];
   const lines = [];
-  const lower = text.toLowerCase();
-  if (/breaking|removed|deprecated|migration/i.test(text)) {
-    for (const line of text.split('\n')) {
-      if (/breaking|removed|deprecated|migration|BREAKING/i.test(line)) lines.push(line.trim());
-    }
+  for (const line of text.split('\n')) {
+    if (!isChangelogSignalLine(line)) continue;
+    const t = line.replace(/^[\+\-]\s*/, '').trim();
+    if (t) lines.push(t);
   }
   return lines.slice(0, 20);
 }

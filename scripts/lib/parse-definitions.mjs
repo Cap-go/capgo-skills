@@ -13,23 +13,23 @@ export function extractMethods(definitionsText) {
     const head = lines[i].match(/^\s{2,4}([a-zA-Z]\w*)\(/);
     if (!head) continue;
     const name = head[1];
-  const parts = [lines[i]];
-  let j = i + 1;
-  let foundPromise = false;
-  while (j < lines.length) {
-    const next = lines[j];
-    if (/^\s{2,4}[a-zA-Z]\w*\(/.test(next)) break;
-    if (/^}\s*$/.test(next.trim()) && foundPromise) break;
-    parts.push(next);
-    if (next.includes('): Promise') || next.includes('): Promise<')) foundPromise = true;
-    if (foundPromise && /;\s*$/.test(next.trim())) break;
-    j++;
-  }
+    const parts = [lines[i]];
+    let j = i + 1;
+    let foundPromise = false;
+    while (j < lines.length) {
+      const next = lines[j];
+      if (/^\s{2,4}[a-zA-Z]\w*\(/.test(next)) break;
+      if (/^}\s*$/.test(next.trim()) && foundPromise) break;
+      parts.push(next);
+      if (next.includes('): Promise') || next.includes('): Promise<')) foundPromise = true;
+      if (foundPromise && /;\s*$/.test(next.trim())) break;
+      j++;
+    }
     const block = parts.join('\n');
     if (!/:\s*Promise/.test(block)) continue;
     if (name === 'addListener' || name === 'removeAllListeners') continue;
     methods.push(name);
-    i = j;
+    i = j - 1;
   }
   return [...new Set(methods)].sort();
 }
@@ -76,8 +76,13 @@ export function diffLists(before, after) {
   };
 }
 
+const CONFIG_KEY_OVERRIDES = {
+  '@capgo/capacitor-updater': 'CapacitorUpdater',
+};
+
 /** Guess PluginsConfig key from package name */
 export function configKeyFromPackage(pkgName) {
+  if (CONFIG_KEY_OVERRIDES[pkgName]) return CONFIG_KEY_OVERRIDES[pkgName];
   const slug = pkgName.replace(/^@capgo\/(capacitor-|cordova-)?/, '');
   const parts = slug.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1));
   return parts.join('');

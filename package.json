@@ -85,7 +85,8 @@
   ],
   "scripts": {
     "generate-plugin-index": "node scripts/diff-capgo-plugin-apis.mjs && node scripts/generate-capgo-plugin-index.mjs",
-    "lint-skills": "bun scripts/lint-skills.mjs",
+    "test": "node --test scripts/lib/parse-definitions.test.mjs",
+    "lint-skills": "node --test scripts/lib/parse-definitions.test.mjs && bun scripts/lint-skills.mjs",
     "sync-skills": "bun scripts/sync-plugin-skills.mjs",
     "lint-skills-skillgrade": "cd skills/skill-creator && bunx skillgrade --ci --provider=local --smoke"
   },

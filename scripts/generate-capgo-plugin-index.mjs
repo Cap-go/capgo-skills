@@ -84,7 +84,8 @@ async function listMonorepoPackages(repo, branch) {
   try {
     contents = await gh(`/repos/${ORG}/${repo}/contents/packages?ref=${branch}`);
   } catch (error) {
-    if (String(error.message).includes(': 404')) return [];
+    const msg = String(error.message);
+    if (msg.includes(': 404') || msg.includes(': 403')) return [];
     throw error;
   }
   if (!Array.isArray(contents)) return [];
@@ -333,19 +334,42 @@ async function mapPool(items, concurrency, fn) {
   return results;
 }
 
+/** Repository names from an existing catalog or index when the org list API is unavailable. */
+async function reposFromExistingIndex() {
+  let text;
+  try {
+    text = await readFile(CATALOG_PATH, 'utf8');
+  } catch {
+    text = await readFile(INDEX_PATH, 'utf8');
+  }
+  const names = [
+    ...text.matchAll(new RegExp(`github\\.com/${ORG}/(capacitor-[^)\\s|]+|cordova-updater)`, 'g')),
+  ].map((m) => m[1]);
+  return [...new Set(names)]
+    .filter((name) => REPO_FILTER.test(name))
+    .sort((a, b) => a.localeCompare(b))
+    .map((name) => ({ name, branch: 'main' }));
+}
+
+/** List Cap-go plugin repositories via the org API, or from the checked-in catalog on rate limits. */
+async function discoverPluginRepos() {
+  try {
+    const repos = await ghPaginate(`/orgs/${ORG}/repos`);
+    return repos
+      .filter((r) => !r.archived && REPO_FILTER.test(r.name))
+      .map((r) => ({ name: r.name, branch: r.default_branch || 'main' }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  } catch (error) {
+    if (!String(error.message).includes(': 403')) throw error;
+    console.warn('GitHub org list rate limited; using repository URLs from the existing catalog.');
+    return reposFromExistingIndex();
+  }
+}
+
 /** Generate catalog and index files, exiting non-zero on discovery errors. */
 async function main() {
-  if (!process.env.GITHUB_TOKEN && !process.env.GH_TOKEN) {
-    console.error('Set GITHUB_TOKEN or GH_TOKEN before generating the plugin index.');
-    process.exit(1);
-  }
-
   const discoveryErrors = [];
-  const repos = await ghPaginate(`/orgs/${ORG}/repos`);
-  const pluginRepos = repos
-    .filter((r) => !r.archived && REPO_FILTER.test(r.name))
-    .map((r) => ({ name: r.name, branch: r.default_branch || 'main' }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const pluginRepos = await discoverPluginRepos();
 
   const allPackages = [];
   await mapPool(pluginRepos, 4, async ({ name: repo, branch }) => {
