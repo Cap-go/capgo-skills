@@ -85,7 +85,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `adHide()`, `adIsLoaded()`, `adLoad()`, `adShow()`, `configRequest()`, `configure()`, `feedAdCreate()`, `feedAdDestroy()`, `feedAdIsLoaded()`, `feedAdLoad()`, `feedAdSetAutoRefresh()`, `feedAdUpdateBounds()`, `getPluginVersion()`, `requestConsentInfo()`, `requestTrackingAuthorization()`, `showConsentForm()`, `showPrivacyOptionsForm()`, `start()`, `trackingAuthorizationStatus()`
+- **API methods**: `adCreate()`, `adHide()`, `adIsLoaded()`, `adLoad()`, `adShow()`, `configRequest()`, `configure()`, `feedAdCreate()`, `feedAdDestroy()`, `feedAdIsLoaded()`, `feedAdLoad()`, `feedAdSetAutoRefresh()`, `feedAdUpdateBounds()`, `getPluginVersion()`, `requestConsentInfo()`, `requestTrackingAuthorization()`, `showConsentForm()`, `showPrivacyOptionsForm()`, `start()`, `trackingAuthorizationStatus()`
 - **Events**: none
 - **Plugin config keys** (`Admob`): none in `definitions.ts`
 
@@ -1050,7 +1050,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `addDocument()`, `clearPersistence()`, `deleteDocument()`, `disableNetwork()`, `disablePersistence()`, `enableNetwork()`, `enablePersistence()`, `getCountFromServer()`, `removeSnapshotListener()`, `setDocument()`, `updateDocument()`, `useEmulator()`, `writeBatch()`
+- **API methods**: `addCollectionGroupSnapshotListener()`, `addCollectionSnapshotListener()`, `addDocument()`, `addDocumentSnapshotListener()`, `clearPersistence()`, `deleteDocument()`, `disableNetwork()`, `disablePersistence()`, `enableNetwork()`, `enablePersistence()`, `getCollection()`, `getCollectionGroup()`, `getCountFromServer()`, `getDocument()`, `removeSnapshotListener()`, `setDocument()`, `updateDocument()`, `useEmulator()`, `writeBatch()`
 - **Events**: none
 - **Plugin config keys** (`FirebaseFirestore`): `databaseId`
 
@@ -1071,7 +1071,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `useEmulator()`
+- **API methods**: `callByName()`, `callByUrl()`, `getPluginVersion()`, `useEmulator()`
 - **Events**: none
 - **Plugin config keys** (`FirebaseFunctions`): none in `definitions.ts`
 
@@ -1916,7 +1916,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getAnonymousToken()`, `getPluginVersion()`, `getSession()`, `getUser()`, `initialize()`, `refreshSession()`, `setSession()`, `signInWithOAuth()`, `signInWithOtp()`, `signInWithPassword()`, `signOut()`, `signUp()`, `verifyOtp()`
+- **API methods**: `delete()`, `getAnonymousToken()`, `getPluginVersion()`, `getSession()`, `getUser()`, `initialize()`, `insert()`, `refreshSession()`, `select()`, `setSession()`, `signInWithOAuth()`, `signInWithOtp()`, `signInWithPassword()`, `signOut()`, `signUp()`, `update()`, `verifyOtp()`
 - **Events**: `authStateChange`
 - **Plugin config keys** (`Neon`): none in `definitions.ts`
 
@@ -2212,7 +2212,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `update()`
+- **API methods**: `promise()`
 - **Events**: none
 - **Plugin config keys** (`PrettyToast`): none in `definitions.ts`
 
@@ -2528,7 +2528,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `decodeIdToken()`, `getAccessTokenExpirationDate()`, `getAuthorizationCode()`, `getPluginVersion()`, `handleRedirectCallback()`, `initialize()`, `isAccessTokenAvailable()`, `isAccessTokenExpired()`, `isLoggedIn()`, `isRefreshTokenAvailable()`, `logout()`, `openAuthSession()`, `openSecureWindow()`, `refresh()`, `refreshToken()`
+- **API methods**: `decodeIdToken()`, `getAccessTokenExpirationDate()`, `getAuthorizationCode()`, `getPluginVersion()`, `handleRedirectCallback()`, `initialize()`, `isAccessTokenAvailable()`, `isAccessTokenExpired()`, `isLoggedIn()`, `isRefreshTokenAvailable()`, `login()`, `logout()`, `openAuthSession()`, `openSecureWindow()`, `providerSpecificCall()`, `refresh()`, `refreshToken()`
 - **Events**: none
 - **Plugin config keys** (`SocialLogin`): none in `definitions.ts`
 
@@ -2696,7 +2696,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `getPluginVersion()`, `getSession()`, `getUser()`, `initialize()`, `refreshSession()`, `setSession()`, `signInAnonymously()`, `signInWithOAuth()`, `signInWithOtp()`, `signInWithPassword()`, `signOut()`, `signUp()`, `verifyOtp()`
+- **API methods**: `delete()`, `getPluginVersion()`, `getSession()`, `getUser()`, `initialize()`, `insert()`, `refreshSession()`, `select()`, `setSession()`, `signInAnonymously()`, `signInWithOAuth()`, `signInWithOtp()`, `signInWithPassword()`, `signOut()`, `signUp()`, `update()`, `verifyOtp()`
 - **Events**: `authStateChange`
 - **Plugin config keys** (`Supabase`): none in `definitions.ts`
 

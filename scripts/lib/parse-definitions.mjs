@@ -27,19 +27,76 @@ function collectPluginInterfaceBodies(definitionsText) {
   return bodies;
 }
 
+function skipInlineWs(line, index) {
+  while (index < line.length && (line[index] === ' ' || line[index] === '\t')) index += 1;
+  return index;
+}
+
+/**
+ * Match a plugin-interface method head: name(, name?(, name<T>(, name?<T>(.
+ * Type parameters may nest, use extends/defaults, contain =>, or span lines.
+ */
+function matchMethodHead(line) {
+  const start = line.match(/^(\s{2,4})([a-zA-Z]\w*)/);
+  if (!start) return null;
+  let i = start[0].length;
+  i = skipInlineWs(line, i);
+  if (line[i] === '?') {
+    i += 1;
+    i = skipInlineWs(line, i);
+  }
+  if (line[i] === '<') {
+    let depth = 0;
+    while (i < line.length) {
+      const ch = line[i];
+      if (ch === '=' && line[i + 1] === '>') {
+        i += 2;
+        continue;
+      }
+      if (ch === "'" || ch === '"' || ch === '`') {
+        const quote = ch;
+        i += 1;
+        while (i < line.length && line[i] !== quote) {
+          if (line[i] === '\\') i += 1;
+          i += 1;
+        }
+        i += 1;
+        continue;
+      }
+      if (ch === '<') {
+        depth += 1;
+      } else if (ch === '>') {
+        depth -= 1;
+        i += 1;
+        if (depth === 0) break;
+        continue;
+      }
+      i += 1;
+    }
+    if (depth !== 0) return { name: start[2] };
+    i = skipInlineWs(line, i);
+    if (line[i] === '?') {
+      i += 1;
+      i = skipInlineWs(line, i);
+    }
+  }
+  if (line[i] === '(') return { name: start[2] };
+  return null;
+}
+
 function extractMethodsFromBlock(block) {
   const methods = [];
   const lines = block.split('\n');
   for (let i = 0; i < lines.length; i++) {
-    const head = lines[i].match(/^\s{2,4}([a-zA-Z]\w*)\??\(/);
+    const head = matchMethodHead(lines[i]);
     if (!head) continue;
-    const name = head[1];
+    const name = head.name;
     const parts = [lines[i]];
     let j = i + 1;
     let foundPromise = false;
     while (j < lines.length) {
       const next = lines[j];
-      if (/^\s{2,4}[a-zA-Z]\w*\??\(/.test(next)) break;
+      if (matchMethodHead(next)) break;
       if (/^}\s*$/.test(next.trim()) && foundPromise) break;
       parts.push(next);
       if (next.includes('): Promise') || next.includes('): Promise<')) foundPromise = true;

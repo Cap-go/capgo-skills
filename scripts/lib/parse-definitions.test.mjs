@@ -48,6 +48,46 @@ describe('extractMethods', () => {
     assert.deepEqual(extractMethods(adjacentSignatures), ['alpha', 'beta', 'delta', 'gamma']);
   });
 
+  it('collects adjacent generic Promise methods with constrained and unconstrained type parameters', () => {
+    const genericSignatures = `export interface SamplePlugin {
+  /** unconstrained generic */
+  login<T>(options: { provider: T }): Promise<{ provider: T }>;
+  /**
+   * constrained generic, single line
+   */
+  adCreate<O extends MobileAdOptions>(opts: O): Promise<void>;
+  /** multi-line constrained generic */
+  providerSpecificCall<T extends ProviderSpecificCall>(options: {
+    call: T;
+  }): Promise<{ call: T }>;
+  /**
+   * nested angle brackets, default type, and function constraint
+   */
+  mapped<T extends Record<string, Array<number>> = Record<string, number[]>>(
+    opts: T,
+    transform?: (value: string) => number,
+  ): Promise<void>;
+  split<
+    T extends Foo,
+    U extends (value: T) => Bar = (value: T) => Bar,
+  >(
+    opts: T,
+  ): Promise<U>;
+  optional?<U extends string>(id: U): Promise<void>;
+  adjacent(): Promise<void>;
+}
+`;
+    assert.deepEqual(extractMethods(genericSignatures), [
+      'adCreate',
+      'adjacent',
+      'login',
+      'mapped',
+      'optional',
+      'providerSpecificCall',
+      'split',
+    ]);
+  });
+
   it('ignores Promise methods on non-Plugin interfaces', () => {
     assert.deepEqual(extractMethods(helperInterface), ['pluginOnly']);
   });
