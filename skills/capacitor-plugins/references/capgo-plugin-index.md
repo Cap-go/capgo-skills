@@ -2,7 +2,7 @@
 
 Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go GitHub organization (non-archived `capacitor-*` repositories and `cordova-updater`). The set should match the public [capgo.app/plugins](https://capgo.app/plugins/) catalog; regenerate after org changes.
 
-Facts come from each repository `package.json` and `src/definitions.ts`. API method names are taken from TypeScript definitions only.
+Facts come from each repository `package.json` and TypeScript API sources (primarily `src/definitions.ts`). API method names are taken from exported plugin interfaces in those sources.
 
 Total packages: 150 (generated 2026-11-11)
 
@@ -1810,7 +1810,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: See `src/definitions.ts` in the repository
+- **API methods**: `addCircles()`, `addMarker()`, `addMarkers()`, `addPolygons()`, `addPolylines()`, `addTileOverlay()`, `create()`, `destroy()`, `disableClustering()`, `disableTouch()`, `dispatchMapEvent()`, `enableAccessibilityElements()`, `enableClustering()`, `enableCurrentLocation()`, `enableIndoorMaps()`, `enableTouch()`, `enableTrafficLayer()`, `fitBounds()`, `getMapBounds()`, `getMapType()`, `hide()`, `mapBoundsContains()`, `mapBoundsExtend()`, `onDisplay()`, `onResize()`, `onScroll()`, `removeCircles()`, `removeMarker()`, `removeMarkers()`, `removePolygons()`, `removePolylines()`, `removeTileOverlay()`, `setCamera()`, `setMapType()`, `setPadding()`, `show()`, `updateLayout()`
 - **Events**: none
 - **Plugin config keys** (`NativeMap`): none in `definitions.ts`
 
@@ -2654,7 +2654,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `initialize()`
+- **API methods**: `handleURLCallback()`, `initialize()`
 - **Events**: none
 - **Plugin config keys** (`StripePay`): none in `definitions.ts`
 
@@ -2871,7 +2871,7 @@ npx cap sync
 - **Plugin config keys** (`VideoPlayer`): none in `definitions.ts`
 
 - **Versions reviewed**: `8.2.8` to `8.3.0`
-- **API delta in window**: none in `definitions.ts` between these tags
+- **Methods added**: `getPluginVersion()`
 - **Docs**: https://capgo.app/docs/plugins/video-player/
 - **Repository**: https://github.com/Cap-go/capacitor-video-player
 
@@ -3163,7 +3163,7 @@ npx cap sync
 - **Events**: `transactionUpdated`, `transactionVerificationFailed`
 - **Plugin config keys** (`NativePurchases`): none in `definitions.ts`
 
-- **Versions reviewed**: `8.7.0` to `8.9.8`
+- **Versions reviewed**: `8.7.0` to `8.9.9`
 - **Methods added**: `configure()`, `finishTransaction()`, `getUnfinishedTransactions()`
 - **Docs**: https://capgo.app/docs/plugins/native-purchases/
 - **Repository**: https://github.com/Cap-go/capacitor-native-purchases

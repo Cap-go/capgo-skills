@@ -6,14 +6,19 @@ const PLUGIN_IFACE_RE =
   /export interface (\w+Plugin)(?:\s+extends\s+[\w.]+)?\s*\{([\s\S]*?)^\}/gm;
 const EXTENDS_PLUGIN_RE = /export interface (\w+)\s+extends\s+Plugin\s*\{([\s\S]*?)^\}/gm;
 const EXTRA_PLUGIN_IFACE_RES = [
-  /export interface NativeAudio\s*\{([\s\S]*?)^\}/m,
-  /export interface StripePlugin\s+extends\s+StripeDefinitions\s*\{([\s\S]*?)^\}/m,
+  /export interface NativeAudio\s*\{([\s\S]*?)^\}/gm,
+  /export interface StripePlugin\s+extends\s+StripeDefinitions\s*\{([\s\S]*?)^\}/gm,
 ];
 
 function collectPluginInterfaceBodies(definitionsText) {
   const bodies = [];
   for (const re of [PLUGIN_IFACE_RE, EXTENDS_PLUGIN_RE, ...EXTRA_PLUGIN_IFACE_RES]) {
     re.lastIndex = 0;
+    if (!re.global) {
+      const match = re.exec(definitionsText);
+      if (match) bodies.push(match[match.length - 1]);
+      continue;
+    }
     let match;
     while ((match = re.exec(definitionsText))) {
       bodies.push(match[match.length - 1]);
@@ -50,14 +55,77 @@ function extractMethodsFromBlock(block) {
   return methods;
 }
 
-/** @returns {string[]} method names on *Plugin interfaces */
-export function extractMethods(definitionsText) {
-  if (!definitionsText) return [];
+const FALLBACK_IFACE_RE =
+  /export interface (\w+Interface)(?:\s+extends\s+[\w.]+)?\s*\{([\s\S]*?)^\}/gm;
+
+function collectFallbackInterfaceBodies(definitionsText) {
+  const bodies = [];
+  FALLBACK_IFACE_RE.lastIndex = 0;
+  let match;
+  while ((match = FALLBACK_IFACE_RE.exec(definitionsText))) {
+    bodies.push(match[2]);
+  }
+  return bodies;
+}
+
+function extractPluginInterfaceMethods(definitionsText) {
   const methods = [];
   for (const body of collectPluginInterfaceBodies(definitionsText)) {
     methods.push(...extractMethodsFromBlock(body));
   }
+  return methods;
+}
+
+/** Source files that may declare the plugin API when definitions.ts does not. */
+export const API_SOURCE_FILES = [
+  'src/definitions.ts',
+  'src/implementation.ts',
+  'src/plugin.ts',
+  'src/map.ts',
+  'src/index.ts',
+];
+
+/**
+ * @returns {string[]} method names on *Plugin interfaces, or *Interface as a fallback
+ */
+export function extractMethods(definitionsText) {
+  if (!definitionsText) return [];
+  const methods = extractPluginInterfaceMethods(definitionsText);
+  if (methods.length) return [...new Set(methods)].sort();
+  for (const body of collectFallbackInterfaceBodies(definitionsText)) {
+    methods.push(...extractMethodsFromBlock(body));
+  }
   return [...new Set(methods)].sort();
+}
+
+/** Prefer *Plugin methods across all sources before falling back to *Interface. */
+export function extractMethodsFromSources(sources) {
+  const pluginMethods = [];
+  for (const text of sources || []) {
+    if (!text) continue;
+    pluginMethods.push(...extractPluginInterfaceMethods(text));
+  }
+  if (pluginMethods.length) return [...new Set(pluginMethods)].sort();
+  const fallback = [];
+  for (const text of sources || []) {
+    if (!text) continue;
+    fallback.push(...extractMethods(text));
+  }
+  return [...new Set(fallback)].sort();
+}
+
+/**
+ * Load TypeScript API sources, stopping once a plugin or fallback interface yields methods.
+ * @param {(relPath: string) => Promise<string|null>} fetchText
+ */
+export async function loadApiSources(fetchText) {
+  const sources = [];
+  for (const file of API_SOURCE_FILES) {
+    const text = await fetchText(file);
+    if (text) sources.push(text);
+    if (extractMethodsFromSources(sources).length > 0) return sources;
+  }
+  return sources;
 }
 
 /** @returns {string[]} addListener event names */
@@ -74,12 +142,12 @@ export function extractListenerEvents(definitionsText) {
 export function extractConfigKeys(definitionsText, pluginConfigName) {
   if (!definitionsText || !pluginConfigName) return [];
   const blockRe = new RegExp(
-    `${pluginConfigName}\\??:\\s*\\{([\\s\S]*?)^\\s{4}\\}`,
+    `${pluginConfigName}\\??:\\s*\\{([\\s\\S]*?)^\\s{4}\\}`,
     'm',
   );
   const m = definitionsText.match(blockRe);
   if (!m) {
-    const alt = new RegExp(`${pluginConfigName}:\\s*\\{([\\s\S]*?)^\\s*\\};`, 'm');
+    const alt = new RegExp(`${pluginConfigName}:\\s*\\{([\\s\\S]*?)^\\s*\\};`, 'm');
     const m2 = definitionsText.match(alt);
     if (!m2) return [];
     return extractPropsFromBlock(m2[1]);

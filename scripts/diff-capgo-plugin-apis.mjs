@@ -2,6 +2,7 @@
  * Diff src/definitions.ts between last tag before CUTOFF and latest tag per Cap-go capacitor-* repo.
  */
 import { spawnSync } from 'node:child_process';
+import { writeSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import {
@@ -9,17 +10,20 @@ import {
   diffLists,
   extractConfigKeys,
   extractListenerEvents,
-  extractMethods,
+  extractMethodsFromSources,
+  loadApiSources,
 } from './lib/parse-definitions.mjs';
 
 const CUTOFF = '2026-09-11T00:00:00Z';
 const ORG = 'Cap-go';
 const OUT = path.join(process.cwd(), 'scripts/.cache/capgo-api-diffs.json');
 
-function ghApi(pathname) {
-  const r = spawnSync('gh', ['api', pathname], {
+function ghApi(pathname, jq) {
+  const args = ['api', pathname];
+  if (jq) args.push('--jq', jq);
+  const r = spawnSync('gh', args, {
     encoding: 'utf8',
-    maxBuffer: 80 * 1024 * 1024,
+    maxBuffer: 8 * 1024 * 1024,
     env: { ...process.env, GH_TOKEN: process.env.GITHUB_TOKEN || process.env.GH_TOKEN },
   });
   if (r.status !== 0) throw new Error(`${pathname}: ${r.stderr || r.stdout}`);
@@ -27,20 +31,31 @@ function ghApi(pathname) {
 }
 
 function ghJson(args) {
-  const r = spawnSync('gh', args, { encoding: 'utf8', maxBuffer: 80 * 1024 * 1024 });
+  const r = spawnSync('gh', args, { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 });
   if (r.status !== 0) throw new Error(r.stderr || r.stdout);
   return JSON.parse(r.stdout);
 }
 
-async function rawAt(repo, tag, filePath, pkgPath = '') {
+async function rawAt(repo, tag, filePath, pkgPath = '', retries = 4) {
   const rel = pkgPath ? `${pkgPath}/${filePath}` : filePath;
-  try {
-    const data = ghApi(`repos/${ORG}/${repo}/contents/${rel}?ref=${encodeURIComponent(tag)}`);
-    return { status: 'ok', text: Buffer.from(data.content, 'base64').toString('utf8') };
-  } catch (e) {
-    const msg = e.message || String(e);
-    if (/\b404\b/.test(msg)) return { status: 'missing', text: null };
-    return { status: 'error', error: msg };
+  const url = `https://raw.githubusercontent.com/${ORG}/${repo}/${encodeURIComponent(tag)}/${rel}`;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (res.status === 404) return { status: 'missing', text: null };
+      if (res.ok) return { status: 'ok', text: await res.text() };
+      if ((res.status === 403 || res.status === 429 || res.status >= 500) && attempt < retries) {
+        await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
+        continue;
+      }
+      return { status: 'error', error: `HTTP ${res.status} for ${rel} at ${tag}` };
+    } catch (e) {
+      if (attempt < retries) {
+        await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
+        continue;
+      }
+      return { status: 'error', error: e.message || String(e) };
+    }
   }
 }
 
@@ -65,7 +80,16 @@ function majorFromTag(tag) {
 }
 
 async function resolveTags(repo) {
-  const releases = ghApi(`repos/${ORG}/${repo}/releases?per_page=100`);
+  let releases;
+  try {
+    releases = ghApi(
+      `repos/${ORG}/${repo}/releases?per_page=100`,
+      '[.[] | {tag_name, published_at}]',
+    );
+  } catch (error) {
+    if (/\b404\b/.test(String(error.message))) return null;
+    throw error;
+  }
   const withDates = [];
   for (const rel of releases) {
     if (!rel.tag_name || !rel.published_at) continue;
@@ -139,31 +163,36 @@ function parseChangelogBreaking(text) {
   return lines.slice(0, 20);
 }
 
+function addedChangelogLines(oldText, newText) {
+  const previous = new Set((oldText || '').split('\n'));
+  return (newText || '')
+    .split('\n')
+    .filter((line) => !previous.has(line))
+    .join('\n');
+}
+
 async function compareChangelog(repo, fromTag, toTag) {
-  try {
-    const cmp = ghApi(
-      `repos/${ORG}/${repo}/compare/${encodeURIComponent(fromTag)}...${encodeURIComponent(toTag)}`,
-    );
-    const notes = [];
-    for (const f of cmp.files || []) {
-      if (f.filename.toLowerCase().includes('changelog') && f.patch) {
-        notes.push(...parseChangelogBreaking(f.patch));
-      }
-    }
-    return [...new Set(notes)];
-  } catch {
-    return [];
+  const names = ['CHANGELOG.md', 'CHANGELOG', 'changelog.md'];
+  for (const name of names) {
+    const oldC = await rawAt(repo, fromTag, name);
+    const newC = await rawAt(repo, toTag, name);
+    if (oldC.status === 'error' || newC.status === 'error') continue;
+    if (oldC.status === 'missing' && newC.status === 'missing') continue;
+    return [...new Set(parseChangelogBreaking(addedChangelogLines(oldC.text, newC.text)))];
   }
+  return [];
 }
 
 async function discoverPkgName(repo, branch = 'main') {
-  try {
-    const data = ghApi(`repos/${ORG}/${repo}/contents/package.json?ref=${branch}`);
-    const pkg = JSON.parse(Buffer.from(data.content, 'base64').toString('utf8'));
-    return pkg.name;
-  } catch {
-    return `@capgo/${repo}`;
+  const fetched = await rawAt(repo, branch, 'package.json');
+  if (fetched.status === 'ok' && fetched.text) {
+    try {
+      return JSON.parse(fetched.text).name || `@capgo/${repo}`;
+    } catch {
+      /* fall through */
+    }
   }
+  return `@capgo/${repo}`;
 }
 
 async function mapPool(items, n, fn) {
@@ -187,31 +216,41 @@ async function main() {
     '--limit',
     '500',
     '--json',
-    'name,isArchived,latestRelease',
-  ]).filter((r) => !r.isArchived && r.name.startsWith('capacitor-'));
+    'name,isArchived',
+  ]).filter((r) => !r.isArchived && r.name.startsWith('capacitor-') && !/-ghsa-/i.test(r.name));
 
-  const results = await mapPool(repos, 6, async (r) => {
+  const results = await mapPool(repos, 2, async (r, idx) => {
     const repo = r.name;
     try {
+      writeSync(2, `diff ${idx + 1}/${repos.length} ${repo}\n`);
       const tags = await resolveTags(repo);
       if (!tags) return { repo, skipped: true, reason: 'no tags in window' };
 
       const pkgName = await discoverPkgName(repo);
       const configKey = configKeyFromPackage(pkgName);
 
-      const oldDef = await rawAt(repo, tags.fromTag, 'src/definitions.ts');
-      const newDef = await rawAt(repo, tags.toTag, 'src/definitions.ts');
-      if (oldDef.status === 'error') {
-        return { repo, error: `definitions at ${tags.fromTag}: ${oldDef.error}` };
-      }
-      if (newDef.status === 'error') {
-        return { repo, error: `definitions at ${tags.toTag}: ${newDef.error}` };
-      }
-      const oldText = oldDef.text ?? '';
-      const newText = newDef.text ?? '';
+      const loadAt = (tag) =>
+        loadApiSources(async (file) => {
+          const fetched = await rawAt(repo, tag, file);
+          if (fetched.status === 'error') {
+            throw new Error(`${file} at ${tag}: ${fetched.error}`);
+          }
+          return fetched.text;
+        });
 
-      const oldMethods = extractMethods(oldText);
-      const newMethods = extractMethods(newText);
+      let oldSources;
+      let newSources;
+      try {
+        oldSources = await loadAt(tags.fromTag);
+        newSources = await loadAt(tags.toTag);
+      } catch (e) {
+        return { repo, error: e.message };
+      }
+      const oldText = oldSources.join('\n');
+      const newText = newSources.join('\n');
+
+      const oldMethods = extractMethodsFromSources(oldSources);
+      const newMethods = extractMethodsFromSources(newSources);
       const methodDiff = diffLists(oldMethods, newMethods);
 
       const oldEvents = extractListenerEvents(oldText);
@@ -265,7 +304,7 @@ async function main() {
         platformNotes,
         hasApiChange:
           hasApiChange || breaking.length > 0 || platformNotes.length > 0,
-        noDefinitions: newDef.status === 'missing' || !newText,
+        noDefinitions: newSources.length === 0 || !newText,
       };
     } catch (e) {
       return { repo, error: e.message };
@@ -285,6 +324,7 @@ async function main() {
   const skipped = results.filter((r) => r.skipped).length;
   console.log(`Repos: ${results.length}, API changes: ${changed}, skipped: ${skipped}`);
   console.log(`Wrote ${OUT}`);
+  console.log(`heapUsedMB ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}`);
 }
 
 main().catch((e) => {

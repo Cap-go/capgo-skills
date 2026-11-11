@@ -7,7 +7,8 @@ import {
   configKeyFromPackage,
   extractConfigKeys,
   extractListenerEvents,
-  extractMethods,
+  extractMethodsFromSources,
+  loadApiSources,
 } from './lib/parse-definitions.mjs';
 
 const ORG = 'Cap-go';
@@ -51,11 +52,19 @@ async function ghPaginate(pathname) {
 }
 
 /** Fetch a raw file from a repository branch, or null when missing. */
-async function rawText(repo, filePath, branch) {
+async function rawText(repo, filePath, branch, retries = 4) {
   const url = `https://raw.githubusercontent.com/${ORG}/${repo}/${branch}/${filePath}`;
-  const res = await fetch(url);
-  if (!res.ok) return null;
-  return res.text();
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(url);
+    if (res.ok) return res.text();
+    if (res.status === 404) return null;
+    if ((res.status === 403 || res.status === 429 || res.status >= 500) && attempt < retries) {
+      await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
+      continue;
+    }
+    return null;
+  }
+  return null;
 }
 
 /** Return whether a raw file exists on a repository branch. */
@@ -370,7 +379,7 @@ async function discoverPluginRepos() {
   try {
     const repos = await ghPaginate(`/orgs/${ORG}/repos`);
     return repos
-      .filter((r) => !r.archived && REPO_FILTER.test(r.name))
+      .filter((r) => !r.archived && REPO_FILTER.test(r.name) && !/-ghsa-/i.test(r.name))
       .map((r) => ({ name: r.name, branch: r.default_branch || 'main' }))
       .sort((a, b) => a.name.localeCompare(b.name));
   } catch (error) {
@@ -411,10 +420,11 @@ async function main() {
     console.warn('No API diff cache at', DIFF_CACHE, '(run node scripts/diff-capgo-plugin-apis.mjs first).');
   }
 
-  const enriched = await mapPool(uniquePackages, 10, async (item) => {
+  const enriched = await mapPool(uniquePackages, 4, async (item) => {
     const relBase = item.pkgPath ? `${item.pkgPath}/` : '';
-    const definitions = await rawText(item.repo, `${relBase}src/definitions.ts`, item.branch);
-    const methods = extractMethods(definitions);
+    const sources = await loadApiSources((file) => rawText(item.repo, `${relBase}${file}`, item.branch));
+    const definitions = sources.join('\n');
+    const methods = extractMethodsFromSources(sources);
     const events = extractListenerEvents(definitions);
     const configKey = configKeyFromPackage(item.pkg.name);
     const configKeys = extractConfigKeys(definitions, configKey);
@@ -456,7 +466,7 @@ Total packages: ${enriched.length} (generated ${generatedAt})
 
 Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go GitHub organization (non-archived \`capacitor-*\` repositories and \`cordova-updater\`). The set should match the public [capgo.app/plugins](https://capgo.app/plugins/) catalog; regenerate after org changes.
 
-Facts come from each repository \`package.json\` and \`src/definitions.ts\`. API method names are taken from TypeScript definitions only.
+Facts come from each repository \`package.json\` and TypeScript API sources (primarily \`src/definitions.ts\`). API method names are taken from exported plugin interfaces in those sources.
 
 Total packages: ${enriched.length} (generated ${generatedAt})
 
@@ -475,6 +485,7 @@ Total packages: ${enriched.length} (generated ${generatedAt})
   await writeFile(path.join(MIRROR_DIR, 'capgo-plugin-index.md'), index);
 
   console.log(`Wrote ${enriched.length} plugins to ${INDEX_PATH}`);
+  console.log(`heapUsedMB ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}`);
 }
 
 main().catch((error) => {
