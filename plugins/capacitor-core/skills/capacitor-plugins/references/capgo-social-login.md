@@ -25,7 +25,10 @@ Use `openAuthSession()` for an in-app auth session (ASWebAuthenticationSession s
 ```typescript
 import { SocialLogin } from '@capgo/capacitor-social-login';
 
-await SocialLogin.openAuthSession({ url: authUrl, callbackUrl: 'myapp://auth' });
+const { callbackURL } = await SocialLogin.openAuthSession({
+  url: authUrl,
+  callbackURLScheme: 'myapp',
+});
 ```
 
 Sign in with Apple store rules: `capacitor-apple-review-preflight`.

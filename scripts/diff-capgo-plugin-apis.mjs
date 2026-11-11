@@ -106,6 +106,9 @@ function isChangelogBoilerplate(line) {
   if (/any breaking changes or migration notes/i.test(t)) return true;
   if (/soon-to-be removed features/i.test(t)) return true;
   if (/removed features.*breaking changes or migration/i.test(t)) return true;
+  if (/^\*\*Removed\*\*:\s*Removed features\s*$/i.test(t)) return true;
+  if (/^-\s*\*\*Removed\*\*:\s*Removed features\s*$/i.test(t)) return true;
+  if (/^Removed features\s*$/i.test(t)) return true;
   if (/^#{1,6}\s*$/.test(t)) return true;
   if (/^@@\s/.test(t)) return true;
   return false;

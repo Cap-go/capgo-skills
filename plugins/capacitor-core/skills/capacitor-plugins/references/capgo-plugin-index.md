@@ -512,7 +512,7 @@ npx cap sync
 - **Plugin config keys** (`BluetoothLowEnergy`): none in `definitions.ts`
 
 - **Versions reviewed**: `8.2.0` to `8.2.7`
-- **Changelog notes**: - **Removed**: Removed features
+- **API delta in window**: none in `definitions.ts` between these tags
 - **Docs**: https://capgo.app/docs/plugins/bluetooth-low-energy/
 - **Repository**: https://github.com/Cap-go/capacitor-bluetooth-low-energy
 
@@ -866,7 +866,7 @@ npx cap sync
 - **Plugin config keys** (`File`): none in `definitions.ts`
 
 - **Versions reviewed**: `8.0.16` to `8.0.24`
-- **Changelog notes**: - **Removed**: Removed features
+- **API delta in window**: none in `definitions.ts` between these tags
 - **Docs**: https://capgo.app/docs/plugins/file/
 - **Repository**: https://github.com/Cap-go/capacitor-file
 
@@ -908,7 +908,7 @@ npx cap sync
 - **Plugin config keys** (`FilePicker`): none in `definitions.ts`
 
 - **Versions reviewed**: `8.1.11` to `8.2.7`
-- **Changelog notes**: - **Removed**: Removed features
+- **API delta in window**: none in `definitions.ts` between these tags
 - **Docs**: https://capgo.app/docs/plugins/file-picker/
 - **Repository**: https://github.com/Cap-go/capacitor-file-picker
 
@@ -1436,7 +1436,6 @@ npx cap sync
 
 - **Versions reviewed**: `8.1.2` to `8.1.9`
 - **Platform or packaging**: package files: android/src/main/,android/ms-intune-app-sdk-android/,android/build.gradle,dist/,ios/Sources,ios/Tests,Package.swift,CapgoCapacitorIntune.podspec -> android/src/main/,android/ms-intune-app-sdk-android/,android/intune-mam-sdk/,android/intune-downlevel-stubs/,android/build.gradle,android/settings.gradle,dist/,ios/Sources,ios/Tests,Package.swift,CapgoCapacitorIntune.podspec
-- **Changelog notes**: - **Removed**: Removed features
 - **Docs**: https://capgo.app/docs/plugins/intune/
 - **Repository**: https://github.com/Cap-go/capacitor-intune
 
@@ -1520,7 +1519,7 @@ npx cap sync
 - **Plugin config keys** (`KeepAwake`): none in `definitions.ts`
 
 - **Versions reviewed**: `8.1.15` to `8.1.20`
-- **Changelog notes**: - **Removed**: Removed features
+- **API delta in window**: none in `definitions.ts` between these tags
 - **Docs**: https://capgo.app/docs/plugins/keep-awake/
 - **Repository**: https://github.com/Cap-go/capacitor-keep-awake
 
@@ -1584,7 +1583,6 @@ npx cap sync
 
 - **Versions reviewed**: `1.1.4` to `1.3.0`
 - **Platform or packaging**: package files: android/src/main/,android/build.gradle,dist/,ios/Sources,ios/Tests,Package.swift,CapgoCapacitorLiveActivities.podspec -> android/src/main/,android/build.gradle,dist/,ios/Sources,ios/Tests,ios/WidgetExtension,Package.swift,CapgoCapacitorLiveActivities.podspec,CapgoLiveActivitiesShared.podspec
-- **Changelog notes**: - **Removed**: Removed features
 - **Docs**: https://capgo.app/docs/plugins/live-activities/
 - **Repository**: https://github.com/Cap-go/capacitor-live-activities
 
@@ -2177,7 +2175,7 @@ npx cap sync
 - **Plugin config keys** (`Persona`): none in `definitions.ts`
 
 - **Versions reviewed**: `8.1.1` to `8.2.3`
-- **Changelog notes**: - **Removed**: Removed features
+- **API delta in window**: none in `definitions.ts` between these tags
 - **Docs**: https://capgo.app/docs/plugins/persona/
 - **Repository**: https://github.com/Cap-go/capacitor-persona
 
@@ -2493,7 +2491,7 @@ npx cap sync
 - **Plugin config keys** (`Sheets`): none in `definitions.ts`
 
 - **Versions reviewed**: `v8.0.17` to `v8.2.7`
-- **Changelog notes**: - **Removed**: Removed features
+- **API delta in window**: none in `definitions.ts` between these tags
 - **Docs**: https://capgo.app/docs/plugins/sheets/
 - **Repository**: https://github.com/Cap-go/capacitor-sheets
 
@@ -2745,7 +2743,7 @@ npx cap sync
 - **Plugin config keys** (`Transitions`): none in `definitions.ts`
 
 - **Versions reviewed**: `v8.1.9` to `v8.3.9`
-- **Changelog notes**: - **Removed**: Removed features
+- **API delta in window**: none in `definitions.ts` between these tags
 - **Docs**: https://capgo.app/docs/plugins/transitions/
 - **Repository**: https://github.com/Cap-go/capacitor-transitions
 
@@ -2767,7 +2765,6 @@ npx cap sync
 
 - **Versions reviewed**: `8.2.12` to `8.2.30`
 - **Platform or packaging**: package files: android/src/main/,android/build.gradle,dist/,ios/Sources,ios/Tests,Package.swift,CapgoCapacitorTwilioVoice.podspec -> android/src/main/,android/build.gradle,android/consumer-rules.pro,dist/,ios/Sources,ios/Tests,Package.swift,CapgoCapacitorTwilioVoice.podspec
-- **Changelog notes**: - **Removed**: Removed features
 - **Docs**: https://capgo.app/docs/plugins/twilio-voice/
 - **Repository**: https://github.com/Cap-go/capacitor-twilio-voice
 
@@ -3042,7 +3039,7 @@ npx cap sync
 - **Plugin config keys** (`WidgetKit`): none in `definitions.ts`
 
 - **Versions reviewed**: `8.1.9` to `8.2.0`
-- **Changelog notes**: - **Removed**: Removed features
+- **API delta in window**: none in `definitions.ts` between these tags
 - **Docs**: https://capgo.app/docs/plugins/widget-kit/
 - **Repository**: https://github.com/Cap-go/capacitor-widget-kit
 
