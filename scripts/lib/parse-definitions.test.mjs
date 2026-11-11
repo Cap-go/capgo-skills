@@ -5,6 +5,7 @@ import {
   extractConfigKeys,
   extractMethods,
   extractMethodsFromSources,
+  loadApiSources,
 } from './parse-definitions.mjs';
 
 const adjacentSignatures = `export interface SamplePlugin {
@@ -110,6 +111,46 @@ export class LatLngBounds {
       'addMarker',
       'create',
     ]);
+  });
+
+  it('includes methods inherited through a StripeDefinitions type alias', () => {
+    const stripe = `type StripeDefinitions = PaymentSheetDefinitions & ApplePayDefinitions;
+export interface PaymentSheetDefinitions {
+  createPaymentSheet(options: { id: string }): Promise<void>;
+  presentPaymentSheet(): Promise<{ ok: boolean }>;
+}
+export interface ApplePayDefinitions {
+  isApplePayAvailable(): Promise<void>;
+}
+export interface StripePlugin extends StripeDefinitions {
+  initialize(opts: { publishableKey: string }): Promise<void>;
+  handleURLCallback?(opts: { url: string }): Promise<void>;
+}
+`;
+    assert.deepEqual(extractMethods(stripe), [
+      'createPaymentSheet',
+      'handleURLCallback',
+      'initialize',
+      'isApplePayAvailable',
+      'presentPaymentSheet',
+    ]);
+  });
+
+  it('follows relative imports when loading API sources', async () => {
+    const files = {
+      'src/definitions.ts': `import type { PaymentSheetDefinitions } from './paymentsheet';
+type StripeDefinitions = PaymentSheetDefinitions;
+export interface StripePlugin extends StripeDefinitions {
+  initialize(opts: { key: string }): Promise<void>;
+}
+`,
+      'src/paymentsheet.ts': `export interface PaymentSheetDefinitions {
+  createPaymentSheet(options: { id: string }): Promise<void>;
+}
+`,
+    };
+    const sources = await loadApiSources(async (file) => files[file] ?? null);
+    assert.deepEqual(extractMethodsFromSources(sources), ['createPaymentSheet', 'initialize']);
   });
 });
 

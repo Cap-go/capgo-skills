@@ -27,9 +27,9 @@ For OAuth-safe system browser use official `@capacitor/inappbrowser` (`capacitor
 ```typescript
 import { InAppBrowser } from '@capgo/capacitor-inappbrowser';
 
+await InAppBrowser.addListener('fullscreenChange', ({ enabled }) => {});
 const { id } = await InAppBrowser.openWebView({ url: 'https://example.com' });
 await InAppBrowser.setFullscreen({ enabled: true, id });
-await InAppBrowser.addListener('fullscreenChange', ({ enabled }) => {});
 await InAppBrowser.executeScript({ code: 'document.title', id });
 ```
 

@@ -2654,7 +2654,7 @@ npx cap sync
 ```
 
 - **Platforms**: iOS, Android, Web
-- **API methods**: `handleURLCallback()`, `initialize()`
+- **API methods**: `confirmPaymentFlow()`, `createApplePay()`, `createGooglePay()`, `createPaymentFlow()`, `createPaymentSheet()`, `handleURLCallback()`, `initialize()`, `isApplePayAvailable()`, `isGooglePayAvailable()`, `presentApplePay()`, `presentGooglePay()`, `presentPaymentFlow()`, `presentPaymentSheet()`, `updateApplePaySheet()`
 - **Events**: none
 - **Plugin config keys** (`StripePay`): none in `definitions.ts`
 

@@ -76,6 +76,90 @@ function extractPluginInterfaceMethods(definitionsText) {
   return methods;
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function collectPluginParentTypes(text) {
+  const names = new Set();
+  const re = /export interface (\w+)\s+extends\s+([^{]+)\{/g;
+  let match;
+  while ((match = re.exec(text))) {
+    const iface = match[1];
+    if (!/Plugin$/.test(iface) && iface !== 'NativeAudio') continue;
+    for (const part of match[2].split(',')) {
+      const name = part.trim();
+      if (name && name !== 'Plugin' && /^\w+$/.test(name)) names.add(name);
+    }
+  }
+  return [...names];
+}
+
+function lookupTypeMethods(typeName, sources, seen = new Set()) {
+  if (!typeName || typeName === 'Plugin' || seen.has(typeName)) return [];
+  seen.add(typeName);
+  const nameRe = escapeRegExp(typeName);
+  const ifaceRe = new RegExp(
+    `export interface ${nameRe}(?:\\s+extends\\s+([^{]+))?\\s*\\{([\\s\\S]*?)^\\}`,
+    'm',
+  );
+  const aliasRe = new RegExp(`(?:export\\s+)?type ${nameRe}\\s*=\\s*([^;]+);`, 'm');
+  for (const text of sources) {
+    if (!text) continue;
+    const iface = ifaceRe.exec(text);
+    if (iface) {
+      const methods = [];
+      if (iface[1]) {
+        for (const part of iface[1].split(',')) {
+          const parentName = part.trim();
+          if (/^\w+$/.test(parentName)) {
+            methods.push(...lookupTypeMethods(parentName, sources, seen));
+          }
+        }
+      }
+      methods.push(...extractMethodsFromBlock(iface[2]));
+      return methods;
+    }
+    const alias = aliasRe.exec(text);
+    if (alias) {
+      const methods = [];
+      for (const part of alias[1].split('&')) {
+        const partName = part.trim();
+        if (/^\w+$/.test(partName)) {
+          methods.push(...lookupTypeMethods(partName, sources, seen));
+        }
+      }
+      return methods;
+    }
+  }
+  return [];
+}
+
+function extractRelativeModuleSpecs(text) {
+  const specs = new Set();
+  const re = /\bfrom\s+['"](\.[^'"]+)['"]/g;
+  let match;
+  while ((match = re.exec(text))) specs.add(match[1]);
+  return [...specs];
+}
+
+function resolveTsImportCandidates(importerPath, spec) {
+  if (!spec.startsWith('.')) return [];
+  const parts = importerPath.split('/');
+  parts.pop();
+  for (const seg of spec.split('/')) {
+    if (seg === '.' || seg === '') continue;
+    if (seg === '..') {
+      if (parts.length) parts.pop();
+      continue;
+    }
+    parts.push(seg);
+  }
+  const base = parts.join('/');
+  if (base.endsWith('.ts') || base.endsWith('.tsx')) return [base];
+  return [`${base}.ts`, `${base}.tsx`, `${base}/index.ts`];
+}
+
 /** Source files that may declare the plugin API when definitions.ts does not. */
 export const API_SOURCE_FILES = [
   'src/definitions.ts',
@@ -90,39 +174,53 @@ export const API_SOURCE_FILES = [
  */
 export function extractMethods(definitionsText) {
   if (!definitionsText) return [];
-  const methods = extractPluginInterfaceMethods(definitionsText);
-  if (methods.length) return [...new Set(methods)].sort();
-  for (const body of collectFallbackInterfaceBodies(definitionsText)) {
-    methods.push(...extractMethodsFromBlock(body));
-  }
-  return [...new Set(methods)].sort();
+  return extractMethodsFromSources([definitionsText]);
 }
 
 /** Prefer *Plugin methods across all sources before falling back to *Interface. */
 export function extractMethodsFromSources(sources) {
+  const list = (sources || []).filter(Boolean);
   const pluginMethods = [];
-  for (const text of sources || []) {
-    if (!text) continue;
+  for (const text of list) {
     pluginMethods.push(...extractPluginInterfaceMethods(text));
+    for (const parent of collectPluginParentTypes(text)) {
+      pluginMethods.push(...lookupTypeMethods(parent, list));
+    }
   }
   if (pluginMethods.length) return [...new Set(pluginMethods)].sort();
   const fallback = [];
-  for (const text of sources || []) {
-    if (!text) continue;
-    fallback.push(...extractMethods(text));
+  for (const text of list) {
+    for (const body of collectFallbackInterfaceBodies(text)) {
+      fallback.push(...extractMethodsFromBlock(body));
+    }
   }
   return [...new Set(fallback)].sort();
 }
 
 /**
- * Load TypeScript API sources, stopping once a plugin or fallback interface yields methods.
+ * Load TypeScript API sources, following relative imports and stopping once methods are found.
  * @param {(relPath: string) => Promise<string|null>} fetchText
  */
 export async function loadApiSources(fetchText) {
   const sources = [];
-  for (const file of API_SOURCE_FILES) {
+  const seen = new Set();
+
+  async function loadFile(file) {
+    if (seen.has(file)) return null;
+    seen.add(file);
     const text = await fetchText(file);
-    if (text) sources.push(text);
+    if (!text) return null;
+    sources.push(text);
+    for (const spec of extractRelativeModuleSpecs(text)) {
+      for (const candidate of resolveTsImportCandidates(file, spec)) {
+        if (await loadFile(candidate)) break;
+      }
+    }
+    return text;
+  }
+
+  for (const file of API_SOURCE_FILES) {
+    await loadFile(file);
     if (extractMethodsFromSources(sources).length > 0) return sources;
   }
   return sources;

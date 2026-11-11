@@ -22,7 +22,7 @@ npx cap sync
 
 ## iOS geofence POST queue vs location log
 
-When `start()` sets `url`, native code can queue geofence transitions for HTTP POST while the app is suspended. `getLocationLog()` reads the on-device location history file (native tracking log), not that POST queue. Inspect transitions in your backend or app handlers. Call `clearGeofenceQueue()` only when you intentionally abandon undelivered POST work (for example sign-out).
+When `setupGeofencing({ url })` is set, native code can queue geofence transitions for HTTP POST while the app is suspended. `start({ url })` configures location POSTs, not geofence delivery. On iOS, terminated-app geofence delivery also requires `GeofenceRelay.shared.start()` from the app delegate (see the plugin README). `getLocationLog()` reads the on-device location history file (native tracking log), not the geofence POST queue. Inspect transitions in your backend or app handlers. Call `clearGeofenceQueue()` only when you intentionally abandon undelivered POST work (for example sign-out).
 
 ```typescript
 import { BackgroundGeolocation } from '@capgo/background-geolocation';

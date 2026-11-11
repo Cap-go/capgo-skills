@@ -28,7 +28,12 @@ npx cap sync
 import { NativeAudio } from '@capgo/capacitor-native-audio';
 
 await NativeAudio.configure({ focus: true });
-await NativeAudio.setQueue({ items: [{ assetId: 'a', assetPath: 'public/a.mp3' }] });
+await NativeAudio.setQueue({
+  items: [
+    { assetId: 'a', assetPath: 'public/a.mp3' },
+    { assetId: 'b', assetPath: 'public/b.mp3' },
+  ],
+});
 await NativeAudio.play({ assetId: 'a' });
 await NativeAudio.queueNext();
 const { state } = await NativeAudio.getPlaybackState();
