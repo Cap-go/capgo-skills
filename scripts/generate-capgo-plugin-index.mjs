@@ -1,8 +1,16 @@
 /**
  * Build Capgo plugin catalog and index Markdown from Cap-go GitHub repositories.
  */
-import { writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import {
+  configKeyFromPackage,
+  extractConfigKeys,
+  extractListenerEvents,
+  extractMethodsFromSources,
+  loadApiSources,
+} from './lib/parse-definitions.mjs';
+import { classifyRawHttpStatus, findCachedDiff } from './lib/fetch-results.mjs';
 
 const ORG = 'Cap-go';
 const ROOT = process.cwd();
@@ -45,11 +53,20 @@ async function ghPaginate(pathname) {
 }
 
 /** Fetch a raw file from a repository branch, or null when missing. */
-async function rawText(repo, filePath, branch) {
+async function rawText(repo, filePath, branch, retries = 4) {
   const url = `https://raw.githubusercontent.com/${ORG}/${repo}/${branch}/${filePath}`;
-  const res = await fetch(url);
-  if (!res.ok) return null;
-  return res.text();
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(url);
+    const action = classifyRawHttpStatus(res.status, attempt < retries);
+    if (action === 'ok') return res.text();
+    if (action === 'missing') return null;
+    if (action === 'retry') {
+      await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
+      continue;
+    }
+    throw new Error(`HTTP ${res.status} for ${repo}/${filePath} on ${branch}`);
+  }
+  throw new Error(`HTTP error for ${repo}/${filePath} on ${branch}`);
 }
 
 /** Return whether a raw file exists on a repository branch. */
@@ -78,7 +95,8 @@ async function listMonorepoPackages(repo, branch) {
   try {
     contents = await gh(`/repos/${ORG}/${repo}/contents/packages?ref=${branch}`);
   } catch (error) {
-    if (String(error.message).includes(': 404')) return [];
+    const msg = String(error.message);
+    if (msg.includes(': 404')) return [];
     throw error;
   }
   if (!Array.isArray(contents)) return [];
@@ -116,19 +134,50 @@ function titleFromPackage(name) {
     .join(' ');
 }
 
-/** Extract Promise-returning plugin method names from definitions.ts. */
-function extractMethods(definitionsText) {
-  if (!definitionsText) return [];
-  const methods = [];
-  const re = /^\s{2,4}([a-zA-Z]\w*)\([^;]*\):\s*Promise<[^;]+>;/gm;
-  let match;
-  while ((match = re.exec(definitionsText)) !== null) {
-    const name = match[1];
-    if (name === 'addListener' || name === 'removeAllListeners') continue;
-    methods.push(name);
+const DIFF_CACHE = path.join(ROOT, 'scripts/.cache/capgo-api-diffs.json');
+
+/** @param {object[]} diffs */
+function formatApiChangeBlock(entry, diffs) {
+  const diff = findCachedDiff(diffs, entry.pkg.name, entry.repo, entry.pkgPath);
+  if (!diff?.fromTag || !diff?.toTag) return '';
+  const lines = [`- **Versions reviewed**: \`${diff.fromTag}\` to \`${diff.toTag}\``];
+  const { methods, events, config, breakingNotes, platformNotes } = diff;
+  if (methods.added.length) {
+    lines.push(`- **Methods added**: ${methods.added.map((m) => `\`${m}()\``).join(', ')}`);
   }
-  const unique = [...new Set(methods)];
-  return unique.slice(0, 12);
+  if (methods.removed.length) {
+    lines.push(`- **Methods removed**: ${methods.removed.map((m) => `\`${m}()\``).join(', ')}`);
+  }
+  if (events.added.length) {
+    lines.push(`- **Events added**: ${events.added.map((e) => `\`${e}\``).join(', ')}`);
+  }
+  if (events.removed.length) {
+    lines.push(`- **Events removed**: ${events.removed.map((e) => `\`${e}\``).join(', ')}`);
+  }
+  if (config.added.length) {
+    lines.push(`- **Config keys added** (\`${config.key}\`): ${config.added.map((k) => `\`${k}\``).join(', ')}`);
+  }
+  if (config.removed.length) {
+    lines.push(`- **Config keys removed**: ${config.removed.map((k) => `\`${k}\``).join(', ')}`);
+  }
+  if (platformNotes?.length) {
+    lines.push(`- **Platform or packaging**: ${sanitize(platformNotes.join(' '))}`);
+  }
+  if (breakingNotes?.length) {
+    lines.push(`- **Changelog notes**: ${sanitize(breakingNotes.slice(0, 6).join(' '))}`);
+  }
+  if (
+    lines.length === 1 &&
+    !methods.added.length &&
+    !methods.removed.length &&
+    !events.added.length &&
+    !events.removed.length &&
+    !config.added.length &&
+    !config.removed.length
+  ) {
+    lines.push(`- **API delta in window**: none in \`definitions.ts\` between these tags`);
+  }
+  return `\n${lines.join('\n')}\n`;
 }
 
 /** Infer supported platforms from a package description when explicit. */
@@ -149,6 +198,16 @@ async function hasFunctionalWeb(repo, pkgPath, branch) {
   if (/isSupported:\s*false/.test(text) && !/isSupported:\s*true/.test(text)) return false;
   const stubMarkers = text.match(/\.unavailable\(|\.unimplemented\(|not available on web/gi) || [];
   if (stubMarkers.length >= 2 && !/isSupported\(\)[\s\S]{0,120}true/.test(text)) return false;
+  const asyncNames = [...text.matchAll(/async\s+(\w+)\s*\(/g)].map((m) => m[1]);
+  if (asyncNames.length > 0) {
+    let stubMethods = 0;
+    for (const name of asyncNames) {
+      const bodyRe = new RegExp(`async\\s+${name}\\s*\\([^)]*\\)[^{]*\\{([\\s\\S]*?)\\n\\s*\\}`);
+      const body = bodyRe.exec(text)?.[1] ?? '';
+      if (/unavailable\(|unimplemented\(/.test(body)) stubMethods++;
+    }
+    if (stubMethods === asyncNames.length) return false;
+  }
   return true;
 }
 
@@ -238,14 +297,19 @@ function formatCatalogRow(entry) {
 }
 
 /** Format one detailed plugin index section. */
-function formatIndexEntry(entry) {
-  const { title, pkg, repo, platforms, methods, branch } = entry;
+function formatIndexEntry(entry, diffs) {
+  const { title, pkg, repo, platforms, methods, events, configKeys, branch } = entry;
   const desc = sanitize(pkg.description || 'Capacitor plugin from Capgo.');
   const docs = docsUrl(pkg);
   const source = `https://github.com/${ORG}/${repo}`;
   const platformStr = platforms.length ? platforms.join(', ') : 'See repository';
   const methodStr = methods.length ? methods.map((m) => `\`${m}()\``).join(', ') : 'See `src/definitions.ts` in the repository';
+  const eventStr = events.length ? events.map((e) => `\`${e}\``).join(', ') : 'none';
+  const configStr = configKeys.length
+    ? configKeys.map((k) => `\`${k}\``).join(', ')
+    : 'none in `definitions.ts`';
   const installPath = entry.pkgPath ? `${repo} (${entry.pkgPath})` : repo;
+  const changeBlock = formatApiChangeBlock(entry, diffs);
 
   return `## ${title}
 
@@ -259,8 +323,10 @@ npx cap sync
 \`\`\`
 
 - **Platforms**: ${platformStr}
-- **Key API methods**: ${methodStr}
-- **Docs**: ${docs}
+- **API methods**: ${methodStr}
+- **Events**: ${eventStr}
+- **Plugin config keys** (\`${entry.configKey}\`): ${configStr}
+${changeBlock}- **Docs**: ${docs}
 - **Repository**: ${source}${entry.pkgPath ? ` (package path: \`${entry.pkgPath}\`, branch \`${branch}\`)` : ''}
 `;
 }
@@ -279,19 +345,56 @@ async function mapPool(items, concurrency, fn) {
   return results;
 }
 
+/** Default git branch for a repository when org discovery is unavailable. */
+async function resolveDefaultBranch(repo) {
+  try {
+    const data = await gh(`/repos/${ORG}/${repo}`);
+    return data.default_branch || 'main';
+  } catch {
+    if (await rawText(repo, 'package.json', 'master')) return 'master';
+    return 'main';
+  }
+}
+
+/** Repository names from an existing catalog or index when the org list API is unavailable. */
+async function reposFromExistingIndex() {
+  let text;
+  try {
+    text = await readFile(CATALOG_PATH, 'utf8');
+  } catch {
+    text = await readFile(INDEX_PATH, 'utf8');
+  }
+  const names = [
+    ...text.matchAll(new RegExp(`github\\.com/${ORG}/(capacitor-[^)\\s|]+|cordova-updater)`, 'g')),
+  ].map((m) => m[1]);
+  const unique = [...new Set(names)]
+    .filter((name) => REPO_FILTER.test(name))
+    .sort((a, b) => a.localeCompare(b));
+  return mapPool(unique, 8, async (name) => ({
+    name,
+    branch: await resolveDefaultBranch(name),
+  }));
+}
+
+/** List Cap-go plugin repositories via the org API, or from the checked-in catalog on rate limits. */
+async function discoverPluginRepos() {
+  try {
+    const repos = await ghPaginate(`/orgs/${ORG}/repos`);
+    return repos
+      .filter((r) => !r.archived && REPO_FILTER.test(r.name) && !/-ghsa-/i.test(r.name))
+      .map((r) => ({ name: r.name, branch: r.default_branch || 'main' }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  } catch (error) {
+    if (!String(error.message).includes(': 403')) throw error;
+    console.warn('GitHub org list rate limited; using repository URLs from the existing catalog.');
+    return reposFromExistingIndex();
+  }
+}
+
 /** Generate catalog and index files, exiting non-zero on discovery errors. */
 async function main() {
-  if (!process.env.GITHUB_TOKEN && !process.env.GH_TOKEN) {
-    console.error('Set GITHUB_TOKEN or GH_TOKEN before generating the plugin index.');
-    process.exit(1);
-  }
-
   const discoveryErrors = [];
-  const repos = await ghPaginate(`/orgs/${ORG}/repos`);
-  const pluginRepos = repos
-    .filter((r) => !r.archived && REPO_FILTER.test(r.name))
-    .map((r) => ({ name: r.name, branch: r.default_branch || 'main' }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const pluginRepos = await discoverPluginRepos();
 
   const allPackages = [];
   await mapPool(pluginRepos, 4, async ({ name: repo, branch }) => {
@@ -311,15 +414,30 @@ async function main() {
 
   const uniquePackages = dedupePackages(allPackages).sort((a, b) => a.pkg.name.localeCompare(b.pkg.name));
 
-  const enriched = await mapPool(uniquePackages, 10, async (item) => {
+  let diffs = [];
+  try {
+    const cached = JSON.parse(await readFile(DIFF_CACHE, 'utf8'));
+    diffs = Array.isArray(cached) ? cached : [];
+  } catch {
+    console.warn('No API diff cache at', DIFF_CACHE, '(run node scripts/diff-capgo-plugin-apis.mjs first).');
+  }
+
+  const enriched = await mapPool(uniquePackages, 4, async (item) => {
     const relBase = item.pkgPath ? `${item.pkgPath}/` : '';
-    const definitions = await rawText(item.repo, `${relBase}src/definitions.ts`, item.branch);
-    const methods = extractMethods(definitions);
+    const sources = await loadApiSources((file) => rawText(item.repo, `${relBase}${file}`, item.branch));
+    const definitions = sources.join('\n');
+    const methods = extractMethodsFromSources(sources);
+    const events = extractListenerEvents(definitions);
+    const configKey = configKeyFromPackage(item.pkg.name);
+    const configKeys = extractConfigKeys(definitions, configKey);
     const platforms = await detectPlatforms(item.repo, item.pkgPath, item.branch, item.pkg);
     return {
       ...item,
       title: titleFromPackage(item.pkg.name),
       methods,
+      events,
+      configKeys,
+      configKey,
       platforms,
     };
   });
@@ -350,7 +468,7 @@ Total packages: ${enriched.length} (generated ${generatedAt})
 
 Agent-facing index of every public Capgo Capacitor plugin package in the Cap-go GitHub organization (non-archived \`capacitor-*\` repositories and \`cordova-updater\`). The set should match the public [capgo.app/plugins](https://capgo.app/plugins/) catalog; regenerate after org changes.
 
-Facts come from each repository \`package.json\` and \`src/definitions.ts\`. API method names are taken from TypeScript definitions only.
+Facts come from each repository \`package.json\` and TypeScript API sources (primarily \`src/definitions.ts\`). API method names are taken from exported plugin interfaces in those sources.
 
 Total packages: ${enriched.length} (generated ${generatedAt})
 
@@ -358,7 +476,7 @@ Total packages: ${enriched.length} (generated ${generatedAt})
 
 `;
 
-  const indexBody = enriched.map(formatIndexEntry).join('\n');
+  const indexBody = enriched.map((e) => formatIndexEntry(e, diffs)).join('\n');
   const index = `${indexHeader}${indexBody}`;
 
   await mkdir(OUT_DIR, { recursive: true });
@@ -369,6 +487,7 @@ Total packages: ${enriched.length} (generated ${generatedAt})
   await writeFile(path.join(MIRROR_DIR, 'capgo-plugin-index.md'), index);
 
   console.log(`Wrote ${enriched.length} plugins to ${INDEX_PATH}`);
+  console.log(`heapUsedMB ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}`);
 }
 
 main().catch((error) => {

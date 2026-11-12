@@ -1,7 +1,7 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "organization": "Capgo",
-  "date": "October 2026",
+  "date": "November 2026",
   "abstract": "Migration from bridge-based SQLite and SQL-style Capacitor plugins (@capacitor-community/sqlite, cordova-sqlite-storage, ORM drivers) to @capgo/capacitor-fast-sql: inventory, API mapping table, iOS ATS local networking and Android localhost cleartext setup, SQLCipher encryption, web OPFS headers, data carry-over options that preserve existing database files, cleanup, verification, and exact error fixes.",
   "triggers": [
     "sqlite to fast sql",

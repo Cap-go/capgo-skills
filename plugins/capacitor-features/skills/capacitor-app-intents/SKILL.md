@@ -18,6 +18,7 @@ TRIGGER when:
 - A plugin author wants to ship App Intents with a plugin
 
 Do not use:
+- JavaScript dispatch for Siri, Shortcuts, Spotlight, or Home Screen quick actions via `@capgo/capacitor-app-intents`: use `capacitor-plugins` (`capgo-plugin-index.md`, package `@capgo/capacitor-app-intents`). This skill is for native Swift App Intents (app target, extensions, or plugin native code), not that plugin API.
 - Universal Links / custom scheme / `appUrlOpen` setup: `capacitor-deep-linking`
 - AppDelegate to SceneDelegate migration: `capacitor-uiscene-migration`
 - Push notification actions: `capacitor-push-notifications`

@@ -9,7 +9,7 @@ npm install <exact-package-name>
 npx cap sync
 ```
 
-Total packages: 145 (generated 2026-10-08)
+Total packages: 150 (generated 2026-11-11)
 
 | Plugin | Package | Description | Source |
 |--------|---------|-------------|--------|
@@ -25,6 +25,7 @@ Total packages: 145 (generated 2026-10-08)
 | Android Sms Retriever | `@capgo/capacitor-android-sms-retriever` | Capacitor plugin for Android SMS Retriever and Phone Number Hint APIs. | [source](https://github.com/Cap-go/capacitor-android-sms-retriever) |
 | Android Usagestatsmanager | `@capgo/capacitor-android-usagestatsmanager` | Exposes the Android's UsageStatsManager SDK to Capacitor | [source](https://github.com/Cap-go/capacitor-android-usagestatsmanager) |
 | App Attest | `@capgo/capacitor-app-attest` | App Attest on iOS, Play Integrity on Android, and optional device fraud signals for Capacitor | [source](https://github.com/Cap-go/capacitor-app-attest) |
+| App Intents | `@capgo/capacitor-app-intents` | Siri, Shortcuts, Spotlight, Home Screen quick actions, and Apple App Intents for Capacitor apps with a JavaScript dispatch bridge. | [source](https://github.com/Cap-go/capacitor-app-intents) |
 | App Tracking Transparency | `@capgo/capacitor-app-tracking-transparency` | Capacitor plugin for iOS App Tracking Transparency framework. Request user authorization to access app-related data for tracking. | [source](https://github.com/Cap-go/capacitor-app-tracking-transparency) |
 | Appinsights | `@capgo/capacitor-appinsights` | A wrapper around the https://github.com/apptopia/appinsights SDK | [source](https://github.com/Cap-go/capacitor-appinsights) |
 | Appsflyer | `@capgo/capacitor-appsflyer` | Capacitor plugin for AppsFlyer attribution, analytics, and deep links. | [source](https://github.com/Cap-go/capacitor-appsflyer) |
@@ -72,6 +73,7 @@ Total packages: 145 (generated 2026-10-08)
 | Health | `@capgo/capacitor-health` | Capacitor plugin to interact with data from Apple HealthKit and Health Connect | [source](https://github.com/Cap-go/capacitor-health) |
 | Home Indicator | `@capgo/capacitor-home-indicator` | hide and show home button indicator in Capacitor app | [source](https://github.com/Cap-go/capacitor-home-indicator) |
 | Ibeacon | `@capgo/capacitor-ibeacon` | iBeacon plugin for Capacitor - proximity detection and beacon region monitoring | [source](https://github.com/Cap-go/capacitor-ibeacon) |
+| Icloud Kv | `@capgo/capacitor-icloud-kv` | Capacitor plugin to keep small app state in iCloud key-value storage on iOS and Android Backup on Android, so it survives a new phone. | [source](https://github.com/Cap-go/capacitor-icloud-kv) |
 | In App Review | `@capgo/capacitor-in-app-review` | Prompt users to submit app store ratings and reviews without leaving your app | [source](https://github.com/Cap-go/capacitor-in-app-review) |
 | Inappbrowser | `@capgo/capacitor-inappbrowser` | Capacitor plugin in app browser | [source](https://github.com/Cap-go/capacitor-inappbrowser) |
 | Incoming Call Kit | `@capgo/capacitor-incoming-call-kit` | Capacitor plugin for native incoming call UI with Android full-screen notifications and iOS CallKit. | [source](https://github.com/Cap-go/capacitor-incoming-call-kit) |
@@ -79,7 +81,7 @@ Total packages: 145 (generated 2026-10-08)
 | Intent Launcher | `@capgo/capacitor-intent-launcher` | Capacitor plugin to launch Android intents and open system settings screens on Android and iOS. | [source](https://github.com/Cap-go/capacitor-intent-launcher) |
 | Intercom | `@capgo/capacitor-intercom` | Intercom Capacitor plugin | [source](https://github.com/Cap-go/capacitor-intercom) |
 | Intune | `@capgo/capacitor-intune` | Capacitor plugin for Microsoft Intune MAM enrollment, app protection policies, app config, and MSAL authentication. | [source](https://github.com/Cap-go/capacitor-intune) |
-| Is Root | `@capgo/capacitor-is-root` | Jailbreak/Root Detection Plugin for Capacitor | [source](https://github.com/Cap-go/capacitor-is-root) |
+| Is Root | `@capgo/capacitor-is-root` | Jailbreak/Root Detection Plugin for Capacitor. Detect Android root, iOS jailbreak, and emulator (when requested). | [source](https://github.com/Cap-go/capacitor-is-root) |
 | Ivs Player | `@capgo/capacitor-ivs-player` | Ivs player for capacitor app | [source](https://github.com/Cap-go/capacitor-ivs-player) |
 | Jw Player | `@capgo/capacitor-jw-player` | Playes videos from jwplayer.com | [source](https://github.com/Cap-go/capacitor-jw-player) |
 | Keep Awake | `@capgo/capacitor-keep-awake` | Prevent the device screen from dimming or sleeping. | [source](https://github.com/Cap-go/capacitor-keep-awake) |
@@ -96,10 +98,12 @@ Total packages: 145 (generated 2026-10-08)
 | Native Audio | `@capgo/capacitor-native-audio` | A native plugin for native audio engine | [source](https://github.com/Cap-go/capacitor-native-audio) |
 | Native Biometric | `@capgo/capacitor-native-biometric` | This plugin gives access to the native biometric apis for android and iOS | [source](https://github.com/Cap-go/capacitor-native-biometric) |
 | Native Loader | `@capgo/capacitor-native-loader` | Capacitor plugin for native animated loaders, fullscreen overlays, Lottie assets, and WebView resizing. | [source](https://github.com/Cap-go/capacitor-native-loader) |
+| Native Map | `@capgo/capacitor-native-map` | Native maps for Capacitor: Google Maps on Android, Apple MapKit on iOS, Google Maps JS on web | [source](https://github.com/Cap-go/capacitor-native-map) |
 | Native Market | `@capgo/capacitor-native-market` | A native market plugin for linking to google play or app store. | [source](https://github.com/Cap-go/capacitor-native-market) |
 | Native Navigation | `@capgo/capacitor-native-navigation` | Capacitor plugin for native navbar, tabbar, safe-area handling, and WebView snapshot transitions. | [source](https://github.com/Cap-go/capacitor-native-navigation) |
 | Nativegeocoder | `@capgo/capacitor-nativegeocoder` | Capacitor plugin for native forward and reverse geocoding | [source](https://github.com/Cap-go/capacitor-nativegeocoder) |
 | Navigation Bar | `@capgo/capacitor-navigation-bar` | Capacitor plugin Set navigation bar color for android lollipop and higher | [source](https://github.com/Cap-go/capacitor-navigation-bar) |
+| Neon | `@capgo/capacitor-neon` | Native Neon Auth and Data API integration for Capacitor: Auth, Database, and JWT access | [source](https://github.com/Cap-go/capacitor-neon) |
 | Network Diagnostics | `@capgo/capacitor-network-diagnostics` | Capacitor plugin for native network diagnostics. | [source](https://github.com/Cap-go/capacitor-network-diagnostics) |
 | Nfc | `@capgo/capacitor-nfc` | Native NFC tag discovery, reading and writing for Capacitor apps on iOS and Android. | [source](https://github.com/Cap-go/capacitor-nfc) |
 | Passkey | `@capgo/capacitor-passkey` | Capacitor passkey plugin with a WebAuthn-style shim for Capacitor apps. | [source](https://github.com/Cap-go/capacitor-passkey) |
@@ -111,6 +115,7 @@ Total packages: 145 (generated 2026-10-08)
 | Permissions | `@capgo/capacitor-permissions` | Capacitor plugin for checking and requesting app permissions. | [source](https://github.com/Cap-go/capacitor-permissions) |
 | Persistent Account | `@capgo/capacitor-persistent-account` | This plugin allows you to securely store account information for a user in Capacitor | [source](https://github.com/Cap-go/capacitor-persistent-account) |
 | Persistent Uuid | `@capgo/capacitor-persistent-uuid` | Capacitor plugin for a persistent app UUID that survives reinstalls and updates. | [source](https://github.com/Cap-go/capacitor-persistent-uuid) |
+| Persona | `@capgo/capacitor-persona` | Capacitor plugin for launching Persona Inquiry flows on iOS and Android. | [source](https://github.com/Cap-go/capacitor-persona) |
 | Photo Library | `@capgo/capacitor-photo-library` | Capacitor plugin Displays photo gallery as web page, or boring native screen which you cannot modify but require no authorization | [source](https://github.com/Cap-go/capacitor-photo-library) |
 | Pretty Toast | `@capgo/capacitor-pretty-toast` | Native-first pretty toast notifications for Capacitor and the web | [source](https://github.com/Cap-go/capacitor-pretty-toast) |
 | Printer | `@capgo/capacitor-printer` | Capacitor plugin for printing documents, HTML, PDFs, images and web views | [source](https://github.com/Cap-go/capacitor-printer) |

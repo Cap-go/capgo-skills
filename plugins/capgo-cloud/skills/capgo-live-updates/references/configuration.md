@@ -1,6 +1,6 @@
 # `plugins.CapacitorUpdater` Configuration
 
-Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.52. Most keys only affect Android and iOS. Run `npx cap sync` after changing config, then rebuild the native app, because config is read at native launch.
+Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.54.2. Most keys only affect Android and iOS. Run `npx cap sync` after changing config, then rebuild the native app, because config is read at native launch.
 
 ## Update behavior
 
@@ -58,6 +58,8 @@ Also install `@capacitor/splash-screen` and upload with `--delta`. A full zip ov
 | --- | --- | --- |
 | `publicKey` | unset | Encryption v2 public key. Written by `npx @capgo/cli@latest key save` / `key create` |
 | `allowHttpsToHttpRedirect` | `false` | Keep it off unless a self-hosted CDN really redirects to HTTP |
+| `httpsOnly` | `true` (8.54.0+) | Rejects HTTP update URLs and redirect hops. `allowHttpsToHttpRedirect` does not bypass this while `httpsOnly` is true. Set `httpsOnly: false` for HTTP endpoints or redirects. An HTTPS-to-HTTP redirect needs both `httpsOnly: false` and `allowHttpsToHttpRedirect: true` |
+| `builtinMinimum` | `false` | When `true`, blocks OTA bundles below the native app version (8.54.0+). Not a version string. The baseline is the `version` config override when set, otherwise the native short version. Only the numeric `major.minor.patch` core is compared, so a `1.2.3-beta.1` bundle can be accepted on native `1.2.3`. Unparseable versions skip the check. Keep it off when web bundles are versioned independently of the native app |
 | `allowModifyUrl` | `false` | Required for `setUpdateUrl` / `setStatsUrl` / `setChannelUrl` |
 | `persistModifyUrl` | `false` | Persist runtime URL overrides |
 | `allowModifyAppId` | `false` | Required for `setAppId` |
@@ -76,6 +78,21 @@ There is no `privateKey` config key. Never put the private key in the app.
 | `appId` | native bundle id. Override when the Capgo app id differs |
 
 Self-hosting guide: https://capgo.app/docs/plugins/updater/self-hosted/getting-started/. For a fully self-hosted backend, the CLI takes `--supa-host` and `--supa-anon` on supported commands. Do not invent a Docker image. Point users to the documented guide.
+
+## Native store update prompts (since 8.53.0)
+
+When a bundle needs a newer store build, the plugin can show a native prompt before opening the store.
+
+| Key | Default | Notes |
+| --- | --- | --- |
+| `nativeUpdatePrompt` | `false` | Master switch for the native update prompt flow |
+| `nativeUpdatePromptTitle` | unset | Prompt title copy |
+| `nativeUpdatePromptMessage` | unset | Body copy |
+| `nativeUpdatePromptUpdateButton` | unset | Primary button label |
+| `nativeUpdatePromptLaterButton` | unset | Dismiss button label |
+| `nativeUpdatePromptCountry` | unset | Restrict prompt by country code |
+| `nativeUpdatePromptOnStoreCheck` | `false` | When this and `nativeUpdatePrompt` are both true, `getAppUpdateInfo()` can show the prompt if a store update is available. The prompt is shown at most once per app session, in addition to the cooldown |
+| `nativeUpdatePromptCooldownHours` | `24` | Minimum hours between prompts |
 
 ## Logging and debug UI
 

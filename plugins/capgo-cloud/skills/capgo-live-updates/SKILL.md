@@ -7,7 +7,7 @@ description: Sets up and debugs Capgo live (OTA) updates in a Capacitor app with
 
 Wire `@capgo/capacitor-updater` into a Capacitor app, ship the first bundle, and keep rollback safe.
 
-Facts below were checked against `@capgo/capacitor-updater` 8.52 and `@capgo/cli` 8.77 (October 2026).
+Facts below were checked against `@capgo/capacitor-updater` 8.54.2 and `@capgo/cli` 8.104 (November 2026).
 
 ## When to Use
 

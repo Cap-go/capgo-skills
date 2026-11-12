@@ -1,6 +1,6 @@
 ---
 name: capacitor-plugins
-description: Pick, install, and wire up Capacitor plugins for native features (camera, filesystem, geolocation, biometrics, in-app purchases, social login, SQLite, calendar, contacts, health, BLE, NFC, etc.). Covers official @capacitor/* packages (Capacitor 8.5 stable, 9 alpha on next) plus the 145-package @capgo/* index, native permission keys (Info.plist, AndroidManifest, variables.gradle minSdk), npx cap sync / cap ls verification, and errors like '"Camera" plugin is not implemented on ios', 'unable to find plugin', UNIMPLEMENTED, and OS-PLUG-* codes. Use for "which plugin should I use for X", adding a plugin, or a plugin call failing after install. Do not use for push setup (capacitor-push-notifications), splash assets (capacitor-splash-screen), keyboard layout (capacitor-keyboard), deep links (capacitor-deep-linking), OTA updates (capgo-live-updates), upgrading plugin source code (capacitor-plugin-upgrades), or adding SPM to a plugin (capacitor-plugin-spm-support).
+description: Pick, install, and wire up Capacitor plugins for native features (camera, filesystem, geolocation, biometrics, in-app purchases, social login, SQLite, calendar, contacts, health, BLE, NFC, etc.). Covers official @capacitor/* packages (Capacitor 8.5 stable, 9 alpha on next) plus the 150-package @capgo/* index, native permission keys (Info.plist, AndroidManifest, variables.gradle minSdk), npx cap sync / cap ls verification, and errors like '"Camera" plugin is not implemented on ios', 'unable to find plugin', UNIMPLEMENTED, and OS-PLUG-* codes. Use for "which plugin should I use for X", adding a plugin, or a plugin call failing after install. Do not use for push setup (capacitor-push-notifications), splash assets (capacitor-splash-screen), keyboard layout (capacitor-keyboard), deep links (capacitor-deep-linking), OTA updates (capgo-live-updates), upgrading plugin source code (capacitor-plugin-upgrades), or adding SPM to a plugin (capacitor-plugin-spm-support).
 ---
 
 # Capacitor Plugins
@@ -29,7 +29,7 @@ Do not use (load the sibling skill instead):
 - Upgrading the app's Capacitor major: `capacitor-app-upgrades`
 - SQL storage migrations: `sqlite-to-fast-sql`
 
-## Version Facts (October 2026)
+## Version Facts (November 2026)
 
 - Capacitor stable: 8.5.x (`latest`). Capacitor 9 is `9.0.0-alpha` on the `next` dist-tag. Official plugins follow: most v8 plugins are `8.x` on `latest` and `9.0.0-alpha` on `next`.
 - Plugin major must match the app's Capacitor major. Plugins for older majors use `latest-<major>` tags, e.g. `npm install @capacitor/camera@latest-7`.
@@ -139,7 +139,21 @@ Official `@capacitor/*` packages (install, native config, usage, gotchas):
 | Toast | `references/capacitor-toast.md` |
 | Apple Watch UI (experimental) | `references/capacitor-watch.md` |
 
-Capgo plugins: `references/capgo-plugin-index.md` (145 packages: install, platforms, key APIs, docs) and `references/capgo-plugin-catalog.md` (compact table).
+Capgo plugins: `references/capgo-plugin-index.md` (150 packages: full API methods, events, config keys, and per-release deltas since 2026-09-11) and `references/capgo-plugin-catalog.md` (compact table).
+
+Capgo deep references (recent API changes):
+
+| Need | Reference |
+|------|-----------|
+| Playlist queue, playback state, audio route | `references/capgo-native-audio.md` |
+| Zebra DataWedge diagnostics and scan intents | `references/capgo-zebra-datawedge.md` |
+| iOS geofence queue | `references/capgo-background-geolocation.md` |
+| PDF `underWebView` and layout | `references/capgo-pdf-viewer.md` |
+| IAP configure and finishTransaction | `references/capgo-native-purchases.md` |
+| Live Activities upgrade notes | `references/capgo-live-activities.md` |
+| OAuth `openAuthSession` | `references/capgo-social-login.md` |
+| Apple Watch and Wear OS | `references/capgo-watch.md` |
+| Capgo in-app browser fullscreen and scripting | `references/capgo-inappbrowser.md` |
 
 ## Capgo Quick Picks
 

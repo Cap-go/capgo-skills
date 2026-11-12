@@ -1,7 +1,14 @@
 # Updater JavaScript API
 
 Import: `import { CapacitorUpdater } from '@capgo/capacitor-updater';`
-Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.52, and https://capgo.app/docs/plugins/updater/api/.
+Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.54.2, and https://capgo.app/docs/plugins/updater/api/.
+
+Minimum native versions for APIs in this reference (rebuild and sync after upgrading):
+
+- **8.47.0+**: `getMissingBundleFiles`, `getBundleDownloadSize`, `startPreviewSession`
+- **8.48.0+**: `startPreviewSession({ payloadUrl })` (the `payloadUrl` option alone requires 8.48.0+)
+- **8.49.0+**: `listPreviews`, `setPreview`, `resetPreview`, `deletePreview`, `checkPreviewUpdate`, `updatePreview`
+- **8.53.0+**: `updaterEvent` unified listener
 
 ## Lifecycle methods
 
@@ -20,6 +27,14 @@ Source of truth: `src/definitions.ts` in `@capgo/capacitor-updater` 8.52, and ht
 | `setMultiDelay({ delayConditions })` / `cancelDelay()` | Hold a `next` bundle until `background`, `kill`, `nativeVersion`, or `date` |
 | `triggerUpdateCheck()` | Queue an immediate auto-update check |
 | `setBundleError({ id })` | Manual mode only. Needs `allowManualBundleError: true` |
+| `getMissingBundleFiles({ version, manifest })` | Delta bundles. Lists manifest entries missing locally |
+| `getBundleDownloadSize({ version, manifest, files })` | Delta bundles. Size estimate after `getMissingBundleFiles` |
+| `startPreviewSession({ appId?, payloadUrl? })` | Expo Go style preview. Needs `allowPreview: true` in config |
+| `listPreviews()` | Locally saved preview bundles still on disk |
+| `setPreview({ id })` | Switch to a preview bundle and reload |
+| `resetPreview()` | Leave preview mode |
+| `deletePreview({ id })` | Remove a stored preview bundle |
+| `checkPreviewUpdate({ id })` / `updatePreview({ id })` | Refresh a preview bundle from the server |
 
 ## Manual flow (`autoUpdate: false` or `"onlyDownload"`)
 
@@ -85,6 +100,9 @@ await CapacitorUpdater.unsetChannel({});     // back to defaultChannel / cloud d
 | `appReloaded` | none |
 | `channelPrivate` | `{ channel, message }` |
 | `updateCheckResult` | result of each check (`kind`, `error`, `message`) |
+| `updaterEvent` | Unified stream: `{ type, data }` where event fields live in `data`. On this stream use `breakingAvailable`, not `majorAvailable` |
+
+Prefer named events in app code. Use `updaterEvent` when one listener must mirror native stats or debug every event. Read `event.data`, not top-level fields.
 
 There is no `downloadProgress` event. Use `download`.
 

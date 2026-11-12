@@ -1,8 +1,8 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "organization": "Capgo",
-  "date": "October 2026",
-  "abstract": "Pick, install, configure, and verify Capacitor plugins. Covers official @capacitor/* packages for Capacitor 8.5 (and 9 alpha on next), including the 8.1+ Camera API and new Calendar, Contacts, Health Fitness, and Local LLM plugins, plus a generated index of 145 @capgo/* packages with install steps, platforms, API methods, and docs links. Includes native permission setup, npx cap sync / cap ls verification, and fixes for 'plugin is not implemented', UNIMPLEMENTED, and OS-PLUG-* errors.",
+  "date": "November 2026",
+  "abstract": "Pick, install, configure, and verify Capacitor plugins. Covers official @capacitor/* packages for Capacitor 8.5 (and 9 alpha on next), including the 8.1+ Camera API and new Calendar, Contacts, Health Fitness, and Local LLM plugins, plus a generated index of 150 @capgo/* packages with install steps, platforms, API methods, and docs links. Includes native permission setup, npx cap sync / cap ls verification, and fixes for 'plugin is not implemented', UNIMPLEMENTED, and OS-PLUG-* errors.",
   "triggers": [
     "which plugin",
     "capacitor plugin for",
