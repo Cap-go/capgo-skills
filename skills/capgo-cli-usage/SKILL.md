@@ -29,6 +29,8 @@ Do not use when one of these already fits. Switch to it as soon as the scope is 
 
 ## Secrets and Confirmation
 
+Use existing authentication only for the user-requested app and operation. A successful login does not authorize uploads, releases, builds, credential export, or deletion. Confirm the target and effect when they are not already specified by the user.
+
 - Never ask the user to paste a Capgo API key, signing password, `.p8` key, keystore, or service-account JSON into the chat. Ask them to run `npx @capgo/cli@latest login` themselves (it opens the browser or asks for the key in a masked prompt), or to set `CAPGO_TOKEN` in their shell or CI secret store.
 - Do not put secrets in command arguments: they end up in shell history and process lists. Use environment variables, the saved login, or the CLI's interactive prompts.
 - If a secret appears in the conversation anyway, do not repeat it, do not write it to a file, and tell the user to revoke it and create a new one.

@@ -59,11 +59,7 @@ Do not use (load the sibling skill instead):
 
 `references/capgo-plugin-index.md` is the complete Capgo plugin source, generated from Cap-go GitHub `package.json` and `src/definitions.ts`: npm name, purpose, install command, platforms, key API methods, docs and repo links for every public non-archived package. `references/capgo-plugin-catalog.md` is the compact table of the same set. Load the index before recommending any `@capgo/*` package and use the exact name from it.
 
-Regenerate both after Cap-go org changes (repository maintainers only):
-
-```bash
-GITHUB_TOKEN=$(gh auth token) node scripts/generate-capgo-plugin-index.mjs
-```
+Use the bundled index for consumer projects. Index regeneration belongs to the `capgo-skills` maintainer workflow; do not extract GitHub credentials or run repository-maintenance scripts while selecting a plugin for an app.
 
 ## Verification
 

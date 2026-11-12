@@ -1,10 +1,6 @@
 ---
 name: capacitor-ios-resizability
 description: Makes a Capacitor iOS app work in windows that resize while running (iPad Split View, Slide Over, Stage Manager, windowed apps, the foldable iPhone). Audits the web layer (viewport, `100vh`, device sniffing, `screen.width`, `window.orientation`, cached safe-area insets) and native code in the app and node_modules plugins (`UIScreen.main`, `interfaceOrientation`, `userInterfaceIdiom`, `keyWindow`, AppDelegate lifecycle, hard-coded bar heights), then applies trait-, window- and scene-based replacements. Checks Info.plist `UIRequiresFullScreen` (ignored on iOS 27, TN3192), iPad orientations, launch screen (ITMS-90870) and the UIScene lifecycle (Capacitor 8.5+). Use for "support iPad multitasking", "Stage Manager layout broken", "app does not resize", "foldable iPhone", or a plugin overlay mis-sized in split view. Do not use for notch padding only (safe-area-handling) or the SceneDelegate migration (capacitor-uiscene-migration).
-allowed-tools:
-  - Bash(grep *)
-  - Bash(find *)
-  - Bash(bash *scan-legacy-apis.sh*)
 ---
 
 # Resizable Windows for Capacitor iOS Apps

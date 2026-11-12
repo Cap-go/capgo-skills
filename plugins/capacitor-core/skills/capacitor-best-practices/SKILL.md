@@ -9,6 +9,8 @@ Review a Capacitor app for structural mistakes that cause broken builds, lost ed
 
 ## When to Use
 
+Use the selected project and its installed dependencies. Package installation and migration tools execute code; limit them to the requested setup or upgrade, preserve the lockfile and existing changes, and review generated edits before running changed build scripts.
+
 TRIGGER when:
 - The user asks for a general code/architecture review of a Capacitor or Ionic + Capacitor app.
 - Setting up a new Capacitor project or adding iOS/Android to an existing web app.

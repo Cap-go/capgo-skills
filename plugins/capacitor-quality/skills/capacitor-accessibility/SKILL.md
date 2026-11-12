@@ -24,6 +24,8 @@ Do not use:
 
 ## Procedure
 
+Use a user-selected test device and local web build. Prefer the project-installed axe dependency. Installing or running an npm tool downloads executable code; do so only as part of the requested audit, and preserve the lockfile. Restore device settings after testing.
+
 1. **Inventory screens** into a TODO list (auth, main tabs, forms, modals, media, settings). Audit one at a time.
 2. **Automated pass** on the web build: run axe (`@axe-core/playwright` in tests, or `npx @axe-core/cli@latest http://localhost:5173`) and fix violations first (names, roles, contrast, labels).
 3. **Device pass** per screen with VoiceOver and TalkBack, largest text size, Reduce Motion, and a Bluetooth keyboard (iPad). Use the checks in `references/testing.md`.

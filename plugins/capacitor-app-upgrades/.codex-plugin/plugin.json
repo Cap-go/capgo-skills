@@ -18,5 +18,17 @@
     "v9",
     "uiscene"
   ],
+  "interface": {
+    "displayName": "Capacitor App Upgrades",
+    "shortDescription": "Capacitor development skills",
+    "longDescription": "Capacitor app upgrade skills for cross-version and major-version app migrations, including the Capacitor 8.5 UIScene adoption and Capacitor 9.",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/"
 }

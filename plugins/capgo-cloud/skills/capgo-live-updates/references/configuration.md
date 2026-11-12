@@ -57,8 +57,8 @@ Also install `@capacitor/splash-screen` and upload with `--delta`. A full zip ov
 | Key | Default | Notes |
 | --- | --- | --- |
 | `publicKey` | unset | Encryption v2 public key. Written by `npx @capgo/cli@latest key save` / `key create` |
-| `allowHttpsToHttpRedirect` | `false` | Keep it off unless a self-hosted CDN really redirects to HTTP |
-| `httpsOnly` | `true` (8.54.0+) | Rejects HTTP update URLs and redirect hops. `allowHttpsToHttpRedirect` does not bypass this while `httpsOnly` is true. Set `httpsOnly: false` for HTTP endpoints or redirects. An HTTPS-to-HTTP redirect needs both `httpsOnly: false` and `allowHttpsToHttpRedirect: true` |
+| `allowHttpsToHttpRedirect` | `false` | Keep it off. Fix the CDN to serve HTTPS rather than downgrading update transport |
+| `httpsOnly` | `true` (8.54.0+) | Rejects HTTP update URLs and redirect hops. `allowHttpsToHttpRedirect` does not bypass this while `httpsOnly` is true. Keep `httpsOnly: true` in production; fix HTTP endpoints or redirects at the server. Do not disable transport checks to make an update succeed |
 | `builtinMinimum` | `false` | When `true`, blocks OTA bundles below the native app version (8.54.0+). Not a version string. The baseline is the `version` config override when set, otherwise the native short version. Only the numeric `major.minor.patch` core is compared, so a `1.2.3-beta.1` bundle can be accepted on native `1.2.3`. Unparseable versions skip the check. Keep it off when web bundles are versioned independently of the native app |
 | `allowModifyUrl` | `false` | Required for `setUpdateUrl` / `setStatsUrl` / `setChannelUrl` |
 | `persistModifyUrl` | `false` | Persist runtime URL overrides |

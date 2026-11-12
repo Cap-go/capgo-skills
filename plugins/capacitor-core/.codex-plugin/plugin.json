@@ -16,5 +16,17 @@
     "best-practices",
     "mcp"
   ],
+  "interface": {
+    "displayName": "Capacitor Core",
+    "shortDescription": "Capacitor development skills",
+    "longDescription": "Core Capacitor skills for best practices, plugin selection, and MCP automation.",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/"
 }

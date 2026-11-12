@@ -18,5 +18,17 @@
     "app-intents",
     "siri"
   ],
+  "interface": {
+    "displayName": "Capacitor Features",
+    "shortDescription": "Capacitor development skills",
+    "longDescription": "Capacitor feature skills for deep links, keyboard handling, offline-first data, push notifications, splash screens, and App Intents (Siri, Shortcuts, Spotlight).",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/"
 }

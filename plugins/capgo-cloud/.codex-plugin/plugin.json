@@ -16,6 +16,18 @@
     "native-builds",
     "release-management"
   ],
+  "interface": {
+    "displayName": "Capgo Cloud",
+    "shortDescription": "Build and update mobile apps",
+    "longDescription": "Capgo cloud skills for CLI usage, live updates, hosted native builds, release management, and organization workflows.",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/",
   "mcpServers": "./mcp.json"
 }

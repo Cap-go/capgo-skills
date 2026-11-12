@@ -18,5 +18,17 @@
     "ipad",
     "resizability"
   ],
+  "interface": {
+    "displayName": "Capacitor Ui",
+    "shortDescription": "Capacitor development skills",
+    "longDescription": "Mobile UI skills for Ionic, Konsta UI, Tailwind, safe-area handling, and iPad/foldable resizability in Capacitor apps.",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/"
 }

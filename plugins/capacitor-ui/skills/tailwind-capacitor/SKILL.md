@@ -32,6 +32,8 @@ Decision: if the iOS deployment target (or real user base) includes iOS < 16.4, 
 
 ## Workflow
 
+Use the selected project and its installed dependencies. Package installation and migration tools execute code; limit them to the requested setup or upgrade, preserve the lockfile and existing changes, and review generated edits before running changed build scripts.
+
 1. **Inspect**: `npm ls tailwindcss`, `tailwind.config.*`, `postcss.config.*`, bundler config, main CSS file, `ios/App/App.xcodeproj` `IPHONEOS_DEPLOYMENT_TARGET`, presence of Ionic or Konsta.
 2. **New install** (below) or **upgrade**: [references/v3-to-v4.md](references/v3-to-v4.md).
 3. **Mobile utilities** (safe areas, platform variants, touch, dark mode): [references/mobile-patterns.md](references/mobile-patterns.md).
