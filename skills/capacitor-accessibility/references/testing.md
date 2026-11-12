@@ -15,21 +15,14 @@
 
 - Accessibility Inspector: Xcode > Open Developer Tool > Accessibility Inspector, target the simulator or a connected device; it inspects WebView elements (label, traits, frame) and runs an audit.
 - VoiceOver on device: Settings > Accessibility > VoiceOver, or set the Accessibility Shortcut (triple-click side button). Swipe right/left moves, double-tap activates, two-finger swipe up reads all, rotor (two-finger rotate) jumps by headings/links.
-- Simulator settings (`xcrun simctl ui`):
-  - `xcrun simctl ui booted content_size accessibility-extra-extra-extra-large` (reset: `large`)
-  - `xcrun simctl ui booted increase_contrast enabled`
-  - `xcrun simctl ui booted appearance dark`
+- On the selected test simulator, record the current text size, contrast, and appearance in Settings. Test the largest accessibility text size, increased contrast, and dark appearance, then restore the recorded values. Use the host's device tools when available; do not change an arbitrary booted simulator.
 - Safari Web Inspector > Elements > Node > Accessibility shows computed role/name for the WebView DOM.
 
 ## Android
 
 - TalkBack on device: Settings > Accessibility > TalkBack (or the volume-keys shortcut). Swipe right/left moves, double-tap activates.
-- Toggle via adb (device with TalkBack installed):
-  ```bash
-  adb shell settings put secure enabled_accessibility_services com.google.android.marvin.talkback/com.google.android.marvin.talkback.TalkBackService
-  adb shell settings put secure enabled_accessibility_services ""   # off
-  ```
-- Font scale: `adb shell settings put system font_scale 2.0` (reset `1.0`). Display size: Settings > Display > Display size.
+- Use the TalkBack Settings toggle on the selected test device. Do not overwrite `enabled_accessibility_services`: doing so can disable other accessibility services the user relies on.
+- Record the original font scale and display size, change them through Settings > Display for the test, then restore those exact values. Do not assume the user's font scale was `1.0`.
 - Accessibility Scanner app (Google Play) flags touch target, contrast, and label issues on the running app.
 - chrome://inspect > Elements > Accessibility pane shows computed names.
 

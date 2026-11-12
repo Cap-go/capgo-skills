@@ -17,5 +17,17 @@
     "security",
     "xcode-hardening"
   ],
+  "interface": {
+    "displayName": "Capacitor Quality",
+    "shortDescription": "Capacitor development skills",
+    "longDescription": "Capacitor quality skills for testing, debugging, logs, performance, accessibility, security, and Xcode build hardening.",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/"
 }

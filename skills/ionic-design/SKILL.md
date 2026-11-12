@@ -33,6 +33,8 @@ Check installed versions first: `npm ls @ionic/core @ionic/react @ionic/vue @ion
 
 ## Workflow
 
+Use the selected project and its installed dependencies. Package installation and migration tools execute code; limit them to the requested setup or upgrade, preserve the lockfile and existing changes, and review generated edits before running changed build scripts.
+
 1. **Inspect** framework, Ionic major, router version, global CSS imports, `setupIonicReact` / `IonicVue` / `provideIonicAngular` config, `capacitor.config` `Keyboard.resize`.
 2. **Upgrading?** Load [references/ionic-9-migration.md](references/ionic-9-migration.md); run `npx @ionic/migrate` in preview first, report findings, then apply.
 3. **Components**: [references/components.md](references/components.md) for page shell, lists, forms, overlays, tabs.

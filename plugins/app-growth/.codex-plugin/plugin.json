@@ -16,5 +16,17 @@
     "aso",
     "paywall"
   ],
+  "interface": {
+    "displayName": "App Growth",
+    "shortDescription": "Capacitor development skills",
+    "longDescription": "App growth and revenue skills for early subscription revenue, ASO, acquisition, paywalls, pricing, and churn learning.",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/"
 }

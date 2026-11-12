@@ -16,5 +16,17 @@
     "ci-cd",
     "apple-review"
   ],
+  "interface": {
+    "displayName": "Capacitor Deployment",
+    "shortDescription": "Capacitor development skills",
+    "longDescription": "Capacitor deployment skills for CI/CD, App Store publishing, Play Store publishing, and Apple review preflight checks.",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/"
 }

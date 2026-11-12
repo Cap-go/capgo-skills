@@ -20,7 +20,7 @@ security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
 security set-keychain-settings -lut 21600 "$KEYCHAIN"
 security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
 echo "$IOS_P12_BASE64" | base64 --decode > "$RUNNER_TEMP/cert.p12"
-security import "$RUNNER_TEMP/cert.p12" -P "$IOS_P12_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN"
+security import "$RUNNER_TEMP/cert.p12" -P "$IOS_P12_PASSWORD" -T /usr/bin/codesign -t cert -f pkcs12 -k "$KEYCHAIN"
 security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
 security list-keychain -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
 
@@ -69,7 +69,7 @@ android {
 
 Keep the existing `versionCode` literal as the fallback if the project already has one higher than `1`.
 
-`npx cap build android --androidreleasetype AAB --keystorepath ... --keystorepass ... --keystorealias ... --keystorealiaspass ...` is an alternative that does not require Gradle edits.
+Use the Gradle environment-variable configuration above for signing. Do not pass keystore passwords in CLI arguments; environment-variable expansion into an argument still exposes the value in the process list.
 
 Play upload: the service account needs access to the app in Play Console (Users and permissions). The first upload of a new app must be done manually in Play Console before the API accepts uploads.
 

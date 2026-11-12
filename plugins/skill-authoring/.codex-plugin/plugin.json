@@ -15,5 +15,17 @@
     "validation",
     "agents"
   ],
+  "interface": {
+    "displayName": "Skill Authoring",
+    "shortDescription": "Capacitor development skills",
+    "longDescription": "Skill authoring workflow for creating and validating new agent skills.",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/"
 }

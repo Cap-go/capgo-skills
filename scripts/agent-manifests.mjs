@@ -69,6 +69,18 @@ export async function buildAgentManifests(root) {
     const mcpServers = OPENAI_MCP[plugin.name];
     files[`${pluginDir}/.codex-plugin/plugin.json`] = json({
       ...common,
+      interface: {
+        displayName: plugin.name.split('-').map((word) => word[0].toUpperCase() + word.slice(1)).join(' '),
+        shortDescription: plugin.name === 'capgo-cloud' ? 'Build and update mobile apps' : 'Capacitor development skills',
+        longDescription: plugin.description,
+        developerName: marketplace.owner.name,
+        category: 'Developer Tools',
+        capabilities: [],
+        websiteURL: 'https://capgo.app/',
+        supportURL: 'https://capgo.app/contact/',
+        privacyPolicyURL: 'https://capgo.app/privacy/',
+        termsOfServiceURL: 'https://capgo.app/tos/',
+      },
       skills: './skills/',
       ...(mcpServers && { mcpServers: './mcp.json' }),
     });

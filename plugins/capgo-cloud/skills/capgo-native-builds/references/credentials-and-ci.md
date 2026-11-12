@@ -4,41 +4,17 @@ Docs: https://capgo.app/docs/builder/credentials/ · https://capgo.app/docs/buil
 
 Storage: `~/.capgo-credentials/credentials.json` (global, the default) or `.capgo-credentials.json` in the project root (`--local`). Never commit either file.
 
-## Save (when the user already has signing files)
+## Supply signing credentials
 
-The user runs these commands in their own terminal. Passwords below are environment variables the user sets first (for example with `read -s P12_PASSWORD && export P12_PASSWORD`), so they never appear in the chat or in shell history.
+For automation, inject the credential environment variables listed below from the user's secret manager or CI secret store into `build request`. Keep existing saved credentials when they already work. Never read their values into agent output.
 
-iOS (App Store, with an extension):
+The CLI's `build credentials save` accepts password arguments. Do not construct these commands with real passwords: expanding an environment variable into an argument still exposes its value in the process list, even when shell history contains only the variable name. Use the environment-variable build workflow instead. Check the installed CLI's help before relying on any interactive credential-entry feature.
 
-```bash
-npx @capgo/cli@latest build credentials save --appId com.example.app --platform ios \
-  --certificate ./cert.p12 --p12-password "$P12_PASSWORD" \
-  --ios-provisioning-profile ./App.mobileprovision \
-  --ios-provisioning-profile com.example.app.widget=./Widget.mobileprovision \
-  --apple-key ./AuthKey_KEYID.p8 --apple-key-id "KEY_ID" \
-  --apple-issuer-id "ISSUER_UUID" --apple-team-id "TEAM_ID"
-```
+Signing inputs:
+- iOS: certificate, P12 password, provisioning map for every signable target, App Store Connect key, key/issuer IDs, and team ID.
+- Android: keystore, alias, key/store passwords, and Play service-account JSON when store upload is requested.
 
-iOS ad hoc artifact only:
-
-```bash
-npx @capgo/cli@latest build credentials save --appId com.example.app --platform ios \
-  --ios-distribution ad_hoc --certificate ./cert.p12 \
-  --ios-provisioning-profile ./adhoc.mobileprovision --output-upload
-```
-
-Android:
-
-```bash
-npx @capgo/cli@latest build credentials save --appId com.example.app --platform android \
-  --keystore ./release.jks --keystore-alias "release-key" \
-  --keystore-key-password "$KEY_PASSWORD" --keystore-store-password "$STORE_PASSWORD" \
-  --play-config ./service-account.json
-```
-
-To get a download link without a Play upload, replace `--play-config` with `--output-upload`.
-
-Saved defaults you can also store: `--output-retention`, `--skip-build-number-bump`, `--skip-marketing-version-bump`, `--android-flavor`, `--in-app-update-priority`.
+Keep credential files outside version control with owner-only access. Select store upload or artifact output explicitly before requesting a build; neither credential setup nor a missing credential authorizes a store submission.
 
 ## Inspect, change, remove
 

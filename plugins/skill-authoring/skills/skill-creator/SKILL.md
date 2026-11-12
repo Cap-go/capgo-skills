@@ -1,6 +1,6 @@
 ---
 name: skill-creator
-description: Guides authoring, reviewing, and validating agent skills (SKILL.md + metadata.json + references/ + scripts/) in this Capgo skills repository and similar ones. Covers trigger and negative-trigger design, lean SKILL.md with a when-to-load reference index, traps over basics, verification and error-handling sections, version tagging of facts, subagent-oriented skills (main-agent vs subagent split), optional when_to_use frontmatter, inline snapshots with allowed-tools, skillgrade evals, and this repo's canonical skills/ to plugins/ mirroring and registration. Use when creating a new skill, tightening a skill's description or triggers, splitting a long skill into references, or fixing `bun run lint-skills` failures. Do not use for app documentation, README or marketing copy, or library code that is not a skill.
+description: Guides authoring, reviewing, and validating agent skills (SKILL.md + metadata.json + references/ + scripts/) in this Capgo skills repository and similar ones. Covers trigger and negative-trigger design, lean SKILL.md with a when-to-load reference index, traps over basics, verification and error-handling sections, version tagging of facts, subagent-oriented skills (main-agent vs subagent split), optional when_to_use frontmatter, explicit project inspection, skillgrade evals, and this repo's canonical skills/ to plugins/ mirroring and registration. Use when creating a new skill, tightening a skill's description or triggers, splitting a long skill into references, or fixing `bun run lint-skills` failures. Do not use for app documentation, README or marketing copy, or library code that is not a skill.
 ---
 
 # Skill Authoring
@@ -28,7 +28,7 @@ Only load a reference when its topic is in play.
 | File | Load when |
 | --- | --- |
 | `references/repo-layout.md` | Adding, renaming, or registering a skill in this repository, mirroring into `plugins/`, or reading lint errors |
-| `references/authoring-patterns.md` | Writing the body: trigger design, reference index, traps, verification, version tags, subagent skills, inline snapshots |
+| `references/authoring-patterns.md` | Writing the body: trigger design, reference index, traps, verification, version tags, subagent skills, project inspection |
 
 ## Procedure
 
@@ -51,7 +51,7 @@ description: <what it does>. Use when <symptoms, APIs, file names, error strings
 - The description is the only text the router sees. Put concrete triggers in it: command names, config keys, file names, exact error strings. Name the sibling skills in the negative clause.
 - Keep it to one line and at most 1024 characters (lint enforces both).
 - Optional `when_to_use:` is appended to `description` in Claude Code's skill listing. The combined text is truncated at 1,536 characters, so put the key use case first. Other agents ignore it, so never move the core trigger out of `description`.
-- `allowed-tools:` only when the skill runs inline commands. Keep it minimal and read-only.
+- Do not declare `allowed-tools`; the host controls tool permissions.
 
 ### 3. Write a lean body
 
@@ -97,7 +97,7 @@ Use `skillgrade` (`eval.yaml` + `graders/`). Prefer deterministic graders for st
 - An index entry like "see references/" with no load condition makes the agent read everything or nothing. Always say *when*.
 - Stale facts age faster than structure. Put the version line at the top so reviewers know what to re-check.
 - Editing a mirrored copy under `plugins/<plugin>/skills/` is wrong. Edit the canonical `skills/<name>/`, then sync.
-- Inline `!`command`` snapshots run on every load. Keep them guarded (`fs.existsSync`), fast, short in output, and read-only.
+- Do not execute shell commands when a skill loads. Use explicit, scoped inspection steps or fenced examples, subject to the host permissions.
 
 ## Verification
 

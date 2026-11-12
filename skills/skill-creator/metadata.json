@@ -2,7 +2,7 @@
   "version": "1.1.0",
   "organization": "Capgo",
   "date": "October 2026",
-  "abstract": "Guide for authoring and validating agent skills: trigger and negative-trigger design, lean SKILL.md with a when-to-load reference index, traps, verification and error-handling sections, version tagging, subagent-oriented skills, inline snapshots, skillgrade evals, and this repo's canonical skills/ to plugins/ mirroring (bun run sync-skills) and registration.",
+  "abstract": "Guide for authoring and validating agent skills: trigger and negative-trigger design, lean SKILL.md with a when-to-load reference index, traps, verification and error-handling sections, version tagging, subagent-oriented skills, explicit project inspection, skillgrade evals, and this repo's canonical skills/ to plugins/ mirroring (bun run sync-skills) and registration.",
   "triggers": [
     "create a skill",
     "skill authoring",

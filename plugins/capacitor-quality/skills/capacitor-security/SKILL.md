@@ -75,9 +75,9 @@ npx @capgo/capgo-sec@latest scan --ci
 # 2. Dev-only config left in capacitor.config
 grep -nE "cleartext|server:\s*\{|\"url\"|url:|allowMixedContent|webContentsDebuggingEnabled" capacitor.config.* 
 
-# 3. Secrets in the built bundle (build first)
+# 3. Secrets in the built bundle (filenames only; never print matching values)
 npm run build
-grep -rnE "sk_live_|sk-ant-|sk-proj-|AKIA[0-9A-Z]{16}|service_role|-----BEGIN (RSA |EC )?PRIVATE KEY" dist/ www/ 2>/dev/null
+grep -rlE "sk_live_|sk-ant-|sk-proj-|AKIA[0-9A-Z]{16}|service_role|-----BEGIN (RSA |EC )?PRIVATE KEY" dist/ www/ 2>/dev/null
 
 # 4. Tokens in plain storage
 grep -rnE "(Preferences\.set|localStorage\.setItem)\(.*(token|password|secret|jwt)" -i src/

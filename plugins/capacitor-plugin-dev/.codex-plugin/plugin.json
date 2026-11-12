@@ -17,5 +17,17 @@
     "swift-package-manager",
     "v9"
   ],
+  "interface": {
+    "displayName": "Capacitor Plugin Dev",
+    "shortDescription": "Capacitor development skills",
+    "longDescription": "Capacitor plugin development skills for SPM support and plugin major-version upgrades.",
+    "developerName": "Capgo",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://capgo.app/",
+    "supportURL": "https://capgo.app/contact/",
+    "privacyPolicyURL": "https://capgo.app/privacy/",
+    "termsOfServiceURL": "https://capgo.app/tos/"
+  },
   "skills": "./skills/"
 }

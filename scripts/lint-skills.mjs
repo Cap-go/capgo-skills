@@ -268,6 +268,13 @@ async function main() {
       errors.push(`${skillName}: name "${frontmatter.name ?? ''}" does not match folder name`);
     }
 
+    if (frontmatter['allowed-tools'] !== undefined) {
+      errors.push(`${skillName}: keep tool authorization in the host; do not grant permissions in skill frontmatter`);
+    }
+    if (/!`[^\n]+`/.test(content)) {
+      errors.push(`${skillName}: replace automatic shell interpolation with explicit inspection instructions`);
+    }
+
     const description = frontmatter.description;
     if (typeof description !== 'string' || !description.trim()) {
       errors.push(`${skillName}: missing description`);

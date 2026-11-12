@@ -101,6 +101,25 @@ gemini extensions install https://github.com/Cap-go/capgo-skills
 
 The same plugin groups are published for Cursor (`.cursor-plugin/marketplace.json`) and Codex (`.agents/plugins/marketplace.json`). Add this repository as a plugin marketplace in either tool, then install the plugin groups you need.
 
+## OpenAI Directory Submission
+
+Use the **With MCP** submission path for `capgo-cloud`, with the production server `https://api.capgo.app/mcp`. That plugin already bundles the hosted server configuration in `plugins/capgo-cloud/mcp.json`. A skills-only ZIP upload excludes remote MCP configuration; adding an MCP file to such an upload does not change the submission type.
+
+The other plugin groups are skills-only. They remain installable from this repository, but cannot resolve the portal's “not accepting more skills-only submissions” restriction. Do not add an unrelated server to them just to bypass that restriction.
+
+Listing links are generated into each Codex manifest's `interface` object:
+
+- Website: https://capgo.app/
+- Support: https://capgo.app/contact/
+- Privacy policy: https://capgo.app/privacy/
+- Terms of service: https://capgo.app/tos/
+
+Edit `scripts/agent-manifests.mjs`, then run `bun run sync-skills` to regenerate manifests and skill copies. Re-upload the changed package and rerun the portal's skill scans. Local lint checks packaging and known unsafe instruction patterns; it does not reproduce OpenAI's security classifier or guarantee acceptance. Generic findings without file/line details need a fresh scan or the portal's detailed report to confirm resolution.
+
+Check policy pages with unauthenticated HTTP requests as well as a browser. On November 12, 2026, both policy URLs returned HTTP 200 to curl and to a descriptive `capgo-policy-check/1.0` user agent. The default `Python-urllib/3.9` user agent returned HTTP 403 with Cloudflare error 1010 (Browser Integrity Check). This does not establish which user agent the submission validator uses. If the portal still rejects accessibility after the URLs are populated, capture its request details before changing site protections. See [Cloudflare error 1010](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/); Pages has an additional managed check that a zone-level exception cannot disable.
+
+See [OpenAI submission instructions](https://developers.openai.com/plugins/deploy/submission) and [submission errors](https://developers.openai.com/plugins/deploy/submission-errors) for the remaining review requirements, including icons, demo recording, test cases, and MCP verification.
+
 ## Available Skills
 
 ### Core Development
